@@ -74,7 +74,7 @@ export default function Header(props) {
                   </ALink>{' '}
                 </h4>
                 <p>
-                  <ALink href="tel:#">099 935 1235</ALink>
+                  <ALink href="tel:#">{program.supportPhone}</ALink>
                 </p>
               </div>
             </div>

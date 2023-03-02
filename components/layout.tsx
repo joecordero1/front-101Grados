@@ -64,7 +64,12 @@ function Layout({ children, closeQuickview }) {
 
   useEffect(() => {
     if (isLoggedIn) {
-      router.push('/');
+      const { pathname } = router;
+      if (pathname === '/signin' || pathname === '/signup') {
+        router.push('/');
+      } else {
+        router.push(pathname);
+      }
     } else {
       router.push('/signin');
     }
