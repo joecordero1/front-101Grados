@@ -7,16 +7,13 @@ import 'react-image-lightbox/style.css';
 import 'react-input-range/lib/css/index.css';
 
 import ALink from '~/components/features/custom-link';
-
 import Header from '~/components/common/header';
 import Footer from '~/components/common/footer';
 import StickyFooter from '~/components/common/sticky-footer';
 import Quickview from '~/components/features/product/common/quickview-modal';
 import VideoModal from '~/components/features/modals/video-modal';
 import MobileMenu from '~/components/common/partials/mobile-menu';
-
 import { modalActions } from '~/store/modal';
-
 import {
   showScrollTopHandler,
   scrollTopHandler,
@@ -24,7 +21,10 @@ import {
   stickyFooterHandler,
 } from '~/utils';
 
+import { useProgram } from 'hooks/useProgram';
+
 function Layout({ children, closeQuickview }) {
+  const { program } = useProgram();
   const router = useRouter();
 
   useLayoutEffect(() => {
@@ -61,7 +61,28 @@ function Layout({ children, closeQuickview }) {
     }, 50);
   }, [router.pathname]);
 
-  return (
+  console.log('loading: program', program);
+
+  return !program ? (
+    <>
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          position: 'fixed',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <div className="lds-facebook">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+    </>
+  ) : (
     <>
       <div className="page-wrapper">
         <Header />

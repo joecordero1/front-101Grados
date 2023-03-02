@@ -5,12 +5,12 @@ import Helmet from 'react-helmet';
 import { SnackbarProvider } from 'notistack';
 
 import { wrapper } from '../store/index.js';
-import Layout from '~/components/layout';
 import { demoActions } from '~/store/demo';
 import { currentDemo } from '~/server/queries';
 import '~/public/sass/style.scss';
 
-import { ApiProvider } from 'context';
+import { ApiProvider, ProgramProvider } from 'context';
+import Layout from '~/components/layout';
 
 const App = ({ Component, pageProps }) => {
   const store = useStore();
@@ -34,29 +34,31 @@ const App = ({ Component, pageProps }) => {
       // action={(key) => <SnackbarCloseButton snackbarKey={key} />}
     >
       <ApiProvider>
-        <Provider store={store}>
-          <Helmet>
-            <meta charSet="UTF-8" />
-            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1, shrink-to-fit=no"
-            />
+        <ProgramProvider>
+          <Provider store={store}>
+            <Helmet>
+              <meta charSet="UTF-8" />
+              <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+              <meta
+                name="viewport"
+                content="width=device-width, initial-scale=1, shrink-to-fit=no"
+              />
 
-            <title>Riode - React eCommerce Template</title>
+              <title>Riode - React eCommerce Template</title>
 
-            <meta name="keywords" content="React Template" />
-            <meta
-              name="description"
-              content="Riode - React eCommerce Template"
-            />
-            <meta name="author" content="D-THEMES" />
-          </Helmet>
+              <meta name="keywords" content="React Template" />
+              <meta
+                name="description"
+                content="Riode - React eCommerce Template"
+              />
+              <meta name="author" content="D-THEMES" />
+            </Helmet>
 
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </Provider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </Provider>
+        </ProgramProvider>
       </ApiProvider>
     </SnackbarProvider>
   );

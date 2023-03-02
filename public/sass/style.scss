@@ -19,7 +19,7 @@ $primary-color: #3467ef;
 $secondary-color: #f6bb20;
 
 /* 2. mixins */
-@import 'mixins/breakpoints'; 
+@import 'mixins/breakpoints';
 @import 'mixins/core';
 @import 'mixins/buttons';
 
@@ -86,8 +86,8 @@ $secondary-color: #f6bb20;
 @import 'base/footer/footer';
 
 /* 8. Pages */
-@import 'pages/about';  
-@import 'pages/account';   
+@import 'pages/about';
+@import 'pages/account';
 @import 'pages/buttons';
 @import 'pages/categories';
 @import 'pages/coming';
@@ -109,3 +109,5 @@ $secondary-color: #f6bb20;
 @import 'pages/vendor';
 
 @import 'demo/market1_custom';
+
+@import 'custom.scss';
