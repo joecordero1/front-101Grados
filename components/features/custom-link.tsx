@@ -1,14 +1,20 @@
+import { FC } from 'react';
 import Link from 'next/link';
 
 import { parseContent } from '~/utils';
 
-export default function ALink({
-  children,
-  className,
-  content,
-  style,
-  ...props
-}) {
+const ALink: FC<{
+  scroll?: boolean;
+  role?: string;
+  id?: string;
+  title?: string;
+  className?: string;
+  content?: string;
+  href: string | any;
+  onClick?: () => void;
+  style?: React.CSSProperties;
+  children?: React.ReactNode;
+}> = ({ children, className, content, style, ...props }) => {
   const preventDefault = (e) => {
     if (props.href === '#') {
       e.preventDefault();
@@ -37,4 +43,6 @@ export default function ALink({
       </a>
     </Link>
   );
-}
+};
+
+export default ALink;
