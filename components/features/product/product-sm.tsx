@@ -4,7 +4,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import ALink from '~/components/features/custom-link';
 
 import { CatalogueItem } from '../../../utils/types/catalogueItem';
-import { useProgram } from 'hooks';
+import { useProgram, useGeneral } from 'hooks';
 
 type Props = {
   product: CatalogueItem;
@@ -17,6 +17,7 @@ type Props = {
 
 const SmallProduct: FC<Props> = (props) => {
   const { coinName } = useProgram();
+  const { openModal } = useGeneral();
   const {
     product,
     adClass,
@@ -65,7 +66,7 @@ const SmallProduct: FC<Props> = (props) => {
             href="#"
             className="btn-product btn-quickview"
             title="Quick View"
-            // onClick={showQuickviewHandler}
+            onClick={() => openModal(product)}
           >
             Vista Rápida
           </ALink>

@@ -1,7 +1,9 @@
 export interface Award {
   id: number;
+  code: string;
   name: string;
   mainImage: string;
+  description: string;
   subcategories: Subcategory[];
 }
 

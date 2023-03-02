@@ -14,6 +14,7 @@ import {
   ProgramProvider,
   AuthProvider,
   ApiAuthProvider,
+  GeneralProvider,
 } from 'context';
 import Layout from '~/components/layout';
 
@@ -42,29 +43,31 @@ const App = ({ Component, pageProps }) => {
         <ProgramProvider>
           <AuthProvider>
             <ApiAuthProvider>
-              <Provider store={store}>
-                <Helmet>
-                  <meta charSet="UTF-8" />
-                  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-                  <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1, shrink-to-fit=no"
-                  />
+              <GeneralProvider>
+                <Provider store={store}>
+                  <Helmet>
+                    <meta charSet="UTF-8" />
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                    <meta
+                      name="viewport"
+                      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+                    />
 
-                  <title>Riode - React eCommerce Template</title>
+                    <title>Riode - React eCommerce Template</title>
 
-                  <meta name="keywords" content="React Template" />
-                  <meta
-                    name="description"
-                    content="Riode - React eCommerce Template"
-                  />
-                  <meta name="author" content="D-THEMES" />
-                </Helmet>
+                    <meta name="keywords" content="React Template" />
+                    <meta
+                      name="description"
+                      content="Riode - React eCommerce Template"
+                    />
+                    <meta name="author" content="D-THEMES" />
+                  </Helmet>
 
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
-              </Provider>
+                  <Layout>
+                    <Component {...pageProps} />
+                  </Layout>
+                </Provider>
+              </GeneralProvider>
             </ApiAuthProvider>
           </AuthProvider>
         </ProgramProvider>
