@@ -22,10 +22,22 @@ function MainMenu() {
           >
             <figure className="categroy-media">
               {/* <i className="fas fa-car"></i> */}
-              <i className={category.icon ? category.icon : 'fas fa-award'}></i>
+              <i
+                className={category.icon ? category.icon : 'fas fa-award'}
+                style={{
+                  color: '#2D2D2D',
+                }}
+              ></i>
             </figure>
             <div className="category-content">
-              <h4 className="category-name">{category.name}</h4>
+              <h4
+                className="category-name"
+                style={{
+                  color: '#2D2D2D',
+                }}
+              >
+                {category.name}
+              </h4>
             </div>
           </ALink>
         </div>
@@ -34,10 +46,22 @@ function MainMenu() {
       <div className="category category-icon">
         <ALink href="/shop">
           <figure className="categroy-media">
-            <i className="d-icon-category"></i>
+            <i
+              className="d-icon-category"
+              style={{
+                color: '#2D2D2D',
+              }}
+            ></i>
           </figure>
           <div className="category-content">
-            <h4 className="category-name">Todas las Categorías</h4>
+            <h4
+              className="category-name"
+              style={{
+                color: '#2D2D2D',
+              }}
+            >
+              Todas las Categorías
+            </h4>
           </div>
         </ALink>
       </div>

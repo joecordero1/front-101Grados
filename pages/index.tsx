@@ -63,7 +63,7 @@ function HomePage() {
 
         <VendorSection />
 
-        <Buyable products={electronics} loading={loading} />
+        <Buyable />
 
         <BannerTwoSection />
 
@@ -75,13 +75,13 @@ function HomePage() {
 
         <BestCollection products={bestSelling} loading={loading} />
 
-        <NewsletterSection />
+        {/* <NewsletterSection />
 
         <BrandSection />
 
         <BlogSection posts={posts} />
 
-        <RecentCollection products={latest} loading={loading} />
+        <RecentCollection products={latest} loading={loading} /> */}
       </div>
 
       <NewsletterModal />

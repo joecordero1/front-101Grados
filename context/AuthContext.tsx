@@ -13,6 +13,7 @@ interface AuthState {
   participant: Participant;
   isLoggedIn: boolean;
   isInitialised: boolean;
+  availablePoints: number;
 }
 
 interface AuthContextValue extends AuthState {
@@ -42,7 +43,16 @@ type WrongUserPasswordAction = {
   type: 'wrong-user-password';
 };
 
-type Action = LoginAction | LogoutAction | WrongUserPasswordAction;
+type UpdateAvailablePoints = {
+  type: 'UPDATE_AVAILABLE_POINTS';
+  payload: number;
+};
+
+type Action =
+  | LoginAction
+  | LogoutAction
+  | WrongUserPasswordAction
+  | UpdateAvailablePoints;
 
 const initialState: AuthState = {
   status: 'idle',
@@ -51,10 +61,11 @@ const initialState: AuthState = {
   error: null,
   isLoggedIn: false,
   isInitialised: false,
+  availablePoints: 0,
 };
 export const setSessionWithToken = (accessToken: string | null): void => {
   if (accessToken) {
-    localStorage.setItem('accessTokenLala4Store', accessToken);
+    // localStorage.setItem('accessTokenLala4Store', accessToken);
     // axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
   } else {
     localStorage.removeItem('accessTokenLala4Store');
@@ -89,6 +100,11 @@ const reducer = (state: AuthState, action: Action): AuthState => {
         isInitialised: true,
         isLoggedIn: false,
       };
+    case 'UPDATE_AVAILABLE_POINTS':
+      return {
+        ...state,
+        availablePoints: action.payload,
+      };
     default:
       return state;
   }
@@ -107,11 +123,10 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [auth, dispatch] = useReducer(reducer, initialState);
   const { program } = useProgram();
   const { get, post } = useApi();
-  const { getAuth } = useApiAuth();
   const router = useRouter();
 
   const loginWithToken = (token: string | null) => {
-    setSessionWithToken(token);
+    // setSessionWithToken(token);
     setSession();
     router.push('/');
   };
@@ -188,6 +203,22 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       });
     }
   };
+
+  const getAvailablePoints = async () => {
+    try {
+      const availablePoints = await get<number>(`/points/my-available-points`);
+      dispatch({
+        type: 'UPDATE_AVAILABLE_POINTS',
+        payload: availablePoints,
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    if (auth.isLoggedIn) getAvailablePoints();
+  }, [auth.isLoggedIn]);
 
   // const updatedAccountInfo = async (changes: UpdateProfileInfo) => {
   //   try {

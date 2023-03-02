@@ -12,7 +12,7 @@ import { headerBorderRemoveList } from '~/utils/data/menu';
 import { useAuth, useProgram } from 'hooks';
 
 export default function Header(props) {
-  const { logOut } = useAuth();
+  const { logOut, availablePoints } = useAuth();
   const { program } = useProgram();
   const router = useRouter();
 
@@ -148,7 +148,7 @@ export default function Header(props) {
             margin: '0 auto',
           }}
         >
-          Tienes 0 Puntos
+          Tienes {availablePoints} Puntos
         </h2>
       </div>
 

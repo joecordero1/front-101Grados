@@ -3,9 +3,11 @@ import React from 'react';
 import ALink from '~/components/features/custom-link';
 import ProductNine from '~/components/features/product/product-nine';
 
-import { useItems } from 'hooks';
+import { useItems, useAuth, useProgram } from 'hooks';
 
-function ElectronicCollection(props) {
+function ElectronicCollection() {
+  const { availablePoints } = useAuth();
+  const { coinName } = useProgram();
   const { items, loading } = useItems({
     metaProps: {
       take: 8,
@@ -47,7 +49,10 @@ function ElectronicCollection(props) {
                   Disponibles con tus puntos
                 </h3>
                 <div className="banner-price-info text-white font-weight-semi-bold ls-m">
-                  Hasta <strong className="text-secondary">100 Puntos</strong>
+                  Hasta{' '}
+                  <strong className="text-secondary">
+                    {availablePoints} {coinName}
+                  </strong>
                 </div>
                 <ALink
                   href={{
