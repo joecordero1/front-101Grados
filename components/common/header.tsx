@@ -102,7 +102,7 @@ export default function Header(props) {
           <div className="header-right">
             <div className="icon-box icon-box-side">
               <div className="icon-box-icon mr-0 mr-lg-2">
-                <i className="d-icon-phone"></i>
+                <i className="fab fa-whatsapp"></i>
               </div>
               <div className="icon-box-content d-lg-show">
                 <h4 className="icon-box-title text-dark text-normal">
@@ -110,27 +110,34 @@ export default function Header(props) {
                     href="mailto:riode@mail.com"
                     className="text-primary d-inline-block"
                   >
-                    Live chat
+                    Soporte:
                   </ALink>{' '}
-                  or:
                 </h4>
                 <p>
-                  <ALink href="tel:#">0(800) 123-456</ALink>
+                  <ALink href="tel:#">099 935 1235</ALink>
                 </p>
               </div>
             </div>
             <span className="divider mr-4"></span>
-            <ALink href="#" className="compare">
-              <i className="d-icon-compare"></i>
-            </ALink>
-            <ALink href="/pages/wishlist" className="wishlist">
+            {/* <ALink href="/pages/wishlist" className="wishlist">
               <i className="d-icon-heart"></i>
-            </ALink>
-            <span className="divider"></span>
+            </ALink> */}
+            {/* <span className="divider"></span> */}
 
             <CartMenu />
           </div>
         </div>
+      </div>
+
+      <div>
+        <h2
+          style={{
+            textAlign: 'center',
+            margin: '0 auto',
+          }}
+        >
+          Tienes 0 Puntos
+        </h2>
       </div>
 
       <div className={`header-bottom ${router.pathname === '/' ? '' : 'pb-0'}`}>
