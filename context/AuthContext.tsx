@@ -54,10 +54,10 @@ const initialState: AuthState = {
 };
 export const setSessionWithToken = (accessToken: string | null): void => {
   if (accessToken) {
-    localStorage.setItem('accessToken', accessToken);
+    localStorage.setItem('accessTokenLala4Store', accessToken);
     // axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
   } else {
-    localStorage.removeItem('accessToken');
+    localStorage.removeItem('accessTokenLala4Store');
     // delete axios.defaults.headers.common.Authorization;
   }
 };
@@ -154,8 +154,9 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   };
 
   const setSession = async () => {
+    console.log('Está buscando');
     // First I retrieve the token saved on localStorage
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = localStorage.getItem('accessTokenLala4Store');
 
     // If there is a token, I proceed to validate it
     if (accessToken) {

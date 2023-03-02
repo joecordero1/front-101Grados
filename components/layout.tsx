@@ -21,10 +21,11 @@ import {
   stickyFooterHandler,
 } from '~/utils';
 
-import { useProgram } from 'hooks/useProgram';
+import { useProgram, useAuth } from 'hooks';
 
 function Layout({ children, closeQuickview }) {
   const { program } = useProgram();
+  const { isLoggedIn, participant } = useAuth();
   const router = useRouter();
 
   useLayoutEffect(() => {
@@ -61,51 +62,68 @@ function Layout({ children, closeQuickview }) {
     }, 50);
   }, [router.pathname]);
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      console.log('isLoggedIn: ', isLoggedIn);
+      router.push('/');
+    } else {
+      console.log('isLoggedIn: ', isLoggedIn);
+      router.push('/signin');
+    }
+  }, [isLoggedIn, participant]);
+
   console.log('loading: program', program);
 
-  return !program ? (
-    <>
-      <div
-        style={{
-          width: '100%',
-          height: '100%',
-          position: 'fixed',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <div className="lds-facebook">
-          <div></div>
-          <div></div>
-          <div></div>
+  if (!program) {
+    return (
+      <>
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            position: 'fixed',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <div className="lds-facebook">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         </div>
-      </div>
-    </>
-  ) : (
+      </>
+    );
+  }
+
+  return (
     <>
       <div className="page-wrapper">
-        <Header />
+        {isLoggedIn && <Header />}
 
         {children}
 
-        <Footer />
-
-        <StickyFooter />
+        {isLoggedIn && <Footer />}
+        {isLoggedIn && <StickyFooter />}
       </div>
 
-      <ALink
-        id="scroll-top"
-        href="#"
-        title="Top"
-        role="button"
-        className="scroll-top"
-        onClick={() => scrollTopHandler(false)}
-      >
-        <i className="d-icon-arrow-up"></i>
-      </ALink>
+      {isLoggedIn && (
+        <>
+          <ALink
+            id="scroll-top"
+            href="#"
+            title="Top"
+            role="button"
+            className="scroll-top"
+            onClick={() => scrollTopHandler(false)}
+          >
+            <i className="d-icon-arrow-up"></i>
+          </ALink>
 
-      <MobileMenu />
+          <MobileMenu />
+        </>
+      )}
 
       <ToastContainer
         autoClose={3000}
