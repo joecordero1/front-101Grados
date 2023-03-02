@@ -31,8 +31,6 @@ const ProductOne: FC<Props> = (props) => {
   const [quantity, setQauntity] = useState(1);
   const { coinName } = useProgram();
 
-  console.log('product', product);
-
   let colors = [],
     sizes = [];
 

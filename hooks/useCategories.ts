@@ -34,7 +34,6 @@ export const useCategories = () => {
       setCategories(randomizedCategories.slice(0, 10));
       setLoading(false);
     } catch (error) {
-      console.log('error', error);
       setLoading(false);
     }
   };

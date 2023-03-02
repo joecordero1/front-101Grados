@@ -13,6 +13,7 @@ type MetaProps = {
 type FilterOptions = {
   random?: boolean;
   orderPoints?: 'ASC' | 'DESC';
+  categoriesIds?: number[];
 };
 
 type UseItemsProps = {
@@ -59,7 +60,6 @@ export function useItems({ metaProps, filterOptions = {} }: UseItemsProps) {
       setItems(response.data);
       setLoading(false);
     } catch (e) {
-      console.log('error', e);
       setLoading(false);
     }
   };
