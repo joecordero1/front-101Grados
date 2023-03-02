@@ -67,11 +67,11 @@ function HomePage() {
 
         <BannerTwoSection />
 
-        <ClothingCollection products={clothings} loading={loading} />
+        {/* <ClothingCollection products={clothings} loading={loading} /> */}
 
-        <BannerThreeSection />
+        {/* <BannerThreeSection />
 
-        <FoodCollection products={foods} loading={loading} />
+        <FoodCollection products={foods} loading={loading} /> */}
 
         <BestCollection products={bestSelling} loading={loading} />
 

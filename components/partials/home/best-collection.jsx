@@ -2,19 +2,26 @@ import React from 'react';
 
 import ALink from '~/components/features/custom-link';
 import OwlCarousel from '~/components/features/owl-carousel';
-
 import ProductNine from '~/components/features/product/product-nine';
-
 import { productSlider } from '~/utils/data/carousel';
 
+import { useItems } from 'hooks';
+
 function BestCollection(props) {
-  const { products, loading } = props;
+  const { items, loading } = useItems({
+    metaProps: {
+      take: 5,
+    },
+    filterOptions: {
+      random: true,
+    },
+  });
 
   return (
     <section className="mb-10 pb-3">
       <div className="container">
         <h2 className="title title-line title-underline with-link">
-          Best Selling
+          Premios más Canjeados
           <ALink
             href="/shop"
             className="btn btn-dark btn-link font-weight-semi-bold text-capitalize btn-more"
@@ -34,15 +41,14 @@ function BestCollection(props) {
           </OwlCarousel>
         ) : (
           <OwlCarousel adClass="owl-theme" options={productSlider}>
-            {products &&
-              products.map((item, index) => (
-                <ProductNine
-                  adClass="text-center"
-                  product={item}
-                  isStockCount={true}
-                  key={`top-selling-product ${index}`}
-                />
-              ))}
+            {items.map((item, index) => (
+              <ProductNine
+                adClass="text-center"
+                product={item}
+                isStockCount={true}
+                key={`top-selling-product ${index}`}
+              />
+            ))}
           </OwlCarousel>
         )}
       </div>
