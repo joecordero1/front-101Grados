@@ -14,6 +14,7 @@ type FilterOptions = {
   random?: boolean;
   orderPoints?: 'ASC' | 'DESC';
   categoriesIds?: number[];
+  buyable?: boolean;
 };
 
 type UseItemsProps = {

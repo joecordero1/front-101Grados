@@ -15,7 +15,7 @@ import DealCollection from '~/components/partials/home/deal-collection';
 import CategorySection from '~/components/partials/home/category-section';
 import BannerOneSection from '~/components/partials/home/banner-one-section';
 import VendorSection from '~/components/partials/home/vendor-section';
-import ElectronicCollection from '~/components/partials/home/electronic-collection';
+import Buyable from '~/components/partials/home/buyable';
 import BannerTwoSection from '~/components/partials/home/banner-two-section';
 import ClothingCollection from '~/components/partials/home/clothing-collection';
 import BannerThreeSection from '~/components/partials/home/banner-three-section';
@@ -63,7 +63,7 @@ function HomePage() {
 
         <VendorSection />
 
-        <ElectronicCollection products={electronics} loading={loading} />
+        <Buyable products={electronics} loading={loading} />
 
         <BannerTwoSection />
 

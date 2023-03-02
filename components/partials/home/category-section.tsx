@@ -8,8 +8,6 @@ import { useCategories } from 'hooks';
 function CategorySection() {
   const { categories } = useCategories();
 
-  console.log('categories', categories);
-
   return (
     <section className="grey-section pt-8 pb-4">
       <div className="container">
