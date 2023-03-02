@@ -5,6 +5,7 @@ export interface Award {
   mainImage: string;
   description: string;
   subcategories: Subcategory[];
+  brand: Brand;
 }
 
 export interface Category {
@@ -27,4 +28,9 @@ export interface SubcategoriesList {
   category_icon: string;
   subcategory_id: number;
   subcategory_name: string;
+}
+
+export interface Brand {
+  id: number;
+  name: string;
 }
