@@ -16,10 +16,10 @@ function Checkout(props) {
   return (
     <main className="main checkout border-no">
       <Helmet>
-        <title>Riode React eCommerce Template | Checkout</title>
+        <title>Tienda | Checkout</title>
       </Helmet>
 
-      <h1 className="d-none">Riode React eCommerce Template - Checkout</h1>
+      <h1 className="d-none">Tienda - Checkout</h1>
 
       <div
         className={`page-content pt-7 pb-10 ${

@@ -11,7 +11,7 @@ function VendorList() {
   return (
     <main className="main store-listing">
       <Helmet>
-        <title>Riode React eCommerce Template | Vendor Grid </title>
+        <title>Tienda | Vendor Grid </title>
       </Helmet>
 
       <div className="page-content mb-10 pb-10">
