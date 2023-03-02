@@ -15,9 +15,11 @@ export function createRequestMethod(
   onError: (error: AxiosError) => void
 ): FetchFunction {
   return async function (url: string, body: any, headers: any) {
+    const token = localStorage.getItem('accessTokenLala4Store');
     try {
       const response = await api(url, {
         method,
+        ...(token && { headers: { Authorization: `Bearer ${token}` } }),
         data: body,
       });
       return response.data;

@@ -64,15 +64,11 @@ function Layout({ children, closeQuickview }) {
 
   useEffect(() => {
     if (isLoggedIn) {
-      console.log('isLoggedIn: ', isLoggedIn);
       router.push('/');
     } else {
-      console.log('isLoggedIn: ', isLoggedIn);
       router.push('/signin');
     }
   }, [isLoggedIn, participant]);
-
-  console.log('loading: program', program);
 
   if (!program) {
     return (

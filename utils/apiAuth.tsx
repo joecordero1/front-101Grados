@@ -10,7 +10,7 @@ export type FetchFunction = <T>(
   headers?: any
 ) => Promise<T>;
 
-export function createRequestMethod(
+export function createAuthRequestMethod(
   method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
   token: string,
   onError: (error: AxiosError) => void
@@ -34,15 +34,15 @@ export function createRequestMethod(
   };
 }
 
-export function createRequestMethods(
+export function createAuthRequestMethods(
   token: string,
   onError: (error: AxiosError) => void
 ) {
   return {
-    get: createRequestMethod('GET', token, onError),
-    post: createRequestMethod('POST', token, onError),
-    put: createRequestMethod('PUT', token, onError),
-    patch: createRequestMethod('PATCH', token, onError),
-    delete: createRequestMethod('DELETE', token, onError),
+    getAuth: createAuthRequestMethod('GET', token, onError),
+    postAuth: createAuthRequestMethod('POST', token, onError),
+    putAuth: createAuthRequestMethod('PUT', token, onError),
+    patchAuth: createAuthRequestMethod('PATCH', token, onError),
+    deleteAuth: createAuthRequestMethod('DELETE', token, onError),
   };
 }

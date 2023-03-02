@@ -373,7 +373,6 @@ export const parseCredentials = (credentials: string): string => {
 };
 // function to get just business days like monday between friday
 export const getBusinessDatesCount = (startDate: any, endDate: any) => {
-  console.log(endDate);
   let count = 0;
   const curDate = new Date(startDate.getTime());
   while (curDate <= endDate) {

@@ -2,7 +2,7 @@ import { createContext, FC, ReactNode, useReducer, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { differenceInCalendarDays } from 'date-fns';
 
-import { useProgram, useApi } from 'hooks';
+import { useProgram, useApi, useApiAuth } from 'hooks';
 import { Participant } from 'utils/types';
 import { parseCredentials } from 'utils';
 
@@ -107,6 +107,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [auth, dispatch] = useReducer(reducer, initialState);
   const { program } = useProgram();
   const { get, post } = useApi();
+  const { getAuth } = useApiAuth();
   const router = useRouter();
 
   const loginWithToken = (token: string | null) => {
@@ -129,8 +130,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         isGoogleLogin,
         programId: program.id,
       });
-
-      console.log('accessTokenResponse', accessTokenResponse);
 
       localStorage.setItem(
         `accessTokenLala4Store`,
@@ -162,50 +161,27 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
     // If there is a token, I proceed to validate it
     if (accessToken) {
-      console.log('accessToken', accessToken);
       try {
-        // I set the token as an Axios header
-        // axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
-
         const participant = await get<Participant>(`participants/info/me`);
-        // When the backend validate the Token, it includes the Participant info on the response
 
         // If all is OK, I send a Login action
         // and i need to verify if participant is active if is active i dispatch action else i send alert for not active
-        if (participant.isActive) {
-          dispatch({
-            type: 'login',
-            payload: {
-              accessToken,
-              participant,
-            },
-          });
-          // notification.open({
-          //   message: '¡Bienvenido!',
-          //   description: 'Has ingresado satisfactoriamente.',
-          //   type: 'success',
-          //   duration: 3,
-          // });
-        } else {
-          // notification.open({
-          //   message: 'usuario inactivo',
-          //   type: 'error',
-          //   duration: 3,
-          // });
-        }
+        dispatch({
+          type: 'login',
+          payload: {
+            accessToken,
+            participant,
+          },
+        });
       } catch (e: any) {
-        console.error(e);
-        // The backend validate the token, and if it isn't valid, I send a Logout action
+        console.error('setSession() ->', e);
         if (e.statusCode === 401) {
-          // delete axios.defaults.headers.common.Authorization;
           dispatch({
             type: 'logout',
           });
         }
       }
     } else {
-      // If there is no token, so I automatically send a Logout action
-      // delete axios.defaults.headers.common.Authorization;
       localStorage.setItem('cart', JSON.stringify([]));
       dispatch({
         type: 'logout',
