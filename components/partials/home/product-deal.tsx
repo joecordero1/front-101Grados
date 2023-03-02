@@ -10,6 +10,7 @@ import { cartActions } from '~/store/cart';
 import { toDecimal } from '~/utils';
 
 import { CatalogueItem } from '../../../utils/types/catalogueItem';
+import { useProgram } from 'hooks';
 
 type Props = {
   product: CatalogueItem;
@@ -28,6 +29,7 @@ const ProductOne: FC<Props> = (props) => {
   const [curIndex, setCurIndex] = useState(0);
   const [cartActive, setCartActive] = useState(false);
   const [quantity, setQauntity] = useState(1);
+  const { coinName } = useProgram();
 
   console.log('product', product);
 
@@ -243,7 +245,9 @@ const ProductOne: FC<Props> = (props) => {
             </h3>
 
             <div className="product-price">
-              <ins className="new-price">{product.points}</ins>
+              <ins className="new-price">
+                {product.points} {coinName}
+              </ins>
               {/* {product.price[0] !== product.price[1] ? (
                 product.variants.length === 0 ||
                 (product.variants.length > 0 && !product.variants[0].price) ? (
@@ -393,14 +397,14 @@ const ProductOne: FC<Props> = (props) => {
               ''
             )} */}
 
-            <div className="product-form product-qty pb-0">
+            {/* <div className="product-form product-qty pb-0">
               <div className="product-form-group">
-                {/* <Quantity
+                <Quantity
                   adClass="input-group mr-2 mb-0"
                   max={product.stock}
                   product={product}
                   onChangeQty={changeQty}
-                /> */}
+                />
                 <button
                   className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold mb-0 ${
                     cartActive ? '' : 'disabled'
@@ -411,7 +415,7 @@ const ProductOne: FC<Props> = (props) => {
                   <i className="d-icon-bag"></i>Add to Cart
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

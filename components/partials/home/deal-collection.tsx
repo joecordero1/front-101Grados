@@ -59,6 +59,7 @@ function BestCollection(props) {
                     product={item}
                     isStockCount={true}
                     key={`deal-product ${index}`}
+                    isTop={true}
                   />
                 ))}
         </div>

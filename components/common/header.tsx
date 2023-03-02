@@ -9,10 +9,11 @@ import SearchBox from '~/components/common/partials/search-box';
 import LoginModal from '~/components/features/modals/login-modal';
 
 import { headerBorderRemoveList } from '~/utils/data/menu';
-import { useAuth } from 'hooks/useAuth';
+import { useAuth, useProgram } from 'hooks';
 
 export default function Header(props) {
   const { logOut } = useAuth();
+  const { program } = useProgram();
   const router = useRouter();
 
   useEffect(() => {
@@ -47,7 +48,8 @@ export default function Header(props) {
 
             <ALink href="/" className="logo">
               <img
-                src="../../images/home/logo.png"
+                // src="../../images/home/logo.png"
+                src={program.logo}
                 alt="logo"
                 width="153"
                 height="44"

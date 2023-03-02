@@ -2,6 +2,7 @@ export interface Program {
   id: number;
   name: string;
   coinName: string;
+  logo: string;
   colorPrimary: string;
   colorHeadings: string;
   colorHeaderIcons: string;

@@ -11,6 +11,8 @@ type Props = {
   adClass?: string;
   isReviewCount?: boolean;
   isStockCount?: boolean;
+  isNew?: boolean;
+  isTop?: boolean;
 };
 
 const SmallProduct: FC<Props> = (props) => {
@@ -20,6 +22,8 @@ const SmallProduct: FC<Props> = (props) => {
     adClass,
     isReviewCount = true,
     isStockCount = false,
+    isNew,
+    isTop,
   } = props;
 
   return (
@@ -50,6 +54,22 @@ const SmallProduct: FC<Props> = (props) => {
             ''
           )} */}
         </ALink>
+
+        <div className="product-label-group">
+          {isNew ? <label className="product-label label-new">New</label> : ''}
+          {isTop ? <label className="product-label label-top">Top</label> : ''}
+        </div>
+
+        <div className="product-action">
+          <ALink
+            href="#"
+            className="btn-product btn-quickview"
+            title="Quick View"
+            // onClick={showQuickviewHandler}
+          >
+            Vista Rápida
+          </ALink>
+        </div>
       </figure>
 
       <div className="product-details">
