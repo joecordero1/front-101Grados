@@ -9,8 +9,10 @@ import SearchBox from '~/components/common/partials/search-box';
 import LoginModal from '~/components/features/modals/login-modal';
 
 import { headerBorderRemoveList } from '~/utils/data/menu';
+import { useAuth } from 'hooks/useAuth';
 
 export default function Header(props) {
+  const { logOut } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -89,7 +91,7 @@ export default function Header(props) {
 
             <ALink href="/" className="logo">
               <img
-                src="./images/home/logo.png"
+                src="../../images/home/logo.png"
                 alt="logo"
                 width="153"
                 height="44"
@@ -125,6 +127,58 @@ export default function Header(props) {
             {/* <span className="divider"></span> */}
 
             <CartMenu />
+
+            <span className="divider mr-4"></span>
+
+            {/* <nav className="main-nav mr-4"> */}
+            <ul className="menu menu-active-underline">
+              <li
+                className={`submenu blog-menu  ${
+                  // pathname.includes('/blog') && !pathname.includes('/elements')
+                  //   ? 'active'
+                  //   : ''
+                  ''
+                }`}
+              >
+                {/* <ALink href={`/blog/classic`}>Blog</ALink> */}
+                <div className="icon-box icon-box-side">
+                  <div className="icon-box-icon mr-0 mr-lg-2">
+                    <i className="d-icon-user"></i>
+                  </div>
+                </div>
+
+                <ul style={{ marginLeft: '-60px' }}>
+                  {/* {mainMenu.blog.map((item, index) => ( */}
+                  <li
+                    key={'blog'}
+                    // className={item.subPages ? 'submenu' : ''}
+                  >
+                    <ALink
+                      href="#"
+                      onClick={() => {
+                        logOut();
+                      }}
+                    >
+                      Salir
+                    </ALink>
+
+                    {/* {item.subPages ? (
+                      <ul>
+                        {item.subPages.map((item, index) => (
+                          <li key={`blog-${item.title}`}>
+                            <ALink href={'/' + item.url}>{item.title}</ALink>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      ''
+                    )} */}
+                  </li>
+                  {/* ))} */}
+                </ul>
+              </li>
+            </ul>
+            {/* </nav> */}
           </div>
         </div>
       </div>

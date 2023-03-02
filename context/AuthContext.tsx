@@ -151,7 +151,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   };
 
   const logOut = () => {
-    localStorage.removeItem('accessToken');
+    localStorage.removeItem('accessTokenLala4Store');
     setSession();
   };
 

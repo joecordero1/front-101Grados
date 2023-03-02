@@ -9,10 +9,8 @@ const SignIn = () => {
     username: string;
     password: string;
   }>({
-    // username: null,
-    // password: null,
-    username: '101.grados',
-    password: '101grados.',
+    username: null,
+    password: null,
   });
   const [showPassword, setShowPassword] = useState(false);
   const { logIn } = useAuth();
