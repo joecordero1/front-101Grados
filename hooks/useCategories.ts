@@ -23,6 +23,7 @@ export const useCategories = () => {
             id: category,
             name: subcategory.category_name,
             icon: subcategory.category_icon,
+            image: subcategory.category_image,
           });
         }
         return acc;

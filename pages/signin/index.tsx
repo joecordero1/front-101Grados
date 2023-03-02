@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 
 import ALink from '~/components/features/custom-link';
 
-import { useForm, useAuth } from 'hooks';
+import { useForm, useAuth, useProgram } from 'hooks';
 
 const SignIn = () => {
+  const { program } = useProgram();
   const { values, onChange } = useForm<{
     username: string;
     password: string;
@@ -47,7 +48,8 @@ const SignIn = () => {
           >
             <ALink href="/" className="logo">
               <img
-                src="../images/home/logo.png"
+                // src="../images/home/logo.png"
+                src={program.logo}
                 alt="logo"
                 width="153"
                 height="44"
