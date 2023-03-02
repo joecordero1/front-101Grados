@@ -1,6 +1,8 @@
 export interface Award {
   id: number;
   name: string;
+  mainImage: string;
+  subcategories: Subcategory[];
 }
 
 export interface Category {

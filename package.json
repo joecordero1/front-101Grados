@@ -36,6 +36,7 @@
     "next-redux-wrapper": "^7.0.5",
     "node-fetch": "^3.0.0",
     "notistack": "^2.0.8",
+    "query-string": "^8.1.0",
     "react": "^18",
     "react-awesome-reveal": "^3.8.1",
     "react-bootstrap": "^1.6.6",
