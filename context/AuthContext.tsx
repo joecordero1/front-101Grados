@@ -121,7 +121,9 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     isGoogleLogin?: boolean
   ) => {
     try {
-      const accessTokenResponse = await post(`/auth/participant/login`, {
+      const accessTokenResponse = await post<{
+        accessToken: string;
+      }>(`/auth/participant/login`, {
         username,
         password,
         isGoogleLogin,
@@ -130,15 +132,16 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
       console.log('accessTokenResponse', accessTokenResponse);
 
-      console.log('accessTokenResponse', accessTokenResponse);
-      // TODO: Add token to local storage
-      // localStorage.setItem(`accessToken`, accessToken);
+      localStorage.setItem(
+        `accessTokenLala4Store`,
+        accessTokenResponse.accessToken
+      );
       setSession();
     } catch (e) {
       console.error(e);
-      dispatch({
-        type: 'wrong-user-password',
-      });
+      // dispatch({
+      //   type: 'wrong-user-password',
+      // });
       // notification.open({
       //   message: 'Tu usuario o contraseña son incorrectos.',
       //   type: 'error',
@@ -154,12 +157,12 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   };
 
   const setSession = async () => {
-    console.log('Está buscando');
     // First I retrieve the token saved on localStorage
     const accessToken = localStorage.getItem('accessTokenLala4Store');
 
     // If there is a token, I proceed to validate it
     if (accessToken) {
+      console.log('accessToken', accessToken);
       try {
         // I set the token as an Axios header
         // axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;

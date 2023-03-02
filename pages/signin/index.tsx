@@ -2,7 +2,24 @@ import React, { useState } from 'react';
 
 import ALink from '~/components/features/custom-link';
 
+import { useForm, useAuth } from 'hooks';
+
 const SignIn = () => {
+  const { values, onChange } = useForm<{
+    username: string;
+    password: string;
+  }>({
+    username: null,
+    password: null,
+  });
+  const [showPassword, setShowPassword] = useState(false);
+  const { logIn } = useAuth();
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    logIn(values.username, values.password);
+  };
+
   return (
     <div
       style={{
@@ -40,7 +57,7 @@ const SignIn = () => {
           <span className="nav-link border-no lh-1 ls-normal">Ingresa</span>
 
           <div className="tab-">
-            <form action="#">
+            <form action="#" onSubmit={handleSubmit}>
               <div className="form-group mb-3">
                 <input
                   type="text"
@@ -49,17 +66,41 @@ const SignIn = () => {
                   name="singin-email"
                   placeholder="Usuario *"
                   required
+                  value={values.username || ''}
+                  onChange={(e) =>
+                    onChange(
+                      'username',
+                      e.target.value.length > 0 ? e.target.value : null
+                    )
+                  }
                 />
               </div>
               <div className="form-group">
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   className="form-control"
                   id="singin-password"
                   placeholder="Contraseña *"
                   name="singin-password"
                   required
+                  value={values.password || ''}
+                  onChange={(e) =>
+                    onChange(
+                      'password',
+                      e.target.value.length > 0 ? e.target.value : null
+                    )
+                  }
                 />
+                <p
+                  style={{
+                    textAlign: 'right',
+                    textDecoration: 'underline',
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? 'Ocultar' : 'Mostrar'}
+                </p>
               </div>
               <button
                 className="btn btn-dark btn-block btn-rounded mt-5"

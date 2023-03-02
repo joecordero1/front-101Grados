@@ -83,12 +83,15 @@ export function ApiProvider({ children }: { children: React.ReactNode }) {
         const isHandledError = Object.values(HandledErrors).includes(
           error.response.status
         );
-        setErrorMessage((prev) => [
-          ...prev,
-          isHandledError
-            ? ErroMessages[error.response.status].message
-            : ErroMessages[HandledErrors.INTERNAL_SERVER_ERROR].message,
-        ]);
+
+        setErrorMessage((prev) => [...prev, error.response.data.message]);
+
+        // setErrorMessage((prev) => [
+        //   ...prev,
+        //   isHandledError
+        //     ? ErroMessages[error.response.status].message
+        //     : ErroMessages[HandledErrors.INTERNAL_SERVER_ERROR].message,
+        // ]);
 
         // This if is for the validation errors | Usually are 400 errors when the sent data is not valid
         if (
@@ -110,13 +113,17 @@ export function ApiProvider({ children }: { children: React.ReactNode }) {
           errorMessages.forEach((message) => {
             setErrorMessage((prev) => [...prev, message]);
           });
-        } else {
-          if (
-            error.response.data.message &&
-            error.response.data.message !== 'Unauthorized'
-          ) {
-            setErrorMessage((prev) => [...prev, error.response.data.message]);
-          }
+        } else if (!isHandledError) {
+          setErrorMessage((prev) => [
+            ...prev,
+            ErroMessages[HandledErrors.INTERNAL_SERVER_ERROR].message,
+          ]);
+          // if (
+          //   error.response.data.message &&
+          //   error.response.data.message !== 'Unauthorized'
+          // ) {
+          //   setErrorMessage((prev) => [...prev, error.response.data.message]);
+          // }
         }
       } else if (error.response) {
         // setState({ errorCode: NoResponseCode, status: 'error' });
