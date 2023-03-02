@@ -6,19 +6,19 @@ import { useAuth } from '../hooks';
 import { createAuthRequestMethods, FetchFunction } from '../utils/apiAuth';
 
 interface ApiContextValue {
-  getAuth: FetchFunction;
-  postAuth: FetchFunction;
-  putAuth: FetchFunction;
-  deleteAuth: FetchFunction;
-  patchAuth: FetchFunction;
+  get: FetchFunction;
+  post: FetchFunction;
+  put: FetchFunction;
+  delete: FetchFunction;
+  patch: FetchFunction;
 }
 
 export const ApiAuthContext = createContext<ApiContextValue>({
-  getAuth: () => Promise.reject(),
-  postAuth: () => Promise.reject(),
-  putAuth: () => Promise.reject(),
-  deleteAuth: () => Promise.reject(),
-  patchAuth: () => Promise.reject(),
+  get: () => Promise.reject(),
+  post: () => Promise.reject(),
+  put: () => Promise.reject(),
+  delete: () => Promise.reject(),
+  patch: () => Promise.reject(),
 });
 
 export enum HandledAuthErrors {

@@ -34,50 +34,6 @@ export default function Header(props) {
 
   return (
     <header className="header">
-      <div className="header-top">
-        <div className="container">
-          <div className="header-left">
-            <p className="welcome-msg ls-normal">
-              Welcome to Riode store message or remove it!
-            </p>
-          </div>
-          <div className="header-right">
-            <div className="dropdown">
-              <ALink href="#">USD</ALink>
-              <ul className="dropdown-box">
-                <li>
-                  <ALink href="#">USD</ALink>
-                </li>
-                <li>
-                  <ALink href="#">EUR</ALink>
-                </li>
-              </ul>
-            </div>
-
-            <div className="dropdown ml-5">
-              <ALink href="#">ENG</ALink>
-              <ul className="dropdown-box">
-                <li>
-                  <ALink href="#">ENG</ALink>
-                </li>
-                <li>
-                  <ALink href="#">FRH</ALink>
-                </li>
-              </ul>
-            </div>
-
-            <span className="divider"></span>
-            <ALink href="/vendor" className="contact d-lg-show">
-              <i className="d-icon-map"></i>Vendors
-            </ALink>
-            <ALink href="/pages/account" className="help d-lg-show">
-              <i className="d-icon-info"></i> My Account
-            </ALink>
-            <LoginModal />
-          </div>
-        </div>
-      </div>
-
       <div className="header-middle sticky-header fix-top sticky-content">
         <div className="container">
           <div className="header-left mr-4">

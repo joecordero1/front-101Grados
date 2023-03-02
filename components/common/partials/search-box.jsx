@@ -129,7 +129,7 @@ function SearchForm() {
             value={cat}
             onChange={(e) => setCat(e.target.value)}
           >
-            <option value="">All Categories</option>
+            <option value="">Todas las Categorías</option>
             <option value="travel">Travel</option>
             <option value="shopping">Shopping</option>
             <option value="fashion">Fashion</option>
@@ -143,7 +143,7 @@ function SearchForm() {
           autoComplete="off"
           value={search}
           onChange={onSearchChange}
-          placeholder="Search..."
+          placeholder="Buscar..."
           required
         />
 

@@ -127,7 +127,7 @@ function SearchForm() {
           autoComplete="off"
           value={search}
           onChange={onSearchChange}
-          placeholder="Search..."
+          placeholder="Buscar..."
           required
         />
 

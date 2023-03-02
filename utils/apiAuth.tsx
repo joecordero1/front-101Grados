@@ -39,10 +39,10 @@ export function createAuthRequestMethods(
   onError: (error: AxiosError) => void
 ) {
   return {
-    getAuth: createAuthRequestMethod('GET', token, onError),
-    postAuth: createAuthRequestMethod('POST', token, onError),
-    putAuth: createAuthRequestMethod('PUT', token, onError),
-    patchAuth: createAuthRequestMethod('PATCH', token, onError),
-    deleteAuth: createAuthRequestMethod('DELETE', token, onError),
+    get: createAuthRequestMethod('GET', token, onError),
+    post: createAuthRequestMethod('POST', token, onError),
+    put: createAuthRequestMethod('PUT', token, onError),
+    patch: createAuthRequestMethod('PATCH', token, onError),
+    delete: createAuthRequestMethod('DELETE', token, onError),
   };
 }
