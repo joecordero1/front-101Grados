@@ -14,11 +14,18 @@ import { useItems } from './reducer';
 
 function ShopHorizontalFilter() {
   const { categories: rawCategories } = useCategories();
-  const { items, loading } = useItems();
+  const {
+    items,
+    loading,
+    handleFiltersChange,
+    cleanFilters,
+    meta,
+    handlePageChange,
+  } = useItems();
   const router = useRouter();
   const query = router.query;
 
-  const categories = rawCategories.slice(0, 8);
+  const categories = rawCategories.slice(0, 7);
 
   const prices = [
     { min: '0', max: '50' },
@@ -85,11 +92,38 @@ function ShopHorizontalFilter() {
           <ShopBanner />
 
           <div className="row cols-xl-8 cols-lg-6 cols-md-4 cols-sm-3 cols-2">
+            <div className="category-wrap mb-4">
+              <div
+                className={`category category-icon ${
+                  query.category === '' || !query.category ? 'active' : ''
+                }`}
+              >
+                <ALink
+                  href={{
+                    pathname: '/shop',
+                    query: {
+                      ...query,
+                      // Remove category from query
+                      category: null,
+                    },
+                  }}
+                  scroll={false}
+                  onClick={() => handleFiltersChange('categoriesIds', null)}
+                >
+                  <figure className="categroy-media">
+                    <i className={'fas fa-award'}></i>
+                  </figure>
+                  <div className="category-content">
+                    <h4 className="category-name">Todas</h4>
+                  </div>
+                </ALink>
+              </div>
+            </div>
             {categories.map((category) => (
               <div className="category-wrap mb-4" key={category.id}>
                 <div
                   className={`category category-icon ${
-                    query.category === 'fashion' ? 'active' : ''
+                    query.category === category.id.toString() ? 'active' : ''
                   }`}
                 >
                   <ALink
@@ -115,7 +149,11 @@ function ShopHorizontalFilter() {
             ))}
           </div>
 
-          <ToolBox type="horizontal" />
+          <ToolBox
+            type="horizontal"
+            handleFiltersChange={handleFiltersChange}
+            cleanFilters={cleanFilters}
+          />
 
           <div className="select-items">
             {filterData.sizes.map((item, index) =>
@@ -210,6 +248,8 @@ function ShopHorizontalFilter() {
             <div className="main-content">
               <ProductListOne
                 items={items}
+                meta={meta}
+                handlePageChange={handlePageChange}
                 loading={loading}
                 isToolbox={false}
                 itemsPerRow={5}

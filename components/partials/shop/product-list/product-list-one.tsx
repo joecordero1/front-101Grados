@@ -9,9 +9,12 @@ import Pagination from '~/components/features/pagination';
 import withApollo from '~/server/apollo';
 import { GET_PRODUCTS } from '~/server/queries';
 import { CatalogueItem } from '../../../../utils/types/catalogueItem';
+import { PaginationMetaDto } from '../../../../utils/types/common';
 
 type Props = {
   items: CatalogueItem[];
+  meta: PaginationMetaDto;
+  handlePageChange: (page: number) => void;
   loading?: boolean;
   itemsPerRow?: number;
   type?: string;
@@ -19,12 +22,10 @@ type Props = {
 };
 
 const ProductListOne: FC<Props> = (props) => {
-  const { items, loading } = props;
+  const { items, loading, meta, handlePageChange } = props;
   const { itemsPerRow = 3, type = 'left', isToolbox = true } = props;
-  console.log('LIST: items', items);
   const router = useRouter();
   const query = router.query;
-  const [getProducts, { data, error }] = useLazyQuery(GET_PRODUCTS);
   // const products = data && data.products.data;
   const gridClasses = {
     3: 'cols-2 cols-sm-3',
@@ -36,42 +37,42 @@ const ProductListOne: FC<Props> = (props) => {
   };
   // @ts-ignore
   const perPage = query.per_page ? parseInt(query.per_page) : 15;
-  const totalPage = data
-    ? // @ts-ignore
-      parseInt(data.products.total / perPage) +
-      (data.products.total % perPage ? 1 : 0)
-    : 1;
+  // const totalPage = data
+  //   ? // @ts-ignore
+  //     parseInt(data.products.total / perPage) +
+  //     (data.products.total % perPage ? 1 : 0)
+  //   : 1;
   const page = query.page ? query.page : 1;
   const gridType = query.type ? query.type : 'grid';
 
   useEffect(() => {
-    getProducts({
-      variables: {
-        search: query.search,
-        // @ts-ignore
-        colors: query.colors ? query.colors.split(',') : [],
-        // @ts-ignore
-        sizes: query.sizes ? query.sizes.split(',') : [],
-        // @ts-ignore
-        brands: query.brands ? query.brands.split(',') : [],
-        // @ts-ignore
-        min_price: parseInt(query.min_price),
-        // @ts-ignore
-        max_price: parseInt(query.max_price),
-        category: query.category,
-        tag: query.tag,
-        sortBy: query.sortby,
-        // @ts-ignore
-        from: perPage * (page - 1),
-        // @ts-ignore
-        to: perPage * page,
-      },
-    });
+    // getProducts({
+    //   variables: {
+    //     search: query.search,
+    //     // @ts-ignore
+    //     colors: query.colors ? query.colors.split(',') : [],
+    //     // @ts-ignore
+    //     sizes: query.sizes ? query.sizes.split(',') : [],
+    //     // @ts-ignore
+    //     brands: query.brands ? query.brands.split(',') : [],
+    //     // @ts-ignore
+    //     min_price: parseInt(query.min_price),
+    //     // @ts-ignore
+    //     max_price: parseInt(query.max_price),
+    //     category: query.category,
+    //     tag: query.tag,
+    //     sortBy: query.sortby,
+    //     // @ts-ignore
+    //     from: perPage * (page - 1),
+    //     // @ts-ignore
+    //     to: perPage * page,
+    //   },
+    // });
   }, [query]);
 
   return (
     <>
-      {isToolbox ? <ToolBox type={type} /> : ''}
+      {/* {isToolbox ? <ToolBox type={type} /> : ''} */}
       {loading ? (
         gridType === 'grid' ? (
           <div className={`row product-wrapper ${gridClasses[itemsPerRow]}`}>
@@ -96,8 +97,27 @@ const ProductListOne: FC<Props> = (props) => {
         ''
       )}
 
+      {items.length > 0 ? (
+        <div className="toolbox toolbox-pagination">
+          {/* {data && (
+            <p className="show-info">
+              Showing{' '}
+              <span>
+                {perPage * (page - 1) + 1} - 
+                {Math.min(perPage * page, data.products.total)} of{' '}
+                {data.products.total}
+              </span>
+              Products
+            </p>
+          )} */}
+
+          <Pagination meta={meta} handlePageChange={handlePageChange} />
+        </div>
+      ) : (
+        ''
+      )}
+
       {gridType === 'grid' ? (
-        // <div className={`row product-wrapper ${gridClasses[itemsPerRow]}`}>
         <div className={`row product-wrapper ${gridClasses[7]}`}>
           {items.map((item) => (
             <div className="product-wrap" key={'shop-' + item.award.id}>
@@ -121,22 +141,21 @@ const ProductListOne: FC<Props> = (props) => {
         ''
       )}
 
-      {data && data.products.total > 0 ? (
+      {items.length > 0 ? (
         <div className="toolbox toolbox-pagination">
-          {data && (
+          {/* {data && (
             <p className="show-info">
               Showing{' '}
               <span>
-                {/* @ts-ignore */}
-                {perPage * (page - 1) + 1} - {/* @ts-ignore */}
+                {perPage * (page - 1) + 1} - 
                 {Math.min(perPage * page, data.products.total)} of{' '}
                 {data.products.total}
               </span>
               Products
             </p>
-          )}
+          )} */}
 
-          <Pagination totalPage={totalPage} />
+          <Pagination meta={meta} handlePageChange={handlePageChange} />
         </div>
       ) : (
         ''

@@ -10,6 +10,7 @@ import {
   PaginationMetaDto,
   Brand,
 } from '~/utils/types';
+import { useRouter } from 'next/router';
 
 type Loading = {
   type: 'loading';
@@ -52,20 +53,31 @@ type GetCategories = {
   };
 };
 
+type CleanFilters = {
+  type: 'CLEAN_FILTERS';
+};
+
 type Actions =
   | Loading
   | GetItems
   | UpdateMetaPageOptions
   | HandleFiltersChange
   | GetBrands
-  | GetCategories;
+  | GetCategories
+  | CleanFilters;
 
 type FilterOptions = {
   brandId: number;
-  categoryId: number;
+  categoriesIds: number[];
   justOnSale: boolean;
   lastDigits: string;
 };
+
+export type FilterOptionsToString =
+  | 'brandId'
+  | 'categoriesIds'
+  | 'justOnSale'
+  | 'lastDigits';
 
 type State = {
   loading: boolean;
@@ -85,11 +97,11 @@ const initialState: State = {
     hasPreviousPage: false,
     itemCount: 0,
     pageCount: 0,
-    take: 25,
+    take: 50,
   },
   filterOptions: {
     brandId: null,
-    categoryId: null,
+    categoriesIds: null,
     justOnSale: false,
     lastDigits: null,
   },
@@ -109,6 +121,7 @@ const reducer = (state: State, action: Actions): State => {
         ...state,
         loading: false,
         items: action.payload.items,
+        meta: action.payload.meta,
       };
     case 'UPDATE_META_PAGE_OPTIONS': {
       const { meta } = action.payload;
@@ -137,6 +150,16 @@ const reducer = (state: State, action: Actions): State => {
         ...state,
         brands: action.payload.brands,
       };
+    case 'CLEAN_FILTERS':
+      return {
+        ...state,
+        filterOptions: {
+          brandId: null,
+          categoriesIds: null,
+          justOnSale: false,
+          lastDigits: null,
+        },
+      };
     default:
       return state;
   }
@@ -144,14 +167,18 @@ const reducer = (state: State, action: Actions): State => {
 
 export interface ReducerValue extends State {
   handlePageChange: (page: number) => void;
-  handleFiltersChange: (field: string, value: any) => void;
+  handleFiltersChange: (field: FilterOptionsToString, value: any) => void;
+  cleanFilters: () => void;
 }
 
 export const useItems = (): ReducerValue => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { get } = useApiAuth();
+  const router = useRouter();
+  const query = router.query;
 
   const getItems = useCallback(async () => {
+    console.log('Está buscando los items');
     try {
       dispatch({ type: 'loading' });
 
@@ -176,7 +203,14 @@ export const useItems = (): ReducerValue => {
 
       const items = response.data;
       const meta = response.meta;
-      dispatch({ type: 'GET_VEHICLES', payload: { items, meta } });
+      console.log('Reducer meta', meta);
+      dispatch({
+        type: 'GET_VEHICLES',
+        payload: {
+          items,
+          meta,
+        },
+      });
     } catch (error) {
       console.error('  getItems() -> error', error);
     }
@@ -196,7 +230,7 @@ export const useItems = (): ReducerValue => {
     }
   };
 
-  const handleFiltersChange = (field: string, value: any) => {
+  const handleFiltersChange = (field: FilterOptionsToString, value: any) => {
     dispatch({
       type: 'HANDLE_FILTERS_CHANGE',
       payload: {
@@ -241,18 +275,49 @@ export const useItems = (): ReducerValue => {
     }
   }, []);
 
-  useEffect(() => {
-    getItems();
-  }, [getItems, state.meta.page, state.filterOptions]);
+  const cleanFilters = () => {
+    dispatch({ type: 'CLEAN_FILTERS' });
+  };
+
+  const localHandleFiltersChange = () => {
+    console.log('Reducer query', query);
+    if (Object.keys(query).length > 0) {
+      // if (query.brand) handleFiltersChange('brandId', query.brand);
+      if (query.category)
+        handleFiltersChange('categoriesIds', [query.category]);
+      console.log('Va a entrar');
+      if (query.page && !isNaN(parseInt(query.page.toString()))) {
+        console.log('Entró');
+        handlePageChange(parseInt(query.page.toString()) || state.meta.page);
+      } else {
+        console.log('No entró');
+      }
+      // if (query.justOnSale) handleFiltersChange('justOnSale', query.justOnSale);
+    } else {
+      cleanFilters();
+    }
+  };
 
   useEffect(() => {
     getCategories();
     getBrands();
   }, []);
 
+  useEffect(() => {
+    getItems();
+  }, [getItems, state.meta.page, state.filterOptions]);
+
+  useEffect(() => {
+    localHandleFiltersChange();
+  }, [query]);
+
+  console.log('state.meta.page', state.meta.page);
+  console.log('state.items', state.items[0]);
+
   return {
     ...state,
     handlePageChange,
     handleFiltersChange,
+    cleanFilters,
   };
 };

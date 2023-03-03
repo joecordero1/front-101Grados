@@ -1,12 +1,18 @@
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 
 import ALink from '~/components/features/custom-link';
-
 import SidebarFilterThree from '~/components/partials/shop/sidebar/sidebar-filter-three';
+import { FilterOptionsToString } from '../../../pages/shop/reducer';
 
-export default function ToolBox(props) {
-  const { type = 'left' } = props;
+type Props = {
+  handleFiltersChange: (field: FilterOptionsToString, value: any) => void;
+  cleanFilters: () => void;
+  type?: string;
+};
+
+const ToolBox: FC<Props> = (props) => {
+  const { type = 'left', handleFiltersChange, cleanFilters } = props;
   const router = useRouter();
   const query = router.query;
   const gridType = query.type ? query.type : 'grid';
@@ -16,23 +22,22 @@ export default function ToolBox(props) {
 
   useEffect(() => {
     window.addEventListener('scroll', stickyToolboxHandler);
-
     return () => {
       window.removeEventListener('scroll', stickyToolboxHandler);
     };
   }, []);
 
   const onChangeAttri = (e, attri) => {
-    e.preventDefault();
-    // @ts-ignore
-    let url = router.pathname.replace('[grid]', query.grid);
-    let arr = [`${attri}=${e.target.value}`, 'page=1'];
-    for (let key in query) {
-      if (key !== attri && key !== 'page' && key !== 'grid')
-        arr.push(key + '=' + query[key]);
-    }
-    url = url + '?' + arr.join('&');
-    router.push(url);
+    // e.preventDefault();
+    // // @ts-ignore
+    // let url = router.pathname.replace('[grid]', query.grid);
+    // let arr = [`${attri}=${e.target.value}`, 'page=1'];
+    // for (let key in query) {
+    //   if (key !== attri && key !== 'page' && key !== 'grid')
+    //     arr.push(key + '=' + query[key]);
+    // }
+    // url = url + '?' + arr.join('&');
+    // router.push(url);
   };
 
   const showSidebar = () => {
@@ -123,6 +128,23 @@ export default function ToolBox(props) {
     tmp = e.currentTarget.scrollY;
   };
 
+  // const localHandleFiltersChange = () => {
+  //   if (Object.keys(query).length > 0) {
+  //     // if (query.brand) handleFiltersChange('brandId', query.brand);
+  //     if (query.category) {
+  //       console.log('query.category', query.category);
+  //       handleFiltersChange('categoriesIds', [query.category]);
+  //     }
+  //     // if (query.justOnSale) handleFiltersChange('justOnSale', query.justOnSale);
+  //   } else {
+  //     cleanFilters();
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   localHandleFiltersChange();
+  // }, [query]);
+
   return (
     <nav
       className={`toolbox sticky-toolbox sticky-content fix-top pt-2 ${
@@ -188,7 +210,7 @@ export default function ToolBox(props) {
       </div>
       <div className="toolbox-right">
         <div className="toolbox-item toolbox-show select-box text-dark">
-          <label>Show :</label>
+          <label>Mostrar :</label>
           <select
             name="count"
             className="form-control"
@@ -201,7 +223,7 @@ export default function ToolBox(props) {
             <option value="30">30</option>
           </select>
         </div>
-        <div
+        {/* <div
           className={`toolbox-item toolbox-layout ${
             type === 'right' ? 'mr-lg-0' : ''
           }`}
@@ -226,7 +248,7 @@ export default function ToolBox(props) {
               gridType !== 'list' ? 'active' : ''
             }`}
           ></ALink>
-        </div>
+        </div> */}
 
         {type === 'right' ? (
           <ALink
@@ -242,4 +264,6 @@ export default function ToolBox(props) {
       </div>
     </nav>
   );
-}
+};
+
+export default ToolBox;
