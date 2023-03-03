@@ -9,7 +9,12 @@ function CategorySection() {
   const { categories } = useCategories();
 
   return (
-    <section className="grey-section pt-8 pb-4">
+    <section
+      className="grey-section pt-8 pb-4"
+      style={{
+        backgroundColor: '#EDEDED',
+      }}
+    >
       <div className="container">
         <div className="row cols-xl-5 cols-lg-4 cols-md-3 cols-sm-2 cols-1">
           {categories.map((category) => (

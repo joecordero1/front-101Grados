@@ -5,6 +5,7 @@ import ALink from '~/components/features/custom-link';
 
 import { CatalogueItem } from '../../../utils/types/catalogueItem';
 import { useProgram, useGeneral } from 'hooks';
+import { toDecimal } from '~/utils';
 
 type Props = {
   product: CatalogueItem;
@@ -26,6 +27,12 @@ const SmallProduct: FC<Props> = (props) => {
     isNew,
     isTop,
   } = props;
+
+  // Get a random rating between 4 and 5 with 1 decimal
+  const rating = Math.random() * (5 - 4) + 4;
+
+  // Get a random number between 1 and 100
+  const reviewCount = Math.floor(Math.random() * 100) + 1;
 
   return (
     <div className={`product product-list-sm ${adClass}`}>
@@ -89,7 +96,7 @@ const SmallProduct: FC<Props> = (props) => {
 
         <h3 className="product-name">
           <ALink href={`/product/default/${product.award.id}`}>
-            {product.award.name}
+            {product.award.name} | {product.award.model}
           </ALink>
         </h3>
 
@@ -114,32 +121,28 @@ const SmallProduct: FC<Props> = (props) => {
           )} */}
         </div>
         <div className="ratings-container">
-          {/* <div className="ratings-full">
+          <div className="ratings-full">
             <span
               className="ratings"
-              style={{ width: 20 * product.ratings + '%' }}
+              style={{ width: 20 * rating + '%' }}
             ></span>
-            <span className="tooltiptext tooltip-top">
-              {toDecimal(product.ratings)}
-            </span>
-          </div> */}
+            <span className="tooltiptext tooltip-top">{toDecimal(rating)}</span>
+          </div>
 
-          {/* {isReviewCount ? (
-            <ALink
-              href={`/product/default/${product.slug}`}
-              className="rating-reviews"
-            >
-              ( {product.reviews} reviews )
+          {isReviewCount ? (
+            <ALink href="#" className="rating-reviews">
+              ( {reviewCount} )
             </ALink>
           ) : (
             ''
-          )} */}
+          )}
         </div>
-        {/* {isStockCount && (
+        {isStockCount && (
           <div className="count-text">
-            Only <strong>{product.stock}</strong> Left
+            {/* Only <strong>{product.stock}</strong> Left */}
+            {product.award.brand.name}
           </div>
-        )} */}
+        )}
       </div>
     </div>
   );

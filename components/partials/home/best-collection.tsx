@@ -10,7 +10,7 @@ import { useItems } from 'hooks';
 function BestCollection(props) {
   const { items, loading } = useItems({
     metaProps: {
-      take: 5,
+      take: 10,
     },
     filterOptions: {
       random: true,

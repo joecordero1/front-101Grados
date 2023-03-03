@@ -31,136 +31,11 @@ const ProductOne: FC<Props> = (props) => {
   const [quantity, setQauntity] = useState(1);
   const { coinName } = useProgram();
 
-  let colors = [],
-    sizes = [];
+  // Get a random rating between 4 and 5 with 1 decimal
+  const rating = Math.random() * (5 - 4) + 4;
 
-  // if (product && product.variants.length > 0) {
-  //   if (product.variants[0].size)
-  //     product.variants.forEach((item) => {
-  //       if (sizes.findIndex((size) => size.name === item.size.name) === -1) {
-  //         sizes.push({ name: item.size.name, value: item.size.size });
-  //       }
-  //     });
-
-  //   if (product.variants[0].color) {
-  //     product.variants.forEach((item) => {
-  //       if (colors.findIndex((color) => color.name === item.color.name) === -1)
-  //         colors.push({ name: item.color.name, value: item.color.color });
-  //     });
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   if (product.variants.length > 0) {
-  //     if (
-  //       (curSize !== 'null' && curColor !== 'null') ||
-  //       (curSize === 'null' &&
-  //         product.variants[0].size === null &&
-  //         curColor !== 'null') ||
-  //       (curColor === 'null' &&
-  //         product.variants[0].color === null &&
-  //         curSize !== 'null')
-  //     ) {
-  //       setCartActive(true);
-  //       setCurIndex(
-  //         product.variants.findIndex(
-  //           (item) =>
-  //             (item.size !== null &&
-  //               item.color !== null &&
-  //               item.color.name === curColor &&
-  //               item.size.name === curSize) ||
-  //             (item.size === null && item.color.name === curColor) ||
-  //             (item.color === null && item.size.name === curSize)
-  //         )
-  //       );
-  //     } else {
-  //       setCartActive(false);
-  //     }
-  //   } else {
-  //     setCartActive(true);
-  //   }
-
-  //   if (product.stock === 0) {
-  //     setCartActive(false);
-  //   }
-  // }, [curColor, curSize, product]);
-
-  const toggleColorHandler = (color) => {
-    // if (!isDisabled(color.name, curSize)) {
-    //   if (curColor === color.name) {
-    //     setCurColor('null');
-    //   } else {
-    //     setCurColor(color.name);
-    //   }
-    // }
-  };
-
-  const toggleSizeHandler = (size) => {
-    // if (!isDisabled(curColor, size.name)) {
-    //   if (curSize === size.name) {
-    //     setCurSize('null');
-    //   } else {
-    //     setCurSize(size.name);
-    //   }
-    // }
-  };
-
-  const addToCartHandler = () => {
-    // if (product.stock > 0 && cartActive) {
-    //   if (product.variants.length > 0) {
-    //     let tmpName = product.name,
-    //       tmpPrice;
-    //     tmpName += curColor !== 'null' ? '-' + curColor : '';
-    //     tmpName += curSize !== 'null' ? '-' + curSize : '';
-    //     if (product.price[0] === product.price[1]) {
-    //       tmpPrice = product.price[0];
-    //     } else if (!product.variants[0].price && product.discount > 0) {
-    //       tmpPrice = product.price[0];
-    //     } else {
-    //       tmpPrice = product.variants[curIndex].sale_price
-    //         ? product.variants[curIndex].sale_price
-    //         : product.variants[curIndex].price;
-    //     }
-    //     addToCart({
-    //       ...product,
-    //       name: tmpName,
-    //       qty: quantity,
-    //       price: tmpPrice,
-    //     });
-    //   } else {
-    //     addToCart({ ...product, qty: quantity, price: product.price[0] });
-    //   }
-    // }
-  };
-
-  const resetValueHandler = (e) => {
-    setCurColor('null');
-    setCurSize('null');
-  };
-
-  function isDisabled(color, size) {
-    // if (color === 'null' || size === 'null') return false;
-    // if (sizes.length === 0) {
-    //   return (
-    //     product.variants.findIndex((item) => item.color.name === curColor) ===
-    //     -1
-    //   );
-    // }
-    // if (colors.length === 0) {
-    //   return (
-    //     product.variants.findIndex((item) => item.size.name === curSize) === -1
-    //   );
-    // }
-    // return (
-    //   product.variants.findIndex(
-    //     (item) => item.color.name === color && item.size.name === size
-    //   ) === -1
-    // );
-  }
-
-  function changeQty(qty) {
-    setQauntity(qty);
-  }
+  // Get a random number between 1 and 100
+  const reviewCount = Math.floor(Math.random() * 100) + 1;
 
   return (
     <div className={`product product-single ${adClass}`}>
@@ -171,9 +46,6 @@ const ProductOne: FC<Props> = (props) => {
               <ALink href={`/product/default/${product.award.id}`}>
                 <LazyLoadImage
                   alt="product"
-                  // src={
-                  //   process.env.NEXT_PUBLIC_ASSET_URI + product.pictures[0].url
-                  // }
                   src={product.award.mainImage}
                   threshold={500}
                   effect="opacity"
@@ -238,7 +110,7 @@ const ProductOne: FC<Props> = (props) => {
           <div className="product-details w-100 pb-0 pl-0">
             <h3 className="product-name">
               <ALink href={`/product/default/${product.award.id}`}>
-                {product.award.name}
+                {product.award.name} | {product.award.model}
               </ALink>
             </h3>
 
@@ -286,6 +158,22 @@ const ProductOne: FC<Props> = (props) => {
                 ( {product.reviews} reviews )
               </ALink>
             </div> */}
+
+            <div className="ratings-container">
+              <div className="ratings-full">
+                <span
+                  className="ratings"
+                  style={{ width: 20 * rating + '%' }}
+                ></span>
+                <span className="tooltiptext tooltip-top">
+                  {toDecimal(rating)}
+                </span>
+              </div>
+
+              <ALink href="#" className="rating-reviews">
+                ( {reviewCount} )
+              </ALink>
+            </div>
 
             {/* {product && product.variants.length > 0 ? (
               <>
@@ -395,25 +283,28 @@ const ProductOne: FC<Props> = (props) => {
               ''
             )} */}
 
-            {/* <div className="product-form product-qty pb-0">
+            <div className="product-form product-qty pb-0">
               <div className="product-form-group">
                 <Quantity
                   adClass="input-group mr-2 mb-0"
-                  max={product.stock}
+                  // max={product.stock}
                   product={product}
-                  onChangeQty={changeQty}
+                  // onChangeQty={changeQty}
                 />
                 <button
                   className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold mb-0 ${
                     cartActive ? '' : 'disabled'
                   }`}
-                  onClick={addToCartHandler}
                   // onClick={addToCartHandler}
                 >
-                  <i className="d-icon-bag"></i>Add to Cart
+                  <i className="d-icon-bag"></i>Añadir
                 </button>
               </div>
-            </div> */}
+            </div>
+            <div className="count-text">
+              {/* Only <strong>{product.stock}</strong> Left */}
+              {product.award.brand.name}
+            </div>
           </div>
         </div>
       </div>

@@ -14,6 +14,7 @@ function ElectronicCollection() {
     },
     filterOptions: {
       buyable: true,
+      random: true,
     },
   });
 

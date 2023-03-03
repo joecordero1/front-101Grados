@@ -6,6 +6,7 @@ export interface Award {
   description: string;
   subcategories: Subcategory[];
   brand: Brand;
+  model: string;
 }
 
 export interface Category {

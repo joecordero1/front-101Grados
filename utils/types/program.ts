@@ -9,4 +9,5 @@ export interface Program {
   colorIcons: string;
   googleAnalyticsId: string;
   supportPhone: string;
+  mainBanner: string;
 }

@@ -7,12 +7,14 @@ import ProductDeal from '~/components/partials/home/product-deal';
 import { useItems } from 'hooks';
 
 function BestCollection(props) {
-  const { items, loading } = useItems({
+  const { items: rawItems, loading } = useItems({
     filterOptions: {
       random: true,
       orderPoints: 'DESC',
     },
   });
+
+  const items = rawItems.slice(0, 9);
 
   return (
     <section className="product-deals-wrapper mb-10 pb-6">

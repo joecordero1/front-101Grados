@@ -44,6 +44,10 @@ const ProductOne: FC<Props> = (props) => {
   //       ? true
   //       : false;
 
+  // Mark as true randomly with 90% probability of false
+  const isNew = Math.random() < 0.9 ? false : true;
+  const isTop = Math.random() < 0.9 ? false : true;
+
   const showQuickviewHandler = () => {
     // openQuickview(product.slug);
   };
@@ -95,18 +99,14 @@ const ProductOne: FC<Props> = (props) => {
           )} */}
         </ALink>
 
-        {/* <div className="product-label-group">
-          {product.is_new ? (
-            <label className="product-label label-new">New</label>
+        <div className="product-label-group">
+          {isNew ? (
+            <label className="product-label label-new">Nuevo</label>
           ) : (
             ''
           )}
-          {product.is_top ? (
-            <label className="product-label label-top">Top</label>
-          ) : (
-            ''
-          )}
-          {product.discount > 0 ? (
+          {isTop ? <label className="product-label label-top">Top</label> : ''}
+          {/* {product.discount > 0 ? (
             product.variants.length === 0 ? (
               <label className="product-label label-sale">
                 {product.discount}% OFF
@@ -116,47 +116,19 @@ const ProductOne: FC<Props> = (props) => {
             )
           ) : (
             ''
-          )}
-        </div> */}
+          )} */}
+        </div>
 
-        {/* <div className="product-action-vertical">
-          {product.variants.length > 0 ? (
-            <ALink
-              href={`/product/default/${product.slug}`}
-              className="btn-product-icon btn-cart"
-              title="Go to product"
-            >
-              <i className="d-icon-arrow-right"></i>
-            </ALink>
-          ) : (
-            <a
-              href="#"
-              className="btn-product-icon btn-cart"
-              title="Add to cart"
-              onClick={addToCartHandler}
-            >
-              <i className="d-icon-bag"></i>
-            </a>
-          )}
+        <div className="product-action-vertical">
           <a
             href="#"
-            className={`btn-product-icon btn-wishlist`}
-            title={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-            onClick={wishlistHandler}
+            className="btn-product-icon btn-cart"
+            title="Añadir"
+            onClick={addToCartHandler}
           >
-            <i
-              className={isWishlisted ? 'd-icon-heart-full' : 'd-icon-heart'}
-            ></i>
+            <i className="d-icon-bag"></i>
           </a>
-          <ALink
-            href="#"
-            className="btn-product-icon btn-quickview"
-            title="Quick View"
-            onClick={showQuickviewHandler}
-          >
-            <i className="d-icon-search"></i>
-          </ALink>
-        </div> */}
+        </div>
       </figure>
 
       <div className="product-details">
@@ -231,6 +203,8 @@ const ProductOne: FC<Props> = (props) => {
             Only <strong>{product.stock}</strong> Left
           </div>
         )} */}
+
+        <div className="count-text">{product.award.brand.name}</div>
       </div>
     </div>
   );
