@@ -1,13 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 
-import { useQuery } from '@apollo/react-hooks';
-
 // Import Apollo Server and Query
 import withApollo from '../server/apollo';
-import { GET_HOME_DATA } from '../server/queries';
-
-// import Home Components
 import NewsletterModal from '~/components/features/modals/newsletter-modal';
 import IntroSection from '~/components/partials/home/intro-section';
 import ServiceBox from '~/components/partials/home/service-section';
@@ -18,6 +13,8 @@ import VendorSection from '~/components/partials/home/vendor-section';
 import Buyable from '~/components/partials/home/buyable';
 import BannerTwoSection from '~/components/partials/home/banner-two-section';
 import BestCollection from '~/components/partials/home/best-collection';
+
+import MultipleCategories from 'components/partials/home/multiple-categories';
 
 function HomePage() {
   const data = null;
@@ -61,6 +58,8 @@ function HomePage() {
         <FoodCollection products={foods} loading={loading} /> */}
 
         <BestCollection products={bestSelling} loading={loading} />
+
+        <MultipleCategories />
 
         {/* <NewsletterSection />
 
