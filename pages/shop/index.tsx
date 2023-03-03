@@ -18,8 +18,6 @@ function ShopHorizontalFilter() {
   const router = useRouter();
   const query = router.query;
 
-  console.log('items', items);
-
   const categories = rawCategories.slice(0, 8);
 
   const prices = [
@@ -210,11 +208,7 @@ function ShopHorizontalFilter() {
 
           <div className="row main-content-wrap gutter-lg">
             <div className="main-content">
-              <ProductListOne
-                // products={items}
-                isToolbox={false}
-                itemsPerRow={5}
-              />
+              <ProductListOne items={items} isToolbox={false} itemsPerRow={5} />
             </div>
           </div>
         </div>

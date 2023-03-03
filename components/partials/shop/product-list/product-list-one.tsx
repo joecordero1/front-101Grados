@@ -24,7 +24,7 @@ const ProductListOne: FC<Props> = (props) => {
   const router = useRouter();
   const query = router.query;
   const [getProducts, { data, loading, error }] = useLazyQuery(GET_PRODUCTS);
-  const products = data && data.products.data;
+  // const products = data && data.products.data;
   const gridClasses = {
     3: 'cols-2 cols-sm-3',
     4: 'cols-2 cols-sm-3 cols-md-4',
@@ -96,24 +96,24 @@ const ProductListOne: FC<Props> = (props) => {
       )}
       {gridType === 'grid' ? (
         <div className={`row product-wrapper ${gridClasses[itemsPerRow]}`}>
-          {products &&
-            products.map((item) => (
-              <div className="product-wrap" key={'shop-' + item.slug}>
-                <ProductTwo product={item} adClass="" />
-              </div>
-            ))}
+          {items.map((item) => (
+            <div className="product-wrap" key={'shop-' + item.award.id}>
+              <ProductTwo item={item} adClass="" />
+            </div>
+          ))}
         </div>
       ) : (
         <div className="product-lists product-wrapper">
-          {products &&
-            products.map((item) => (
-              <ProductEight product={item} key={'shop-list-' + item.slug} />
-            ))}
+          {items.map((item) => (
+            <ProductEight product={item} key={'shop-list-' + item.award.id} />
+          ))}
         </div>
       )}
 
-      {products && products.length === 0 ? (
-        <p className="ml-1">No products were found matching your selection.</p>
+      {items.length === 0 ? (
+        <p className="ml-1">
+          No hemos encontrado ningún premio con esos filtros.
+        </p>
       ) : (
         ''
       )}
