@@ -1,4 +1,5 @@
 import { useReducer, useEffect, useCallback } from 'react';
+import queryString from 'query-string';
 
 import { useApiAuth } from 'hooks/useApiAuth';
 import { SubcategoriesList } from '../../utils/types/award';
@@ -84,7 +85,7 @@ const initialState: State = {
     hasPreviousPage: false,
     itemCount: 0,
     pageCount: 0,
-    take: 100,
+    take: 25,
   },
   filterOptions: {
     brandId: null,
@@ -146,32 +147,38 @@ export interface ReducerValue extends State {
   handleFiltersChange: (field: string, value: any) => void;
 }
 
-export const useProducts = (): ReducerValue => {
+export const useItems = (): ReducerValue => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { get } = useApiAuth();
 
-  const getProducts = useCallback(async () => {
-    console.log('Buscando vehículos');
+  const getItems = useCallback(async () => {
     try {
       dispatch({ type: 'loading' });
-      console.log('state.filterOptions', state.filterOptions);
+
+      const params = {
+        order: 'DESC',
+        take: state.meta.take.toString(),
+        page: state.meta.page.toString(),
+        // Add just the filter options that are not null or undefined or empty string
+        ...(Object.keys(state.filterOptions).reduce((acc, key) => {
+          if (state.filterOptions[key]) {
+            acc[key] = state.filterOptions[key];
+          }
+          return acc;
+        }, {}) as FilterOptions),
+      };
+
+      const query = queryString.stringify(params);
+
       const response = await get<Page<CatalogueItem>>(
-        '/  items/store'
-        // {
-        //   params: {
-        //     order: 'DESC',
-        //     take: state.meta.take,
-        //     page: state.meta.page,
-        //     ...state.filterOptions,
-        //   },
-        // }
+        '/catalogue-items/store?' + query
       );
 
       const items = response.data;
       const meta = response.meta;
       dispatch({ type: 'GET_VEHICLES', payload: { items, meta } });
     } catch (error) {
-      console.error('getProducts() -> error', error);
+      console.error('  getItems() -> error', error);
     }
   }, [state.meta.page, state.filterOptions]);
 
@@ -235,8 +242,8 @@ export const useProducts = (): ReducerValue => {
   }, []);
 
   useEffect(() => {
-    getProducts();
-  }, [getProducts, state.meta.page, state.filterOptions]);
+    getItems();
+  }, [getItems, state.meta.page, state.filterOptions]);
 
   useEffect(() => {
     getCategories();

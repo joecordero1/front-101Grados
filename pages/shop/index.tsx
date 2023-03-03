@@ -4,19 +4,21 @@ import { useRouter } from 'next/router';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import ALink from '~/components/features/custom-link';
-import OwlCarousel from '~/components/features/owl-carousel';
-
 import ShopBanner from '~/components/partials/shop/shop-banner';
 import ToolBox from '~/components/partials/shop/toolbox';
 import ProductListOne from '~/components/partials/shop/product-list/product-list-one';
 import filterData from '~/utils/data/shop';
 
 import { useCategories } from 'hooks/useCategories';
+import { useItems } from './reducer';
 
 function ShopHorizontalFilter() {
   const { categories: rawCategories } = useCategories();
+  const { items } = useItems();
   const router = useRouter();
   const query = router.query;
+
+  console.log('items', items);
 
   const categories = rawCategories.slice(0, 8);
 
