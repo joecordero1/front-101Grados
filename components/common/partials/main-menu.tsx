@@ -11,6 +11,28 @@ function MainMenu() {
 
   return (
     <nav className="menu category-menu">
+      <div className="category category-icon">
+        <ALink href="/shop">
+          <figure className="categroy-media">
+            <i
+              className="d-icon-category"
+              style={{
+                color: '#2D2D2D',
+              }}
+            ></i>
+          </figure>
+          <div className="category-content">
+            <h4
+              className="category-name"
+              style={{
+                color: '#2D2D2D',
+              }}
+            >
+              Todas
+            </h4>
+          </div>
+        </ALink>
+      </div>
       {categories.map((category) => (
         <div className="category category-icon">
           <ALink
@@ -42,29 +64,6 @@ function MainMenu() {
           </ALink>
         </div>
       ))}
-
-      <div className="category category-icon">
-        <ALink href="/shop">
-          <figure className="categroy-media">
-            <i
-              className="d-icon-category"
-              style={{
-                color: '#2D2D2D',
-              }}
-            ></i>
-          </figure>
-          <div className="category-content">
-            <h4
-              className="category-name"
-              style={{
-                color: '#2D2D2D',
-              }}
-            >
-              Todas las Categorías
-            </h4>
-          </div>
-        </ALink>
-      </div>
     </nav>
   );
 }

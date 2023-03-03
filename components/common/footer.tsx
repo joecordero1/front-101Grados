@@ -2,11 +2,14 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 import ALink from '~/components/features/custom-link';
 
+import { useProgram } from 'hooks';
+
 export default function Footer() {
+  const { program } = useProgram();
   return (
     <footer className="footer">
       <div className="container">
-        <div className="footer-top">
+        {/* <div className="footer-top">
           <div className="row align-items-center">
             <div className="col-lg-3">
               <ALink href="market1.html" className="logo-footer">
@@ -286,38 +289,18 @@ export default function Footer() {
               <ALink href="#">Wayfarer</ALink>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="footer-bottom">
           <div className="footer-left">
             <figure className="payment">
-              <img
-                src="images/payment.png"
-                alt="payment"
-                width="159"
-                height="29"
-              />
+              <img src={program.logo} alt="payment" width="159" height="29" />
             </figure>
           </div>
           <div className="footer-center">
             <p className="copyright">
-              Riode eCommerce &copy; 2021. All Rights Reserved
+              101 Grados Marketing Relacional © {new Date().getFullYear()}.
+              Todos los derechos reservados.
             </p>
-          </div>
-          <div className="footer-right">
-            <div className="social-links">
-              <ALink
-                href="#"
-                className="social-link social-facebook fab fa-facebook-f"
-              ></ALink>
-              <ALink
-                href="#"
-                className="social-link social-twitter fab fa-twitter"
-              ></ALink>
-              <ALink
-                href="#"
-                className="social-link social-linkedin fab fa-linkedin-in"
-              ></ALink>
-            </div>
           </div>
         </div>
       </div>
