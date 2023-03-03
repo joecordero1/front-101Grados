@@ -2,7 +2,7 @@ import { useReducer, useEffect, useCallback } from 'react';
 import queryString from 'query-string';
 
 import { useApiAuth } from 'hooks/useApiAuth';
-import { SubcategoriesList } from '../../utils/types/award';
+import { SubcategoriesList } from '../utils/types/award';
 import {
   CatalogueItem,
   Page,

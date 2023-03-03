@@ -3,7 +3,7 @@ import { FC, useEffect } from 'react';
 
 import ALink from '~/components/features/custom-link';
 import SidebarFilterThree from '~/components/partials/shop/sidebar/sidebar-filter-three';
-import { FilterOptionsToString } from '../../../pages/shop/reducer';
+import { FilterOptionsToString } from '../../../reducers/useItems';
 
 type Props = {
   handleFiltersChange: (field: FilterOptionsToString, value: any) => void;

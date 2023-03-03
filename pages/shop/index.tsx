@@ -10,7 +10,7 @@ import ProductListOne from '~/components/partials/shop/product-list/product-list
 import filterData from '~/utils/data/shop';
 
 import { useCategories } from 'hooks/useCategories';
-import { useItems } from './reducer';
+import { useItems } from '../../reducers/useItems';
 
 function ShopHorizontalFilter() {
   const { categories: rawCategories } = useCategories();
