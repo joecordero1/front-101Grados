@@ -7,6 +7,8 @@ import { cartActions } from '~/store/cart';
 import { modalActions } from '~/store/modal';
 import { wishlistActions } from '~/store/wishlist';
 import { toDecimal } from '~/utils';
+
+import { useProgram, useGeneral } from 'hooks';
 import { CatalogueItem } from '../../../utils/types/catalogueItem';
 
 type Props = {
@@ -33,6 +35,8 @@ const ProductTwo: FC<Props> = (props) => {
     isNew,
     isTop,
   } = props;
+  const { coinName } = useProgram();
+  const { openModal } = useGeneral();
 
   // decide if the product is wishlisted
   // let isWishlisted;
@@ -142,9 +146,9 @@ const ProductTwo: FC<Props> = (props) => {
             href="#"
             className="btn-product btn-quickview"
             title="Quick View"
-            onClick={showQuickviewHandler}
+            onClick={() => openModal(item)}
           >
-            Quick View
+            Vista Rápida
           </ALink>
         </div>
       </figure>
@@ -171,7 +175,9 @@ const ProductTwo: FC<Props> = (props) => {
         </h3>
 
         <div className="product-price">
-          <ins className="new-price">{item.points} Puntos</ins>
+          <ins className="new-price">
+            {item.points} {coinName}
+          </ins>
           {/* {product.price[0] !== product.price[1] ? (
             product.variants.length === 0 ||
             (product.variants.length > 0 && !product.variants[0].price) ? (

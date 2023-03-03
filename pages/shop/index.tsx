@@ -14,7 +14,7 @@ import { useItems } from './reducer';
 
 function ShopHorizontalFilter() {
   const { categories: rawCategories } = useCategories();
-  const { items } = useItems();
+  const { items, loading } = useItems();
   const router = useRouter();
   const query = router.query;
 
@@ -62,10 +62,10 @@ function ShopHorizontalFilter() {
   return (
     <main className="main">
       <Helmet>
-        <title>Tienda - Shop Horizontal Filter</title>
+        <title>Tienda</title>
       </Helmet>
 
-      <h1 className="d-none">Tienda - Shop Horizontal Filter</h1>
+      <h1 className="d-none">Tienda Global</h1>
 
       <nav className="breadcrumb-nav">
         <div className="container">
@@ -75,7 +75,7 @@ function ShopHorizontalFilter() {
                 <i className="d-icon-home"></i>
               </ALink>
             </li>
-            <li>Riode Shop</li>
+            <li>Tienda</li>
           </ul>
         </div>
       </nav>
@@ -208,7 +208,12 @@ function ShopHorizontalFilter() {
 
           <div className="row main-content-wrap gutter-lg">
             <div className="main-content">
-              <ProductListOne items={items} isToolbox={false} itemsPerRow={5} />
+              <ProductListOne
+                items={items}
+                loading={loading}
+                isToolbox={false}
+                itemsPerRow={5}
+              />
             </div>
           </div>
         </div>

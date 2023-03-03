@@ -12,18 +12,19 @@ import { CatalogueItem } from '../../../../utils/types/catalogueItem';
 
 type Props = {
   items: CatalogueItem[];
+  loading?: boolean;
   itemsPerRow?: number;
   type?: string;
   isToolbox?: boolean;
 };
 
 const ProductListOne: FC<Props> = (props) => {
-  const { items } = props;
+  const { items, loading } = props;
   const { itemsPerRow = 3, type = 'left', isToolbox = true } = props;
   console.log('LIST: items', items);
   const router = useRouter();
   const query = router.query;
-  const [getProducts, { data, loading, error }] = useLazyQuery(GET_PRODUCTS);
+  const [getProducts, { data, error }] = useLazyQuery(GET_PRODUCTS);
   // const products = data && data.products.data;
   const gridClasses = {
     3: 'cols-2 cols-sm-3',
@@ -94,8 +95,10 @@ const ProductListOne: FC<Props> = (props) => {
       ) : (
         ''
       )}
+
       {gridType === 'grid' ? (
-        <div className={`row product-wrapper ${gridClasses[itemsPerRow]}`}>
+        // <div className={`row product-wrapper ${gridClasses[itemsPerRow]}`}>
+        <div className={`row product-wrapper ${gridClasses[7]}`}>
           {items.map((item) => (
             <div className="product-wrap" key={'shop-' + item.award.id}>
               <ProductTwo item={item} adClass="" />
@@ -105,7 +108,7 @@ const ProductListOne: FC<Props> = (props) => {
       ) : (
         <div className="product-lists product-wrapper">
           {items.map((item) => (
-            <ProductEight product={item} key={'shop-list-' + item.award.id} />
+            <ProductEight item={item} key={'shop-list-' + item.award.id} />
           ))}
         </div>
       )}
