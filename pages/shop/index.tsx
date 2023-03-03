@@ -210,7 +210,11 @@ function ShopHorizontalFilter() {
 
           <div className="row main-content-wrap gutter-lg">
             <div className="main-content">
-              <ProductListOne isToolbox={false} itemsPerRow={5} />
+              <ProductListOne
+                // products={items}
+                isToolbox={false}
+                itemsPerRow={5}
+              />
             </div>
           </div>
         </div>

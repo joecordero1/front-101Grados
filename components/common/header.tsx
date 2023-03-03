@@ -12,7 +12,7 @@ import { headerBorderRemoveList } from '~/utils/data/menu';
 import { useAuth, useProgram } from 'hooks';
 
 export default function Header(props) {
-  const { logOut, availablePoints } = useAuth();
+  const { logOut, availablePoints, participant } = useAuth();
   const { program } = useProgram();
   const router = useRouter();
 
@@ -141,21 +141,31 @@ export default function Header(props) {
         </div>
       </div>
 
-      <div>
-        <h2
+      <div
+        className={`header-bottom ${router.pathname === '/' ? '' : 'pb-50'}`}
+      >
+        <div className="container">
+          <MainMenu />
+        </div>
+      </div>
+
+      <div className="welcome-message">
+        <h6
+          style={{
+            textAlign: 'center',
+            margin: '0 auto',
+          }}
+        >
+          ¡Hola {participant?.firstName}!
+        </h6>
+        <h5
           style={{
             textAlign: 'center',
             margin: '0 auto',
           }}
         >
           Tienes {availablePoints} Puntos
-        </h2>
-      </div>
-
-      <div className={`header-bottom ${router.pathname === '/' ? '' : 'pb-0'}`}>
-        <div className="container">
-          <MainMenu />
-        </div>
+        </h5>
       </div>
     </header>
   );

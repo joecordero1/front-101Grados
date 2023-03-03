@@ -35,3 +35,11 @@
     height: 32px;
   }
 }
+
+.welcome-message {
+  margin-bottom: 10px;
+  h6,
+  h5 {
+    color: $primary-color;
+  }
+}
