@@ -2,7 +2,6 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 
 // Import Apollo Server and Query
-import withApollo from '../server/apollo';
 import NewsletterModal from '~/components/features/modals/newsletter-modal';
 import IntroSection from '~/components/partials/home/intro-section';
 import ServiceBox from '~/components/partials/home/service-section';
@@ -14,13 +13,11 @@ import Buyable from '~/components/partials/home/buyable';
 import BannerTwoSection from '~/components/partials/home/banner-two-section';
 import BestCollection from '~/components/partials/home/best-collection';
 
+import { useAuth } from 'hooks';
 import MultipleCategories from 'components/partials/home/multiple-categories';
 
 function HomePage() {
-  const data = null;
-  const loading = false;
-  const onSale = data && data.specialProducts.onSale;
-  const bestSelling = data && data.specialProducts.bestSelling;
+  const { availablePoints } = useAuth();
 
   return (
     <div className="main home">
@@ -39,7 +36,7 @@ function HomePage() {
           </div>
         </div>
 
-        <DealCollection products={onSale} loading={loading} />
+        <DealCollection />
 
         <CategorySection />
 
@@ -47,27 +44,13 @@ function HomePage() {
 
         <VendorSection />
 
-        <Buyable />
+        {availablePoints > 0 && <Buyable />}
 
         <BannerTwoSection />
 
-        {/* <ClothingCollection products={clothings} loading={loading} /> */}
-
-        {/* <BannerThreeSection />
-
-        <FoodCollection products={foods} loading={loading} /> */}
-
-        <BestCollection products={bestSelling} loading={loading} />
+        <BestCollection />
 
         <MultipleCategories />
-
-        {/* <NewsletterSection />
-
-        <BrandSection />
-
-        <BlogSection posts={posts} />
-
-        <RecentCollection products={latest} loading={loading} /> */}
       </div>
 
       <NewsletterModal />
@@ -75,4 +58,4 @@ function HomePage() {
   );
 }
 
-export default withApollo({ ssr: typeof window === 'undefined' })(HomePage);
+export default HomePage;
