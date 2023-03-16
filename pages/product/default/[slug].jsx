@@ -46,7 +46,7 @@ function ProductRightSidebar() {
   return (
     <main className="main market1-product single-product">
       <Helmet>
-        <title>Tienda | Product With Right Sidebar</title>
+        <title>Tienda | Producto</title>
       </Helmet>
 
       <h1 className="d-none">Tienda - Product With Right Sidebar</h1>

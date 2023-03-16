@@ -1,16 +1,16 @@
-import { useState, useEffect, FC } from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { connect } from 'react-redux';
-import Collapse from 'react-bootstrap/Collapse';
+import { useState, useEffect, FC } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { connect } from "react-redux";
+import Collapse from "react-bootstrap/Collapse";
 
-import ALink from '~/components/features/custom-link';
-import Countdown from '~/components/features/countdown';
-import Quantity from '~/components/features/quantity';
-import { cartActions } from '~/store/cart';
-import { toDecimal } from '~/utils';
+import ALink from "~/components/features/custom-link";
+import Countdown from "~/components/features/countdown";
+import Quantity from "~/components/features/quantity";
+import { cartActions } from "~/store/cart";
+import { toDecimal } from "~/utils";
 
-import { CatalogueItem } from '../../../utils/types/catalogueItem';
-import { useProgram } from 'hooks';
+import { CatalogueItem } from "../../../utils/types/catalogueItem";
+import { useProgram } from "hooks";
 
 type Props = {
   product: CatalogueItem;
@@ -23,9 +23,9 @@ type Props = {
 };
 
 const ProductOne: FC<Props> = (props) => {
-  const { product, adClass = '', addToCart, isNew, isTop } = props;
-  const [curColor, setCurColor] = useState('null');
-  const [curSize, setCurSize] = useState('null');
+  const { product, adClass = "", addToCart, isNew, isTop } = props;
+  const [curColor, setCurColor] = useState("null");
+  const [curSize, setCurSize] = useState("null");
   const [curIndex, setCurIndex] = useState(0);
   const [cartActive, setCartActive] = useState(false);
   const [quantity, setQauntity] = useState(1);
@@ -43,7 +43,7 @@ const ProductOne: FC<Props> = (props) => {
         <div className="col-md-6 p-relative mb-4 mb-md-0">
           <div className="w-100">
             <figure className="product-media">
-              <ALink href={`/product/default/${product.award.id}`}>
+              <ALink href={`/product/default/${product.id}`}>
                 <LazyLoadImage
                   alt="product"
                   src={product.award.mainImage}
@@ -74,12 +74,12 @@ const ProductOne: FC<Props> = (props) => {
                 {isNew ? (
                   <label className="product-label label-new">New</label>
                 ) : (
-                  ''
+                  ""
                 )}
                 {isTop ? (
                   <label className="product-label label-top">Top</label>
                 ) : (
-                  ''
+                  ""
                 )}
                 {/* {product.discount > 0 ? (
                   product.variants.length === 0 ? (
@@ -163,7 +163,7 @@ const ProductOne: FC<Props> = (props) => {
               <div className="ratings-full">
                 <span
                   className="ratings"
-                  style={{ width: 20 * rating + '%' }}
+                  style={{ width: 20 * rating + "%" }}
                 ></span>
                 <span className="tooltiptext tooltip-top">
                   {toDecimal(rating)}
@@ -293,7 +293,7 @@ const ProductOne: FC<Props> = (props) => {
                 />
                 <button
                   className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold mb-0 ${
-                    cartActive ? '' : 'disabled'
+                    cartActive ? "" : "disabled"
                   }`}
                   // onClick={addToCartHandler}
                 >

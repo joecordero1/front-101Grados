@@ -35,3 +35,20 @@ export interface Brand {
   id: number;
   name: string;
 }
+
+export enum VariantType {
+  SIZE = "SIZE",
+  COLOR = "COLOR",
+  GENERAL = "GENERAL",
+}
+
+export interface AwardVariant {
+  id: number;
+  type: VariantType;
+  image: null;
+  name: string;
+  level: number;
+  isActive: boolean;
+  isDeleted: boolean;
+  deletedAt: null;
+}

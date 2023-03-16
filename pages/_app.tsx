@@ -1,13 +1,13 @@
-import { useEffect } from 'react';
-import { useStore, Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import Helmet from 'react-helmet';
-import { SnackbarProvider } from 'notistack';
+import { useEffect } from "react";
+import { useStore, Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import Helmet from "react-helmet";
+import { SnackbarProvider } from "notistack";
 
-import { wrapper } from '../store/index.js';
-import { demoActions } from '~/store/demo';
-import { currentDemo } from '~/server/queries';
-import '~/public/sass/style.scss';
+import { wrapper } from "../store/index.js";
+import { demoActions } from "~/store/demo";
+import { currentDemo } from "~/server/queries";
+import "~/public/sass/style.scss";
 
 import {
   ApiProvider,
@@ -15,8 +15,9 @@ import {
   AuthProvider,
   ApiAuthProvider,
   GeneralProvider,
-} from 'context';
-import Layout from '~/components/layout';
+  CartProvider,
+} from "context";
+import Layout from "~/components/layout";
 
 const App = ({ Component, pageProps }) => {
   const store = useStore();
@@ -31,8 +32,8 @@ const App = ({ Component, pageProps }) => {
     <SnackbarProvider
       maxSnack={50}
       anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
+        vertical: "top",
+        horizontal: "right",
       }}
       hideIconVariant
       autoHideDuration={3000}
@@ -45,27 +46,29 @@ const App = ({ Component, pageProps }) => {
             <ApiAuthProvider>
               <GeneralProvider>
                 <Provider store={store}>
-                  <Helmet>
-                    <meta charSet="UTF-8" />
-                    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-                    <meta
-                      name="viewport"
-                      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-                    />
+                  <CartProvider>
+                    <Helmet>
+                      <meta charSet="UTF-8" />
+                      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                      <meta
+                        name="viewport"
+                        content="width=device-width, initial-scale=1, shrink-to-fit=no"
+                      />
 
-                    <title>Riode - React eCommerce Template</title>
+                      <title>Riode - React eCommerce Template</title>
 
-                    <meta name="keywords" content="React Template" />
-                    <meta
-                      name="description"
-                      content="Riode - React eCommerce Template"
-                    />
-                    <meta name="author" content="D-THEMES" />
-                  </Helmet>
+                      <meta name="keywords" content="React Template" />
+                      <meta
+                        name="description"
+                        content="Riode - React eCommerce Template"
+                      />
+                      <meta name="author" content="D-THEMES" />
+                    </Helmet>
 
-                  <Layout>
-                    <Component {...pageProps} />
-                  </Layout>
+                    <Layout>
+                      <Component {...pageProps} />
+                    </Layout>
+                  </CartProvider>
                 </Provider>
               </GeneralProvider>
             </ApiAuthProvider>

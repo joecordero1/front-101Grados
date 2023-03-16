@@ -1,22 +1,21 @@
-import React, { FC } from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { connect } from 'react-redux';
+import React, { FC } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { connect } from "react-redux";
 
-import ALink from '~/components/features/custom-link';
-import { cartActions } from '~/store/cart';
-import { modalActions } from '~/store/modal';
-import { wishlistActions } from '~/store/wishlist';
-import { toDecimal } from '~/utils';
+import ALink from "~/components/features/custom-link";
+import { cartActions } from "~/store/cart";
+import { modalActions } from "~/store/modal";
+import { wishlistActions } from "~/store/wishlist";
+import { toDecimal } from "~/utils";
 
-import { useProgram } from 'hooks';
-import { CatalogueItem } from '../../../utils/types/catalogueItem';
+import { useCart, useProgram } from "hooks";
+import { CatalogueItem } from "../../../utils/types/catalogueItem";
 
 type Props = {
   product: CatalogueItem;
   adClass?: string;
   toggleWishlist?: (product: CatalogueItem) => void;
   wishlist?: CatalogueItem[];
-  addToCart?: (product: CatalogueItem) => void;
   openQuickview?: (slug: string) => void;
   isCategory?: boolean;
   isRating?: boolean;
@@ -29,13 +28,13 @@ const ProductOne: FC<Props> = (props) => {
     adClass,
     toggleWishlist,
     wishlist,
-    addToCart,
     openQuickview,
     isCategory = true,
     isRating = true,
     isStockCount = false,
   } = props;
   const { coinName } = useProgram();
+  const { addToCart } = useCart();
 
   //   // decide if the product is wishlisted
   //   let isWishlisted;
@@ -59,16 +58,16 @@ const ProductOne: FC<Props> = (props) => {
 
     e.preventDefault();
     let currentTarget = e.currentTarget;
-    currentTarget.classList.add('load-more-overlay', 'loading');
+    currentTarget.classList.add("load-more-overlay", "loading");
 
     setTimeout(() => {
-      currentTarget.classList.remove('load-more-overlay', 'loading');
+      currentTarget.classList.remove("load-more-overlay", "loading");
     }, 1000);
   };
 
   const addToCartHandler = (e) => {
-    // e.preventDefault();
-    // addToCart({ ...product, qty: 1, price: product.price[0] });
+    e.preventDefault();
+    addToCart(product, 1);
   };
 
   return (
@@ -103,9 +102,9 @@ const ProductOne: FC<Props> = (props) => {
           {isNew ? (
             <label className="product-label label-new">Nuevo</label>
           ) : (
-            ''
+            ""
           )}
-          {isTop ? <label className="product-label label-top">Top</label> : ''}
+          {isTop ? <label className="product-label label-top">Top</label> : ""}
           {/* {product.discount > 0 ? (
             product.variants.length === 0 ? (
               <label className="product-label label-sale">
@@ -135,15 +134,15 @@ const ProductOne: FC<Props> = (props) => {
         {isCategory && (
           <div className="product-cat">
             {product.award.subcategories.map((item, index) => (
-              <React.Fragment key={item.name + '-' + index}>
+              <React.Fragment key={item.name + "-" + index}>
                 <ALink
                   href={{
-                    pathname: '/shop',
+                    pathname: "/shop",
                     query: { subcategory: item.id },
                   }}
                 >
                   {item.name}
-                  {index < product.award.subcategories.length - 1 ? ', ' : ''}
+                  {index < product.award.subcategories.length - 1 ? ", " : ""}
                 </ALink>
               </React.Fragment>
             ))}

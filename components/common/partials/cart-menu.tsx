@@ -1,33 +1,31 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { connect } from 'react-redux';
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { connect } from "react-redux";
 
-import ALink from '~/components/features/custom-link';
+import ALink from "~/components/features/custom-link";
 
-import { cartActions } from '~/store/cart';
+import { cartActions } from "~/store/cart";
 
-import { getTotalPrice, getCartCount, toDecimal } from '~/utils';
+import { getTotalPrice, getCartCount, toDecimal } from "~/utils";
+import { CatalogueItem } from "~/utils/types";
+import { useCart, useProgram } from "~/hooks";
 
-function CartMenu(props) {
-  const { cartList, removeFromCart } = props;
+function CartMenu() {
+  const { removeFromCart, items, totalAmount } = useCart();
+  const { program } = useProgram();
   const router = useRouter();
-
   useEffect(() => {
     hideCartMenu();
   }, [router.asPath]);
 
   const showCartMenu = (e) => {
     e.preventDefault();
-    e.currentTarget.closest('.cart-dropdown').classList.add('opened');
+    e.currentTarget.closest(".cart-dropdown").classList.add("opened");
   };
 
   const hideCartMenu = () => {
-    if (document.querySelector('.cart-dropdown').classList.contains('opened'))
-      document.querySelector('.cart-dropdown').classList.remove('opened');
-  };
-
-  const removeCart = (item) => {
-    removeFromCart(item);
+    if (document.querySelector(".cart-dropdown").classList.contains("opened"))
+      document.querySelector(".cart-dropdown").classList.remove("opened");
   };
 
   return (
@@ -42,7 +40,7 @@ function CartMenu(props) {
           <span className="cart-price">0 Puntos</span>
         </div>
         <i className="d-icon-bag">
-          <span className="cart-count">{getCartCount(cartList)}</span>
+          <span className="cart-count">{items.length}</span>
         </i>
       </a>
       <div className="cart-overlay" onClick={hideCartMenu}></div>
@@ -58,21 +56,18 @@ function CartMenu(props) {
             <span className="sr-only">Cart</span>
           </ALink>
         </div>
-        {cartList.length > 0 ? (
+        {items.length > 0 ? (
           <>
             <div className="products scrollable">
-              {cartList.map((item, index) => (
+              {items.map((item: CatalogueItem, index: number) => (
                 <div
                   className="product product-cart"
-                  key={'cart-menu-product-' + index}
+                  key={"cart-menu-product-" + index}
                 >
                   <figure className="product-media pure-media">
-                    <ALink href={'/product/default/' + item.slug}>
+                    <ALink href={"/product/default/" + item.award.id}>
                       <img
-                        src={
-                          process.env.NEXT_PUBLIC_ASSET_URI +
-                          item.pictures[0].url
-                        }
+                        src={item.award.mainImage}
                         alt="product"
                         width="80"
                         height="88"
@@ -81,7 +76,7 @@ function CartMenu(props) {
                     <button
                       className="btn btn-link btn-close"
                       onClick={() => {
-                        removeCart(item);
+                        removeFromCart(item.id);
                       }}
                     >
                       <i className="fas fa-times"></i>
@@ -90,16 +85,14 @@ function CartMenu(props) {
                   </figure>
                   <div className="product-detail">
                     <ALink
-                      href={'/product/default/' + item.slug}
+                      href={"/product/default/" + item.award.id}
                       className="product-name"
                     >
-                      {item.name}
+                      {item.award.name}
                     </ALink>
                     <div className="price-box">
-                      <span className="product-quantity">{item.qty}</span>
-                      <span className="product-price">
-                        ${toDecimal(item.price)}
-                      </span>
+                      {/* <span className="product-quantity">{item.qty}</span> */}
+                      <span className="product-price">{`${item.points} ${program.coinName}`}</span>
                     </div>
                   </div>
                 </div>
@@ -108,9 +101,9 @@ function CartMenu(props) {
 
             <div className="cart-total">
               <label>Subtotal:</label>
-              <span className="price">
-                ${toDecimal(getTotalPrice(cartList))}
-              </span>
+              <span className="price">{`${totalAmount()} ${
+                program.coinName
+              }`}</span>
             </div>
 
             <div className="cart-action">
@@ -146,6 +139,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {
-  removeFromCart: cartActions.removeFromCart,
-})(CartMenu);
+export default CartMenu;

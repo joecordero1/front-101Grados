@@ -1,14 +1,14 @@
-import React from 'react';
-import Reveal from 'react-awesome-reveal';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import React from "react";
+import Reveal from "react-awesome-reveal";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 // import Custom Components
-import ALink from '~/components/features/custom-link';
-import OwlCarousel from '~/components/features/owl-carousel';
-import { introSlider } from '~/utils/data/carousel';
-import { fadeInRightShorter, fadeInLeftShorter } from '~/utils/data/keyframes';
+import ALink from "~/components/features/custom-link";
+import OwlCarousel from "~/components/features/owl-carousel";
+import { introSlider } from "~/utils/data/carousel";
+import { fadeInRightShorter, fadeInLeftShorter } from "~/utils/data/keyframes";
 
-import { useProgram } from 'hooks';
+import { useProgram } from "hooks";
 
 function IntroSection(props) {
   const { program } = useProgram();
@@ -21,7 +21,7 @@ function IntroSection(props) {
         >
           <div
             className="banner banner-fixed content-middle intro-slide intro-slide1 banner-radius"
-            style={{ backgroundColor: '#f8f8f8' }}
+            style={{ backgroundColor: "#f8f8f8" }}
           >
             <figure>
               <LazyLoadImage
@@ -128,12 +128,12 @@ function IntroSection(props) {
           <div className="intro-banner mb-4">
             <div
               className="banner banner-fixed content-middle banner-radius overlay-zoom"
-              style={{ backgroundColor: '#232323' }}
+              style={{ backgroundColor: "#232323" }}
             >
               <figure>
                 <LazyLoadImage
-                  src="https://storage.googleapis.com/lala4_dev_bucket/store/images/3ca2dbe1-0c47-48e1-ab50-ec4df8cebe2f-864425f0-2ac8-419c-9a9c-5d13123eb7a1.jpg"
-                  alt="Intro Banner"
+                  src={program.banner2}
+                  alt="Banner"
                   width="330"
                   height="215"
                 />
@@ -143,12 +143,12 @@ function IntroSection(props) {
           <div className="intro-banner mb-4">
             <div
               className="banner banner-fixed content-middle banner-radius overlay-zoom"
-              style={{ backgroundColor: '#eca5a9' }}
+              style={{ backgroundColor: "#eca5a9" }}
             >
               <figure>
                 <LazyLoadImage
-                  src="https://storage.googleapis.com/lala4_dev_bucket/store/images/0f972bdc-3cef-4917-a42c-56a3a062888b-7d2ee3b1-73d7-4881-a8f3-fc79fe551cbd.jpg"
-                  alt="Intro Banner"
+                  src={program.banner3}
+                  alt="Banner"
                   width="330"
                   height="215"
                 />
