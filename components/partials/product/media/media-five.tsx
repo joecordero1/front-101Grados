@@ -1,20 +1,20 @@
-import { useState, useEffect } from 'react';
-import { Magnifier } from 'react-image-magnifiers';
+import { useState, useEffect } from "react";
+import { Magnifier } from "react-image-magnifiers";
 
-import ALink from '~/components/features/custom-link';
-import OwlCarousel from '~/components/features/owl-carousel';
+import ALink from "~/components/features/custom-link";
+import OwlCarousel from "~/components/features/owl-carousel";
 
-import ThumbTwo from '~/components/partials/product/thumb/thumb-two';
-import MediaLightBox from '~/components/partials/product/light-box';
+import ThumbTwo from "~/components/partials/product/thumb/thumb-two";
+import MediaLightBox from "~/components/partials/product/light-box";
 
-import { mainSlider3 } from '~/utils/data/carousel';
-import { CartItem, CatalogueItem } from '~/utils/types';
+import { mainSlider3 } from "~/utils/data/carousel";
+import { CartItem, CatalogueItem } from "~/utils/types";
 
 export default function MediaFive(props: {
   product: CatalogueItem;
   adClass?: any;
 }) {
-  const { product, adClass = '' } = props;
+  const { product, adClass = "" } = props;
   const [index, setIndex] = useState(0);
   const [mediaIndex, setMediaIndex] = useState(0);
   const [isOpen, setOpenState] = useState(false);
@@ -53,22 +53,23 @@ export default function MediaFive(props: {
   let events = {
     onTranslate: function (e) {
       if (!e.target) return;
-      if (document.querySelector('.product-thumbs')) {
+      if (document.querySelector(".product-thumbs")) {
         document
-          .querySelector('.product-thumbs')
-          .querySelector('.product-thumb.active')
-          .classList.remove('active');
+          .querySelector(".product-thumbs")
+          .querySelector(".product-thumb.active")
+          .classList.remove("active");
         document
-          .querySelector('.product-thumbs')
-          .querySelectorAll('.product-thumb')
-          [e.item.index].classList.add('active');
+          .querySelector(".product-thumbs")
+          .querySelectorAll(".product-thumb")
+          [e.item.index].classList.add("active");
       }
     },
   };
 
   return (
     <div
-      className={`product-gallery product-gallery-vertical product-gallery-sticky ${adClass}`}>
+      className={`product-gallery product-gallery-vertical product-gallery-sticky ${adClass}`}
+    >
       {/*     <div className="product-label-group">
                 {
                     product.stock === 0 ?
@@ -92,11 +93,12 @@ export default function MediaFive(props: {
             </div> */}
 
       <OwlCarousel
-        adClass='product-single-carousel owl-theme owl-nav-inner'
+        adClass="product-single-carousel owl-theme owl-nav-inner"
         options={mainSlider3}
         onChangeIndex={setIndexHandler}
         onChangeRef={changeRefHandler}
-        events={events}>
+        events={events}
+      >
         {product.award.variants.length > 0 ? (
           product.award.variants.map(
             (variant) =>
@@ -104,33 +106,33 @@ export default function MediaFive(props: {
                 <div key={variant.id}>
                   <Magnifier
                     imageSrc={variant.image}
-                    imageAlt='magnifier'
+                    imageAlt="magnifier"
                     largeImageSrc={variant.image}
                     dragToMove={false}
-                    mouseActivation='hover'
-                    cursorStyleActive='crosshair'
-                    className='product-image large-image'
+                    mouseActivation="hover"
+                    cursorStyleActive="crosshair"
+                    className="product-image large-image"
                   />
                 </div>
-              ),
+              )
           )
         ) : (
           <div>
             <Magnifier
               imageSrc={product.award.mainImage}
-              imageAlt='magnifier'
+              imageAlt="magnifier"
               largeImageSrc={product.award.mainImage}
               dragToMove={false}
-              mouseActivation='hover'
-              cursorStyleActive='crosshair'
-              className='product-image large-image'
+              mouseActivation="hover"
+              cursorStyleActive="crosshair"
+              className="product-image large-image"
             />
           </div>
         )}
       </OwlCarousel>
 
-      <ALink href='#' className='product-image-full' onClick={openLightBox}>
-        <i className='d-icon-zoom'></i>
+      <ALink href="#" className="product-image-full" onClick={openLightBox}>
+        <i className="d-icon-zoom"></i>
       </ALink>
 
       <ThumbTwo
@@ -143,9 +145,9 @@ export default function MediaFive(props: {
         images={
           product.award.variants.length > 0
             ? product.award.variants.map(
-                (variant) => variant.image && variant.image,
+                (variant) => variant.image && variant.image
               )
-            : product.award.mainImage
+            : null
         }
         isOpen={isOpen}
         changeOpenState={changeOpenState}

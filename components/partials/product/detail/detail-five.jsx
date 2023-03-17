@@ -413,7 +413,6 @@ function DetailOne(props) {
               cartActive ? '' : 'disabled'
             }`}
             onClick={addToCartHandler}
-            onClick={addToCartHandler}
           >
             <i className="d-icon-bag"></i>Add to Cart
           </button>

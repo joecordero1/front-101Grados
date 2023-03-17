@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { useRouter } from 'next/router';
-import Collapse from 'react-bootstrap/Collapse';
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { useRouter } from "next/router";
+import Collapse from "react-bootstrap/Collapse";
 
-import ALink from '~/components/features/custom-link';
-import Countdown from '~/components/features/countdown';
-import Quantity from '~/components/features/quantity';
-import DescTwo from '~/components/partials/product/desc/desc-two';
+import ALink from "~/components/features/custom-link";
+import Countdown from "~/components/features/countdown";
+import Quantity from "~/components/features/quantity";
+import DescTwo from "~/components/partials/product/desc/desc-two";
 
-import { wishlistActions } from '~/store/wishlist';
-import { cartActions } from '~/store/cart';
+import { wishlistActions } from "~/store/wishlist";
+import { cartActions } from "~/store/cart";
 
-import { toDecimal } from '~/utils';
-import { CartItem, CatalogueItem, VariantType } from '~/utils/types';
-import { useCart, useProgram } from '~/hooks';
+import { toDecimal } from "~/utils";
+import { CartItem, CatalogueItem, VariantType } from "~/utils/types";
+import { useCart, useProgram } from "~/hooks";
 
 function DetailOne(props: {
   data: CartItem;
@@ -29,10 +29,10 @@ function DetailOne(props: {
     data: catalogueItem,
     isSticky = false,
     isDesc = false,
-    adClass = '',
+    adClass = "",
   } = props;
-  const [curColor, setCurColor] = useState('null');
-  const [curSize, setCurSize] = useState('null');
+  const [curColor, setCurColor] = useState("null");
+  const [curSize, setCurSize] = useState("null");
   const [curIndex, setCurIndex] = useState(0);
   const [cartActive, setCartActive] = useState(false);
   const [quantity, setQauntity] = useState(1);
@@ -116,8 +116,8 @@ function DetailOne(props: {
   };
 
   const resetValueHandler = (e) => {
-    setCurColor('null');
-    setCurSize('null');
+    setCurColor("null");
+    setCurSize("null");
   };
 
   function changeQty(qty) {
@@ -125,27 +125,28 @@ function DetailOne(props: {
   }
 
   return (
-    <div className={`product-details ${isSticky ? 'sticky' : ''} ${adClass}`}>
-      <h2 className='product-name'>{product.award.name}</h2>
+    <div className={`product-details ${isSticky ? "sticky" : ""} ${adClass}`}>
+      <h2 className="product-name">{product.award.name}</h2>
 
-      <div className='product-meta'>
-        SKU: <span className='product-sku'>{product.award.code}</span>
-        CATEGORIES:{' '}
-        <span className='product-brand'>
+      <div className="product-meta">
+        SKU: <span className="product-sku">{product.award.code}</span>
+        CATEGORIES:{" "}
+        <span className="product-brand">
           {product.award.subcategories.map((item, index) => (
-            <React.Fragment key={item.name + '-' + index}>
+            <React.Fragment key={item.name + "-" + index}>
               <ALink
-                href={{ pathname: '/shop', query: { category: item.name } }}>
+                href={{ pathname: "/shop", query: { category: item.name } }}
+              >
                 {item.name}
               </ALink>
-              {index < product.award.subcategories.length - 1 ? ', ' : ''}
+              {index < product.award.subcategories.length - 1 ? ", " : ""}
             </React.Fragment>
           ))}
         </span>
       </div>
 
-      <div className='product-price'>
-        <ins className='new-price'>{`${product.points} ${program.coinName}`}</ins>
+      <div className="product-price">
+        <ins className="new-price">{`${product.points} ${program.coinName}`}</ins>
       </div>
 
       {/* <div className='ratings-container'>
@@ -163,19 +164,22 @@ function DetailOne(props: {
         </ALink>
       </div> */}
 
-      <p className='product-short-desc'>{product.award.description}</p>
+      <p
+        className="product-short-desc"
+        dangerouslySetInnerHTML={{ __html: product.award.description }}
+      ></p>
 
       {product && product.award.variants.length > 0 ? (
         <>
           {product.award.variants.map((variant) =>
             variant.type === VariantType.COLOR ? (
-              <div className='product-form product-color'>
+              <div className="product-form product-color">
                 <label>Color:</label>
 
-                <div className='product-variations'>
+                <div className="product-variations">
                   <ALink
-                    href='#'
-                    className={'color'}
+                    href="#"
+                    className={"color"}
                     key={variant.id}
                     /* style={{ backgroundColor: `${variant.name}` }} */
                     /* onClick={(e) => toggleColorHandler(item)} */
@@ -185,15 +189,15 @@ function DetailOne(props: {
                 </div>
               </div>
             ) : variant.type === VariantType.SIZE ? (
-              <div className='product-form product-size mb-0 pb-2'>
+              <div className="product-form product-size mb-0 pb-2">
                 <label>Size:</label>
 
-                <div className='product-form-group'>
-                  <div className='product-variations'>
+                <div className="product-form-group">
+                  <div className="product-variations">
                     <ALink
-                      href='#'
+                      href="#"
                       className={`size`}
-                      key={'size-' + variant.id}
+                      key={"size-" + variant.id}
                       /*  onClick={(e) => toggleSizeHandler(item)} */
                     >
                       {variant.name}
@@ -213,19 +217,19 @@ function DetailOne(props: {
                 </div>
               </div>
             ) : (
-              ''
-            ),
+              ""
+            )
           )}
         </>
       ) : (
-        ''
+        ""
       )}
 
-      <hr className='product-divider'></hr>
+      <hr className="product-divider"></hr>
 
-      <div className='product-form product-qty pb-0'>
-        <label className='d-none'>QTY:</label>
-        <div className='product-form-group'>
+      <div className="product-form product-qty pb-0">
+        <label className="d-none">QTY:</label>
+        <div className="product-form-group">
           <Quantity
             /*    max={product.award.} */
             product={product}
@@ -233,31 +237,35 @@ function DetailOne(props: {
           />
           <button
             className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${
-              cartActive ? '' : 'disabled'
+              /* cartActive ? "" : "disabled" */ ""
             }`}
-            onClick={addToCartHandler}>
-            <i className='d-icon-bag'></i>Add to Cart
+            onClick={addToCartHandler}
+          >
+            <i className="d-icon-bag"></i>Add to Cart
           </button>
         </div>
       </div>
 
-      <hr className='product-divider mb-3'></hr>
+      <hr className="product-divider mb-3"></hr>
 
-      <div className='product-footer'>
-        <div className='social-links mr-4'>
+      <div className="product-footer">
+        <div className="social-links mr-4">
           <ALink
-            href='#'
-            className='social-link social-facebook fab fa-facebook-f'></ALink>
+            href="#"
+            className="social-link social-facebook fab fa-facebook-f"
+          ></ALink>
           <ALink
-            href='#'
-            className='social-link social-twitter fab fa-twitter'></ALink>
+            href="#"
+            className="social-link social-twitter fab fa-twitter"
+          ></ALink>
           <ALink
-            href='#'
-            className='social-link social-pinterest fab fa-pinterest-p'></ALink>
+            href="#"
+            className="social-link social-pinterest fab fa-pinterest-p"
+          ></ALink>
         </div>
       </div>
 
-      {isDesc ? <DescTwo product={product.award} adClass={adClass} /> : ''}
+      {isDesc ? <DescTwo product={product.award} adClass={adClass} /> : ""}
     </div>
   );
 }
