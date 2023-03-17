@@ -5,3 +5,8 @@ export interface CatalogueItem {
   points: number;
   award: Award;
 }
+
+export interface CartItem extends CatalogueItem {
+  quantity: number;
+  variantId?: number;
+}

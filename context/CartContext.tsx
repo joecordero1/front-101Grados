@@ -1,101 +1,103 @@
-import { createContext, FC, ReactNode, useReducer, useEffect } from "react";
-import Router from "next/router";
+import { createContext, FC, ReactNode, useReducer, useEffect } from 'react';
+import Router from 'next/router';
 
-import { useApiAuth } from "../hooks/useApiAuth";
-import { CatalogueItem, Page } from "../utils/types";
-import { Address } from "../utils/types";
-import { useProgram } from "../hooks/useProgram";
-import { AwardVariant } from "../utils/types";
-import { useAuth } from "~/hooks";
-import { useSnackbar } from "notistack";
+import { useApiAuth } from '../hooks/useApiAuth';
+import {
+  CartItem,
+  CatalogueItem,
+  CreateRequestDto,
+  Page,
+  AwardVariant,
+  RequestTypes,
+} from '../utils/types';
+import { Address } from '../utils/types';
+import { useProgram } from '../hooks/useProgram';
+import { useAuth } from '~/hooks';
+import { useSnackbar } from 'notistack';
+import { toast } from 'react-toastify';
+import CartPopup from '../components/features/product/common/cart-popup';
 
 interface State {
-  status: "idle" | "loading";
-  items: CatalogueItem[];
+  status: 'idle' | 'loading';
+  items: CartItem[];
   pointsSimulation: number;
   availableAdresses: Address[];
   newAddress: Partial<Address>;
   selectedAdressId: any;
   request: CreateRequestDto;
   sending: boolean;
-  selectedVariant: AwardVariant[];
+  /*  selectedVariant: AwardVariant[]; */
   imageStatus: boolean;
   awardQuantity: number;
 }
 
 interface ContextValue extends State {
-  addToCart: (item: CatalogueItem, quantity: number) => void;
+  addToCart: (item: CartItem, quantity: number, variantId?: number) => void;
   removeFromCart: (itemId: number) => void;
   isTheItemOnCart: (itemId: number) => boolean;
   totalAmount: () => number;
-  /* redeemAll: () => void; */
+  redeemAll: () => void;
   handleNewAddressChange: (field: string, value: any) => void;
   saveAddress: () => void;
   selectAddress: (addressId: number) => void;
-  selectVariant: (variant: AwardVariant) => void;
+  /*   selectVariant: (variant: AwardVariant) => void; */
   removeAddress: (addressId: number) => void;
   sumQuantity: (itemId: number) => void;
   substractQuantity: (itemId: number) => void;
   resetQuantity: () => void;
 }
 
-type CreateRequestDto = {
-  type: "SOLICITUD PARTICIPANTE";
-  participantId: number;
-  catalogueItemId: number;
-  addressId: number | null;
-  awardVariantId?: number | null;
-};
 type SendRequest = {
-  type: "send-request";
+  type: 'send-request';
   payload: {
     request: CreateRequestDto;
   };
 };
 type SendedRequest = {
-  type: "request-sended";
+  type: 'request-sended';
 };
 interface ProgramProviderProps {
   children: ReactNode;
 }
 
 type InitializeItems = {
-  type: "initialize-items";
+  type: 'initialize-items';
   payload: {
-    items: CatalogueItem[] | [];
+    items: CartItem[] | [];
     pointsSimulation: number;
   };
 };
 
 type AddToCart = {
-  type: "add-to-cart";
+  type: 'add-to-cart';
   payload: {
-    item: CatalogueItem;
+    item: CartItem;
     itemQuantity: number;
+    variantId?: number;
   };
 };
 
 type RemoveFromCart = {
-  type: "remove-from-cart";
+  type: 'remove-from-cart';
   payload: { itemId: number };
 };
 
 type SimulatePoints = {
-  type: "simulate-points";
+  type: 'simulate-points';
   payload: {
     pointsSimulation: number;
   };
 };
 
 type RetrieveAddresses = {
-  type: "retrieve-addresses";
+  type: 'retrieve-addresses';
   payload: {
     addresses: Address[];
   };
 };
 
 type HandleNewAddressChange = {
-  type: "handle-new-address-change";
+  type: 'handle-new-address-change';
   payload: {
     field: string;
     value: any;
@@ -103,35 +105,35 @@ type HandleNewAddressChange = {
 };
 
 type SaveAddress = {
-  type: "save-address";
+  type: 'save-address';
 };
 
 type ResetQuantity = {
-  type: "reset-quantity";
+  type: 'reset-quantity';
 };
 
 type SelectAddress = {
-  type: "select-address";
+  type: 'select-address';
   payload: {
     addressId: number;
   };
 };
-type SelectVariant = {
-  type: "select-variant";
+/* type SelectVariant = {
+  type: 'select-variant';
   payload: {
     variant: AwardVariant;
   };
-};
+}; */
 
 type SumQuantity = {
-  type: "sum-quantity";
+  type: 'sum-quantity';
   payload: {
     itemId: number;
   };
 };
 
 type SubstractQuantity = {
-  type: "substract-quantity";
+  type: 'substract-quantity';
   payload: {
     itemId: number;
   };
@@ -150,105 +152,102 @@ type Action =
   | SendedRequest
   | SumQuantity
   | SubstractQuantity
-  | ResetQuantity
-  | SelectVariant;
+  | ResetQuantity;
+/* | SelectVariant; */
 
 const initialState: State = {
-  status: "loading",
+  status: 'loading',
   items: [],
   pointsSimulation: 0,
   availableAdresses: [],
   newAddress: {},
   selectedAdressId: null,
-  request: {
-    type: "SOLICITUD PARTICIPANTE",
-    participantId: 0,
-    catalogueItemId: 0,
-    addressId: null,
-  },
+  request: {} as CreateRequestDto,
   sending: false,
-  selectedVariant: [],
+  /*  selectedVariant: [], */
   imageStatus: false,
   awardQuantity: 1,
 };
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case "initialize-items":
+    case 'initialize-items':
       const { items, pointsSimulation } = action.payload;
       return {
         ...state,
-        status: "idle",
+        status: 'idle',
         items,
         pointsSimulation,
       };
-    case "add-to-cart":
-      const { item: itemToAdd, itemQuantity } = action.payload;
+    case 'add-to-cart':
+      const { item: itemToAdd, itemQuantity, variantId } = action.payload;
       return {
         ...state,
         items: [
           ...state.items,
           {
             ...itemToAdd,
+            quantity: itemQuantity,
+            variantId,
           },
         ],
       };
-    /*     case "sum-quantity":
+    case 'sum-quantity':
       const { itemId: itemSumId } = action.payload;
       return {
         ...state,
         items: state.items.map((item) =>
           item.id === itemSumId
             ? { ...item, quantity: item.quantity + 1 }
-            : item
+            : item,
         ),
-      }; */
-    /*    case "substract-quantity":
+      };
+    case 'substract-quantity':
       const { itemId: itemSubstractId } = action.payload;
       return {
         ...state,
         items: state.items.map((item) =>
           item.id === itemSubstractId
             ? { ...item, quantity: item.quantity - 1 }
-            : item
+            : item,
         ),
-      }; */
+      };
 
-    case "reset-quantity":
+    case 'reset-quantity':
       return {
         ...state,
         awardQuantity: initialState.awardQuantity,
       };
 
-    case "remove-from-cart":
+    case 'remove-from-cart':
       const { itemId } = action.payload;
 
       return {
         ...state,
         items: state.items.filter((item) => item.id !== itemId),
       };
-    case "simulate-points":
+    case 'simulate-points':
       const { pointsSimulation: newPointsSimulation } = action.payload;
       return {
         ...state,
         pointsSimulation: newPointsSimulation,
       };
-    case "retrieve-addresses": {
+    case 'retrieve-addresses': {
       const { addresses } = action.payload;
       return {
         ...state,
-        status: "idle",
+        status: 'idle',
         availableAdresses: addresses,
-        selectedAdressId: "",
+        selectedAdressId: '',
       };
     }
-    case "save-address": {
+    case 'save-address': {
       return {
         ...state,
         newAddress: {},
       };
     }
-    case "handle-new-address-change": {
+    case 'handle-new-address-change': {
       const { field, value } = action.payload;
       return {
         ...state,
@@ -258,14 +257,14 @@ const reducer = (state: State, action: Action): State => {
         },
       };
     }
-    case "select-address": {
+    case 'select-address': {
       const { addressId } = action.payload;
       return {
         ...state,
         selectedAdressId: addressId,
       };
     }
-    case "send-request": {
+    case 'send-request': {
       const { request } = action.payload;
       return {
         ...state,
@@ -273,21 +272,15 @@ const reducer = (state: State, action: Action): State => {
         request,
       };
     }
-    case "request-sended": {
+    case 'request-sended': {
       return {
         ...state,
         sending: false,
-        selectedVariant: [],
+        items: [],
       };
     }
     //cause in cases i have some awards with variants in cart i need to do a array with selected variants and filter one by one by catalogueItemId
-    case "select-variant": {
-      const { variant } = action.payload;
-      return {
-        ...state,
-        selectedVariant: [...state.selectedVariant, variant],
-      };
-    }
+
     default:
       return state;
   }
@@ -299,11 +292,11 @@ export const CartContext = createContext<ContextValue>({
   removeFromCart: () => {},
   isTheItemOnCart: () => false,
   totalAmount: () => 0,
-  /* redeemAll: () => {}, */
+  redeemAll: () => {},
   handleNewAddressChange: () => {},
   saveAddress: () => {},
   selectAddress: () => {},
-  selectVariant: () => {},
+  /* selectVariant: () => {}, */
   removeAddress: () => {},
   sumQuantity: (itemId: number) => {},
   substractQuantity: (itemId: number) => {},
@@ -313,26 +306,25 @@ export const CartContext = createContext<ContextValue>({
 export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const api = useApiAuth();
-  const { participant } = useAuth();
+  const { participant, availablePoints } = useAuth();
   const { program } = useProgram();
   const { enqueueSnackbar } = useSnackbar();
-  const addToCart = (item: CatalogueItem, quantity: number) => {
+  const addToCart = (item: CartItem, quantity: number, variantId?: number) => {
     dispatch({
-      type: "add-to-cart",
+      type: 'add-to-cart',
       payload: {
         item,
         itemQuantity: quantity,
+        variantId,
       },
     });
 
-    enqueueSnackbar("¡Premio añadido!", {
-      variant: "success",
-    });
+    toast(<CartPopup product={item} />);
   };
 
   const removeFromCart = (itemId: number) => {
     dispatch({
-      type: "remove-from-cart",
+      type: 'remove-from-cart',
       payload: {
         itemId,
       },
@@ -341,7 +333,7 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
 
   const sumQuantity = (itemId: number) => {
     dispatch({
-      type: "sum-quantity",
+      type: 'sum-quantity',
       payload: {
         itemId,
       },
@@ -350,7 +342,7 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
 
   const substractQuantity = (itemId: number) => {
     dispatch({
-      type: "substract-quantity",
+      type: 'substract-quantity',
       payload: {
         itemId,
       },
@@ -359,7 +351,7 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
 
   const resetQuantity = () => {
     dispatch({
-      type: "reset-quantity",
+      type: 'reset-quantity',
     });
   };
 
@@ -376,104 +368,99 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
     return 0;
   };
 
-  /*  const simulatePoints = () => {
+  const simulatePoints = () => {
     if (state.items.length > 0) {
       const pointsToBuy = totalAmount();
       dispatch({
-        type: "simulate-points",
+        type: 'simulate-points',
         payload: {
-          pointsSimulation: participant.availablePoints - pointsToBuy,
+          pointsSimulation: availablePoints - pointsToBuy,
         },
       });
     } else {
       dispatch({
-        type: "simulate-points",
+        type: 'simulate-points',
         payload: {
-          pointsSimulation: participant.availablePoints,
+          pointsSimulation: availablePoints,
         },
       });
     }
-  }; */
+  };
 
-  /* useEffect(() => {
-    if (state.status === "idle") {
+  useEffect(() => {
+    if (state.status === 'idle') {
       localStorage.setItem(
-        "cart",
-        JSON.stringify({ participantId: participant.id, items: state.items })
+        'cart',
+        JSON.stringify({ participantId: participant.id, items: state.items }),
       );
       simulatePoints();
     }
-  }, [state.status, state.items]); */
+  }, [state.status, state.items]);
 
-  /*  useEffect(() => {
+  useEffect(() => {
     if (participant) {
-      const oldCart: { participantId: number; items: CatalogueItem[] } =
-        JSON.parse(localStorage.getItem("cart") || "[]");
+      const oldCart: { participantId: number; items: CartItem[] } = JSON.parse(
+        localStorage.getItem('cart') || '[]',
+      );
       if (oldCart.participantId !== participant.id) {
         dispatch({
-          type: "initialize-items",
+          type: 'initialize-items',
           payload: {
             items: [],
-            pointsSimulation: participant.availablePoints,
+            pointsSimulation: availablePoints,
           },
         });
       } else {
         dispatch({
-          type: "initialize-items",
+          type: 'initialize-items',
           payload: {
             items: oldCart.items || [],
-            pointsSimulation: participant.availablePoints,
+            pointsSimulation: availablePoints,
           },
         });
       }
     }
-  }, [participant]); */
+  }, [participant]);
 
-  /*  const redeemAll = async () => {
+  const redeemAll = async () => {
     const ammountToRedeem = totalAmount();
-    if (
-      ammountToRedeem <= participant.availablePoints &&
-      state.items.length > 0
-    ) {
+    if (ammountToRedeem <= availablePoints && state.items.length > 0) {
       try {
         for (const item of state.items) {
           for (let index = 0; index < item.quantity; index++) {
             const createRequestData: CreateRequestDto = {
-              type: "SOLICITUD PARTICIPANTE",
+              type: RequestTypes.PARTICIPANT,
               participantId: participant.id,
-              catalogueItemId: item.id,
+              awardId: item.award.id,
               addressId: state.selectedAdressId,
+              points: item.points,
+              ...(item.variantId && { variantId: item.variantId }),
               //cause in cases i have some awards with variants in cart i need to do a array with selected variants and filter one by one by catalogueItemId
-              awardVariantId:
-                state.selectedVariant && item.award.hasVariants
+              /*      awardVariantId:
+                state.selectedVariant && item.award.variants.length > 0 
                   ? state.selectedVariant.filter(
-                      (variant) => variant.catalogueItemId === item.id
-                    )[0].variantId
-                  : null,
+                      (variant) => variant.awardId === item.award.variants.
+                    )[0].id
+                  : null, */
             };
             dispatch({
-              type: "send-request",
+              type: 'send-request',
               payload: {
                 request: createRequestData,
               },
             });
-            await axios.post(`/requests`, createRequestData);
+            await api.post(`/requests`, createRequestData);
           }
         }
         dispatch({
-          type: "request-sended",
+          type: 'request-sended',
         });
-        notification.open({
-          message: "¡Felicitaciones!",
-          description:
-            "Has solicitado tu premio. Pronto lo tendrás en tus manos.",
-          type: "success",
-          duration: 3,
-        });
-
-        // localStorage.setItem('cart', JSON.stringify([]));
+        enqueueSnackbar(
+          'Has solicitado tu premio. Pronto lo tendrás en tus manos.',
+          { variant: 'success' },
+        );
         dispatch({
-          type: "initialize-items",
+          type: 'initialize-items',
           payload: {
             items: [],
             pointsSimulation: 0,
@@ -481,43 +468,34 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
         });
       } catch (e) {
         console.error(e);
-        notification.open({
-          message: "Error",
-          description:
-            "Lo sentimos, algo inesperado ha ocurrido. Inténtalo más tarde",
-          type: "error",
-          duration: 3,
-        });
         dispatch({
-          type: "request-sended",
+          type: 'request-sended',
         });
       }
     } else {
-      notification.open({
-        message: "Error",
-        description: `Lo sentimos, no tiene ${program.coinName} suficientes para el canje`,
-        type: "error",
-        duration: 3,
-      });
+      enqueueSnackbar(
+        `Lo sentimos, no tiene ${program.coinName} suficientes para el canje`,
+        { variant: 'error' },
+      );
       console.error(`No tienes los ${program.coinName} suficientes`);
     }
-  }; */
+  };
   const retrieveAddresses = async () => {
     try {
       if (participant !== null) {
         const { data: addresses } = await api.get<Page<Address>>(
-          `/addresses/mine`
+          `/addresses/mine`,
         );
 
         dispatch({
-          type: "retrieve-addresses",
+          type: 'retrieve-addresses',
           payload: {
             addresses,
           },
         });
       }
     } catch (e) {
-      console.error("retrieveAddresses(): ", e);
+      console.error('retrieveAddresses(): ', e);
     }
   };
 
@@ -527,7 +505,7 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
 
   const handleNewAddressChange = (field: string, value: any) => {
     dispatch({
-      type: "handle-new-address-change",
+      type: 'handle-new-address-change',
       payload: {
         field,
         value,
@@ -542,37 +520,37 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
         participantId: participant.id,
       });
       dispatch({
-        type: "select-address",
+        type: 'select-address',
         payload: {
           addressId: address.id,
         },
       });
       dispatch({
-        type: "save-address",
+        type: 'save-address',
       });
-      enqueueSnackbar("Se agrego con exito la dirección", {
-        variant: "success",
+      enqueueSnackbar('Se agrego con exito la dirección', {
+        variant: 'success',
       });
       retrieveAddresses();
     } catch (e) {
-      console.error("saveAddress(): ", e);
-      enqueueSnackbar("debes cambiar los datos para una nueva direcció", {
-        variant: "error",
+      console.error('saveAddress(): ', e);
+      enqueueSnackbar('debes cambiar los datos para una nueva direcció', {
+        variant: 'error',
       });
     }
   };
-  const selectVariant = (variant: AwardVariant) => {
+  /*  const selectVariant = (variant: AwardVariant) => {
     dispatch({
-      type: "select-variant",
+      type: 'select-variant',
       payload: {
         variant,
       },
     });
-  };
+  }; */
 
   const selectAddress = (addressId: number) => {
     dispatch({
-      type: "select-address",
+      type: 'select-address',
       payload: {
         addressId,
       },
@@ -583,8 +561,8 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
   const removeAddress = async (addressId: number) => {
     try {
       await api.delete(`/addresses/${addressId}`);
-      enqueueSnackbar("Se elimino con exito la dirección", {
-        variant: "success",
+      enqueueSnackbar('Se elimino con exito la dirección', {
+        variant: 'success',
       });
       retrieveAddresses();
     } catch (error) {
@@ -599,17 +577,16 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
         removeFromCart,
         isTheItemOnCart,
         totalAmount,
-        /* redeemAll, */
+        redeemAll,
         handleNewAddressChange,
         saveAddress,
         selectAddress,
-        selectVariant,
+        /* selectVariant, */
         removeAddress,
         sumQuantity,
         substractQuantity,
         resetQuantity,
-      }}
-    >
+      }}>
       {children}
     </CartContext.Provider>
   );

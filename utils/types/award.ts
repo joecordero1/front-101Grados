@@ -7,6 +7,7 @@ export interface Award {
   subcategories: Subcategory[];
   brand: Brand;
   model: string;
+  variants: AwardVariant[];
 }
 
 export interface Category {
@@ -37,9 +38,9 @@ export interface Brand {
 }
 
 export enum VariantType {
-  SIZE = "SIZE",
-  COLOR = "COLOR",
-  GENERAL = "GENERAL",
+  SIZE = 'SIZE',
+  COLOR = 'COLOR',
+  GENERAL = 'GENERAL',
 }
 
 export interface AwardVariant {
