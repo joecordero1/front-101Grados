@@ -68,15 +68,15 @@ const ProductTwo: FC<Props> = (props) => {
 
   return (
     <div className={`product text-left ${adClass}`}>
-      <figure className="product-media">
-        <ALink href={`/product/default/${item.award.id}`}>
+      <figure className='product-media'>
+        <ALink href={`/award/${item.award.id}`}>
           <LazyLoadImage
-            alt="product"
+            alt='product'
             src={item.award.mainImage}
             threshold={500}
-            effect="opacity"
-            width="300"
-            height="338"
+            effect='opacity'
+            width='300'
+            height='338'
           />
 
           {/* {product.pictures.length >= 2 ? (
@@ -94,9 +94,9 @@ const ProductTwo: FC<Props> = (props) => {
           )} */}
         </ALink>
 
-        <div className="product-label-group">
-          {isNew ? <label className="product-label label-new">New</label> : ''}
-          {isTop ? <label className="product-label label-top">Top</label> : ''}
+        <div className='product-label-group'>
+          {isNew ? <label className='product-label label-new'>New</label> : ''}
+          {isTop ? <label className='product-label label-top'>Top</label> : ''}
           {/* {product.discount > 0 ? (
             product.variants.length === 0 ? (
               <label className="product-label label-sale">
@@ -110,7 +110,7 @@ const ProductTwo: FC<Props> = (props) => {
           )} */}
         </div>
 
-        <div className="product-action-vertical">
+        <div className='product-action-vertical'>
           {/* {product.variants.length > 0 ? (
             <ALink
               href={`/product/default/${product.slug}`}
@@ -141,28 +141,26 @@ const ProductTwo: FC<Props> = (props) => {
           </a> */}
         </div>
 
-        <div className="product-action">
+        <div className='product-action'>
           <ALink
-            href="#"
-            className="btn-product btn-quickview"
-            title="Quick View"
-            onClick={() => openModal(item)}
-          >
+            href='#'
+            className='btn-product btn-quickview'
+            title='Quick View'
+            onClick={() => openModal(item)}>
             Vista Rápida
           </ALink>
         </div>
       </figure>
 
-      <div className="product-details">
-        <div className="product-cat">
+      <div className='product-details'>
+        <div className='product-cat'>
           {item.award.subcategories.map((subcategory, index) => (
             <React.Fragment key={subcategory.name + '-' + index}>
               <ALink
                 href={{
                   pathname: '/shop',
                   query: { subcategory: subcategory.id },
-                }}
-              >
+                }}>
                 {subcategory.name}
                 {index < item.award.subcategories.length - 1 ? ', ' : ''}
               </ALink>
@@ -170,12 +168,12 @@ const ProductTwo: FC<Props> = (props) => {
           ))}
         </div>
 
-        <h3 className="product-name">
-          <ALink href={`/product/default/${item.id}`}>{item.award.name}</ALink>
+        <h3 className='product-name'>
+          <ALink href={`/award/${item.id}`}>{item.award.name}</ALink>
         </h3>
 
-        <div className="product-price">
-          <ins className="new-price">
+        <div className='product-price'>
+          <ins className='new-price'>
             {item.points} {coinName}
           </ins>
           {/* {product.price[0] !== product.price[1] ? (

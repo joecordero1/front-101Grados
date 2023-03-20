@@ -73,7 +73,7 @@ const ProductOne: FC<Props> = (props) => {
   return (
     <div className={`product ${adClass}`}>
       <figure className='product-media'>
-        <ALink href={`/product/default/${product.award.id}`}>
+        <ALink href={`/award/${product.award.id}`}>
           <LazyLoadImage
             alt='product'
             // src={process.env.NEXT_PUBLIC_ASSET_URI + product.pictures[0].url}
@@ -157,7 +157,7 @@ const ProductOne: FC<Props> = (props) => {
         )}
 
         <h3 className='product-name'>
-          <ALink href={`/product/default/${product.award.id}`}>
+          <ALink href={`/award/${product.award.id}`}>
             {product.award.name}
           </ALink>
         </h3>

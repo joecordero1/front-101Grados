@@ -62,7 +62,7 @@ function CartMenu() {
                   className='product product-cart'
                   key={'cart-menu-product-' + index}>
                   <figure className='product-media pure-media'>
-                    <ALink href={'/product/default/' + item.award.id}>
+                    <ALink href={'/award/' + item.award.id}>
                       <img
                         src={item.award.mainImage}
                         alt='product'
@@ -81,12 +81,12 @@ function CartMenu() {
                   </figure>
                   <div className='product-detail'>
                     <ALink
-                      href={'/product/default/' + item.award.id}
+                      href={'/award/' + item.award.id}
                       className='product-name'>
                       {item.award.name}
                     </ALink>
                     <div className='price-box'>
-                      {/* <span className="product-quantity">{item.qty}</span> */}
+                      <span className='product-quantity'>{item.quantity}</span>
                       <span className='product-price'>{`${item.points} ${program.coinName}`}</span>
                     </div>
                   </div>

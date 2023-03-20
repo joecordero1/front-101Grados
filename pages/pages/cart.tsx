@@ -6,9 +6,11 @@ import Quantity from '~/components/features/quantity';
 
 import { toDecimal, getTotalPrice } from '~/utils';
 import { useCart, useProgram } from '~/hooks';
+import { CartItem } from '~/utils/types';
 
 function Cart() {
-  const { removeFromCart, items, totalAmount } = useCart();
+  const { removeFromCart, items, totalAmount, sumQuantity, substractQuantity } =
+    useCart();
   const { program } = useProgram();
 
   return (
@@ -44,7 +46,6 @@ function Cart() {
                         <th>
                           <span>Cantidad</span>
                         </th>
-                        <th>Subtotal</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -52,7 +53,7 @@ function Cart() {
                         <tr key={'cart' + item.award.id}>
                           <td className='product-thumbnail'>
                             <figure>
-                              <ALink href={'/product/default/' + item.award.id}>
+                              <ALink href={'/award/' + item.award.id}>
                                 <img
                                   src={item.award.mainImage}
                                   width='100'
@@ -64,7 +65,7 @@ function Cart() {
                           </td>
                           <td className='product-name'>
                             <div className='product-name-section'>
-                              <ALink href={'/product/default/' + item.award.id}>
+                              <ALink href={'/award/' + item.award.id}>
                                 {item.award.name}
                               </ALink>
                             </div>
@@ -76,17 +77,25 @@ function Cart() {
                           </td>
 
                           <td className='product-quantity'>
-                            {/*   <Quantity
-                              qty={item.qty}
-                              max={item.stock}
-                              onChangeQty={(qty) => onChangeQty(item.name, qty)}
-                            /> */}
+                            <div className='mr-2 input-group'>
+                              <button
+                                className='quantity-minus d-icon-minus'
+                                onClick={() =>
+                                  substractQuantity(item.id)
+                                }></button>
+                              <input
+                                className='quantity form-control'
+                                type='number'
+                                min='1'
+                                max='100'
+                                value={item.quantity}
+                              />
+                              <button
+                                className='quantity-plus d-icon-plus'
+                                onClick={() => sumQuantity(item.id)}></button>
+                            </div>
                           </td>
-                          <td className='product-price'>
-                            <span className='amount'>
-                              {`${item.points} ${program.coinName}`}
-                            </span>
-                          </td>
+
                           <td className='product-close'>
                             <ALink
                               href='#'
@@ -130,78 +139,47 @@ function Cart() {
                     className='sticky-sidebar'
                     data-sticky-options="{'bottom': 20}">
                     <div className='summary mb-4'>
-                      <h3 className='summary-title text-left'>Cart Totals</h3>
+                      <h3 className='summary-title text-left'>
+                        Detalle de Canje
+                      </h3>
                       <table className='shipping'>
                         <tbody>
-                          <tr className='summary-subtotal'>
-                            <td>
-                              <h4 className='summary-subtitle'>Subtotal</h4>
-                            </td>
-                            <td>
-                              <p className='summary-subtotal-price'>
-                                {`${totalAmount()} ${program.coinName}`}
-                              </p>
-                            </td>
-                          </tr>
                           <tr className='sumnary-shipping shipping-row-last'>
                             <td colSpan={2}>
-                              <h4 className='summary-subtitle'>
-                                Calculate Shipping
-                              </h4>
-                              <ul>
-                                <li>
-                                  <div className='custom-radio'>
-                                    <input
-                                      type='radio'
-                                      id='flat_rate'
-                                      name='shipping'
-                                      className='custom-control-input'
-                                      defaultChecked
-                                    />
-                                    <label
-                                      className='custom-control-label'
-                                      htmlFor='flat_rate'>
-                                      Flat rate
-                                    </label>
+                              {items.map((item: CartItem, index: number) => (
+                                <div
+                                  className='product product-cart'
+                                  key={'cart-menu-product-' + index}>
+                                  <figure className='product-media pure-media'>
+                                    <ALink href={'/award/' + item.award.id}>
+                                      <img
+                                        src={item.award.mainImage}
+                                        alt='product'
+                                        width='80'
+                                        height='88'
+                                      />
+                                    </ALink>
+                                  </figure>
+                                  <div className='product-detail'>
+                                    <ALink
+                                      href={'/award/' + item.award.id}
+                                      className='product-name'>
+                                      {item.award.name}
+                                    </ALink>
+                                    <div className='price-box'>
+                                      <span className='product-quantity'>
+                                        {item.quantity}
+                                      </span>
+                                      <span className='product-price'>{`${item.points} ${program.coinName}`}</span>
+                                    </div>
                                   </div>
-                                </li>
-                                <li>
-                                  <div className='custom-radio'>
-                                    <input
-                                      type='radio'
-                                      id='free-shipping'
-                                      name='shipping'
-                                      className='custom-control-input'
-                                    />
-                                    <label
-                                      className='custom-control-label'
-                                      htmlFor='free-shipping'>
-                                      Free shipping
-                                    </label>
-                                  </div>
-                                </li>
-
-                                <li>
-                                  <div className='custom-radio'>
-                                    <input
-                                      type='radio'
-                                      id='local_pickup'
-                                      name='shipping'
-                                      className='custom-control-input'
-                                    />
-                                    <label
-                                      className='custom-control-label'
-                                      htmlFor='local_pickup'>
-                                      Local pickup
-                                    </label>
-                                  </div>
-                                </li>
-                              </ul>
+                                </div>
+                              ))}
                             </td>
                           </tr>
                         </tbody>
                       </table>
-                      <div className='shipping-address'>
+                      {/*     <div className='shipping-address'>
                         <label>
                           Shipping to <strong>CA.</strong>
                         </label>
@@ -244,7 +222,7 @@ function Cart() {
                           className='btn btn-md btn-dark btn-rounded btn-outline'>
                           Update totals
                         </ALink>
-                      </div>
+                      </div> */}
                       <table className='total'>
                         <tbody>
                           <tr className='summary-subtotal'>

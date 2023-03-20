@@ -198,7 +198,13 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         items: state.items.map((item) =>
           item.id === itemSumId
-            ? { ...item, quantity: item.quantity + 1 }
+            ? {
+                ...item,
+                quantity:
+                  item.quantity >= 1 && item.quantity <= 300
+                    ? item.quantity + 1
+                    : 1,
+              }
             : item,
         ),
       };
@@ -208,7 +214,13 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         items: state.items.map((item) =>
           item.id === itemSubstractId
-            ? { ...item, quantity: item.quantity - 1 }
+            ? {
+                ...item,
+                quantity:
+                  item.quantity > 0 && item.quantity !== 1
+                    ? item.quantity - 1
+                    : 1,
+              }
             : item,
         ),
       };
@@ -363,7 +375,10 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
 
   const totalAmount = () => {
     if (state.items.length > 0) {
-      return state.items.reduce((acum, current) => acum + current.points, 0);
+      return state.items.reduce(
+        (acum, current) => acum + current.points * current.quantity,
+        0,
+      );
     }
     return 0;
   };
@@ -569,6 +584,7 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
       console.error(error);
     }
   };
+  console.log(state.items);
   return (
     <CartContext.Provider
       value={{

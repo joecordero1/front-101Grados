@@ -67,18 +67,17 @@ const ProductEight: FC<Props> = (props) => {
       // className={`product product-list ${adClass} ${
       //   product.variants.length > 0 ? 'product-variable' : ''
       // }`}
-      className={`product product-list ${adClass}`}
-    >
-      <figure className="product-media">
-        <ALink href={`/product/default/${item.award.id}`}>
+      className={`product product-list ${adClass}`}>
+      <figure className='product-media'>
+        <ALink href={`/award/${item.award.id}`}>
           <LazyLoadImage
-            alt="product"
+            alt='product'
             // src={process.env.NEXT_PUBLIC_ASSET_URI + product.pictures[0].url}
             src={item.award.mainImage}
             threshold={500}
-            effect="opacity"
-            width="300"
-            height="338"
+            effect='opacity'
+            width='300'
+            height='338'
           />
 
           {/* {product.pictures.length >= 2 ? (
@@ -96,9 +95,9 @@ const ProductEight: FC<Props> = (props) => {
           )} */}
         </ALink>
 
-        <div className="product-label-group">
-          {isNew ? <label className="product-label label-new">New</label> : ''}
-          {isTop ? <label className="product-label label-top">Top</label> : ''}
+        <div className='product-label-group'>
+          {isNew ? <label className='product-label label-new'>New</label> : ''}
+          {isTop ? <label className='product-label label-top'>Top</label> : ''}
           {/* {product.discount > 0 ? (
             product.variants.length === 0 ? (
               <label className="product-label label-sale">
@@ -113,16 +112,15 @@ const ProductEight: FC<Props> = (props) => {
         </div>
       </figure>
 
-      <div className="product-details">
-        <div className="product-cat">
+      <div className='product-details'>
+        <div className='product-cat'>
           {item.award.subcategories.map((subcategory, index) => (
             <React.Fragment key={subcategory.name + '-' + index}>
               <ALink
                 href={{
                   pathname: '/shop',
                   query: { subcategory: subcategory.id },
-                }}
-              >
+                }}>
                 {subcategory.name}
                 {index < item.award.subcategories.length - 1 ? ', ' : ''}
               </ALink>
@@ -130,14 +128,12 @@ const ProductEight: FC<Props> = (props) => {
           ))}
         </div>
 
-        <h3 className="product-name">
-          <ALink href={`/product/default/${item.award.id}`}>
-            {item.award.name}
-          </ALink>
+        <h3 className='product-name'>
+          <ALink href={`/award/${item.award.id}`}>{item.award.name}</ALink>
         </h3>
 
-        <div className="product-price">
-          <ins className="new-price">{item.points} Puntos</ins>
+        <div className='product-price'>
+          <ins className='new-price'>{item.points} Puntos</ins>
           {/* {product.price[0] !== product.price[1] ? (
             product.variants.length === 0 ||
             (product.variants.length > 0 && !product.variants[0].price) ? (
@@ -174,9 +170,9 @@ const ProductEight: FC<Props> = (props) => {
           </ALink>
         </div> */}
 
-        <p className="product-short-desc">{item.award.description}</p>
+        <p className='product-short-desc'>{item.award.description}</p>
 
-        <div className="product-action">
+        <div className='product-action'>
           {/* {product.variants.length > 0 ? (
             <ALink
               href={`/product/default/${product.slug}`}
@@ -208,12 +204,11 @@ const ProductEight: FC<Props> = (props) => {
           </a> */}
 
           <ALink
-            href="#"
-            className="btn-product-icon btn-quickview"
-            title="Quick View"
-            onClick={showQuickviewHandler}
-          >
-            <i className="d-icon-search"></i>
+            href='#'
+            className='btn-product-icon btn-quickview'
+            title='Quick View'
+            onClick={showQuickviewHandler}>
+            <i className='d-icon-search'></i>
           </ALink>
         </div>
       </div>
