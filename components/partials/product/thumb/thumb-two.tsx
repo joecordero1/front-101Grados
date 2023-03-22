@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 import OwlCarousel from "~/components/features/owl-carousel";
+import ProductEight from "~/components/features/product/product-eight";
 
 import { mainSlider15 } from "~/utils/data/carousel";
-import { CartItem, CatalogueItem } from "~/utils/types";
+import { CatalogueItem } from "~/utils/types";
 
 function ThumbTwo(props: {
   product: CatalogueItem;
@@ -60,31 +61,7 @@ function ThumbTwo(props: {
 
   return (
     <div className="product-thumbs-wrap product-thumbs-two">
-      <OwlCarousel
-        adClass="product-thumbs product-thumb-carousel"
-        options={mainSlider15}
-        onChangeRef={changeRefHandler}
-      >
-        {product.award.variants.length > 0 &&
-        product.award.variants.filter((variant) => variant.image)
-          ? product.award.variants.map((variant) => (
-              <div
-                className={`product-thumb ${index === 0 ? "active" : ""}`}
-                onClick={(e) => {
-                  thumbActiveHandler(e, index);
-                }}
-                key={variant.id}
-              >
-                <img
-                  src={variant.image}
-                  alt="product thumbnail"
-                  width="137"
-                  height="137"
-                />
-              </div>
-            ))
-          : null}
-      </OwlCarousel>
+      <ProductEight item={product} />
     </div>
   );
 }

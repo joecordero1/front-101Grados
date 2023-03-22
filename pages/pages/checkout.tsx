@@ -1,346 +1,222 @@
-import { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import Helmet from 'react-helmet';
-import SlideToggle from 'react-slide-toggle';
-import Collapse from 'react-bootstrap/Collapse';
+import Helmet from "react-helmet";
 
-import ALink from '~/components/features/custom-link';
-import Card from '~/components/features/accordion/card';
+import ALink from "~/components/features/custom-link";
 
-import { toDecimal, getTotalPrice } from '~/utils';
-import { useCart, useProgram } from '~/hooks';
+import { useAuth, useCart, useProgram } from "~/hooks";
+import AddressesList from "~/components/partials/addresses/AddressesList";
+import { Button } from "@mui/material";
 
 function Checkout(props) {
-  const [isFirst, setFirst] = useState(false);
-  const { items, totalAmount } = useCart();
+  const {
+    items,
+    totalAmount,
+    availableAdresses,
+    saveAddress,
+    redeemAll,
+    status,
+    handleNewAddressChange,
+    selectedAdressId,
+  } = useCart();
   const { program } = useProgram();
+  const { availablePoints } = useAuth();
   return (
-    <main className='main checkout border-no'>
+    <main className="main checkout border-no">
       <Helmet>
         <title>Tienda | Checkout</title>
       </Helmet>
 
-      <h1 className='d-none'>Tienda - Checkout</h1>
+      <h1 className="d-none">Tienda - Checkout</h1>
 
       <div
         className={`page-content pt-7 pb-10 ${
-          items.length > 0 ? 'mb-10' : 'mb-2'
-        }`}>
-        <div className='step-by pr-4 pl-4'>
-          <h3 className='title title-simple title-step'>
-            <ALink href='/pages/cart'>1.Carrito</ALink>
+          items.length > 0 ? "mb-10" : "mb-2"
+        }`}
+      >
+        <div className="step-by pr-4 pl-4">
+          <h3 className="title title-simple title-step">
+            <ALink href="/pages/cart">1.Carrito</ALink>
           </h3>
-          <h3 className='title title-simple title-step active'>
-            <ALink href='#'>2.Envio</ALink>
+          <h3 className="title title-simple title-step active">
+            <ALink href="#">2.Envio</ALink>
           </h3>
-          <h3 className='title title-simple title-step'>
-            <ALink href='/pages/order'>3.Finalizar</ALink>
+          <h3 className="title title-simple title-step">
+            <ALink
+              href={availablePoints >= totalAmount() ? "/pages/order" : ""}
+            >
+              3.Finalizar
+            </ALink>
           </h3>
         </div>
-        <div className='container mt-7'>
+        <div className="container mt-7">
           {items.length > 0 ? (
             <>
-              <form action='#' className='form'>
-                <div className='row'>
-                  <div className='col-lg-7 mb-6 mb-lg-0 pr-lg-4'>
-                    <h3 className='title title-simple text-left text-uppercase'>
-                      Billing Details
+              <form action="#" className="form">
+                <div className="row">
+                  <div className="col-lg-7 mb-6 mb-lg-0 pr-lg-4">
+                    <h3 className="title title-simple text-left text-uppercase">
+                      Dirección de envio
                     </h3>
-                    <div className='row'>
-                      <div className='col-xs-6'>
-                        <label>First Name *</label>
+                    {availableAdresses.length > 0 ? (
+                      <AddressesList addresses={availableAdresses} />
+                    ) : (
+                      <h5>Aún no tienes direcciones registradas</h5>
+                    )}
+                    <h5>Nueva dirección</h5>
+                    <div className="row">
+                      <div className="col-xs-6">
+                        <label>Nombre de la dirección *</label>
                         <input
-                          type='text'
-                          className='form-control'
-                          name='first-name'
+                          onChange={(e) =>
+                            handleNewAddressChange(
+                              e.target.name,
+                              e.target.value
+                            )
+                          }
+                          type="text"
+                          className="form-control"
+                          name="alias"
+                          placeholder={"casa, trabajo, casa2"}
                           required
                         />
                       </div>
-                      <div className='col-xs-6'>
-                        <label>Last Name *</label>
+                      <div className="col-xs-6">
+                        <label>Ciudad *</label>
                         <input
-                          type='text'
-                          className='form-control'
-                          name='last-name'
+                          type="text"
+                          className="form-control"
+                          name="city"
+                          onChange={(e) =>
+                            handleNewAddressChange(
+                              e.target.name,
+                              e.target.value
+                            )
+                          }
                           required
                         />
                       </div>
                     </div>
-                    <label>Company Name (Optional)</label>
+                    <label>Sector(Opcional)</label>
                     <input
-                      type='text'
-                      className='form-control'
-                      name='company-name'
+                      type="text"
+                      className="form-control"
+                      name="company-name"
                       required
                     />
-                    <label>Country / Region *</label>
-                    <div className='select-box'>
+
+                    {/* <div className="select-box">
                       <select
-                        name='country'
-                        className='form-control'
-                        defaultValue='us'>
-                        <option value='us'>United States (US)</option>
-                        <option value='uk'> United Kingdom</option>
-                        <option value='fr'>France</option>
-                        <option value='aus'>Austria</option>
+                        name="mainStreet"
+                        className="form-control"
+                        required
+                      >
+                        <option value="us">United States (US)</option>
+                        <option value="uk"> United Kingdom</option>
+                        <option value="fr">France</option>
+                        <option value="aus">Austria</option>
                       </select>
-                    </div>
-                    <label>Street Address *</label>
+                    </div> */}
+                    <label>Calle principal *</label>
                     <input
-                      type='text'
-                      className='form-control'
-                      name='address1'
+                      type="text"
+                      className="form-control"
+                      onChange={(e) =>
+                        handleNewAddressChange(e.target.name, e.target.value)
+                      }
+                      name="mainStreet"
                       required
-                      placeholder='House number and street name'
+                      placeholder="Calle principal"
                     />
+                    <label>Calle secundaria *</label>
                     <input
-                      type='text'
-                      className='form-control'
-                      name='address2'
+                      type="text"
+                      className="form-control"
+                      name="secondaryStreet"
+                      onChange={(e) =>
+                        handleNewAddressChange(e.target.name, e.target.value)
+                      }
                       required
-                      placeholder='Apartment, suite, unit, etc. (optional)'
+                      placeholder="Calle secundaria"
                     />
-                    <div className='row'>
-                      <div className='col-xs-6'>
-                        <label>Town / City *</label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          name='city'
-                          required
-                        />
-                      </div>
-                      <div className='col-xs-6'>
-                        <label>State *</label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          name='state'
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div className='row'>
-                      <div className='col-xs-6'>
-                        <label>ZIP *</label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          name='zip'
-                          required
-                        />
-                      </div>
-                      <div className='col-xs-6'>
-                        <label>Phone *</label>
-                        <input
-                          type='text'
-                          className='form-control'
-                          name='phone'
-                          required
-                        />
-                      </div>
-                    </div>
-                    <label>Email Address *</label>
+                    <label>
+                      Numero de casa * (en caso de no contar con este dato
+                      escribir no tiene)
+                    </label>
                     <input
-                      type='text'
-                      className='form-control'
-                      name='email-address'
+                      type="text"
+                      className="form-control"
+                      name="houseNumber"
+                      onChange={(e) =>
+                        handleNewAddressChange(e.target.name, e.target.value)
+                      }
                       required
+                      placeholder="Numero de casa"
                     />
 
-                    <SlideToggle duration={300} collapsed>
-                      {({ onToggle, setCollapsibleElement }) => (
-                        <div className='form-checkbox mb-0 pt-0'>
-                          <input
-                            type='checkbox'
-                            className='custom-checkbox'
-                            id='create-account'
-                            name='create-account'
-                            onChange={onToggle}
-                          />
-                          <label
-                            className='form-control-label ls-s'
-                            htmlFor='create-account'>
-                            Create an account?
-                          </label>
+                    <div className="row">
+                      <div className="col-xs-6">
+                        <label>Referencia *</label>
+                        <input
+                          type="text"
+                          placeholder="a 2 cuadras del parque"
+                          className="form-control"
+                          onChange={(e) =>
+                            handleNewAddressChange(
+                              e.target.name,
+                              e.target.value
+                            )
+                          }
+                          name="reference"
+                          required
+                        />
+                      </div>
+                      <div className="col-xs-6">
+                        <label>Nombre para contacto *</label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          onChange={(e) =>
+                            handleNewAddressChange(
+                              e.target.name,
+                              e.target.value
+                            )
+                          }
+                          name="contactName"
+                          required
+                        />
+                      </div>
+                    </div>
 
-                          <div
-                            ref={setCollapsibleElement}
-                            style={{ overflow: 'hidden' }}>
-                            <label htmlFor='account_username' className='pt-4'>
-                              Account username&nbsp;
-                              <abbr className='required' title='required'>
-                                *
-                              </abbr>
-                            </label>
-
-                            <input
-                              type='text'
-                              className='form-control'
-                              name='account_username'
-                              id='account_username'
-                              placeholder='Username'
-                              rows='5'
-                            />
-
-                            <label htmlFor='account_password'>
-                              Create account password&nbsp;
-                              <abbr className='required' title='required'>
-                                *
-                              </abbr>
-                            </label>
-
-                            <input
-                              type='password'
-                              className='form-control mb-3'
-                              name='account_password'
-                              id='account_password'
-                              placeholder='Password'
-                              rows='5'
-                            />
-                          </div>
-                        </div>
-                      )}
-                    </SlideToggle>
-
-                    <SlideToggle duration={300} collapsed>
-                      {({ onToggle, setCollapsibleElement }) => (
-                        <div className='form-checkbox mb-6'>
-                          <input
-                            type='checkbox'
-                            className='custom-checkbox'
-                            id='different-address'
-                            name='different-address'
-                            onChange={onToggle}
-                          />
-                          <label
-                            className='form-control-label ls-s'
-                            htmlFor='different-address'>
-                            Ship to a different address?
-                          </label>
-
-                          <div
-                            ref={setCollapsibleElement}
-                            style={{ overflow: 'hidden' }}>
-                            <div className='row pt-4'>
-                              <div className='col-xs-6'>
-                                <label>First Name *</label>
-                                <input
-                                  type='text'
-                                  className='form-control'
-                                  name='first-name'
-                                  required
-                                />
-                              </div>
-                              <div className='col-xs-6'>
-                                <label>Last Name *</label>
-                                <input
-                                  type='text'
-                                  className='form-control'
-                                  name='last-name'
-                                  required
-                                />
-                              </div>
-                            </div>
-                            <label>Company Name (Optional)</label>
-                            <input
-                              type='text'
-                              className='form-control'
-                              name='company-name'
-                              required
-                            />
-                            <label>Country / Region *</label>
-                            <div className='select-box'>
-                              <select
-                                name='country'
-                                className='form-control'
-                                defaultValue='us'>
-                                <option value='us'>United States (US)</option>
-                                <option value='uk'> United Kingdom</option>
-                                <option value='fr'>France</option>
-                                <option value='aus'>Austria</option>
-                              </select>
-                            </div>
-                            <label>Street Address *</label>
-                            <input
-                              type='text'
-                              className='form-control'
-                              name='address1'
-                              required
-                              placeholder='House number and street name'
-                            />
-                            <input
-                              type='text'
-                              className='form-control'
-                              name='address2'
-                              required
-                              placeholder='Apartment, suite, unit, etc. (optional)'
-                            />
-                            <div className='row'>
-                              <div className='col-xs-6'>
-                                <label>Town / City *</label>
-                                <input
-                                  type='text'
-                                  className='form-control'
-                                  name='city'
-                                  required
-                                />
-                              </div>
-                              <div className='col-xs-6'>
-                                <label>State *</label>
-                                <input
-                                  type='text'
-                                  className='form-control'
-                                  name='state'
-                                  required
-                                />
-                              </div>
-                            </div>
-                            <div className='row'>
-                              <div className='col-xs-6'>
-                                <label>ZIP *</label>
-                                <input
-                                  type='text'
-                                  className='form-control'
-                                  name='zip'
-                                  required
-                                />
-                              </div>
-                              <div className='col-xs-6'>
-                                <label>Phone *</label>
-                                <input
-                                  type='text'
-                                  className='form-control'
-                                  name='phone'
-                                  required
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </SlideToggle>
-
-                    <h2 className='title title-simple text-uppercase text-left mt-6'>
-                      Additional Information
-                    </h2>
-                    <label>Order Notes (Optional)</label>
-                    <textarea
-                      className='form-control pb-2 pt-2 mb-0'
-                      cols='30'
-                      rows='5'
-                      placeholder='Notes about your order, e.g. special notes for delivery'></textarea>
+                    <label>Numero de telefono para contacto *</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="contactPhone"
+                      onChange={(e) =>
+                        handleNewAddressChange(e.target.name, e.target.value)
+                      }
+                      required
+                    />
+                    <Button
+                      size="large"
+                      variant="contained"
+                      disabled={status === "loading" ? true : false}
+                      onClick={() => saveAddress()}
+                      style={{ fontSize: 12 }}
+                    >
+                      Guardar Dirección
+                    </Button>
                   </div>
 
-                  <aside className='col-lg-5 sticky-sidebar-wrapper'>
+                  <aside className="col-lg-5 sticky-sidebar-wrapper">
                     <div
-                      className='sticky-sidebar mt-1'
-                      data-sticky-options="{'bottom': 50}">
-                      <div className='summary pt-5'>
-                        <h3 className='title title-simple text-left text-uppercase'>
+                      className="sticky-sidebar mt-1"
+                      data-sticky-options="{'bottom': 50}"
+                    >
+                      <div className="summary pt-5">
+                        <h3 className="title title-simple text-left text-uppercase">
                           Tu Canje
                         </h3>
-                        <table className='order-table'>
+                        <table className="order-table">
                           <thead>
                             <tr>
                               <th>Premio</th>
@@ -349,36 +225,59 @@ function Checkout(props) {
                           </thead>
                           <tbody>
                             {items.map((item) => (
-                              <tr key={'checkout-' + item.award.name}>
-                                <td className='product-name'>
-                                  {item.award.name}{' '}
-                                  <span className='product-quantity'>
+                              <tr key={"checkout-" + item.award.name}>
+                                <td className="product-name">
+                                  {`${item.award.name}${
+                                    item.variant ? "-" + item.variant.name : ""
+                                  }`}
+                                  <span className="product-quantity">
                                     ×&nbsp;{item.quantity}
                                   </span>
                                 </td>
-                                <td className='product-total text-body'>
+                                <td className="product-total text-body">
                                   {totalAmount()} {program.coinName}
                                 </td>
                               </tr>
                             ))}
-                            <tr className='summary-total'>
-                              <td className='pb-0'>
-                                <h4 className='summary-subtitle'>Total</h4>
+                            <tr className="summary-total">
+                              <td className="pb-0">
+                                <h4 className="summary-subtitle">Total</h4>
                               </td>
-                              <td className=' pt-0 pb-0'>
-                                <p className='summary-total-price ls-s text-primary'>
+                              <td className=" pt-0 pb-0">
+                                <p className="summary-total-price ls-s text-primary">
                                   {`${totalAmount()} ${program.coinName}`}
                                 </p>
                               </td>
                             </tr>
                           </tbody>
                         </table>
-
-                        <button
-                          type='submit'
-                          className='btn btn-dark btn-rounded btn-order'>
-                          Place Order
-                        </button>
+                        {availablePoints >= totalAmount() &&
+                        selectedAdressId ? (
+                          items.length > 1 ? (
+                            <ALink
+                              href={"/pages/order"}
+                              className="btn btn-dark btn-rounded btn-order"
+                              onClick={() => redeemAll()}
+                            >
+                              Canjear Premios
+                            </ALink>
+                          ) : (
+                            <ALink
+                              href={"/pages/order"}
+                              className="btn btn-dark btn-rounded btn-order"
+                              onClick={() => redeemAll()}
+                            >
+                              Canjear Premio
+                            </ALink>
+                          )
+                        ) : (
+                          <button
+                            disabled={true}
+                            className="btn btn-dark btn-rounded btn-order"
+                          >
+                            Selecciona una dirección de envio
+                          </button>
+                        )}
                       </div>
                     </div>
                   </aside>
@@ -386,13 +285,14 @@ function Checkout(props) {
               </form>
             </>
           ) : (
-            <div className='empty-cart text-center'>
-              <p>Your cart is currently empty.</p>
-              <i className='cart-empty d-icon-bag'></i>
-              <p className='return-to-shop mb-0'>
+            <div className="empty-cart text-center">
+              <p>Tu Carrito esta vacio.</p>
+              <i className="cart-empty d-icon-bag"></i>
+              <p className="return-to-shop mb-0">
                 <ALink
-                  className='button wc-backward btn btn-dark btn-md'
-                  href='/shop'>
+                  className="button wc-backward btn btn-dark btn-md"
+                  href="/shop"
+                >
                   Return to shop
                 </ALink>
               </p>

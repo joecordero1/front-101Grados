@@ -1,6 +1,6 @@
-import { CatalogueItem } from '~/utils/types';
-import { useApiAuth } from 'hooks/useApiAuth';
-import { useEffect, useState } from 'react';
+import { CatalogueItem } from "~/utils/types";
+import { useApiAuth } from "hooks/useApiAuth";
+import { useEffect, useState } from "react";
 export const useItem = (itemId: any) => {
   const api = useApiAuth();
   const [item, setItem] = useState<CatalogueItem>();
@@ -11,9 +11,8 @@ export const useItem = (itemId: any) => {
     try {
       setLoading(true);
       const catalogueItem = await api.get<CatalogueItem>(
-        `catalogue-items/store/award/${itemId}`,
+        `catalogue-items/store/award/${itemId}`
       );
-      console.log(catalogueItem);
       setItem(catalogueItem);
 
       setLoading(false);
@@ -25,7 +24,7 @@ export const useItem = (itemId: any) => {
 
   useEffect(() => {
     getItem();
-  }, []);
+  }, [itemId]);
   return {
     item,
     loading,

@@ -1,4 +1,4 @@
-import { Award } from './award';
+import { Award, AwardVariant } from "./award";
 
 export interface CatalogueItem {
   id: number;
@@ -8,5 +8,5 @@ export interface CatalogueItem {
 
 export interface CartItem extends CatalogueItem {
   quantity: number;
-  variantId?: number;
+  variant?: AwardVariant;
 }

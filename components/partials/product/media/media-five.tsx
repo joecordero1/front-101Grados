@@ -99,56 +99,25 @@ export default function MediaFive(props: {
         onChangeRef={changeRefHandler}
         events={events}
       >
-        {product.award.variants.length > 0 ? (
-          product.award.variants.map(
-            (variant) =>
-              variant.image && (
-                <div key={variant.id}>
-                  <Magnifier
-                    imageSrc={variant.image}
-                    imageAlt="magnifier"
-                    largeImageSrc={variant.image}
-                    dragToMove={false}
-                    mouseActivation="hover"
-                    cursorStyleActive="crosshair"
-                    className="product-image large-image"
-                  />
-                </div>
-              )
-          )
-        ) : (
-          <div>
-            <Magnifier
-              imageSrc={product.award.mainImage}
-              imageAlt="magnifier"
-              largeImageSrc={product.award.mainImage}
-              dragToMove={false}
-              mouseActivation="hover"
-              cursorStyleActive="crosshair"
-              className="product-image large-image"
-            />
-          </div>
-        )}
+        <div>
+          <Magnifier
+            imageSrc={product.award.mainImage}
+            imageAlt="magnifier"
+            largeImageSrc={product.award.mainImage}
+            dragToMove={false}
+            mouseActivation="hover"
+            cursorStyleActive="crosshair"
+            className="product-image large-image"
+          />
+        </div>
       </OwlCarousel>
 
       <ALink href="#" className="product-image-full" onClick={openLightBox}>
         <i className="d-icon-zoom"></i>
       </ALink>
 
-      <ThumbTwo
-        product={product}
-        index={index}
-        onChangeIndex={setIndexHandler}
-      />
-
       <MediaLightBox
-        images={
-          product.award.variants.length > 0
-            ? product.award.variants.map(
-                (variant) => variant.image && variant.image
-              )
-            : null
-        }
+        images={product.award.mainImage}
         isOpen={isOpen}
         changeOpenState={changeOpenState}
         index={index}

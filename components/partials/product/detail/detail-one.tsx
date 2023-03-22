@@ -1,18 +1,18 @@
-import React, { FC, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { useRouter } from 'next/router';
-import Collapse from 'react-bootstrap/Collapse';
+import React, { FC, useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { useRouter } from "next/router";
+import Collapse from "react-bootstrap/Collapse";
 
-import ALink from '~/components/features/custom-link';
-import Countdown from '~/components/features/countdown';
-import Quantity from '~/components/features/quantity';
-import ProductNav from '~/components/partials/product/product-nav';
-import { wishlistActions } from '~/store/wishlist';
-import { cartActions } from '~/store/cart';
+import ALink from "~/components/features/custom-link";
+import Countdown from "~/components/features/countdown";
+import Quantity from "~/components/features/quantity";
+import ProductNav from "~/components/partials/product/product-nav";
+import { wishlistActions } from "~/store/wishlist";
+import { cartActions } from "~/store/cart";
 
-import { toDecimal } from '~/utils';
-import { CatalogueItem } from '../../../../utils/types/catalogueItem';
-import { useProgram } from 'hooks';
+import { toDecimal } from "~/utils";
+import { CatalogueItem } from "../../../../utils/types/catalogueItem";
+import { useProgram } from "hooks";
 
 type Props = {
   product: CatalogueItem;
@@ -28,10 +28,10 @@ type Props = {
 const DetailOne: FC<Props> = (props) => {
   const { coinName } = useProgram();
   let router = useRouter();
-  const { product, isStickyCart = false, adClass = '', isNav = true } = props;
+  const { product, isStickyCart = false, adClass = "", isNav = true } = props;
   const { toggleWishlist, addToCart, wishlist } = props;
-  const [curColor, setCurColor] = useState('null');
-  const [curSize, setCurSize] = useState('null');
+  const [curColor, setCurColor] = useState("null");
+  const [curSize, setCurSize] = useState("null");
   const [curIndex, setCurIndex] = useState(-1);
   const [cartActive, setCartActive] = useState(false);
   const [quantity, setQauntity] = useState(1);
@@ -161,8 +161,8 @@ const DetailOne: FC<Props> = (props) => {
   };
 
   const resetValueHandler = (e) => {
-    setCurColor('null');
-    setCurSize('null');
+    setCurColor("null");
+    setCurSize("null");
   };
 
   function isDisabled(color, size) {
@@ -193,7 +193,7 @@ const DetailOne: FC<Props> = (props) => {
   }
 
   return (
-    <div className={'product-details ' + adClass}>
+    <div className={"product-details " + adClass}>
       {isNav ? (
         <div className="product-navigation">
           <ul className="breadcrumb breadcrumb-lg">
@@ -213,23 +213,23 @@ const DetailOne: FC<Props> = (props) => {
           <ProductNav product={product} />
         </div>
       ) : (
-        ''
+        ""
       )}
 
       <h2 className="product-name">{product.award.name}</h2>
 
       <div className="product-meta">
         Código: <span className="product-sku">{product.award.code}</span>
-        Subcategorías:{' '}
+        Subcategorías:{" "}
         <span className="product-brand">
           {product.award.subcategories.map((item, index) => (
-            <React.Fragment key={item.name + '-' + index}>
+            <React.Fragment key={item.name + "-" + index}>
               <ALink
-                href={{ pathname: '/shop', query: { subcategory: item.id } }}
+                href={{ pathname: "/shop", query: { subcategory: item.id } }}
               >
                 {item.name}
               </ALink>
-              {index < product.award.subcategories.length - 1 ? ', ' : ''}
+              {index < product.award.subcategories.length - 1 ? ", " : ""}
             </React.Fragment>
           ))}
         </span>
@@ -239,343 +239,14 @@ const DetailOne: FC<Props> = (props) => {
         <ins className="new-price">
           {product.points} {coinName}
         </ins>
-        {/* {product.data.price[0] !== product.data.price[1] ? (
-          product.data.variants.length === 0 ||
-          (product.data.variants.length > 0 &&
-            !product.data.variants[0].price) ? (
-            <>
-              <ins className="new-price">
-                ${toDecimal(product.data.price[0])}
-              </ins>
-              <del className="old-price">
-                ${toDecimal(product.data.price[1])}
-              </del>
-            </>
-          ) : (
-            <del className="new-price">
-              ${toDecimal(product.data.price[0])} – $
-              {toDecimal(product.data.price[1])}
-            </del>
-          )
-        ) : (
-          <ins className="new-price">${toDecimal(product.data.price[0])}</ins>
-        )} */}
       </div>
-
-      {/* {product.data.price[0] !== product.data.price[1] &&
-      product.data.variants.length === 0 ? (
-        <Countdown type={2} />
-      ) : (
-        ''
-      )} */}
-
-      {/* <div className="ratings-container">
-        <div className="ratings-full">
-          <span
-            className="ratings"
-            style={{ width: 20 * product.data.ratings + '%' }}
-          ></span>
-          <span className="tooltiptext tooltip-top">
-            {toDecimal(product.data.ratings)}
-          </span>
-        </div>
-
-        <ALink href="#" className="rating-reviews">
-          ( {product.data.reviews} reviews )
-        </ALink>
-      </div> */}
 
       <p
         className="product-short-desc"
         dangerouslySetInnerHTML={{ __html: product.award.description }}
       ></p>
-
-      {/* {product && product.data.variants.length > 0 ? (
-        <>
-          {product.data.variants[0].color ? (
-            <div className="product-form product-variations product-color">
-              <label>Color:</label>
-              <div className="select-box">
-                <select
-                  name="color"
-                  className="form-control select-color"
-                  onChange={setColorHandler}
-                  value={curColor}
-                >
-                  <option value="null">Choose an option</option>
-                  {colors.map((item) =>
-                    !isDisabled(item.name, curSize) ? (
-                      <option value={item.name} key={'color-' + item.name}>
-                        {item.name}
-                      </option>
-                    ) : (
-                      ''
-                    )
-                  )}
-                </select>
-              </div>
-            </div>
-          ) : (
-            ''
-          )}
-
-          {product.data.variants[0].size ? (
-            <div className="product-form product-variations product-size mb-0 pb-2">
-              <label>Size:</label>
-              <div className="product-form-group">
-                <div className="select-box">
-                  <select
-                    name="size"
-                    className="form-control select-size"
-                    onChange={setSizeHandler}
-                    value={curSize}
-                  >
-                    <option value="null">Choose an option</option>
-                    {sizes.map((item) =>
-                      !isDisabled(curColor, item.name) ? (
-                        <option value={item.name} key={'size-' + item.name}>
-                          {item.name}
-                        </option>
-                      ) : (
-                        ''
-                      )
-                    )}
-                  </select>
-                </div>
-
-                <Collapse in={'null' !== curColor || 'null' !== curSize}>
-                  <div className="card-wrapper overflow-hidden reset-value-button w-100 mb-0">
-                    <ALink
-                      href="#"
-                      className="product-variation-clean"
-                      onClick={resetValueHandler}
-                    >
-                      Clean All
-                    </ALink>
-                  </div>
-                </Collapse>
-              </div>
-            </div>
-          ) : (
-            ''
-          )}
-
-          <div className="product-variation-price">
-            <Collapse in={cartActive && curIndex > -1}>
-              <div className="card-wrapper">
-                {curIndex > -1 ? (
-                  <div className="single-product-price">
-                    {product.data.variants[curIndex].price ? (
-                      product.data.variants[curIndex].sale_price ? (
-                        <div className="product-price mb-0">
-                          <ins className="new-price">
-                            $
-                            {toDecimal(
-                              product.data.variants[curIndex].sale_price
-                            )}
-                          </ins>
-                          <del className="old-price">
-                            ${toDecimal(product.data.variants[curIndex].price)}
-                          </del>
-                        </div>
-                      ) : (
-                        <div className="product-price mb-0">
-                          <ins className="new-price">
-                            ${toDecimal(product.data.variants[curIndex].price)}
-                          </ins>
-                        </div>
-                      )
-                    ) : (
-                      ''
-                    )}
-                  </div>
-                ) : (
-                  ''
-                )}
-              </div>
-            </Collapse>
-          </div>
-        </>
-      ) : (
-        ''
-      )} */}
-
-      <hr className="product-divider"></hr>
-      {/* 
-      {isStickyCart ? (
-        <div className="sticky-content fix-top product-sticky-content">
-          <div className="container">
-            <div className="sticky-product-details">
-              <figure className="product-image">
-                <ALink href={'/product/default/' + product.data.slug}>
-                  <img
-                    src={
-                      process.env.NEXT_PUBLIC_ASSET_URI +
-                      product.data.pictures[0].url
-                    }
-                    width="90"
-                    height="90"
-                    alt="Product"
-                  />
-                </ALink>
-              </figure>
-              <div>
-                <h4 className="product-title">
-                  <ALink href={'/product/default/' + product.data.slug}>
-                    {product.data.name}
-                  </ALink>
-                </h4>
-                <div className="product-info">
-                  <div className="product-price mb-0">
-                    {curIndex > -1 && product.data.variants[0] ? (
-                      product.data.variants[curIndex].price ? (
-                        product.data.variants[curIndex].sale_price ? (
-                          <>
-                            <ins className="new-price">
-                              $
-                              {toDecimal(
-                                product.data.variants[curIndex].sale_price
-                              )}
-                            </ins>
-                            <del className="old-price">
-                              $
-                              {toDecimal(product.data.variants[curIndex].price)}
-                            </del>
-                          </>
-                        ) : (
-                          <>
-                            <ins className="new-price">
-                              $
-                              {toDecimal(product.data.variants[curIndex].price)}
-                            </ins>
-                          </>
-                        )
-                      ) : (
-                        ''
-                      )
-                    ) : product.data.price[0] !== product.data.price[1] ? (
-                      product.data.variants.length === 0 ? (
-                        <>
-                          <ins className="new-price">
-                            ${toDecimal(product.data.price[0])}
-                          </ins>
-                          <del className="old-price">
-                            ${toDecimal(product.data.price[1])}
-                          </del>
-                        </>
-                      ) : (
-                        <del className="new-price">
-                          ${toDecimal(product.data.price[0])} – $
-                          {toDecimal(product.data.price[1])}
-                        </del>
-                      )
-                    ) : (
-                      <ins className="new-price">
-                        ${toDecimal(product.data.price[0])}
-                      </ins>
-                    )}
-                  </div>
-
-                  <div className="ratings-container mb-0">
-                    <div className="ratings-full">
-                      <span
-                        className="ratings"
-                        style={{ width: 20 * product.data.ratings + '%' }}
-                      ></span>
-                      <span className="tooltiptext tooltip-top">
-                        {toDecimal(product.data.ratings)}
-                      </span>
-                    </div>
-
-                    <ALink href="#" className="rating-reviews">
-                      ( {product.data.reviews} reviews )
-                    </ALink>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="product-form product-qty pb-0">
-              <label className="d-none">QTY:</label>
-              <div className="product-form-group">
-                <Quantity
-                  max={product.data.stock}
-                  product={product}
-                  onChangeQty={changeQty}
-                />
-                <button
-                  className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${
-                    cartActive ? '' : 'disabled'
-                  }`}
-                  onClick={addToCartHandler}
-                >
-                  <i className="d-icon-bag"></i>Add to Cart
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div className="product-form product-qty pb-0">
-          <label className="d-none">QTY:</label>
-          <div className="product-form-group">
-            <Quantity
-              max={product.data.stock}
-              product={product}
-              onChangeQty={changeQty}
-            />
-            <button
-              className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${
-                cartActive ? '' : 'disabled'
-              }`}
-              onClick={addToCartHandler}
-            >
-              <i className="d-icon-bag"></i>Add to Cart
-            </button>
-          </div>
-        </div>
-      )} */}
-
-      <hr className="product-divider mb-3"></hr>
-
-      {/* <div className="product-footer">
-        <div className="social-links mr-4">
-          <ALink
-            href="#"
-            className="social-link social-facebook fab fa-facebook-f"
-          ></ALink>
-          <ALink
-            href="#"
-            className="social-link social-twitter fab fa-twitter"
-          ></ALink>
-          <ALink
-            href="#"
-            className="social-link social-pinterest fab fa-pinterest-p"
-          ></ALink>
-        </div>{' '}
-        <span className="divider d-lg-show"></span>{' '}
-        <a
-          href="#"
-          className={`btn-product btn-wishlist`}
-          title={isWishlisted ? 'Browse wishlist' : 'Add to wishlist'}
-          onClick={wishlistHandler}
-        >
-          <i
-            className={isWishlisted ? 'd-icon-heart-full' : 'd-icon-heart'}
-          ></i>{' '}
-          {isWishlisted ? 'Browse wishlist' : 'Add to Wishlist'}
-        </a>
-      </div> */}
     </div>
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    wishlist: state.wishlist.data ? state.wishlist.data : [],
-  };
-}
-
-export default connect(mapStateToProps, {
-  toggleWishlist: wishlistActions.toggleWishlist,
-  addToCart: cartActions.addToCart,
-})(DetailOne);
+export default DetailOne;

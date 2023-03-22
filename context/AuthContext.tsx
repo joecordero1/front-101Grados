@@ -1,14 +1,14 @@
-import { createContext, FC, ReactNode, useReducer, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { differenceInCalendarDays } from 'date-fns';
+import { createContext, FC, ReactNode, useReducer, useEffect } from "react";
+import { useRouter } from "next/router";
+import { differenceInCalendarDays } from "date-fns";
 
-import { useProgram, useApi, useApiAuth } from 'hooks';
-import { Participant } from 'utils/types';
-import { parseCredentials } from 'utils';
+import { useProgram, useApi, useApiAuth } from "hooks";
+import { Participant } from "utils/types";
+import { parseCredentials } from "utils";
 
 interface AuthState {
-  status: 'idle' | 'login';
-  error: 'wrong-user-password' | any | null;
+  status: "idle" | "login";
+  error: "wrong-user-password" | any | null;
   accessToken: string | null;
   participant: Participant;
   isLoggedIn: boolean;
@@ -28,7 +28,7 @@ interface AuthProviderProps {
 }
 
 type LoginAction = {
-  type: 'login';
+  type: "login";
   payload: {
     accessToken: string;
     participant: Participant;
@@ -36,15 +36,15 @@ type LoginAction = {
 };
 
 type LogoutAction = {
-  type: 'logout';
+  type: "logout";
 };
 
 type WrongUserPasswordAction = {
-  type: 'wrong-user-password';
+  type: "wrong-user-password";
 };
 
 type UpdateAvailablePoints = {
-  type: 'UPDATE_AVAILABLE_POINTS';
+  type: "UPDATE_AVAILABLE_POINTS";
   payload: number;
 };
 
@@ -55,7 +55,7 @@ type Action =
   | UpdateAvailablePoints;
 
 const initialState: AuthState = {
-  status: 'idle',
+  status: "idle",
   accessToken: null,
   participant: {} as Participant,
   error: null,
@@ -68,13 +68,13 @@ export const setSessionWithToken = (accessToken: string | null): void => {
     // localStorage.setItem('accessTokenLala4Store', accessToken);
     // axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
   } else {
-    localStorage.removeItem('accessTokenLala4Store');
+    localStorage.removeItem("accessTokenLala4Store");
     // delete axios.defaults.headers.common.Authorization;
   }
 };
 const reducer = (state: AuthState, action: Action): AuthState => {
   switch (action.type) {
-    case 'login':
+    case "login":
       const { accessToken, participant } = action.payload;
       return {
         ...state,
@@ -86,12 +86,12 @@ const reducer = (state: AuthState, action: Action): AuthState => {
         isInitialised: true,
         isLoggedIn: true,
       };
-    case 'wrong-user-password':
+    case "wrong-user-password":
       return {
         ...state,
-        error: 'wrong-user-password',
+        error: "wrong-user-password",
       };
-    case 'logout':
+    case "logout":
       /* Router.push('/login'); */
       return {
         ...state,
@@ -100,7 +100,7 @@ const reducer = (state: AuthState, action: Action): AuthState => {
         isInitialised: true,
         isLoggedIn: false,
       };
-    case 'UPDATE_AVAILABLE_POINTS':
+    case "UPDATE_AVAILABLE_POINTS":
       return {
         ...state,
         availablePoints: action.payload,
@@ -128,7 +128,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const loginWithToken = (token: string | null) => {
     // setSessionWithToken(token);
     setSession();
-    router.push('/');
+    router.push("/");
   };
 
   const logIn = async (
@@ -166,13 +166,13 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   };
 
   const logOut = () => {
-    localStorage.removeItem('accessTokenLala4Store');
+    localStorage.removeItem("accessTokenLala4Store");
     setSession();
   };
 
   const setSession = async () => {
     // First I retrieve the token saved on localStorage
-    const accessToken = localStorage.getItem('accessTokenLala4Store');
+    const accessToken = localStorage.getItem("accessTokenLala4Store");
 
     // If there is a token, I proceed to validate it
     if (accessToken) {
@@ -182,24 +182,24 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         // If all is OK, I send a Login action
         // and i need to verify if participant is active if is active i dispatch action else i send alert for not active
         dispatch({
-          type: 'login',
+          type: "login",
           payload: {
             accessToken,
             participant,
           },
         });
       } catch (e: any) {
-        console.error('setSession() ->', e);
+        console.error("setSession() ->", e);
         if (e.statusCode === 401) {
           dispatch({
-            type: 'logout',
+            type: "logout",
           });
         }
       }
     } else {
-      localStorage.setItem('cart', JSON.stringify([]));
+      localStorage.setItem("cart", JSON.stringify([]));
       dispatch({
-        type: 'logout',
+        type: "logout",
       });
     }
   };
@@ -208,7 +208,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     try {
       const availablePoints = await get<number>(`/points/my-available-points`);
       dispatch({
-        type: 'UPDATE_AVAILABLE_POINTS',
+        type: "UPDATE_AVAILABLE_POINTS",
         payload: availablePoints,
       });
     } catch (e) {
@@ -217,6 +217,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
+    console.log("useAuth");
     if (auth.isLoggedIn) getAvailablePoints();
   }, [auth.isLoggedIn]);
 

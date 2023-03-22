@@ -1,15 +1,15 @@
-import React, { FC } from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { connect } from 'react-redux';
+import React, { FC } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { connect } from "react-redux";
 
-import ALink from '~/components/features/custom-link';
-import { cartActions } from '~/store/cart';
-import { modalActions } from '~/store/modal';
-import { wishlistActions } from '~/store/wishlist';
-import { toDecimal } from '~/utils';
+import ALink from "~/components/features/custom-link";
+import { cartActions } from "~/store/cart";
+import { modalActions } from "~/store/modal";
+import { wishlistActions } from "~/store/wishlist";
+import { toDecimal } from "~/utils";
 
-import { useCart, useProgram } from 'hooks';
-import { CartItem, CatalogueItem } from '../../../utils/types/catalogueItem';
+import { useCart, useProgram } from "hooks";
+import { CartItem, CatalogueItem } from "../../../utils/types/catalogueItem";
 
 type Props = {
   product: CartItem;
@@ -34,7 +34,7 @@ const ProductOne: FC<Props> = (props) => {
     isStockCount = false,
   } = props;
   const { coinName } = useProgram();
-  const { addToCart } = useCart();
+  const { addToCart, items } = useCart();
 
   //   // decide if the product is wishlisted
   //   let isWishlisted;
@@ -58,30 +58,32 @@ const ProductOne: FC<Props> = (props) => {
 
     e.preventDefault();
     let currentTarget = e.currentTarget;
-    currentTarget.classList.add('load-more-overlay', 'loading');
+    currentTarget.classList.add("load-more-overlay", "loading");
 
     setTimeout(() => {
-      currentTarget.classList.remove('load-more-overlay', 'loading');
+      currentTarget.classList.remove("load-more-overlay", "loading");
     }, 1000);
   };
 
   const addToCartHandler = (e) => {
     e.preventDefault();
-    addToCart(product, 1);
+    items.filter((item) => item.id === product.id)[0]
+      ? null
+      : addToCart(product, 1);
   };
 
   return (
     <div className={`product ${adClass}`}>
-      <figure className='product-media'>
+      <figure className="product-media">
         <ALink href={`/award/${product.award.id}`}>
           <LazyLoadImage
-            alt='product'
+            alt="product"
             // src={process.env.NEXT_PUBLIC_ASSET_URI + product.pictures[0].url}
             src={product.award.mainImage}
             threshold={500}
-            effect='opacity'
-            width='300'
-            height='338'
+            effect="opacity"
+            width="300"
+            height="338"
           />
 
           {/* {product.pictures.length >= 2 ? (
@@ -98,13 +100,13 @@ const ProductOne: FC<Props> = (props) => {
           )} */}
         </ALink>
 
-        <div className='product-label-group'>
+        <div className="product-label-group">
           {isNew ? (
-            <label className='product-label label-new'>Nuevo</label>
+            <label className="product-label label-new">Nuevo</label>
           ) : (
-            ''
+            ""
           )}
-          {isTop ? <label className='product-label label-top'>Top</label> : ''}
+          {isTop ? <label className="product-label label-top">Top</label> : ""}
           {/* {product.discount > 0 ? (
             product.variants.length === 0 ? (
               <label className="product-label label-sale">
@@ -118,52 +120,55 @@ const ProductOne: FC<Props> = (props) => {
           )} */}
         </div>
 
-        <div className='product-action-vertical'>
+        <div className="product-action-vertical">
           {product.award.variants.length > 0 ? (
             <a
               href={`product/default/${product.award.id}`}
-              className='btn-product-icon btn-cart'
-              title='Elegir Talla'>
-              <i className='d-icon-right-arrow'></i>
+              className="btn-product-icon btn-cart"
+              title="Elegir Talla"
+            >
+              <i className="d-icon-right-arrow"></i>
             </a>
           ) : (
             <a
-              href={'#'}
+              href={"#"}
               onClick={addToCartHandler}
-              className='btn-product-icon btn-cart'
-              title='Añadir'>
-              <i className='d-icon-bag'></i>
+              className="btn-product-icon btn-cart"
+              title="Añadir"
+            >
+              <i className="d-icon-bag"></i>
             </a>
           )}
         </div>
       </figure>
 
-      <div className='product-details'>
+      <div className="product-details">
         {isCategory && (
-          <div className='product-cat'>
+          <div className="product-cat">
             {product.award.subcategories.map((item, index) => (
-              <React.Fragment key={item.name + '-' + index}>
+              <React.Fragment key={item.name + "-" + index}>
                 <ALink
                   href={{
-                    pathname: '/shop',
+                    pathname: "/shop",
                     query: { subcategory: item.id },
-                  }}>
+                  }}
+                >
                   {item.name}
-                  {index < product.award.subcategories.length - 1 ? ', ' : ''}
+                  {index < product.award.subcategories.length - 1 ? ", " : ""}
                 </ALink>
               </React.Fragment>
             ))}
           </div>
         )}
 
-        <h3 className='product-name'>
+        <h3 className="product-name">
           <ALink href={`/award/${product.award.id}`}>
             {product.award.name}
           </ALink>
         </h3>
 
-        <div className='product-price'>
-          <ins className='new-price'>
+        <div className="product-price">
+          <ins className="new-price">
             {product.points} {coinName}
           </ins>
           {/* {product.price[0] !== product.price[1] ? (
@@ -210,7 +215,7 @@ const ProductOne: FC<Props> = (props) => {
           </div>
         )} */}
 
-        <div className='count-text'>{product.award.brand.name}</div>
+        <div className="count-text">{product.award.brand.name}</div>
       </div>
     </div>
   );

@@ -45,8 +45,8 @@ const App = ({ Component, pageProps }) => {
           <AuthProvider>
             <ApiAuthProvider>
               <GeneralProvider>
-                <Provider store={store}>
-                  <CartProvider>
+                <CartProvider>
+                  <Provider store={store}>
                     <Helmet>
                       <meta charSet="UTF-8" />
                       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -68,8 +68,8 @@ const App = ({ Component, pageProps }) => {
                     <Layout>
                       <Component {...pageProps} />
                     </Layout>
-                  </CartProvider>
-                </Provider>
+                  </Provider>
+                </CartProvider>
               </GeneralProvider>
             </ApiAuthProvider>
           </AuthProvider>
