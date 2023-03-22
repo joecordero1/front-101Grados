@@ -7,6 +7,6 @@ export interface CatalogueItem {
 }
 
 export interface CartItem extends CatalogueItem {
-  quantity: number;
+  quantity?: number;
   variant?: AwardVariant;
 }
