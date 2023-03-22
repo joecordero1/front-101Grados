@@ -1,58 +1,35 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { useQuery } from '@apollo/react-hooks';
-import Helmet from 'react-helmet';
-import imagesLoaded from 'imagesloaded';
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Helmet from "react-helmet";
+import imagesLoaded from "imagesloaded";
 
-import withApollo from '~/server/apollo';
-import { GET_PRODUCT } from '~/server/queries';
+import ALink from "~/components/features/custom-link";
+import OwlCarousel from "~/components/features/owl-carousel";
 
-import ALink from '~/components/features/custom-link';
-import OwlCarousel from '~/components/features/owl-carousel';
+import MediaFive from "~/components/partials/product/media/media-five";
+import DetailThree from "~/components/partials/product/detail/detail-three";
+import DescOne from "~/components/partials/product/desc/desc-one";
+import RelatedProducts from "~/components/partials/product/related-products";
+import ProductSidebar from "~/components/partials/product/product-sidebar";
+import ProductNav from "~/components/partials/product/product-nav";
 
-import MediaFive from '~/components/partials/product/media/media-five';
-import DetailThree from '~/components/partials/product/detail/detail-three';
-import DescOne from '~/components/partials/product/desc/desc-one';
-import RelatedProducts from '~/components/partials/product/related-products';
-import ProductSidebar from '~/components/partials/product/product-sidebar';
-import ProductNav from '~/components/partials/product/product-nav';
-
-import { mainSlider17 } from '~/utils/data/carousel';
+import { mainSlider17 } from "~/utils/data/carousel";
+import { useItem } from "~/hooks";
 
 function ProductRightSidebar() {
   const slug = useRouter().query.slug;
-
-  if (!slug) return '';
-
-  const { data, loading, error } = useQuery(GET_PRODUCT, {
-    variables: { slug },
-  });
-  const [loaded, setLoadingState] = useState(false);
-  const product = data && data.product.data;
-  const related = data && data.product.related;
-
-  useEffect(() => {
-    if (!loading && product)
-      imagesLoaded('main')
-        .on('done', function () {
-          setLoadingState(true);
-        })
-        .on('progress', function () {
-          setLoadingState(false);
-        });
-    if (loading) setLoadingState(false);
-  }, [loading, product]);
+  const { item, loading } = useItem(slug);
 
   return (
     <main className="main market1-product single-product">
       <Helmet>
-        <title>Tienda | Product With Right Sidebar</title>
+        <title>Tienda | Producto</title>
       </Helmet>
 
       <h1 className="d-none">Tienda - Product With Right Sidebar</h1>
 
-      {product !== undefined ? (
-        <div className={`page-content mb-10 pb-6 ${loaded ? '' : 'd-none'}`}>
+      {item && (
+        <div className={`page-content mb-10 pb-6`}>
           <div className="container skeleton-body">
             <nav className="breadcrumb-nav product-navigation">
               <ul className="breadcrumb pt-0 pb-0 mb-0">
@@ -62,42 +39,40 @@ function ProductRightSidebar() {
                   </ALink>
                 </li>
                 <li>
-                  <ALink href="#" className="active">
-                    Products
+                  <ALink href="/shop" className="active">
+                    Premios
                   </ALink>
                 </li>
-                <li>Detail</li>
+                <li>Detalle</li>
               </ul>
 
-              <ProductNav product={data && data.product} adClass="mb-0" />
+              <ProductNav product={item && item} adClass="mb-0" />
             </nav>
 
             <div className="row gutter-lg">
-              <ProductSidebar />
+              {/*     <ProductSidebar /> */}
 
               <div className="col-xl-9 col-lg-8">
                 <div className="product product-single row mb-8">
                   <div className="col-md-6">
-                    <MediaFive product={product} />
+                    <MediaFive product={item} />
                   </div>
 
                   <div className="col-md-6">
-                    <DetailThree data={data} isNav={false} />
+                    <DetailThree
+                      data={{ ...item, quantity: 1 }}
+                      isNav={false}
+                    />
                   </div>
                 </div>
-
-                <DescOne product={product} isDivider={false} />
-
-                <RelatedProducts products={related} />
+                <RelatedProducts item={item} />
               </div>
             </div>
           </div>
         </div>
-      ) : (
-        ''
       )}
-      {loaded && !loading ? (
-        ''
+      {!loading ? (
+        ""
       ) : (
         <div className="skeleton-body container mb-10">
           <div className="row mt-6 gutter-lg">
@@ -121,7 +96,7 @@ function ProductRightSidebar() {
 
               <section className="pt-3 mt-4">
                 <h2 className="title justify-content-center">
-                  Related Products
+                  Premios Relacionados
                 </h2>
 
                 <OwlCarousel
@@ -131,7 +106,7 @@ function ProductRightSidebar() {
                   {[1, 2, 3, 4, 5, 6].map((item) => (
                     <div
                       className="product-loading-overlay"
-                      key={'popup-skel-' + item}
+                      key={"popup-skel-" + item}
                     ></div>
                   ))}
                 </OwlCarousel>
@@ -144,6 +119,4 @@ function ProductRightSidebar() {
   );
 }
 
-export default withApollo({ ssr: typeof window === 'undefined' })(
-  ProductRightSidebar
-);
+export default ProductRightSidebar;

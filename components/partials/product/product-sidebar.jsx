@@ -34,75 +34,70 @@ function ProductsSidebar(props) {
     <aside
       className={`col-xl-3 col-lg-4 sidebar sidebar-fixed sticky-sidebar-wrapper ${adClass} ${
         type === 'left' ? '' : 'right-sidebar'
-      }`}
-    >
-      <div className="sidebar-overlay" onClick={hideSidebarhandler}>
-        <ALink className="sidebar-close" href="#">
-          <i className="d-icon-times"></i>
+      }`}>
+      <div className='sidebar-overlay' onClick={hideSidebarhandler}>
+        <ALink className='sidebar-close' href='#'>
+          <i className='d-icon-times'></i>
         </ALink>
       </div>
 
-      <div className="sidebar-toggle" onClick={toggleSidebarHandler}>
+      <div className='sidebar-toggle' onClick={toggleSidebarHandler}>
         {type === 'right' ? (
-          <i className="fas fa-chevron-left"></i>
+          <i className='fas fa-chevron-left'></i>
         ) : (
-          <i className="fas fa-chevron-right"></i>
+          <i className='fas fa-chevron-right'></i>
         )}
       </div>
 
-      <div className="sidebar-content">
+      <div className='sidebar-content'>
         {loading ? (
-          <div className="widget-2"></div>
+          <div className='widget-2'></div>
         ) : (
-          <div className="sticky-sidebar">
-            <div className="widget widget-collapsible widget-vendor-info">
+          <div className='sticky-sidebar'>
+            <div className='widget widget-collapsible widget-vendor-info'>
               <SlideToggle collapsed={false}>
                 {({ onToggle, setCollapsibleElement, toggleState }) => (
                   <>
                     <h3
                       className={`widget-title ${toggleState.toLowerCase()}`}
-                      onClick={onToggle}
-                    >
+                      onClick={onToggle}>
                       Vendor Info{' '}
-                      <span className="toggle-btn parse-content"></span>
+                      <span className='toggle-btn parse-content'></span>
                     </h3>
                     <div
-                      className="overflow-hidden"
-                      ref={setCollapsibleElement}
-                    >
-                      <ul className="widget-body filter-items">
-                        <li className="store-name">
+                      className='overflow-hidden'
+                      ref={setCollapsibleElement}>
+                      <ul className='widget-body filter-items'>
+                        <li className='store-name'>
                           <span>Store Name:</span>
-                          <span className="details">vendor1</span>
+                          <span className='details'>vendor1</span>
                         </li>
-                        <li className="seller-name">
+                        <li className='seller-name'>
                           <span>Vendor:</span>
-                          <span className="details">vendor1</span>
+                          <span className='details'>vendor1</span>
                         </li>
-                        <li className="store-address">
+                        <li className='store-address'>
                           <span>Address:</span>
-                          <span className="details">
+                          <span className='details'>
                             ON
                             <br />
                             Canada
                           </span>
                         </li>
-                        <li className="clearfix">
-                          <span className="ratings-container">
+                        <li className='clearfix'>
+                          <span className='ratings-container'>
                             <span
-                              className="ratings-full"
-                              title="Rated 4.65 out of 5"
-                            >
+                              className='ratings-full'
+                              title='Rated 4.65 out of 5'>
                               <span
-                                className="ratings"
-                                style={{ width: '93%' }}
-                              ></span>
-                              <span className="tooltiptext tooltip-top">
+                                className='ratings'
+                                style={{ width: '93%' }}></span>
+                              <span className='tooltiptext tooltip-top'>
                                 4.65
                               </span>
                             </span>
                           </span>
-                          <span className="details">
+                          <span className='details'>
                             4.65 rating from 31 reviews
                           </span>
                         </li>
@@ -112,47 +107,44 @@ function ProductsSidebar(props) {
                 )}
               </SlideToggle>
             </div>
-            <div className="widget widget-collapsible widget-contact-vendor">
+            <div className='widget widget-collapsible widget-contact-vendor'>
               <SlideToggle collapsed={false}>
                 {({ onToggle, setCollapsibleElement, toggleState }) => (
                   <>
                     <h3
                       className={`widget-title ${toggleState.toLowerCase()}`}
-                      onClick={onToggle}
-                    >
+                      onClick={onToggle}>
                       Contact Vendor{' '}
-                      <span className="toggle-btn parse-content"></span>
+                      <span className='toggle-btn parse-content'></span>
                     </h3>
                     <div
-                      className="overflow-hidden"
-                      ref={setCollapsibleElement}
-                    >
-                      <div className="widget-body">
+                      className='overflow-hidden'
+                      ref={setCollapsibleElement}>
+                      <div className='widget-body'>
                         <input
-                          type="text"
-                          className="form-control"
-                          id="name"
-                          name="name"
-                          placeholder="Your Name"
-                          required=""
+                          type='text'
+                          className='form-control'
+                          id='name'
+                          name='name'
+                          placeholder='Your Name'
+                          required=''
                         />
                         <input
-                          type="text"
-                          className="form-control"
-                          id="address"
-                          name="address"
-                          placeholder="you@example.com"
-                          required=""
+                          type='text'
+                          className='form-control'
+                          id='address'
+                          name='address'
+                          placeholder='you@example.com'
+                          required=''
                         />
                         <textarea
-                          id="message"
-                          cols="30"
-                          rows="6"
-                          className="form-control"
-                          placeholder="Type your message..."
-                          required=""
-                        ></textarea>
-                        <ALink href="#" className="btn btn-dark btn-rounded">
+                          id='message'
+                          cols='30'
+                          rows='6'
+                          className='form-control'
+                          placeholder='Type your message...'
+                          required=''></textarea>
+                        <ALink href='#' className='btn btn-dark btn-rounded'>
                           Send Message
                         </ALink>
                       </div>
@@ -161,12 +153,12 @@ function ProductsSidebar(props) {
                 )}
               </SlideToggle>
             </div>
-            <div className="widget widget-products">
-              <h4 className="widget-title lh-1 border-no text-capitalize ">
+            <div className='widget widget-products'>
+              <h4 className='widget-title lh-1 border-no text-capitalize '>
                 Más Premios
               </h4>
 
-              <ul className="widget-body">
+              {/*     <ul className="widget-body">
                 <OwlCarousel adClass="owl-nav-top" options={mainSlider7}>
                   <div className="products-col">
                     {featured.slice(0, 3).map((product, index) => (
@@ -186,7 +178,7 @@ function ProductsSidebar(props) {
                     ))}
                   </div>
                 </OwlCarousel>
-              </ul>
+              </ul> */}
             </div>
           </div>
         )}
@@ -196,5 +188,5 @@ function ProductsSidebar(props) {
 }
 
 export default withApollo({ ssr: typeof window === 'undefined' })(
-  ProductsSidebar
+  ProductsSidebar,
 );

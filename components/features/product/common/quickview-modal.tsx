@@ -1,32 +1,32 @@
-import { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { useQuery } from '@apollo/react-hooks';
-import { Magnifier } from 'react-image-magnifiers';
-import Modal from 'react-modal';
-import imagesLoaded from 'imagesloaded';
+import { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { useQuery } from "@apollo/react-hooks";
+import { Magnifier } from "react-image-magnifiers";
+import Modal from "react-modal";
+import imagesLoaded from "imagesloaded";
 
-import { GET_PRODUCT } from '~/server/queries';
-import withApollo from '~/server/apollo';
-import OwlCarousel from '~/components/features/owl-carousel';
-import DetailOne from '~/components/partials/product/detail/detail-one';
-import { modalActions } from '~/store/modal';
-import { mainSlider3 } from '~/utils/data/carousel';
+import { GET_PRODUCT } from "~/server/queries";
+import withApollo from "~/server/apollo";
+import OwlCarousel from "~/components/features/owl-carousel";
+import DetailOne from "~/components/partials/product/detail/detail-one";
+import { modalActions } from "~/store/modal";
+import { mainSlider3 } from "~/utils/data/carousel";
 
-import { useGeneral } from 'hooks/useGeneral';
+import { useGeneral } from "hooks/useGeneral";
 
 const customStyles = {
   content: {
-    position: 'relative',
+    position: "relative",
   },
   overlay: {
-    background: 'rgba(0,0,0,.4)',
-    zIndex: '10000',
-    overflowX: 'hidden',
-    overflowY: 'auto',
+    background: "rgba(0,0,0,.4)",
+    zIndex: "10000",
+    overflowX: "hidden",
+    overflowY: "auto",
   },
 };
 
-Modal.setAppElement('#__next');
+Modal.setAppElement("#__next");
 
 function Quickview() {
   const { modal, closeModal } = useGeneral();
@@ -73,7 +73,7 @@ function Quickview() {
               </div> */}
 
               <Magnifier
-                key={'quickview-image'}
+                key={"quickview-image"}
                 imageSrc={item.award.mainImage}
                 largeImgSrc={item.award.mainImage}
                 imageAlt="magnifier"
@@ -133,7 +133,7 @@ function mapStateToProps(state) {
   };
 }
 
-export default withApollo({ ssr: typeof window === 'undefined' })(
+export default withApollo({ ssr: typeof window === "undefined" })(
   connect(mapStateToProps, { closeQuickview: modalActions.closeQuickview })(
     // @ts-ignore
     Quickview

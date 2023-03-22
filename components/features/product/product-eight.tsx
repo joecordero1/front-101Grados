@@ -1,14 +1,14 @@
-import React, { FC } from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { connect } from 'react-redux';
+import React, { FC } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import { connect } from "react-redux";
 
-import ALink from '~/components/features/custom-link';
-import { cartActions } from '~/store/cart';
-import { modalActions } from '~/store/modal';
-import { wishlistActions } from '~/store/wishlist';
-import { toDecimal } from '~/utils';
+import ALink from "~/components/features/custom-link";
+import { cartActions } from "~/store/cart";
+import { modalActions } from "~/store/modal";
+import { wishlistActions } from "~/store/wishlist";
+import { toDecimal } from "~/utils";
 
-import { CatalogueItem } from '../../../utils/types/catalogueItem';
+import { CatalogueItem } from "../../../utils/types/catalogueItem";
 
 type Props = {
   item: CatalogueItem;
@@ -70,7 +70,7 @@ const ProductEight: FC<Props> = (props) => {
       className={`product product-list ${adClass}`}
     >
       <figure className="product-media">
-        <ALink href={`/product/default/${item.award.id}`}>
+        <ALink href={`/award/${item.award.id}`}>
           <LazyLoadImage
             alt="product"
             // src={process.env.NEXT_PUBLIC_ASSET_URI + product.pictures[0].url}
@@ -97,8 +97,8 @@ const ProductEight: FC<Props> = (props) => {
         </ALink>
 
         <div className="product-label-group">
-          {isNew ? <label className="product-label label-new">New</label> : ''}
-          {isTop ? <label className="product-label label-top">Top</label> : ''}
+          {isNew ? <label className="product-label label-new">New</label> : ""}
+          {isTop ? <label className="product-label label-top">Top</label> : ""}
           {/* {product.discount > 0 ? (
             product.variants.length === 0 ? (
               <label className="product-label label-sale">
@@ -116,24 +116,22 @@ const ProductEight: FC<Props> = (props) => {
       <div className="product-details">
         <div className="product-cat">
           {item.award.subcategories.map((subcategory, index) => (
-            <React.Fragment key={subcategory.name + '-' + index}>
+            <React.Fragment key={subcategory.name + "-" + index}>
               <ALink
                 href={{
-                  pathname: '/shop',
+                  pathname: "/shop",
                   query: { subcategory: subcategory.id },
                 }}
               >
                 {subcategory.name}
-                {index < item.award.subcategories.length - 1 ? ', ' : ''}
+                {index < item.award.subcategories.length - 1 ? ", " : ""}
               </ALink>
             </React.Fragment>
           ))}
         </div>
 
         <h3 className="product-name">
-          <ALink href={`/product/default/${item.award.id}`}>
-            {item.award.name}
-          </ALink>
+          <ALink href={`/award/${item.award.id}`}>{item.award.name}</ALink>
         </h3>
 
         <div className="product-price">
@@ -221,14 +219,4 @@ const ProductEight: FC<Props> = (props) => {
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    wishlist: state.wishlist.data ? state.wishlist.data : [],
-  };
-}
-
-export default connect(mapStateToProps, {
-  toggleWishlist: wishlistActions.toggleWishlist,
-  addToCart: cartActions.addToCart,
-  ...modalActions,
-})(ProductEight);
+export default ProductEight;

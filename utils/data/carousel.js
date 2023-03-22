@@ -366,9 +366,6 @@ export const serviceSlider = {
         },
         992: {
             items: 3
-        },
-        1306: {
-            items: 4
         }
     }
 }

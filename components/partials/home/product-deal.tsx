@@ -39,18 +39,18 @@ const ProductOne: FC<Props> = (props) => {
 
   return (
     <div className={`product product-single ${adClass}`}>
-      <div className="row product-gallery align-items-center pb-0 mb-0 h-100">
-        <div className="col-md-6 p-relative mb-4 mb-md-0">
-          <div className="w-100">
-            <figure className="product-media">
-              <ALink href={`/product/default/${product.award.id}`}>
+      <div className='row product-gallery align-items-center pb-0 mb-0 h-100'>
+        <div className='col-md-6 p-relative mb-4 mb-md-0'>
+          <div className='w-100'>
+            <figure className='product-media'>
+              <ALink href={`/award/${product.id}`}>
                 <LazyLoadImage
-                  alt="product"
+                  alt='product'
                   src={product.award.mainImage}
                   threshold={500}
-                  effect="opacity"
-                  width="300"
-                  height="338"
+                  effect='opacity'
+                  width='300'
+                  height='338'
                 />
 
                 {/* {product.pictures.length >= 2 ? (
@@ -70,14 +70,14 @@ const ProductOne: FC<Props> = (props) => {
                 )} */}
               </ALink>
 
-              <div className="product-label-group">
+              <div className='product-label-group'>
                 {isNew ? (
-                  <label className="product-label label-new">New</label>
+                  <label className='product-label label-new'>New</label>
                 ) : (
                   ''
                 )}
                 {isTop ? (
-                  <label className="product-label label-top">Top</label>
+                  <label className='product-label label-top'>Top</label>
                 ) : (
                   ''
                 )}
@@ -106,16 +106,16 @@ const ProductOne: FC<Props> = (props) => {
           )} */}
         </div>
 
-        <div className="col-md-6">
-          <div className="product-details w-100 pb-0 pl-0">
-            <h3 className="product-name">
-              <ALink href={`/product/default/${product.award.id}`}>
+        <div className='col-md-6'>
+          <div className='product-details w-100 pb-0 pl-0'>
+            <h3 className='product-name'>
+              <ALink href={`/award/${product.award.id}`}>
                 {product.award.name} | {product.award.model}
               </ALink>
             </h3>
 
-            <div className="product-price">
-              <ins className="new-price">
+            <div className='product-price'>
+              <ins className='new-price'>
                 {product.points} {coinName}
               </ins>
               {/* {product.price[0] !== product.price[1] ? (
@@ -159,18 +159,17 @@ const ProductOne: FC<Props> = (props) => {
               </ALink>
             </div> */}
 
-            <div className="ratings-container">
-              <div className="ratings-full">
+            <div className='ratings-container'>
+              <div className='ratings-full'>
                 <span
-                  className="ratings"
-                  style={{ width: 20 * rating + '%' }}
-                ></span>
-                <span className="tooltiptext tooltip-top">
+                  className='ratings'
+                  style={{ width: 20 * rating + '%' }}></span>
+                <span className='tooltiptext tooltip-top'>
                   {toDecimal(rating)}
                 </span>
               </div>
 
-              <ALink href="#" className="rating-reviews">
+              <ALink href='#' className='rating-reviews'>
                 ( {reviewCount} )
               </ALink>
             </div>
@@ -283,10 +282,10 @@ const ProductOne: FC<Props> = (props) => {
               ''
             )} */}
 
-            <div className="product-form product-qty pb-0">
-              <div className="product-form-group">
+            <div className='product-form product-qty pb-0'>
+              <div className='product-form-group'>
                 <Quantity
-                  adClass="input-group mr-2 mb-0"
+                  adClass='input-group mr-2 mb-0'
                   // max={product.stock}
                   product={product}
                   // onChangeQty={changeQty}
@@ -297,11 +296,11 @@ const ProductOne: FC<Props> = (props) => {
                   }`}
                   // onClick={addToCartHandler}
                 >
-                  <i className="d-icon-bag"></i>Añadir
+                  <i className='d-icon-bag'></i>Añadir
                 </button>
               </div>
             </div>
-            <div className="count-text">
+            <div className='count-text'>
               {/* Only <strong>{product.stock}</strong> Left */}
               {product.award.brand.name}
             </div>

@@ -1,14 +1,14 @@
-import Helmet from 'react-helmet';
-import React, { useEffect } from 'react';
+import Helmet from "react-helmet";
+import React, { useEffect } from "react";
 
-import ALink from '~/components/features/custom-link';
+import ALink from "~/components/features/custom-link";
 
 function Error404() {
   useEffect(() => {
-    document.querySelector('header').classList.remove('header-border');
+    document.querySelector("header")?.classList.remove("header-border");
 
     return () => {
-      document.querySelector('header').classList.add('header-border');
+      document.querySelector("header")?.classList.add("header-border");
     };
   }, []);
 

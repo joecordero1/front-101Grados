@@ -1,9 +1,9 @@
-import { connect } from 'react-redux';
-import Helmet from 'react-helmet';
+import { connect } from "react-redux";
+import Helmet from "react-helmet";
 
-import ALink from '~/components/features/custom-link';
+import ALink from "~/components/features/custom-link";
 
-import { toDecimal, getTotalPrice } from '~/utils';
+import { toDecimal, getTotalPrice } from "~/utils";
 
 function Order(props) {
   const { cartList } = props;
@@ -19,13 +19,13 @@ function Order(props) {
       <div className="page-content pt-7 pb-10 mb-10">
         <div className="step-by pr-4 pl-4">
           <h3 className="title title-simple title-step">
-            <ALink href="/pages/cart">1. Shopping Cart</ALink>
+            <ALink href="/pages/cart">1.Carrito</ALink>
           </h3>
           <h3 className="title title-simple title-step">
-            <ALink href="/pages/checkout">2. Checkout</ALink>
+            <ALink href="/pages/checkout">2.Envio</ALink>
           </h3>
           <h3 className="title title-simple title-step active">
-            <ALink href="#">3. Order Complete</ALink>
+            <ALink href="#">3.Finalizar</ALink>
           </h3>
         </div>
         <div className="container mt-8">
@@ -68,13 +68,16 @@ function Order(props) {
               </div>
               <div className="icon-box-content text-left">
                 <h5 className="icon-box-title font-weight-bold lh-1 mb-1">
-                  Thank You!
+                  Canje realizado con exito!
                 </h5>
-                <p className="lh-1 ls-m">Your order has been received</p>
+                <p>
+                  Los premios canjeados te llegarán en un máximo de 8 a 15 días
+                  laborables. ¡Espéralos!
+                </p>
               </div>
             </div>
           </div>
-
+          {/* 
           <div className="order-results">
             <div className="overview-item">
               <span>Order number:</span>
@@ -117,11 +120,11 @@ function Order(props) {
               </thead>
               <tbody>
                 {cartList.map((item) => (
-                  <tr key={'order-' + item.name}>
+                  <tr key={"order-" + item.name}>
                     <td className="product-name">
-                      {item.name}{' '}
+                      {item.name}{" "}
                       <span>
-                        {' '}
+                        {" "}
                         <i className="fas fa-times"></i> {item.qty}
                       </span>
                     </td>
@@ -179,13 +182,13 @@ function Order(props) {
               123456789
             </p>
             <p className="email">mail@riode.com</p>
-          </div>
+          </div> */}
 
           <ALink
             href="/shop"
             className="btn btn-icon-left btn-dark btn-back btn-rounded btn-md mb-4"
           >
-            <i className="d-icon-arrow-left"></i> Back to List
+            <i className="d-icon-arrow-left"></i>Regresar a la tienda
           </ALink>
         </div>
       </div>

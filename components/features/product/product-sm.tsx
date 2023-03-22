@@ -36,16 +36,16 @@ const SmallProduct: FC<Props> = (props) => {
 
   return (
     <div className={`product product-list-sm ${adClass}`}>
-      <figure className="product-media">
-        <ALink href={`/product/default/${product.award.id}`}>
+      <figure className='product-media'>
+        <ALink href={`/award/${product.award.id}`}>
           <LazyLoadImage
-            alt="product"
+            alt='product'
             // src={process.env.NEXT_PUBLIC_ASSET_URI + product.award.mainImage}
             src={product.award.mainImage}
             threshold={500}
-            effect="opacity"
-            width="300"
-            height="338"
+            effect='opacity'
+            width='300'
+            height='338'
           />
 
           {/* {product.pictures.length >= 2 ? (
@@ -63,30 +63,28 @@ const SmallProduct: FC<Props> = (props) => {
           )} */}
         </ALink>
 
-        <div className="product-label-group">
-          {isNew ? <label className="product-label label-new">New</label> : ''}
-          {isTop ? <label className="product-label label-top">Top</label> : ''}
+        <div className='product-label-group'>
+          {isNew ? <label className='product-label label-new'>New</label> : ''}
+          {isTop ? <label className='product-label label-top'>Top</label> : ''}
         </div>
 
-        <div className="product-action">
+        <div className='product-action'>
           <ALink
-            href="#"
-            className="btn-product btn-quickview"
-            title="Quick View"
-            onClick={() => openModal(product)}
-          >
+            href='#'
+            className='btn-product btn-quickview'
+            title='Quick View'
+            onClick={() => openModal(product)}>
             Vista Rápida
           </ALink>
         </div>
       </figure>
 
-      <div className="product-details">
-        <div className="product-cat">
+      <div className='product-details'>
+        <div className='product-cat'>
           {product.award.subcategories.map((item, index) => (
             <React.Fragment key={item.name + '-' + index}>
               <ALink
-                href={{ pathname: '/shop', query: { subcategory: item.id } }}
-              >
+                href={{ pathname: '/shop', query: { subcategory: item.id } }}>
                 {item.name}
                 {index < product.award.subcategories.length - 1 ? ', ' : ''}
               </ALink>
@@ -94,14 +92,14 @@ const SmallProduct: FC<Props> = (props) => {
           ))}
         </div>
 
-        <h3 className="product-name">
+        <h3 className='product-name'>
           <ALink href={`/product/default/${product.award.id}`}>
             {product.award.name} | {product.award.model}
           </ALink>
         </h3>
 
-        <div className="product-price">
-          <ins className="new-price">
+        <div className='product-price'>
+          <ins className='new-price'>
             {product.points} {coinName}
           </ins>
           {/* {product.price[0] !== product.price[1] ? (
@@ -120,17 +118,16 @@ const SmallProduct: FC<Props> = (props) => {
             <ins className="new-price">${toDecimal(product.price[0])}</ins>
           )} */}
         </div>
-        <div className="ratings-container">
-          <div className="ratings-full">
+        <div className='ratings-container'>
+          <div className='ratings-full'>
             <span
-              className="ratings"
-              style={{ width: 20 * rating + '%' }}
-            ></span>
-            <span className="tooltiptext tooltip-top">{toDecimal(rating)}</span>
+              className='ratings'
+              style={{ width: 20 * rating + '%' }}></span>
+            <span className='tooltiptext tooltip-top'>{toDecimal(rating)}</span>
           </div>
 
           {isReviewCount ? (
-            <ALink href="#" className="rating-reviews">
+            <ALink href='#' className='rating-reviews'>
               ( {reviewCount} )
             </ALink>
           ) : (
@@ -138,7 +135,7 @@ const SmallProduct: FC<Props> = (props) => {
           )}
         </div>
         {isStockCount && (
-          <div className="count-text">
+          <div className='count-text'>
             {/* Only <strong>{product.stock}</strong> Left */}
             {product.award.brand.name}
           </div>
