@@ -49,7 +49,7 @@ export default function CartPopup(props: { product: CatalogueItem }) {
               href="/pages/checkout"
               className="btn btn-sm btn-primary btn-rounded"
             >
-              Proceder a envió
+              Canjear
             </ALink>
           )}
         </div>

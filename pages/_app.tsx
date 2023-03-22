@@ -55,7 +55,7 @@ const App = ({ Component, pageProps }) => {
                         content="width=device-width, initial-scale=1, shrink-to-fit=no"
                       />
 
-                      <title>Riode - React eCommerce Template</title>
+                      <title>Tienda-Premia Tu Esfuerzo</title>
 
                       <meta name="keywords" content="React Template" />
                       <meta

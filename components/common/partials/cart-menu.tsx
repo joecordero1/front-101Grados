@@ -122,7 +122,7 @@ function CartMenu() {
                   href="/pages/checkout"
                   className="btn btn-dark btn-rounded btn-checkout"
                 >
-                  Proceder a envió
+                  Proceder a envío
                 </ALink>
               ) : (
                 <ALink

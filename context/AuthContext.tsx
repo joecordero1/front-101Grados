@@ -217,7 +217,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log("useAuth");
     if (auth.isLoggedIn) getAvailablePoints();
   }, [auth.isLoggedIn]);
 

@@ -25,7 +25,7 @@ function Cart() {
             <ALink
               href={availablePoints >= totalAmount() ? "/pages/checkout" : ""}
             >
-              2.Envio
+              2.Envío
             </ALink>
           </h3>
           <h3 className="title title-simple title-step">
@@ -262,7 +262,7 @@ function Cart() {
                           href="/pages/checkout"
                           className="btn btn-dark btn-rounded btn-checkout"
                         >
-                          Proceder a envió
+                          Proceder a envío
                         </ALink>
                       ) : (
                         <ALink

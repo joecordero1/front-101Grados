@@ -1,15 +1,11 @@
-import { FC, useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { useLazyQuery } from '@apollo/react-hooks';
-
-import ToolBox from '~/components/partials/shop/toolbox';
-import ProductTwo from '~/components/features/product/product-two';
-import ProductEight from '~/components/features/product/product-eight';
-import Pagination from '~/components/features/pagination';
-import withApollo from '~/server/apollo';
-import { GET_PRODUCTS } from '~/server/queries';
-import { CatalogueItem } from '../../../../utils/types/catalogueItem';
-import { PaginationMetaDto } from '../../../../utils/types/common';
+import { FC, useEffect } from "react";
+import { useRouter } from "next/router";
+import ProductTwo from "~/components/features/product/product-two";
+import ProductEight from "~/components/features/product/product-eight";
+import Pagination from "~/components/features/pagination";
+import withApollo from "~/server/apollo";
+import { CatalogueItem } from "../../../../utils/types/catalogueItem";
+import { PaginationMetaDto } from "../../../../utils/types/common";
 
 type Props = {
   items: CatalogueItem[];
@@ -23,17 +19,18 @@ type Props = {
 
 const ProductListOne: FC<Props> = (props) => {
   const { items, loading, meta, handlePageChange } = props;
-  const { itemsPerRow = 3, type = 'left', isToolbox = true } = props;
+  const { itemsPerRow = 3, type = "left", isToolbox = true } = props;
   const router = useRouter();
   const query = router.query;
+
   // const products = data && data.products.data;
   const gridClasses = {
-    3: 'cols-2 cols-sm-3',
-    4: 'cols-2 cols-sm-3 cols-md-4',
-    5: 'cols-2 cols-sm-3 cols-md-4 cols-xl-5',
-    6: 'cols-2 cols-sm-3 cols-md-4 cols-xl-6',
-    7: 'cols-2 cols-sm-3 cols-md-4 cols-lg-5 cols-xl-7',
-    8: 'cols-2 cols-sm-3 cols-md-4 cols-lg-5 cols-xl-8',
+    3: "cols-2 cols-sm-3",
+    4: "cols-2 cols-sm-3 cols-md-4",
+    5: "cols-2 cols-sm-3 cols-md-4 cols-xl-5",
+    6: "cols-2 cols-sm-3 cols-md-4 cols-xl-6",
+    7: "cols-2 cols-sm-3 cols-md-4 cols-lg-5 cols-xl-7",
+    8: "cols-2 cols-sm-3 cols-md-4 cols-lg-5 cols-xl-8",
   };
   // @ts-ignore
   const perPage = query.per_page ? parseInt(query.per_page) : 15;
@@ -43,7 +40,7 @@ const ProductListOne: FC<Props> = (props) => {
   //     (data.products.total % perPage ? 1 : 0)
   //   : 1;
   const page = query.page ? query.page : 1;
-  const gridType = query.type ? query.type : 'grid';
+  const gridType = query.type ? query.type : "grid";
 
   useEffect(() => {
     // getProducts({
@@ -74,12 +71,12 @@ const ProductListOne: FC<Props> = (props) => {
     <>
       {/* {isToolbox ? <ToolBox type={type} /> : ''} */}
       {loading ? (
-        gridType === 'grid' ? (
+        gridType === "grid" ? (
           <div className={`row product-wrapper ${gridClasses[itemsPerRow]}`}>
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
               <div
                 className="product-loading-overlay"
-                key={'popup-skel-' + item}
+                key={"popup-skel-" + item}
               ></div>
             ))}
           </div>
@@ -88,13 +85,13 @@ const ProductListOne: FC<Props> = (props) => {
             {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
               <div
                 className="skel-pro skel-pro-list mb-4"
-                key={'list-skel-' + item}
+                key={"list-skel-" + item}
               ></div>
             ))}
           </div>
         )
       ) : (
-        ''
+        ""
       )}
 
       {items.length > 0 ? (
@@ -114,13 +111,13 @@ const ProductListOne: FC<Props> = (props) => {
           <Pagination meta={meta} handlePageChange={handlePageChange} />
         </div>
       ) : (
-        ''
+        ""
       )}
 
-      {gridType === 'grid' ? (
+      {gridType === "grid" ? (
         <div className={`row product-wrapper ${gridClasses[7]}`}>
           {items.map((item) => (
-            <div className="product-wrap" key={'shop-' + item.award.id}>
+            <div className="product-wrap" key={"shop-" + item.award.id}>
               <ProductTwo item={item} adClass="" />
             </div>
           ))}
@@ -128,7 +125,7 @@ const ProductListOne: FC<Props> = (props) => {
       ) : (
         <div className="product-lists product-wrapper">
           {items.map((item) => (
-            <ProductEight item={item} key={'shop-list-' + item.award.id} />
+            <ProductEight item={item} key={"shop-list-" + item.award.id} />
           ))}
         </div>
       )}
@@ -138,7 +135,7 @@ const ProductListOne: FC<Props> = (props) => {
           No hemos encontrado ningún premio con esos filtros.
         </p>
       ) : (
-        ''
+        ""
       )}
 
       {items.length > 0 ? (
@@ -158,12 +155,12 @@ const ProductListOne: FC<Props> = (props) => {
           <Pagination meta={meta} handlePageChange={handlePageChange} />
         </div>
       ) : (
-        ''
+        ""
       )}
     </>
   );
 };
 
-export default withApollo({ ssr: typeof window === 'undefined' })(
+export default withApollo({ ssr: typeof window === "undefined" })(
   ProductListOne
 );

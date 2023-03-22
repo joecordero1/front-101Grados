@@ -22,7 +22,7 @@ function Order(props) {
             <ALink href="/pages/cart">1.Carrito</ALink>
           </h3>
           <h3 className="title title-simple title-step">
-            <ALink href="/pages/checkout">2.Envio</ALink>
+            <ALink href="/pages/checkout">2.Envío</ALink>
           </h3>
           <h3 className="title title-simple title-step active">
             <ALink href="#">3.Finalizar</ALink>

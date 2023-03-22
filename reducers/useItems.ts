@@ -71,12 +71,14 @@ type FilterOptions = {
   categoriesIds: number[];
   justOnSale: boolean;
   lastDigits: string;
+  toSearch?: string;
 };
 
 export type FilterOptionsToString =
   | "brandId"
   | "categoriesIds"
   | "justOnSale"
+  | "toSearch"
   | "lastDigits";
 
 type State = {
@@ -104,6 +106,7 @@ const initialState: State = {
     categoriesIds: null,
     justOnSale: false,
     lastDigits: null,
+    toSearch: null,
   },
   categories: [],
   brands: [],
@@ -264,7 +267,7 @@ export const useItems = (): ReducerValue => {
     }
   }, []);
 
-  const getBrands = useCallback(async () => {
+  /* const getBrands = useCallback(async () => {
     try {
       const response = await get<Brand[]>("/brands/list");
       dispatch({ type: "GET_BRANDS", payload: { brands: response } });
@@ -272,7 +275,7 @@ export const useItems = (): ReducerValue => {
       console.error("getBrands() -> error", error);
     }
   }, []);
-
+ */
   const cleanFilters = () => {
     dispatch({ type: "CLEAN_FILTERS" });
   };
@@ -283,11 +286,12 @@ export const useItems = (): ReducerValue => {
       if (query.category)
         handleFiltersChange("categoriesIds", [query.category]);
 
+      if (query.search) handleFiltersChange("toSearch", [query.search]);
       if (query.page && !isNaN(parseInt(query.page.toString()))) {
         handlePageChange(parseInt(query.page.toString()) || state.meta.page);
-      } else {
+      } /* else {
         console.log("No entró localHandleFiltersChange useItems Hook");
-      }
+      } */
       // if (query.justOnSale) handleFiltersChange('justOnSale', query.justOnSale);
     } else {
       cleanFilters();
@@ -296,7 +300,7 @@ export const useItems = (): ReducerValue => {
 
   useEffect(() => {
     getCategories();
-    getBrands();
+    /*  getBrands(); */
   }, []);
 
   useEffect(() => {
