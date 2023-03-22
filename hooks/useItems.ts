@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
-import queryString from 'query-string';
+import { useState, useEffect } from "react";
+import queryString from "query-string";
 
-import { useApiAuth } from 'hooks/useApiAuth';
-import { CatalogueItem } from '../utils/types/catalogueItem';
-import { Page, PaginationMetaDto } from '../utils/types/common';
+import { useApiAuth } from "hooks/useApiAuth";
+import { CatalogueItem } from "../utils/types/catalogueItem";
+import { Page, PaginationMetaDto } from "../utils/types/common";
 
 type MetaProps = {
   take?: number;
@@ -12,9 +12,10 @@ type MetaProps = {
 
 type FilterOptions = {
   random?: boolean;
-  orderPoints?: 'ASC' | 'DESC';
+  orderPoints?: "ASC" | "DESC";
   categoriesIds?: number[];
   buyable?: boolean;
+  toSearch?: string;
 };
 
 type UseItemsProps = {
@@ -41,7 +42,7 @@ export function useItems({ metaProps, filterOptions = {} }: UseItemsProps) {
     try {
       setLoading(true);
       const params = {
-        order: 'DESC',
+        order: "DESC",
         take: meta.take.toString(),
         page: meta.page.toString(),
         // Add just the filter options that are not null or undefined or empty string
@@ -56,7 +57,7 @@ export function useItems({ metaProps, filterOptions = {} }: UseItemsProps) {
       const query = queryString.stringify(params);
 
       const response = await get<Page<CatalogueItem>>(
-        '/catalogue-items/store?' + query
+        "/catalogue-items/store?" + query
       );
       setItems(response.data);
       setLoading(false);

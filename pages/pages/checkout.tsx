@@ -37,7 +37,7 @@ function Checkout(props) {
             <ALink href="/pages/cart">1.Carrito</ALink>
           </h3>
           <h3 className="title title-simple title-step active">
-            <ALink href="#">2.Envio</ALink>
+            <ALink href="#">2.Envío</ALink>
           </h3>
           <h3 className="title title-simple title-step">
             <ALink
@@ -54,7 +54,7 @@ function Checkout(props) {
                 <div className="row">
                   <div className="col-lg-7 mb-6 mb-lg-0 pr-lg-4">
                     <h3 className="title title-simple text-left text-uppercase">
-                      Dirección de envio
+                      Dirección de envío
                     </h3>
                     {availableAdresses.length > 0 ? (
                       <AddressesList addresses={availableAdresses} />
@@ -138,7 +138,7 @@ function Checkout(props) {
                       placeholder="Calle secundaria"
                     />
                     <label>
-                      Numero de casa * (en caso de no contar con este dato
+                      Número de casa * (en caso de no contar con este dato
                       escribir no tiene)
                     </label>
                     <input
@@ -149,7 +149,7 @@ function Checkout(props) {
                         handleNewAddressChange(e.target.name, e.target.value)
                       }
                       required
-                      placeholder="Numero de casa"
+                      placeholder="Número de casa"
                     />
 
                     <div className="row">
@@ -186,7 +186,7 @@ function Checkout(props) {
                       </div>
                     </div>
 
-                    <label>Numero de telefono para contacto *</label>
+                    <label>Número de telefono para contacto *</label>
                     <input
                       type="text"
                       className="form-control"
@@ -275,7 +275,7 @@ function Checkout(props) {
                             disabled={true}
                             className="btn btn-dark btn-rounded btn-order"
                           >
-                            Selecciona una dirección de envio
+                            Selecciona una dirección de envío
                           </button>
                         )}
                       </div>

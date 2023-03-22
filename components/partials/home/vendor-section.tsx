@@ -1,12 +1,12 @@
-import React, { FC } from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import React, { FC } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
-import ALink from '~/components/features/custom-link';
-import OwlCarousel from '~/components/features/owl-carousel';
-import { mainSlider12 } from '~/utils/data/carousel';
+import ALink from "~/components/features/custom-link";
+import OwlCarousel from "~/components/features/owl-carousel";
+import { mainSlider12 } from "~/utils/data/carousel";
 
-import { useCategories, useItems } from 'hooks';
-import { take } from 'redux-saga/effects';
+import { useCategories, useItems } from "hooks";
+import { take } from "redux-saga/effects";
 
 function VendorSection() {
   const { categories: rawCategories } = useCategories();
@@ -27,7 +27,7 @@ function VendorSection() {
                 <figure
                   className="vendor-logo"
                   style={{
-                    width: '100px',
+                    width: "100px",
                   }}
                 >
                   <ALink href="/vendor/single">
@@ -35,7 +35,7 @@ function VendorSection() {
                       src={
                         category.image
                           ? category.image
-                          : '../../images/empty.jpg'
+                          : "../../images/empty.jpg"
                       }
                       alt="Vendor logo"
                       effect="opacity"
@@ -53,7 +53,7 @@ function VendorSection() {
                     <div className="ratings-full">
                       <span
                         className="ratings"
-                        style={{ width: '100%' }}
+                        style={{ width: "100%" }}
                       ></span>
                       <span className="tooltiptext tooltip-top">5</span>
                     </div>
@@ -86,14 +86,14 @@ const CategoryItems: FC<{
     <>
       <div className="vendor-products grid-type gutter-xs">
         {items.map((item) => (
-          <div className="vendor-product">
+          <div className="vendor-product" key={item.id}>
             <figure className="product-media">
               <ALink href="/shop">
                 <LazyLoadImage
                   src={
                     item.award.mainImage
                       ? item.award.mainImage
-                      : '../../images/empty.jpg'
+                      : "../../images/empty.jpg"
                   }
                   alt="Vendor Product"
                   width="217"
