@@ -1,3 +1,4 @@
+import { Address } from "./address";
 import { Award, AwardVariant } from "./award";
 import { Participant } from "./participant";
 
@@ -58,19 +59,4 @@ export interface Request {
   award: Award;
   variant: null;
   address: Address;
-}
-
-export interface Address {
-  id: number;
-  alias: string;
-  city: string;
-  sector: null;
-  mainStreet: string;
-  houseNumber: string;
-  secondaryStreet: string;
-  reference: string;
-  contactName: string;
-  contactPhone: string;
-  isDeleted: boolean;
-  deletedAt: null;
 }
