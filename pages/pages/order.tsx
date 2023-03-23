@@ -71,7 +71,7 @@ function Order(props) {
                   Canje realizado con exito!
                 </h5>
                 <p>
-                  Los premios canjeados te llegarán en un máximo de 8 a 15 días
+                  Los premios canjeados te llegarán en un máximo de 15 días
                   laborables. ¡Espéralos!
                 </p>
               </div>

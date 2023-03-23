@@ -1,6 +1,5 @@
 import { createContext, FC, ReactNode, useReducer, useEffect } from "react";
 import { useRouter } from "next/router";
-import { differenceInCalendarDays } from "date-fns";
 
 import { useProgram, useApi, useApiAuth } from "hooks";
 import { Participant } from "utils/types";
@@ -65,11 +64,9 @@ const initialState: AuthState = {
 };
 export const setSessionWithToken = (accessToken: string | null): void => {
   if (accessToken) {
-    // localStorage.setItem('accessTokenLala4Store', accessToken);
-    // axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+    localStorage.setItem("accessTokenLala4Store", accessToken);
   } else {
     localStorage.removeItem("accessTokenLala4Store");
-    // delete axios.defaults.headers.common.Authorization;
   }
 };
 const reducer = (state: AuthState, action: Action): AuthState => {
@@ -126,9 +123,8 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const router = useRouter();
 
   const loginWithToken = (token: string | null) => {
-    // setSessionWithToken(token);
+    setSessionWithToken(token);
     setSession();
-    router.push("/");
   };
 
   const logIn = async (
@@ -166,6 +162,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   };
 
   const logOut = () => {
+    console.log("entrando logout");
     localStorage.removeItem("accessTokenLala4Store");
     setSession();
   };
@@ -266,6 +263,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     setSession();
   }, []);
+  console.log(auth.isLoggedIn);
   return (
     <AuthContext.Provider
       value={{

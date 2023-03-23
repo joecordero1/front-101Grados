@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import ALink from '~/components/features/custom-link';
+import ALink from "~/components/features/custom-link";
 
-import { useForm, useAuth, useProgram } from 'hooks';
+import { useForm, useAuth, useProgram } from "hooks";
+import { useRouter } from "next/router";
 
 const SignIn = () => {
   const { program } = useProgram();
+  const router = useRouter();
   const { values, onChange } = useForm<{
     username: string;
     password: string;
@@ -14,7 +16,14 @@ const SignIn = () => {
     password: null,
   });
   const [showPassword, setShowPassword] = useState(false);
-  const { logIn } = useAuth();
+  const { logIn, loginWithToken } = useAuth();
+
+  useEffect(() => {
+    if (router.isReady && router.query.token !== undefined) {
+      const { token } = router.query;
+      loginWithToken(token.toString());
+    }
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,26 +33,26 @@ const SignIn = () => {
   return (
     <div
       style={{
-        display: 'flex',
-        width: '100%',
-        height: '100vh',
-        justifyContent: 'center',
-        alignItems: 'center',
+        display: "flex",
+        width: "100%",
+        height: "100vh",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       <div
         className="form-box"
         style={{
-          background: '#EAEAEA',
-          padding: '20px',
-          borderRadius: '10px',
+          background: "#EAEAEA",
+          padding: "20px",
+          borderRadius: "10px",
         }}
       >
         <div className="tab tab-nav-simple tab-nav-boxed form-tab">
           <div
             style={{
-              display: 'flex',
-              justifyContent: 'center',
+              display: "flex",
+              justifyContent: "center",
             }}
           >
             <ALink href="/" className="logo">
@@ -68,10 +77,10 @@ const SignIn = () => {
                   name="singin-email"
                   placeholder="Usuario *"
                   required
-                  value={values.username || ''}
+                  value={values.username || ""}
                   onChange={(e) =>
                     onChange(
-                      'username',
+                      "username",
                       e.target.value.length > 0 ? e.target.value : null
                     )
                   }
@@ -79,29 +88,29 @@ const SignIn = () => {
               </div>
               <div className="form-group">
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   className="form-control"
                   id="singin-password"
                   placeholder="Contraseña *"
                   name="singin-password"
                   required
-                  value={values.password || ''}
+                  value={values.password || ""}
                   onChange={(e) =>
                     onChange(
-                      'password',
+                      "password",
                       e.target.value.length > 0 ? e.target.value : null
                     )
                   }
                 />
                 <p
                   style={{
-                    textAlign: 'right',
-                    textDecoration: 'underline',
-                    cursor: 'pointer',
+                    textAlign: "right",
+                    textDecoration: "underline",
+                    cursor: "pointer",
                   }}
                   onClick={() => setShowPassword(!showPassword)}
                 >
-                  {showPassword ? 'Ocultar' : 'Mostrar'}
+                  {showPassword ? "Ocultar" : "Mostrar"}
                 </p>
               </div>
               <button
