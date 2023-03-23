@@ -107,6 +107,10 @@ export default function Header(props) {
 
                 <ul style={{ marginLeft: "-60px" }}>
                   {/* {mainMenu.blog.map((item, index) => ( */}
+
+                  <li>
+                    <ALink href="/pages/my-requests">Mis Solicitudes</ALink>
+                  </li>
                   <li
                     key={"blog"}
                     // className={item.subPages ? 'submenu' : ''}
@@ -131,16 +135,6 @@ export default function Header(props) {
                     ) : (
                       ''
                     )} */}
-                  </li>
-                  <li>
-                    <ALink
-                      href="/pages/my-requests"
-                      onClick={() => {
-                        logOut();
-                      }}
-                    >
-                      Mis Solicitudes
-                    </ALink>
                   </li>
                   {/* ))} */}
                 </ul>

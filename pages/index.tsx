@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
 
 // Import Apollo Server and Query
@@ -15,10 +15,17 @@ import BestCollection from "~/components/partials/home/best-collection";
 
 import { useAuth, useProgram } from "hooks";
 import MultipleCategories from "components/partials/home/multiple-categories";
+import { useRouter } from "next/router";
 
 function HomePage() {
-  const { availablePoints } = useAuth();
+  const { availablePoints, loginWithToken } = useAuth();
   const { program } = useProgram();
+  const router = useRouter();
+
+  /* if (router.isReady && router.query.token !== undefined) {
+    const { token } = router.query;
+    loginWithToken(token.toLocaleString());
+  } */
 
   return (
     <div className="main home">

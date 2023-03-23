@@ -47,7 +47,6 @@ export const useRequests = (): ReducerValue => {
           requestsParticipant: data,
         },
       });
-      console.log(data);
     } catch (e) {
       console.log("getParticipantRequests", e);
     }
