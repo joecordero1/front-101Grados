@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import ALink from "~/components/features/custom-link";
 
 import { useForm, useAuth, useProgram } from "hooks";
-import { useRouter } from "next/router";
 
 const SignIn = () => {
   const { program } = useProgram();
-  const router = useRouter();
+
   const { values, onChange } = useForm<{
     username: string;
     password: string;
@@ -16,14 +15,7 @@ const SignIn = () => {
     password: null,
   });
   const [showPassword, setShowPassword] = useState(false);
-  const { logIn, loginWithToken } = useAuth();
-
-  useEffect(() => {
-    if (router.isReady && router.query.token !== undefined) {
-      const { token } = router.query;
-      loginWithToken(token.toString());
-    }
-  }, []);
+  const { logIn } = useAuth();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
