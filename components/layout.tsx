@@ -63,6 +63,11 @@ function Layout({ children, closeQuickview }) {
   }, [router.pathname]);
 
   useEffect(() => {
+    if (router.isReady && router.query.token !== undefined) {
+      const { token } = router.query;
+      loginWithToken(token.toString());
+    }
+
     if (isLoggedIn) {
       const { pathname } = router;
       if (pathname === "/signin" || pathname === "/signup") {

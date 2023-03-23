@@ -162,7 +162,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   };
 
   const logOut = () => {
-    console.log("entrando logout");
     localStorage.removeItem("accessTokenLala4Store");
     setSession();
   };
@@ -263,7 +262,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     setSession();
   }, []);
-  console.log(auth.isLoggedIn);
   return (
     <AuthContext.Provider
       value={{
