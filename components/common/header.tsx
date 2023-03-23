@@ -38,13 +38,13 @@ export default function Header(props) {
       <div className="header-middle sticky-header fix-top sticky-content">
         <div className="container">
           <div className="header-left mr-4">
-            <ALink
+            {/*  <ALink
               href="#"
               className="mobile-menu-toggle"
               onClick={showMobileMenu}
             >
               <i className="d-icon-bars2"></i>
-            </ALink>
+            </ALink> */}
 
             <ALink href="/" className="logo">
               <img

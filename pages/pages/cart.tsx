@@ -277,10 +277,10 @@ function Cart() {
                 </aside>
               </>
             ) : (
-              <div className="empty-cart text-center">
+              <div className="empty-cart text-center" style={{ marginTop: 10 }}>
                 <p>Tu carrito esta vacio.</p>
                 <i className="cart-empty d-icon-bag"></i>
-                <p className="return-to-shop mb-0">
+                <p className="return-to-shop">
                   <ALink
                     className="button wc-backward btn btn-dark btn-md"
                     href="/shop"
