@@ -62,19 +62,15 @@ export default function StickyFooter () {
         <div className="sticky-footer sticky-content fix-bottom">
             <ALink href="/" className="sticky-link active">
                 <i className="d-icon-home"></i>
-                <span>Home</span>
+                <span>Inicio</span>
             </ALink>
             <ALink href="/shop" className="sticky-link">
                 <i className="d-icon-volume"></i>
-                <span>Categories</span>
+                <span>Categorias</span>
             </ALink>
-            <ALink href="/pages/wishlist" className="sticky-link">
-                <i className="d-icon-heart"></i>
-                <span>Wishlist</span>
-            </ALink>
-            <ALink href="/pages/account" className="sticky-link">
+            <ALink href="/pages/my-requests" className="sticky-link">
                 <i className="d-icon-user"></i>
-                <span>Account</span>
+                <span>Mis Solicitudes</span>
             </ALink>
 
             <FooterSearchBox />
