@@ -112,7 +112,7 @@ function SearchForm() {
         onClick={onSearchClick}
       >
         <i className="d-icon-search"></i>
-        <span>Search</span>
+        <span>Buscar</span>
       </a>
       <form
         action="#"

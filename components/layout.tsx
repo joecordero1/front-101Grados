@@ -114,7 +114,7 @@ function Layout({ children, closeQuickview }) {
         {isLoggedIn && <StickyFooter />}
       </div>
 
-      {isLoggedIn && (
+      {/* {isLoggedIn && (
         <>
           <ALink
             id="scroll-top"
@@ -129,7 +129,7 @@ function Layout({ children, closeQuickview }) {
 
           <MobileMenu />
         </>
-      )}
+      )} */}
 
       <ToastContainer
         autoClose={3000}
