@@ -185,6 +185,7 @@ function Order(props) {
           </div> */}
 
           <ALink
+            style={{ marginTop: 10 }}
             href="/shop"
             className="btn btn-icon-left btn-dark btn-back btn-rounded btn-md mb-4"
           >

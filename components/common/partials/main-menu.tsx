@@ -39,7 +39,7 @@ function MainMenu() {
             key={category.id}
             href={{
               pathname: "/shop",
-              query: { category: "office-computers" },
+              query: { category: category.id },
             }}
           >
             <figure className="categroy-media">
