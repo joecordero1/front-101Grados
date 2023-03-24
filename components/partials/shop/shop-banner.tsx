@@ -7,7 +7,11 @@ export default function ShopBanner(props) {
   return (
     <div
       className="shop-boxed-banner banner mb-8 mb-lg-7"
-      style={{ backgroundImage: program.hero1, backgroundColor: "#ECEDEF" }}
+      style={{
+        backgroundImage: `url(${program.shopSection1})`,
+        backgroundSize: "cover",
+        backgroundColor: "#ECEDEF",
+      }}
     >
       <div className="banner-content">
         <h4 className="banner-subtitle font-weight-semi-bold ls-m text-uppercase text-secondary mb-3">

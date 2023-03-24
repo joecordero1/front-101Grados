@@ -152,7 +152,7 @@ function ProductFive( props ) {
                         <span className="tooltiptext tooltip-top">{ toDecimal( product.ratings ) }</span>
                     </div>
 
-                    <ALink href={ `/product/default/${ product.slug }` } className="rating-reviews">( { product.reviews } reviews )</ALink>
+              {/*       <ALink href={ `/product/default/${ product.slug }` } className="rating-reviews">( { product.reviews } reviews )</ALink> */}
                 </div>
 
                 <div className="product-action">

@@ -3,6 +3,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { connect } from "react-redux";
 
 import ALink from "~/components/features/custom-link";
+import { useProgram } from "~/hooks";
 import { cartActions } from "~/store/cart";
 import { modalActions } from "~/store/modal";
 import { wishlistActions } from "~/store/wishlist";
@@ -33,6 +34,7 @@ const ProductEight: FC<Props> = (props) => {
     isNew,
     isTop,
   } = props;
+  const { program } = useProgram();
 
   // decide if the product is wishlisted
   // let isWishlisted;
@@ -131,11 +133,18 @@ const ProductEight: FC<Props> = (props) => {
         </div>
 
         <h3 className="product-name">
-          <ALink href={`/award/${item.award.id}`}>{item.award.name}</ALink>
+          <ALink href={`/award/${item.award.id}`}>
+            {`${item.award.name} ${
+              item.award.model ? "-" + item.award.model : ""
+            }-${item.award.brand.name}`}
+          </ALink>
         </h3>
 
         <div className="product-price">
-          <ins className="new-price">{item.points} Puntos</ins>
+          <ins className="new-price">
+            {item.points}
+            {program.coinName}
+          </ins>
           {/* {product.price[0] !== product.price[1] ? (
             product.variants.length === 0 ||
             (product.variants.length > 0 && !product.variants[0].price) ? (

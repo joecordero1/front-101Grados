@@ -30,6 +30,8 @@ const SignIn = () => {
         height: "100vh",
         justifyContent: "center",
         alignItems: "center",
+        backgroundImage: `url(${program.loginScreen})`,
+        backgroundSize: "cover",
       }}
     >
       <div
@@ -48,13 +50,7 @@ const SignIn = () => {
             }}
           >
             <ALink href="/" className="logo">
-              <img
-                // src="../images/home/logo.png"
-                src={program.logo}
-                alt="logo"
-                width="153"
-                height="44"
-              />
+              <img src={program.logoBig} alt="logo" width="153" height="44" />
             </ALink>
           </div>
           <span className="nav-link border-no lh-1 ls-normal">Ingresa</span>

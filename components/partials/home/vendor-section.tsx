@@ -51,11 +51,11 @@ function VendorSection() {
                   </h4>
                   <div className="ratings-container mb-0">
                     <div className="ratings-full">
-                      <span
+                      {/*   <span
                         className="ratings"
                         style={{ width: "100%" }}
                       ></span>
-                      <span className="tooltiptext tooltip-top">5</span>
+                      <span className="tooltiptext tooltip-top">5</span> */}
                     </div>
                   </div>
                 </div>
