@@ -13,7 +13,10 @@ import { useCategories } from 'hooks/useCategories';
 import { useItems } from '../../reducers/useItems';
 
 function ShopHorizontalFilter() {
-  const { categories: rawCategories } = useCategories();
+  const { categories } = useCategories({
+    take: 7,
+    random: true,
+  });
   const {
     items,
     loading,
@@ -24,8 +27,6 @@ function ShopHorizontalFilter() {
   } = useItems();
   const router = useRouter();
   const query = router.query;
-
-  const categories = rawCategories.slice(0, 7);
 
   const prices = [
     { min: '0', max: '50' },

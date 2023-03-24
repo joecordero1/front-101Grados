@@ -1,23 +1,23 @@
-import { useReducer, useEffect, useCallback } from "react";
-import queryString from "query-string";
+import { useReducer, useEffect, useCallback } from 'react';
+import queryString from 'query-string';
 
-import { useApiAuth } from "hooks/useApiAuth";
-import { SubcategoriesList } from "../utils/types/award";
+import { useApiAuth } from 'hooks/useApiAuth';
+import { SubcategoriesList } from '../utils/types/award';
 import {
   CatalogueItem,
   Page,
   Category,
   PaginationMetaDto,
   Brand,
-} from "~/utils/types";
-import { useRouter } from "next/router";
+} from '~/utils/types';
+import { useRouter } from 'next/router';
 
 type Loading = {
-  type: "loading";
+  type: 'loading';
 };
 
 type GetItems = {
-  type: "GET_VEHICLES";
+  type: 'GET_VEHICLES';
   payload: {
     items: CatalogueItem[];
     meta: PaginationMetaDto;
@@ -25,14 +25,14 @@ type GetItems = {
 };
 
 type UpdateMetaPageOptions = {
-  type: "UPDATE_META_PAGE_OPTIONS";
+  type: 'UPDATE_META_PAGE_OPTIONS';
   payload: {
     meta: PaginationMetaDto;
   };
 };
 
 type HandleFiltersChange = {
-  type: "HANDLE_FILTERS_CHANGE";
+  type: 'HANDLE_FILTERS_CHANGE';
   payload: {
     field: string;
     value: any;
@@ -40,21 +40,21 @@ type HandleFiltersChange = {
 };
 
 type GetBrands = {
-  type: "GET_BRANDS";
+  type: 'GET_BRANDS';
   payload: {
     brands: Brand[];
   };
 };
 
 type GetCategories = {
-  type: "GET_CATEGORIES";
+  type: 'GET_CATEGORIES';
   payload: {
     categories: Category[];
   };
 };
 
 type CleanFilters = {
-  type: "CLEAN_FILTERS";
+  type: 'CLEAN_FILTERS';
 };
 
 type Actions =
@@ -75,11 +75,12 @@ type FilterOptions = {
 };
 
 export type FilterOptionsToString =
-  | "brandId"
-  | "categoriesIds"
-  | "justOnSale"
-  | "toSearch"
-  | "lastDigits";
+  | 'brandId'
+  | 'categoriesIds'
+  | 'justOnSale'
+  | 'toSearch'
+  | 'orderPoints'
+  | 'lastDigits';
 
 type State = {
   loading: boolean;
@@ -114,26 +115,26 @@ const initialState: State = {
 
 const reducer = (state: State, action: Actions): State => {
   switch (action.type) {
-    case "loading":
+    case 'loading':
       return {
         ...state,
         loading: true,
       };
-    case "GET_VEHICLES":
+    case 'GET_VEHICLES':
       return {
         ...state,
         loading: false,
         items: action.payload.items,
         meta: action.payload.meta,
       };
-    case "UPDATE_META_PAGE_OPTIONS": {
+    case 'UPDATE_META_PAGE_OPTIONS': {
       const { meta } = action.payload;
       return {
         ...state,
         meta,
       };
     }
-    case "HANDLE_FILTERS_CHANGE": {
+    case 'HANDLE_FILTERS_CHANGE': {
       const { field, value } = action.payload;
       return {
         ...state,
@@ -143,17 +144,17 @@ const reducer = (state: State, action: Actions): State => {
         },
       };
     }
-    case "GET_CATEGORIES":
+    case 'GET_CATEGORIES':
       return {
         ...state,
         categories: action.payload.categories,
       };
-    case "GET_BRANDS":
+    case 'GET_BRANDS':
       return {
         ...state,
         brands: action.payload.brands,
       };
-    case "CLEAN_FILTERS":
+    case 'CLEAN_FILTERS':
       return {
         ...state,
         filterOptions: {
@@ -182,10 +183,10 @@ export const useItems = (): ReducerValue => {
 
   const getItems = useCallback(async () => {
     try {
-      dispatch({ type: "loading" });
+      dispatch({ type: 'loading' });
 
       const params = {
-        order: "DESC",
+        order: 'DESC',
         take: state.meta.take.toString(),
         page: state.meta.page.toString(),
         // Add just the filter options that are not null or undefined or empty string
@@ -200,27 +201,27 @@ export const useItems = (): ReducerValue => {
       const query = queryString.stringify(params);
 
       const response = await get<Page<CatalogueItem>>(
-        "/catalogue-items/store?" + query
+        '/catalogue-items/store?' + query
       );
 
       const items = response.data;
       const meta = response.meta;
       dispatch({
-        type: "GET_VEHICLES",
+        type: 'GET_VEHICLES',
         payload: {
           items,
           meta,
         },
       });
     } catch (error) {
-      console.error("  getItems() -> error", error);
+      console.error('  getItems() -> error', error);
     }
   }, [state.meta.page, state.filterOptions]);
 
   const handlePageChange = (page: number) => {
     if (page > 0 && page <= state.meta.pageCount) {
       dispatch({
-        type: "UPDATE_META_PAGE_OPTIONS",
+        type: 'UPDATE_META_PAGE_OPTIONS',
         payload: {
           meta: {
             ...state.meta,
@@ -233,7 +234,7 @@ export const useItems = (): ReducerValue => {
 
   const handleFiltersChange = (field: FilterOptionsToString, value: any) => {
     dispatch({
-      type: "HANDLE_FILTERS_CHANGE",
+      type: 'HANDLE_FILTERS_CHANGE',
       payload: {
         field,
         value,
@@ -244,7 +245,7 @@ export const useItems = (): ReducerValue => {
   const getCategories = useCallback(async () => {
     try {
       const data = await get<SubcategoriesList[]>(
-        "/catalogue-items/categories"
+        '/catalogue-items/categories'
       );
 
       // Extract the categories from the categories with no repeated categories
@@ -261,9 +262,9 @@ export const useItems = (): ReducerValue => {
         return acc;
       }, [] as Category[]);
 
-      dispatch({ type: "GET_CATEGORIES", payload: { categories } });
+      dispatch({ type: 'GET_CATEGORIES', payload: { categories } });
     } catch (error) {
-      console.error("getCategories() -> error", error);
+      console.error('getCategories() -> error', error);
     }
   }, []);
 
@@ -277,21 +278,25 @@ export const useItems = (): ReducerValue => {
   }, []);
  */
   const cleanFilters = () => {
-    dispatch({ type: "CLEAN_FILTERS" });
+    dispatch({ type: 'CLEAN_FILTERS' });
   };
 
   const localHandleFiltersChange = () => {
     if (Object.keys(query).length > 0) {
       // if (query.brand) handleFiltersChange('brandId', query.brand);
-      if (query.category)
-        handleFiltersChange("categoriesIds", [query.category]);
+      if (query.category) {
+        handleFiltersChange('categoriesIds', [query.category]);
+      } else {
+        handleFiltersChange('categoriesIds', null);
+      }
 
-      if (query.search) handleFiltersChange("toSearch", [query.search]);
+      if (query.search) handleFiltersChange('toSearch', [query.search]);
       if (query.page && !isNaN(parseInt(query.page.toString()))) {
         handlePageChange(parseInt(query.page.toString()) || state.meta.page);
       } /* else {
-        console.log("No entró localHandleFiltersChange useItems Hook");
       } */
+      if (query.orderPoints)
+        handleFiltersChange('orderPoints', query.orderPoints);
       // if (query.justOnSale) handleFiltersChange('justOnSale', query.justOnSale);
     } else {
       cleanFilters();

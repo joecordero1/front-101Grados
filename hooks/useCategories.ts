@@ -3,7 +3,13 @@ import { useState, useEffect } from 'react';
 import { useApiAuth } from 'hooks';
 import { Category, SubcategoriesList } from '../utils/types/award';
 
-export const useCategories = () => {
+export const useCategories = ({
+  random = false,
+  take = 10,
+}: {
+  random?: boolean;
+  take: number;
+}) => {
   const { get } = useApiAuth();
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
@@ -29,9 +35,13 @@ export const useCategories = () => {
         return acc;
       }, [] as Category[]);
 
-      const randomizedCategories = categories.sort(() => Math.random() - 0.5);
+      if (random) categories.sort(() => Math.random() - 0.5);
+      if (take) categories.splice(take);
 
-      setCategories(randomizedCategories.slice(0, 10));
+      // const randomizedCategories = categories.sort(() => Math.random() - 0.5);
+
+      // setCategories(randomizedCategories.slice(0, 10));
+      setCategories(categories);
       setLoading(false);
     } catch (error) {
       setLoading(false);
