@@ -169,12 +169,13 @@ const ProductTwo: FC<Props> = (props) => {
         </div>
 
         <h3 className="product-name">
-          <ALink href={`/award/${item.id}`}>
-            {`${item.award.name} ${
-              item.award.model ? "-" + item.award.model : ""
-            }-${item.award.brand.name}`}
-          </ALink>
+          <ALink href={`/award/${item.id}`}>{`${item.award.name}`}</ALink>
+          <br />
+          <span className="product-brand" style={{ fontSize: 12 }}>
+            {item.award.brand.name}
+          </span>
         </h3>
+        {item.award.model && <p style={{ fontSize: 13 }}>{item.award.model}</p>}
 
         <div className="product-price">
           <ins className="new-price">
