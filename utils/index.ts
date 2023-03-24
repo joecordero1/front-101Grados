@@ -4,8 +4,8 @@
  * @return {object}
  */
 export const parseOptions = function (options) {
-  if ("string" === typeof options) {
-    return JSON.parse(options.replace(/'/g, '"').replace(";", ""));
+  if ('string' === typeof options) {
+    return JSON.parse(options.replace(/'/g, '"').replace(';', ''));
   }
   return {};
 };
@@ -16,7 +16,7 @@ export const parseOptions = function (options) {
  */
 export const isIEBrowser = function () {
   let sUsrAg = navigator.userAgent;
-  if (sUsrAg.indexOf("Trident") > -1) {
+  if (sUsrAg.indexOf('Trident') > -1) {
     return true;
   }
 
@@ -29,7 +29,7 @@ export const isIEBrowser = function () {
  */
 export const isSafariBrowser = function () {
   let sUsrAg = navigator.userAgent;
-  if (sUsrAg.indexOf("Safari") !== -1 && sUsrAg.indexOf("Chrome") === -1)
+  if (sUsrAg.indexOf('Safari') !== -1 && sUsrAg.indexOf('Chrome') === -1)
     return true;
   return false;
 };
@@ -40,7 +40,7 @@ export const isSafariBrowser = function () {
  */
 export const isEdgeBrowser = function () {
   let sUsrAg = navigator.userAgent;
-  if (sUsrAg.indexOf("Edge") > -1) return true;
+  if (sUsrAg.indexOf('Edge') > -1) return true;
   return false;
 };
 
@@ -85,11 +85,11 @@ export const parseContent = (html) => {
 
   //Removing the <script> tags
   while (SCRIPT_REGEX.test(html)) {
-    html = html.replace(SCRIPT_REGEX, "");
+    html = html.replace(SCRIPT_REGEX, '');
   }
 
   //Removing all events from tags...
-  html = html.replace(/ on\w+="[^"]*"/g, "");
+  html = html.replace(/ on\w+="[^"]*"/g, '');
 
   return {
     __html: html,
@@ -100,11 +100,11 @@ export const parseContent = (html) => {
  * Apply sticky header
  */
 export const stickyHeaderHandler = function () {
-  let top = document.querySelector("main")
-    ? document.querySelector("main").offsetTop
+  let top = document.querySelector('main')
+    ? document.querySelector('main').offsetTop
     : 300;
 
-  let stickyHeader = document.querySelector(".sticky-header");
+  let stickyHeader = document.querySelector('.sticky-header');
   let height = 0;
 
   if (stickyHeader) {
@@ -114,40 +114,40 @@ export const stickyHeaderHandler = function () {
 
   if (window.pageYOffset >= top && window.innerWidth >= 992) {
     if (stickyHeader) {
-      stickyHeader.classList.add("fixed");
-      if (!document.querySelector(".sticky-wrapper")) {
-        let newNode = document.createElement("div");
-        newNode.className = "sticky-wrapper";
+      stickyHeader.classList.add('fixed');
+      if (!document.querySelector('.sticky-wrapper')) {
+        let newNode = document.createElement('div');
+        newNode.className = 'sticky-wrapper';
         stickyHeader.parentNode.insertBefore(newNode, stickyHeader);
         document
-          .querySelector(".sticky-wrapper")
-          .insertAdjacentElement("beforeend", stickyHeader);
+          .querySelector('.sticky-wrapper')
+          .insertAdjacentElement('beforeend', stickyHeader);
         document
-          .querySelector(".sticky-wrapper")
-          .setAttribute("style", "height: " + height + "px");
+          .querySelector('.sticky-wrapper')
+          .setAttribute('style', 'height: ' + height + 'px');
       }
 
-      if (!document.querySelector(".sticky-wrapper").getAttribute("style")) {
+      if (!document.querySelector('.sticky-wrapper').getAttribute('style')) {
         document
-          .querySelector(".sticky-wrapper")
-          .setAttribute("style", "height: " + height + "px");
+          .querySelector('.sticky-wrapper')
+          .setAttribute('style', 'height: ' + height + 'px');
       }
     }
   } else {
     if (stickyHeader) {
-      stickyHeader.classList.remove("fixed");
+      stickyHeader.classList.remove('fixed');
     }
 
-    if (document.querySelector(".sticky-wrapper")) {
-      document.querySelector(".sticky-wrapper").removeAttribute("style");
+    if (document.querySelector('.sticky-wrapper')) {
+      document.querySelector('.sticky-wrapper').removeAttribute('style');
     }
   }
 
   if (
     window.outerWidth >= 992 &&
-    document.querySelector("body").classList.contains("right-sidebar-active")
+    document.querySelector('body').classList.contains('right-sidebar-active')
   ) {
-    document.querySelector("body").classList.remove("right-sidebar-active");
+    document.querySelector('body').classList.remove('right-sidebar-active');
   }
 };
 
@@ -156,17 +156,17 @@ export const stickyHeaderHandler = function () {
  */
 export const resizeHandler = function (
   width = 992,
-  attri = "right-sidebar-active"
+  attri = 'right-sidebar-active'
 ) {
   let bodyClasses =
-    document.querySelector("body") && document.querySelector("body").classList;
+    document.querySelector('body') && document.querySelector('body').classList;
   // @ts-ignore
   bodyClasses = bodyClasses.value
-    .split(" ")
-    .filter((item) => item !== "home" && item !== "loaded");
+    .split(' ')
+    .filter((item) => item !== 'home' && item !== 'loaded');
   for (let i = 0; i < bodyClasses.length; i++) {
-    document.querySelector("body") &&
-      document.querySelector("body").classList.remove(bodyClasses[i]);
+    document.querySelector('body') &&
+      document.querySelector('body').classList.remove(bodyClasses[i]);
   }
 };
 
@@ -174,9 +174,9 @@ export const resizeHandler = function (
  * Apply sticky footer
  */
 export const stickyFooterHandler = function () {
-  let stickyFooter = document.querySelector(".sticky-footer");
-  let top = document.querySelector("main")
-    ? document.querySelector("main").offsetTop
+  let stickyFooter = document.querySelector('.sticky-footer');
+  let top = document.querySelector('main')
+    ? document.querySelector('main').offsetTop
     : 300;
 
   let height = 0;
@@ -188,38 +188,38 @@ export const stickyFooterHandler = function () {
 
   if (window.pageYOffset >= top && window.innerWidth < 768) {
     if (stickyFooter) {
-      stickyFooter.classList.add("fixed");
-      if (!document.querySelector(".sticky-content-wrapper")) {
-        let newNode = document.createElement("div");
-        newNode.className = "sticky-content-wrapper";
+      stickyFooter.classList.add('fixed');
+      if (!document.querySelector('.sticky-content-wrapper')) {
+        let newNode = document.createElement('div');
+        newNode.className = 'sticky-content-wrapper';
         stickyFooter.parentNode.insertBefore(newNode, stickyFooter);
         document
-          .querySelector(".sticky-content-wrapper")
-          .insertAdjacentElement("beforeend", stickyFooter);
+          .querySelector('.sticky-content-wrapper')
+          .insertAdjacentElement('beforeend', stickyFooter);
       }
 
       document
-        .querySelector(".sticky-content-wrapper")
-        .setAttribute("style", "height: " + height + "px");
+        .querySelector('.sticky-content-wrapper')
+        .setAttribute('style', 'height: ' + height + 'px');
     }
   } else {
     if (stickyFooter) {
-      stickyFooter.classList.remove("fixed");
+      stickyFooter.classList.remove('fixed');
     }
 
-    if (document.querySelector(".sticky-content-wrapper")) {
+    if (document.querySelector('.sticky-content-wrapper')) {
       document
-        .querySelector(".sticky-content-wrapper")
-        .removeAttribute("style");
+        .querySelector('.sticky-content-wrapper')
+        .removeAttribute('style');
     }
   }
 
   if (
     window.innerWidth > 768 &&
-    document.querySelector(".sticky-content-wrapper")
+    document.querySelector('.sticky-content-wrapper')
   ) {
     // @ts-ignore
-    document.querySelector(".sticky-content-wrapper").style.height = "auto";
+    document.querySelector('.sticky-content-wrapper').style.height = 'auto';
   }
 };
 
@@ -227,7 +227,7 @@ export const stickyFooterHandler = function () {
  * utils to make background parallax
  */
 export const parallaxHandler = function () {
-  let parallaxItems = document.querySelectorAll(".parallax");
+  let parallaxItems = document.querySelectorAll('.parallax');
 
   if (parallaxItems) {
     for (let i = 0; i < parallaxItems.length; i++) {
@@ -236,9 +236,9 @@ export const parallaxHandler = function () {
         yPos,
         parallaxSpeed = 1;
 
-      if (parallax.getAttribute("data-option")) {
+      if (parallax.getAttribute('data-option')) {
         parallaxSpeed = parseInt(
-          parseOptions(parallax.getAttribute("data-option")).speed
+          parseOptions(parallax.getAttribute('data-option')).speed
         );
       }
 
@@ -250,7 +250,7 @@ export const parallaxHandler = function () {
         50;
 
       // @ts-ignore
-      parallax.style.backgroundPosition = "50% " + yPos + "%";
+      parallax.style.backgroundPosition = '50% ' + yPos + '%';
     }
   }
 };
@@ -259,12 +259,12 @@ export const parallaxHandler = function () {
  * utils to show scrollTop button
  */
 export const showScrollTopHandler = function () {
-  let scrollTop = document.querySelector(".scroll-top");
+  let scrollTop = document.querySelector('.scroll-top');
 
   if (window.pageYOffset >= 768) {
-    scrollTop.classList.add("show");
+    scrollTop.classList.add('show');
   } else {
-    scrollTop.classList.remove("show");
+    scrollTop.classList.remove('show');
   }
 };
 
@@ -275,14 +275,14 @@ export function scrollTopHandler(isCustom = true, speed = 15) {
   let offsetTop = 0;
 
   if (isCustom && !isEdgeBrowser()) {
-    if (document.querySelector(".main .container > .row")) {
+    if (document.querySelector('.main .container > .row')) {
       offsetTop =
         document
-          .querySelector(".main .container > .row")
+          .querySelector('.main .container > .row')
           .getBoundingClientRect().top +
         window.pageYOffset -
         // @ts-ignore
-        document.querySelector(".sticky-header").offsetHeight +
+        document.querySelector('.sticky-header').offsetHeight +
         2;
     }
   } else {
@@ -299,7 +299,7 @@ export function scrollTopHandler(isCustom = true, speed = 15) {
   } else {
     window.scrollTo({
       top: offsetTop,
-      behavior: "smooth",
+      behavior: 'smooth',
     });
   }
 }
@@ -308,25 +308,24 @@ export function scrollTopHandler(isCustom = true, speed = 15) {
  * utils to play and pause video
  */
 export const videoHandler = (e) => {
-  e.stopPropagation();
-  e.preventDefault();
-
-  if (e.currentTarget.closest(".post-video")) {
-    let video = e.currentTarget.closest(".post-video");
-    if (video.classList.contains("playing")) {
-      video.classList.remove("playing");
-      video.classList.add("paused");
-      video.querySelector("video").pause();
-    } else {
-      video?.classList?.add("playing");
-      video.querySelector("video").play();
-    }
-
-    video.querySelector("video").addEventListener("ended", function () {
-      video.classList.remove("playing");
-      video.classList.remove("paused");
-    });
-  }
+  // e.stopPropagation();
+  // e.preventDefault();
+  // if (e.currentTarget.closest('.post-video')) {
+  //   let video = e.currentTarget.closest('.post-video');
+  //   if (video.classList.contains('playing')) {
+  //     video.classList.remove('playing');
+  //     video.classList.add('paused');
+  //     video.querySelector('video').pause();
+  //   } else {
+  //     // TODO:
+  //     // video?.classList?.add("playing");
+  //     // video.querySelector("video").play();
+  //   }
+  //   video.querySelector('video').addEventListener('ended', function () {
+  //     video.classList.remove('playing');
+  //     video.classList.remove('paused');
+  //   });
+  // }
 };
 
 /**
@@ -367,7 +366,7 @@ export const toDecimal = (price, fixedCount = 2) => {
 
 export const parseCredentials = (credentials: string): string => {
   const purgedLoginCredential = credentials.substring(
-    credentials.indexOf("_") + 1
+    credentials.indexOf('_') + 1
   );
   return purgedLoginCredential;
 };

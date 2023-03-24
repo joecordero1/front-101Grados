@@ -1,12 +1,15 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
-import ALink from "~/components/features/custom-link";
+import ALink from '~/components/features/custom-link';
 
-import { useCategories } from "hooks";
+import { useCategories } from 'hooks';
 
 function MainMenu() {
-  const { categories } = useCategories();
+  const { categories } = useCategories({
+    take: 10,
+    random: true,
+  });
   const pathname = useRouter().pathname;
 
   return (
@@ -17,7 +20,7 @@ function MainMenu() {
             <i
               className="d-icon-category"
               style={{
-                color: "#2D2D2D",
+                color: '#2D2D2D',
               }}
             ></i>
           </figure>
@@ -25,7 +28,7 @@ function MainMenu() {
             <h4
               className="category-name"
               style={{
-                color: "#2D2D2D",
+                color: '#2D2D2D',
               }}
             >
               Todas
@@ -38,16 +41,16 @@ function MainMenu() {
           <ALink
             key={category.id}
             href={{
-              pathname: "/shop",
+              pathname: '/shop',
               query: { category: category.id },
             }}
           >
             <figure className="categroy-media">
               {/* <i className="fas fa-car"></i> */}
               <i
-                className={category.icon ? category.icon : "fas fa-award"}
+                className={category.icon ? category.icon : 'fas fa-award'}
                 style={{
-                  color: "#2D2D2D",
+                  color: '#2D2D2D',
                 }}
               ></i>
             </figure>
@@ -55,7 +58,7 @@ function MainMenu() {
               <h4
                 className="category-name"
                 style={{
-                  color: "#2D2D2D",
+                  color: '#2D2D2D',
                 }}
               >
                 {category.name}
