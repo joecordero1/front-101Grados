@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import ALink from '~/components/features/custom-link';
-import ProductNine from '~/components/features/product/product-nine';
+import ALink from "~/components/features/custom-link";
+import ProductNine from "~/components/features/product/product-nine";
 
-import { useItems, useAuth, useProgram } from 'hooks';
+import { useItems, useAuth, useProgram } from "hooks";
 
 function ElectronicCollection() {
   const { availablePoints } = useAuth();
@@ -24,7 +24,7 @@ function ElectronicCollection() {
         <h2 className="title title-line title-underline with-link">
           Cómpralos Ahora
           <ALink
-            href={{ pathname: '/shop', query: { category: 'electronics' } }}
+            href={{ pathname: "/shop", query: { category: "electronics" } }}
             className="btn btn-dark btn-link font-weight-semi-bold text-capitalize btn-more"
           >
             Más Premios<i className="d-icon-arrow-right"></i>
@@ -39,7 +39,7 @@ function ElectronicCollection() {
                 // backgroundImage: 'url(images/home/banner/3.jpg)',
                 // backgroundImage:
                 //   'url(https://zanzibarworld.com/wp-content/uploads/2022/04/f1fd2bd5-e90f-48fa-85d1-840e2c4ace3b.jpg)',
-                backgroundColor: '#313131',
+                backgroundColor: "#313131",
               }}
             >
               <div className="banner-content">
@@ -47,18 +47,18 @@ function ElectronicCollection() {
                   Te mereces lo mejor
                 </h4>
                 <h3 className="banner-title text-white font-weight-bold ls-m">
-                  Disponibles con tus puntos
+                  Disponibles con tus {coinName}
                 </h3>
                 <div className="banner-price-info text-white font-weight-semi-bold ls-m">
-                  Hasta{' '}
+                  Hasta{" "}
                   <strong className="text-secondary">
                     {availablePoints} {coinName}
                   </strong>
                 </div>
                 <ALink
                   href={{
-                    pathname: '/shop',
-                    query: { category: 'electronics' },
+                    pathname: "/shop",
+                    query: { category: "electronics" },
                   }}
                   className="btn btn-white btn-outline btn-rounded"
                 >
@@ -71,7 +71,7 @@ function ElectronicCollection() {
             ? [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
                 <div
                   className="product-loading-overlay"
-                  key={'electronic-' + item}
+                  key={"electronic-" + item}
                 ></div>
               ))
             : items.map((item, index) => (

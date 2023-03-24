@@ -169,7 +169,11 @@ const ProductTwo: FC<Props> = (props) => {
         </div>
 
         <h3 className="product-name">
-          <ALink href={`/award/${item.id}`}>{item.award.name}</ALink>
+          <ALink href={`/award/${item.id}`}>
+            {`${item.award.name} ${
+              item.award.model ? "-" + item.award.model : ""
+            }-${item.award.brand.name}`}
+          </ALink>
         </h3>
 
         <div className="product-price">

@@ -12,7 +12,8 @@ import { cartActions } from "~/store/cart";
 
 import { toDecimal } from "~/utils";
 import { CatalogueItem } from "../../../../utils/types/catalogueItem";
-import { useProgram } from "hooks";
+import { useCart, useProgram } from "hooks";
+import { AwardVariant, VariantType } from "~/utils/types";
 
 type Props = {
   product: CatalogueItem;
@@ -29,12 +30,8 @@ const DetailOne: FC<Props> = (props) => {
   const { coinName } = useProgram();
   let router = useRouter();
   const { product, isStickyCart = false, adClass = "", isNav = true } = props;
-  const { toggleWishlist, addToCart, wishlist } = props;
-  const [curColor, setCurColor] = useState("null");
-  const [curSize, setCurSize] = useState("null");
-  const [curIndex, setCurIndex] = useState(-1);
-  const [cartActive, setCartActive] = useState(false);
-  const [quantity, setQauntity] = useState(1);
+  const { addToCart, items } = useCart();
+  const [quantity, setQuantity] = useState(1);
 
   // // decide if the product is wishlisted
   // let isWishlisted,
@@ -60,13 +57,6 @@ const DetailOne: FC<Props> = (props) => {
   //     });
   //   }
   // }
-
-  useEffect(() => {
-    return () => {
-      setCurIndex(-1);
-      // resetValueHandler();
-    };
-  }, [product]);
 
   // useEffect(() => {
   //   if (product.data.variants.length > 0) {
@@ -117,52 +107,10 @@ const DetailOne: FC<Props> = (props) => {
     // }
   };
 
-  const setColorHandler = (e) => {
-    setCurColor(e.target.value);
-  };
-
-  const setSizeHandler = (e) => {
-    setCurSize(e.target.value);
-  };
-
-  const addToCartHandler = () => {
-    // if (product.data.stock > 0 && cartActive) {
-    //   if (product.data.variants.length > 0) {
-    //     let tmpName = product.data.name,
-    //       tmpPrice;
-    //     tmpName += curColor !== 'null' ? '-' + curColor : '';
-    //     tmpName += curSize !== 'null' ? '-' + curSize : '';
-    //     if (product.data.price[0] === product.data.price[1]) {
-    //       tmpPrice = product.data.price[0];
-    //     } else if (
-    //       !product.data.variants[0].price &&
-    //       product.data.discount > 0
-    //     ) {
-    //       tmpPrice = product.data.price[0];
-    //     } else {
-    //       tmpPrice = product.data.variants[curIndex].sale_price
-    //         ? product.data.variants[curIndex].sale_price
-    //         : product.data.variants[curIndex].price;
-    //     }
-    //     addToCart({
-    //       ...product.data,
-    //       name: tmpName,
-    //       qty: quantity,
-    //       price: tmpPrice,
-    //     });
-    //   } else {
-    //     addToCart({
-    //       ...product.data,
-    //       qty: quantity,
-    //       price: product.data.price[0],
-    //     });
-    //   }
-    // }
-  };
-
-  const resetValueHandler = (e) => {
-    setCurColor("null");
-    setCurSize("null");
+  const addToCartHandler = (variant?: AwardVariant) => {
+    items.filter((item) => item.id === product.id)[0]
+      ? null
+      : addToCart(product, quantity, variant);
   };
 
   function isDisabled(color, size) {
@@ -186,10 +134,6 @@ const DetailOne: FC<Props> = (props) => {
     //     (item) => item.color.name === color && item.size.name === size
     //   ) === -1
     // );
-  }
-
-  function changeQty(qty) {
-    setQauntity(qty);
   }
 
   return (
@@ -220,6 +164,8 @@ const DetailOne: FC<Props> = (props) => {
 
       <div className="product-meta">
         Código: <span className="product-sku">{product.award.code}</span>
+        Modelo: <span className="product-sku">{product.award.model}</span>
+        Marca: <span className="product-sku">{product.award.brand.name}</span>
         Subcategorías:{" "}
         <span className="product-brand">
           {product.award.subcategories.map((item, index) => (
@@ -245,6 +191,108 @@ const DetailOne: FC<Props> = (props) => {
         className="product-short-desc"
         dangerouslySetInnerHTML={{ __html: product.award.description }}
       ></p>
+      <div className="product-form product-qty pb-0">
+        <label className="d-none">Cantidad:</label>
+        <div className="product-form-group">
+          <div className="mr-2 input-group">
+            <button
+              className="quantity-minus d-icon-minus"
+              onClick={() =>
+                setQuantity(quantity > 0 && quantity !== 1 ? quantity - 1 : 1)
+              }
+            ></button>
+            <input
+              className="quantity form-control"
+              type="number"
+              min="1"
+              max="300"
+              value={quantity}
+            />
+            <button
+              className="quantity-plus d-icon-plus"
+              onClick={() =>
+                setQuantity(quantity >= 1 && quantity <= 300 ? quantity + 1 : 1)
+              }
+            ></button>
+          </div>
+          {product.award.variants.length <= 0 && (
+            <button
+              className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${
+                /* cartActive ? "" : "disabled" */ ""
+              }`}
+              disabled={
+                items.filter((item) => item.id === product.id)[0] ? true : false
+              }
+              onClick={() => addToCartHandler()}
+            >
+              <i className="d-icon-bag"></i>Agregar Al Carrito
+            </button>
+          )}
+        </div>
+      </div>
+      {product && product.award.variants.length > 0 ? (
+        <>
+          <h5>
+            escoge la cantidad y da click en la variante y el premio se agregara
+            al carrito
+          </h5>
+          {product.award.variants.map((variant) =>
+            variant.type === VariantType.COLOR && variant.isActive ? (
+              <div className="product-form product-color">
+                <label>Color:</label>
+
+                <div className="product-variations">
+                  <ALink
+                    href="#"
+                    /* className={"color"} */
+                    key={variant.id}
+                    /*  style={{ backgroundColor: `${variant.name}` }} */
+                    onClick={() => addToCartHandler(variant)}
+                  >
+                    {variant.name}
+                  </ALink>
+                </div>
+              </div>
+            ) : variant.type === VariantType.SIZE && variant.isActive ? (
+              <div className="product-form product-size mb-0 pb-2">
+                <label>Talla:</label>
+                <div className="product-form-group">
+                  <div className="product-variations">
+                    <ALink
+                      href="#"
+                      className={`size`}
+                      key={"size-" + variant.id}
+                      onClick={() => addToCartHandler(variant)}
+                    >
+                      {variant.name}
+                    </ALink>
+                  </div>
+                </div>
+              </div>
+            ) : variant.type === VariantType.GENERAL && variant.isActive ? (
+              <div className="product-form product-size mb-0 pb-2">
+                <label>Tipo:</label>
+                <div className="product-form-group">
+                  <div className="product-variations">
+                    <ALink
+                      href="#"
+                      className={`size`}
+                      key={"size-" + variant.id}
+                      onClick={() => addToCartHandler(variant)}
+                    >
+                      {variant.name}
+                    </ALink>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              ""
+            )
+          )}
+        </>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

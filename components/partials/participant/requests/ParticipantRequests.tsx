@@ -6,8 +6,10 @@ import { es } from "date-fns/locale";
 import { StatusTypes } from "../../../../utils/types";
 
 import { Alert, Container } from "@mui/material";
+import { useProgram } from "~/hooks";
 export const ParticipantRequests = () => {
   const { requestsParticipant, status } = useRequests();
+  const { coinName } = useProgram();
 
   return (
     <Container
@@ -29,7 +31,7 @@ export const ParticipantRequests = () => {
                 <th>Nombre</th>
                 <th>Modelo</th>
                 <th>Codigo</th>
-                <th>Puntos</th>
+                <th>{coinName}</th>
                 <th>Fecha Solicitud</th>
                 <th>Estado</th>
               </tr>

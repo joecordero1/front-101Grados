@@ -227,7 +227,11 @@ function Checkout(props) {
                             {items.map((item) => (
                               <tr key={"checkout-" + item.award.name}>
                                 <td className="product-name">
-                                  {`${item.award.name}${
+                                  {`${item.award.name} ${
+                                    item.award.model
+                                      ? "-" + item.award.model
+                                      : ""
+                                  }-${item.award.brand.name}${
                                     item.variant ? "-" + item.variant.name : ""
                                   }`}
                                   <span className="product-quantity">

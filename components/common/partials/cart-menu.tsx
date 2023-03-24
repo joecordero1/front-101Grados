@@ -38,7 +38,9 @@ function CartMenu() {
       >
         <div className="cart-label d-lg-show">
           <span className="cart-name">Carrito:</span>
-          <span className="cart-price">0 Puntos</span>
+          <span className="cart-price">{`${totalAmount()} ${
+            program.coinName
+          }`}</span>
         </div>
         <i className="d-icon-bag">
           <span className="cart-count">{items.length}</span>
@@ -89,7 +91,9 @@ function CartMenu() {
                       href={"/award/" + item.award.id}
                       className="product-name"
                     >
-                      {`${item.award.name}${
+                      {`${item.award.name} ${
+                        item.award.model ? "-" + item.award.model : ""
+                      }-${item.award.brand.name}${
                         item.variant ? "-" + item.variant.name : ""
                       }`}
                     </ALink>
@@ -129,7 +133,7 @@ function CartMenu() {
                   href=""
                   className="btn btn-dark btn-rounded btn-checkout"
                 >
-                  Puntos insuficientes
+                  {program.coinName} insuficientes
                 </ALink>
               )}
             </div>

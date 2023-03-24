@@ -75,7 +75,9 @@ function Cart() {
                           <td className="product-name">
                             <div className="product-name-section">
                               <ALink href={"/award/" + item.award.id}>
-                                {`${item.award.name}${
+                                {`${item.award.name} ${
+                                  item.award.model ? "-" + item.award.model : ""
+                                }-${item.award.brand.name}${
                                   item.variant ? "-" + item.variant.name : ""
                                 }`}
                               </ALink>
@@ -180,7 +182,11 @@ function Cart() {
                                       href={"/award/" + item.award.id}
                                       className="product-name"
                                     >
-                                      {`${item.award.name}${
+                                      {`${item.award.name} ${
+                                        item.award.model
+                                          ? "-" + item.award.model
+                                          : ""
+                                      }-${item.award.brand.name}${
                                         item.variant
                                           ? "-" + item.variant.name
                                           : ""
@@ -269,7 +275,7 @@ function Cart() {
                           href=""
                           className="btn btn-dark btn-rounded btn-checkout"
                         >
-                          Puntos insuficientes
+                          {program.coinName} insuficientes
                         </ALink>
                       )}
                     </div>

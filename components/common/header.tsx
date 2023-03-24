@@ -168,7 +168,7 @@ export default function Header(props) {
             margin: "0 auto",
           }}
         >
-          Tienes {availablePoints} Puntos
+          Tienes {availablePoints} {program.coinName}
         </h5>
       </div>
     </header>

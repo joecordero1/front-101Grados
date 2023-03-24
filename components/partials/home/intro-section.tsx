@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Reveal from "react-awesome-reveal";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
@@ -12,26 +12,46 @@ import { useProgram } from "hooks";
 
 function IntroSection(props) {
   const { program } = useProgram();
+  const [screenSize, getDimension] = useState({
+    dynamicWidth: window.innerWidth,
+    dynamicHeight: window.innerHeight,
+  });
+  const setDimension = () => {
+    getDimension({
+      dynamicWidth: window.innerWidth,
+      dynamicHeight: window.innerHeight,
+    });
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", setDimension);
+
+    return () => {
+      window.removeEventListener("resize", setDimension);
+    };
+  }, [screenSize]);
   return (
     <div className="row">
-      <div className="col-lg-9 mb-4">
-        <OwlCarousel
-          adClass="owl-theme owl-dot-inner intro-slider animation-slider"
-          options={introSlider}
-        >
-          <div
-            className="banner banner-fixed content-middle intro-slide intro-slide1 banner-radius"
-            style={{ backgroundColor: "#f8f8f8" }}
+      {screenSize.dynamicWidth > 990 && (
+        <div className="col-lg-9 mb-4">
+          <OwlCarousel
+            adClass="owl-theme owl-dot-inner intro-slider animation-slider"
+            options={introSlider}
           >
-            <figure>
-              <LazyLoadImage
-                src={program.mainBanner}
-                alt="Banner"
-                width="1030"
-                height="450"
-              />
-            </figure>
-            {/* <div className="banner-content">
+            <div
+              className="banner banner-fixed content-middle intro-slide intro-slide1 banner-radius"
+              style={{ backgroundColor: "#f8f8f8" }}
+            >
+              <figure>
+                <LazyLoadImage
+                  src={program.hero1}
+                  alt="Banner"
+                  width="330"
+                  height="215"
+                />
+              </figure>
+
+              {/* <div className="banner-content">
               <Reveal keyframes={fadeInLeftShorter} duration={1000}>
                 <h5 className="banner-subtitle text-capitalize font-weight-normal">
                   Lifestyle Collection
@@ -50,8 +70,8 @@ function IntroSection(props) {
                 </ALink>
               </Reveal>
             </div> */}
-          </div>
-          {/* <div
+            </div>
+            {/* <div
             className="banner banner-fixed content-middle intro-slide intro-slide2 banner-radius"
             style={{ backgroundColor: '#e2e2e3' }}
           >
@@ -86,7 +106,7 @@ function IntroSection(props) {
               </Reveal>
             </div>
           </div> */}
-          {/* <div
+            {/* <div
             className="banner banner-fixed content-middle intro-slide intro-slide3 banner-radius"
             style={{ backgroundColor: '#d8dee4' }}
           >
@@ -121,8 +141,9 @@ function IntroSection(props) {
               </Reveal>
             </div>
           </div> */}
-        </OwlCarousel>
-      </div>
+          </OwlCarousel>
+        </div>
+      )}
       <div className="col-lg-3">
         <div className="row cols-lg-1 cols-sm-2 cols-1">
           <div className="intro-banner mb-4">
@@ -132,7 +153,7 @@ function IntroSection(props) {
             >
               <figure>
                 <LazyLoadImage
-                  src={program.banner2}
+                  src={program.heroSection1}
                   alt="Banner"
                   width="330"
                   height="215"
@@ -147,7 +168,7 @@ function IntroSection(props) {
             >
               <figure>
                 <LazyLoadImage
-                  src={program.banner3}
+                  src={program.heroSection2}
                   alt="Banner"
                   width="330"
                   height="215"
