@@ -33,7 +33,12 @@ function VendorSection() {
                     width: '100px',
                   }}
                 >
-                  <ALink href="/vendor/single">
+                  <ALink
+                    href={{
+                      pathname: "/shop",
+                      query: { category: category.id },
+                    }}
+                  >
                     <LazyLoadImage
                       src={
                         category.image
@@ -47,7 +52,14 @@ function VendorSection() {
                 </figure>
                 <div className="vendor-personal">
                   <h4 className="vendor-name">
-                    <ALink href="#">{category.name}</ALink>
+                    <ALink
+                      href={{
+                        pathname: "/shop",
+                        query: { category: category.id },
+                      }}
+                    >
+                      {category.name}
+                    </ALink>
                     {/* <span className="vendor-products-count">
                       ( 16 Products )
                     </span> */}
@@ -91,7 +103,7 @@ const CategoryItems: FC<{
         {items.map((item) => (
           <div className="vendor-product" key={item.id}>
             <figure className="product-media">
-              <ALink href="/shop">
+              <ALink href={"/award/" + item.award.id}>
                 <LazyLoadImage
                   src={
                     item.award.mainImage

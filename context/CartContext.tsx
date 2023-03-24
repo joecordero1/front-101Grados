@@ -305,7 +305,8 @@ export const CartContext = createContext<ContextValue>({
 export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const api = useApiAuth();
-  const { participant, availablePoints, isLoggedIn } = useAuth();
+  const { participant, availablePoints, isLoggedIn, getAvailablePoints } =
+    useAuth();
   const { program } = useProgram();
   const { enqueueSnackbar } = useSnackbar();
   const addToCart = (
@@ -465,6 +466,7 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
           "Has solicitado tu premio. Pronto lo tendrás en tus manos.",
           { variant: "success" }
         );
+        getAvailablePoints();
         dispatch({
           type: "initialize-items",
           payload: {

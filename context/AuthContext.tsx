@@ -20,6 +20,7 @@ interface AuthContextValue extends AuthState {
   logIn: (username: string, password: string, isGoogleLogin?: boolean) => void;
   logOut: () => void;
   loginWithToken: (token: string) => void;
+  getAvailablePoints: () => void;
 }
 
 interface AuthProviderProps {
@@ -112,6 +113,7 @@ export const AuthContext = createContext<AuthContextValue>({
   isLoggedIn: false,
   logIn: () => {},
   logOut: () => {},
+  getAvailablePoints: () => {},
   haveToUpdateHisInfo: true,
   loginWithToken: (token: string) => {},
 });
@@ -270,6 +272,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         haveToUpdateHisInfo: verifyIfHasToUpdateHisInfo(),
         logIn,
         logOut,
+        getAvailablePoints,
         loginWithToken,
       }}
     >
