@@ -18,7 +18,6 @@ type Props = {
   adClass?: string;
   isReviewCount?: boolean;
   isStockCount?: boolean;
-  addToCart: (product: CatalogueItem, quantity: number) => void;
   isNew?: boolean;
   isTop?: boolean;
 };
