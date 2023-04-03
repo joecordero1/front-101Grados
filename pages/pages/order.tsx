@@ -11,10 +11,10 @@ function Order(props) {
   return (
     <main className="main order">
       <Helmet>
-        <title>Tienda | Order</title>
+        <title>Tienda | Orden</title>
       </Helmet>
 
-      <h1 className="d-none">Tienda - Order</h1>
+      <h1 className="d-none">Tienda - Orden</h1>
 
       <div className="page-content pt-7 pb-10 mb-10">
         <div className="step-by pr-4 pl-4">
