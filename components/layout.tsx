@@ -75,6 +75,11 @@ function Layout({ children, closeQuickview }) {
       } else {
         router.push(pathname);
       }
+    } else if (!isLoggedIn) {
+      const { pathname } = router;
+      if (pathname === "/pages/privacy-policy") {
+        router.push("/pages/privacy-policy");
+      }
     } else {
       router.push("/signin");
     }
