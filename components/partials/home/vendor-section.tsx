@@ -1,15 +1,18 @@
-import React, { FC } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import React, { FC } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
-import ALink from "~/components/features/custom-link";
-import OwlCarousel from "~/components/features/owl-carousel";
-import { mainSlider12 } from "~/utils/data/carousel";
+import ALink from '~/components/features/custom-link';
+import OwlCarousel from '~/components/features/owl-carousel';
+import { mainSlider12 } from '~/utils/data/carousel';
 
-import { useCategories, useItems } from "hooks";
-import { take } from "redux-saga/effects";
+import { useCategories, useItems } from 'hooks';
+import { take } from 'redux-saga/effects';
 
 function VendorSection() {
-  const { categories: rawCategories } = useCategories();
+  const { categories: rawCategories } = useCategories({
+    take: 10,
+    random: true,
+  });
 
   const categories = rawCategories.slice(0, 4);
 
@@ -27,7 +30,7 @@ function VendorSection() {
                 <figure
                   className="vendor-logo"
                   style={{
-                    width: "100px",
+                    width: '100px',
                   }}
                 >
                   <ALink
@@ -40,7 +43,7 @@ function VendorSection() {
                       src={
                         category.image
                           ? category.image
-                          : "../../images/empty.jpg"
+                          : '../../images/empty.jpg'
                       }
                       alt="Vendor logo"
                       effect="opacity"
@@ -65,7 +68,7 @@ function VendorSection() {
                     <div className="ratings-full">
                       {/*   <span
                         className="ratings"
-                        style={{ width: "100%" }}
+                        style={{ width: '100%' }}
                       ></span>
                       <span className="tooltiptext tooltip-top">5</span> */}
                     </div>
@@ -105,7 +108,7 @@ const CategoryItems: FC<{
                   src={
                     item.award.mainImage
                       ? item.award.mainImage
-                      : "../../images/empty.jpg"
+                      : '../../images/empty.jpg'
                   }
                   alt="Vendor Product"
                   width="217"

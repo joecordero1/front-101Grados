@@ -6,7 +6,10 @@ import ALink from '~/components/features/custom-link';
 import { useCategories } from 'hooks';
 
 function CategorySection() {
-  const { categories } = useCategories();
+  const { categories } = useCategories({
+    take: 10,
+    random: true,
+  });
 
   return (
     <section
