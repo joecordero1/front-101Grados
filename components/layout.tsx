@@ -79,6 +79,8 @@ function Layout({ children, closeQuickview }) {
       const { pathname } = router;
       if (pathname === "/pages/privacy-policy") {
         router.push("/pages/privacy-policy");
+      } else {
+        router.push("/signin");
       }
     } else {
       router.push("/signin");
