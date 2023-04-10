@@ -31,7 +31,9 @@ const SignIn = () => {
         justifyContent: "center",
         alignItems: "center",
         backgroundImage: `url(${program.loginScreen})`,
-        backgroundSize: "cover",
+        backgroundPosition: "bottom",
+        backgroundSize: "contain",
+        backgroundRepeat: "no-repeat",
       }}
     >
       <div
