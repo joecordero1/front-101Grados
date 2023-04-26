@@ -26,14 +26,14 @@ const SignIn = () => {
     <div
       style={{
         display: "flex",
-        width: "100%",
+        width: "100vw",
         height: "100vh",
         justifyContent: "center",
         alignItems: "center",
         backgroundImage: `url(${program.loginScreen})`,
         backgroundPosition: "bottom",
-        backgroundSize: "contain",
-        backgroundRepeat: "no-repeat",
+        backgroundSize: "100% auto",
+        backgroundRepeat: "space",
       }}
     >
       <div
