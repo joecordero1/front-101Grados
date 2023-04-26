@@ -533,9 +533,6 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
       retrieveAddresses();
     } catch (e) {
       console.error("saveAddress(): ", e);
-      enqueueSnackbar("debes cambiar los datos para una nueva direcció", {
-        variant: "error",
-      });
     }
   };
   /*  const selectVariant = (variant: AwardVariant) => {

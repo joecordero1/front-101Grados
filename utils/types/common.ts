@@ -1,6 +1,6 @@
 export interface OptionLabel {
   label: string;
-  value: number;
+  value: any;
 }
 
 export class PaginationMetaDto {

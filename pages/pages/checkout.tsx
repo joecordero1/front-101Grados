@@ -4,7 +4,9 @@ import ALink from "~/components/features/custom-link";
 
 import { useAuth, useCart, useProgram } from "~/hooks";
 import AddressesList from "~/components/partials/addresses/AddressesList";
-import { Button } from "@mui/material";
+import { Autocomplete, Button, TextField } from "@mui/material";
+import { cities } from "~/utils/types/city";
+import { OptionLabel } from "~/utils/types";
 
 function Checkout(props) {
   const {
@@ -81,17 +83,22 @@ function Checkout(props) {
                       </div>
                       <div className="col-xs-6">
                         <label>Ciudad *</label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="city"
-                          onChange={(e) =>
+                        <Autocomplete
+                          fullWidth
+                          disablePortal
+                          options={cities}
+                          getOptionLabel={(option: OptionLabel) =>
+                            option ? `${option.label}` : ""
+                          }
+                          renderInput={(params) => (
+                            <TextField {...params} label="Ciudad" />
+                          )}
+                          onChange={(_, value: OptionLabel) =>
                             handleNewAddressChange(
-                              e.target.name,
-                              e.target.value
+                              "city",
+                              value ? value.value : null
                             )
                           }
-                          required
                         />
                       </div>
                     </div>

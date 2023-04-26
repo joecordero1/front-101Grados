@@ -27,10 +27,10 @@ export const ParticipantRequests = () => {
           <table className="order-table">
             <thead>
               <tr>
+                <th>Codigo Solicitud</th>
                 <th>Premio</th>
                 <th>Nombre</th>
                 <th>Modelo</th>
-                <th>Codigo</th>
                 <th>{coinName}</th>
                 <th>Fecha Solicitud</th>
                 <th>Estado</th>
@@ -40,18 +40,21 @@ export const ParticipantRequests = () => {
               {requestsParticipant.map((request) => (
                 <>
                   <tr>
+                    <td className="order-total" align="center">
+                      {request.code}
+                    </td>
                     <td className="order-number">
                       <img src={request.award.mainImage} alt="imagen premio" />
                     </td>
                     <td className="order-date" align="center">
                       {request.award.name}
+                      <br />
+                      <p>{request.award.code}</p>
                     </td>
                     <td className="order-status" align="center">
                       {request.award.model}
                     </td>
-                    <td className="order-total" align="center">
-                      {request.award.code}
-                    </td>
+
                     <td className="order-date" align="center">
                       {request.points}
                     </td>
