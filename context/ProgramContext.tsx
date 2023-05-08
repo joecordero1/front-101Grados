@@ -114,7 +114,7 @@ export const ProgramProvider: FC<ProgramProviderProps> = ({ children }) => {
   return (
     <ProgramContext.Provider value={{ ...programState }}>
       <>
-        {/* <Script
+        <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${programState.program.googleAnalyticsId}`}
           strategy="afterInteractive"
         />
@@ -126,7 +126,7 @@ export const ProgramProvider: FC<ProgramProviderProps> = ({ children }) => {
 
           gtag('config', ${programState.program.googleAnalyticsId});
         `}
-        </Script> */}
+        </Script>
         {children}
       </>
     </ProgramContext.Provider>

@@ -74,7 +74,11 @@ export default function Header(props) {
                   </ALink>{" "}
                 </h4>
                 <p>
-                  <ALink href="tel:#">{program.supportPhone}</ALink>
+                  <ALink
+                    href={`https://api.whatsapp.com/send?phone=593${program.supportPhone}&text=Hola!%20Soy%20un%20participante%20del%20programa%20${program.name},%20mi%20usuario%20es%20${participant.fullName},%20y%20tengo%20una%20duda%20sobre...`}
+                  >
+                    {program.supportPhone}
+                  </ALink>
                 </p>
               </div>
             </div>
