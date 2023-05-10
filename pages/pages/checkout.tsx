@@ -145,13 +145,14 @@ function Checkout(props) {
                       placeholder="Calle secundaria"
                     />
                     <label>
-                      Número de casa * (en caso de no contar con este dato
-                      escribir no tiene)
+                      Número de casa * (máximo 10 caracteres en caso de no
+                      contar con este dato escribir no tiene)
                     </label>
                     <input
                       type="text"
                       className="form-control"
                       name="houseNumber"
+                      max={10}
                       onChange={(e) =>
                         handleNewAddressChange(e.target.name, e.target.value)
                       }
