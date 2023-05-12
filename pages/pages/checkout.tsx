@@ -49,7 +49,7 @@ function Checkout(props) {
                 <div className="row">
                   <div className="col-lg-7 mb-6 mb-lg-0 pr-lg-4">
                     <h3 className="title title-simple text-left text-uppercase">
-                      Dirección de envío
+                      Selecciona Una Dirección de envío
                     </h3>
                     {availableAdresses.length > 0 ? (
                       <AddressesList addresses={availableAdresses} />
