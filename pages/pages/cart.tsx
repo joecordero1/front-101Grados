@@ -28,13 +28,6 @@ function Cart() {
               2.Envío
             </ALink>
           </h3>
-          <h3 className="title title-simple title-step">
-            <ALink
-              href={availablePoints >= totalAmount() ? "/pages/order" : ""}
-            >
-              3.Finalizar
-            </ALink>
-          </h3>
         </div>
 
         <div className="container mt-7 mb-2">
