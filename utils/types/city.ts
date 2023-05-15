@@ -79,6 +79,7 @@ export enum City {
   "Llacao" = "Llacao",
   "Junín" = "Junín",
   "El Chaco" = "El Chaco",
+  "Gualaquiza" = "Gualaquiza",
 }
 
 export const cities = Object.values(City).map((city) => ({
