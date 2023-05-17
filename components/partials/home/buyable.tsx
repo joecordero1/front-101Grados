@@ -24,7 +24,7 @@ function ElectronicCollection() {
         <h2 className="title title-line title-underline with-link">
           Cómpralos Ahora
           <ALink
-            href={{ pathname: "/shop", query: { category: "electronics" } }}
+            href={{ pathname: "/shop", query: { buyable: true } }}
             className="btn btn-dark btn-link font-weight-semi-bold text-capitalize btn-more"
           >
             Más Premios<i className="d-icon-arrow-right"></i>
