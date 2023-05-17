@@ -25,7 +25,8 @@ import { useProgram, useAuth } from "hooks";
 
 function Layout({ children, closeQuickview }) {
   const { program } = useProgram();
-  const { isLoggedIn, participant, loginWithToken } = useAuth();
+  const { isLoggedIn, participant, loginWithToken, getAvailablePoints } =
+    useAuth();
   const router = useRouter();
 
   useLayoutEffect(() => {
@@ -85,6 +86,7 @@ function Layout({ children, closeQuickview }) {
     } else {
       router.push("/signin");
     }
+    getAvailablePoints();
   }, [isLoggedIn, participant]);
 
   if (!program) {

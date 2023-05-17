@@ -75,11 +75,11 @@ const ProductOne: FC<Props> = (props) => {
   return (
     <div className={`product ${adClass}`}>
       <figure className="product-media">
-        <ALink href={`/award/${product.award.id}`}>
+        <ALink href={`/award/${product.award?.id}`}>
           <LazyLoadImage
             alt="product"
             // src={process.env.NEXT_PUBLIC_ASSET_URI + product.pictures[0].url}
-            src={product.award.mainImage}
+            src={product.award?.mainImage}
             threshold={500}
             effect="opacity"
             width="300"

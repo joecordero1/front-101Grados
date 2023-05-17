@@ -58,7 +58,7 @@ function ElectronicCollection() {
                 <ALink
                   href={{
                     pathname: "/shop",
-                    query: { category: "electronics" },
+                    query: { buyable: true },
                   }}
                   className="btn btn-white btn-outline btn-rounded"
                 >

@@ -12,7 +12,8 @@ import { headerBorderRemoveList } from "~/utils/data/menu";
 import { useAuth, useProgram } from "hooks";
 
 export default function Header(props) {
-  const { logOut, availablePoints, participant } = useAuth();
+  const { logOut, availablePoints, participant, getAvailablePoints } =
+    useAuth();
   const { program } = useProgram();
   const router = useRouter();
 
@@ -27,6 +28,7 @@ export default function Header(props) {
       else if (!headerBorderRemoveList.includes(router.pathname))
         document.querySelector("header").classList.add("header-border");
     }
+    getAvailablePoints();
   }, [router.pathname]);
 
   const showMobileMenu = () => {
@@ -172,7 +174,7 @@ export default function Header(props) {
             margin: "0 auto",
           }}
         >
-          Tienes {availablePoints} {program.coinName}
+          Tienes {availablePoints && availablePoints} {program.coinName}
         </h5>
       </div>
     </header>

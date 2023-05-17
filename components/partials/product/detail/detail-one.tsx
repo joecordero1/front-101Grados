@@ -232,10 +232,7 @@ const DetailOne: FC<Props> = (props) => {
       </div>
       {product && product.award.variants.length > 0 ? (
         <>
-          <h5>
-            escoge la cantidad y da click en la variante y el premio se agregara
-            al carrito
-          </h5>
+          <h5>escoge la cantidad y da click en la variante</h5>
           {product.award.variants.map((variant) =>
             variant.type === VariantType.COLOR && variant.isActive ? (
               <div className="product-form product-color">
@@ -249,7 +246,7 @@ const DetailOne: FC<Props> = (props) => {
                     /*  style={{ backgroundColor: `${variant.name}` }} */
                     onClick={() => addToCartHandler(variant)}
                   >
-                    {variant.name}
+                    {`${variant.name}-Agregar al carrito`}
                   </ALink>
                 </div>
               </div>
@@ -264,7 +261,7 @@ const DetailOne: FC<Props> = (props) => {
                       key={"size-" + variant.id}
                       onClick={() => addToCartHandler(variant)}
                     >
-                      {variant.name}
+                      {`${variant.name}-Agregar al carrito`}
                     </ALink>
                   </div>
                 </div>
@@ -280,7 +277,7 @@ const DetailOne: FC<Props> = (props) => {
                       key={"size-" + variant.id}
                       onClick={() => addToCartHandler(variant)}
                     >
-                      {variant.name}
+                      {`${variant.name}-Agregar al carrito`}
                     </ALink>
                   </div>
                 </div>
