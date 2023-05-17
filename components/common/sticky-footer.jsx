@@ -17,6 +17,7 @@ export default function StickyFooter() {
     };
   }, []);
 
+  // this function is used to handle sticky footer i changed it to always show the footer
   const stickyFooterHandler = (e) => {
     let top = document.querySelector(".page-content")
       ? document.querySelector(".page-content").offsetTop +
