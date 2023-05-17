@@ -30,11 +30,6 @@ export default function StickyFooter() {
       height = stickyFooter.offsetHeight;
     }
 
-    if (
-      window.pageYOffset >= top &&
-      window.innerWidth < 768 &&
-      e.currentTarget.scrollY > tmp
-    ) {
       if (stickyFooter) {
         stickyFooter.classList.add("fixed");
         stickyFooter.setAttribute("style", "margin-bottom: 0");
@@ -60,18 +55,7 @@ export default function StickyFooter() {
             .setAttribute("style", "height: " + height + "px");
         }
       }
-    } else {
-      if (stickyFooter) {
-        stickyFooter.classList.remove("fixed");
-        stickyFooter.setAttribute("style", `margin-bottom: -${height}px`);
-      }
-
-      if (document.querySelector(".sticky-content-wrapper")) {
-        document
-          .querySelector(".sticky-content-wrapper")
-          .removeAttribute("style");
-      }
-    }
+    
 
     if (
       window.outerWidth > 767 &&
@@ -84,28 +68,25 @@ export default function StickyFooter() {
   };
 
   return (
-    <div className="sticky-footer sticky-content fix-bottom">
+    <div className="sticky-footer sticky-content fix-bottom fixed">
       <ALink href="/" className="sticky-link active">
         <i className="d-icon-home"></i>
         <span>Inicio</span>
       </ALink>
-      <ALink href="/shop" className="sticky-link">
-        <i className="d-icon-volume"></i>
-        <span>Categorias</span>
-      </ALink>
+     
       <ALink href="/pages/my-requests" className="sticky-link">
         <i className="d-icon-user"></i>
         <span>Mis Solicitudes</span>
       </ALink>
       <ALink
-        href="#"
+        href="/"
         onClick={() => {
           logOut();
         }}
         className="sticky-link"
       >
         <i className="d-icon-close"></i>
-        <span>Cerrar sesión</span>
+        <span>Salir</span>
       </ALink>
       <FooterSearchBox />
     </div>
