@@ -117,6 +117,11 @@ export default function Header(props) {
                   <li>
                     <ALink href="/pages/my-requests">Mis Solicitudes</ALink>
                   </li>
+                  <li>
+                    <ALink href="/pages/my-account-status">
+                      Mi estado de cuenta
+                    </ALink>
+                  </li>
                   <li
                     key={"blog"}
                     // className={item.subPages ? 'submenu' : ''}
