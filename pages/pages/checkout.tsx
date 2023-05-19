@@ -7,6 +7,7 @@ import AddressesList from "~/components/partials/addresses/AddressesList";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import { cities } from "~/utils/types/city";
 import { OptionLabel } from "~/utils/types";
+import { useEffect, useState } from "react";
 
 function Checkout(props) {
   const {
@@ -21,6 +22,19 @@ function Checkout(props) {
   } = useCart();
   const { program } = useProgram();
   const { availablePoints } = useAuth();
+
+  const [width, setWidth] = useState(0);
+  useEffect(() => {
+    setWidth(window.innerWidth);
+  }, []);
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <main className="main checkout border-no">
       <Helmet>
@@ -48,14 +62,23 @@ function Checkout(props) {
               <form action="#" className="form">
                 <div className="row">
                   <div className="col-lg-7 mb-6 mb-lg-0 pr-lg-4">
-                    <h3 className="title title-simple text-left text-uppercase">
-                      Selecciona Una Dirección de envío
-                    </h3>
-                    {availableAdresses.length > 0 ? (
-                      <AddressesList addresses={availableAdresses} />
-                    ) : (
-                      <h5>Aún no tienes direcciones registradas</h5>
+                    {width > 768 && (
+                      <>
+                        <h3
+                          className="title title-simple text-left text-uppercase"
+                          style={{ marginTop: 25 }}
+                        >
+                          Selecciona Una Dirección de envío
+                        </h3>
+                        <h5>Dirección de envío</h5>
+                        {availableAdresses.length > 0 ? (
+                          <AddressesList addresses={availableAdresses} />
+                        ) : (
+                          <h5>Aún no tienes direcciones registradas</h5>
+                        )}
+                      </>
                     )}
+
                     <h5>Nueva dirección</h5>
                     <div className="row">
                       <div className="col-xs-6">
@@ -206,6 +229,21 @@ function Checkout(props) {
                     >
                       Guardar Dirección
                     </Button>
+                    {width < 768 && (
+                      <>
+                        <h3
+                          className="title title-simple text-left text-uppercase"
+                          style={{ marginTop: 25 }}
+                        >
+                          Selecciona Una Dirección de envío
+                        </h3>
+                        {availableAdresses.length > 0 ? (
+                          <AddressesList addresses={availableAdresses} />
+                        ) : (
+                          <h5>Aún no tienes direcciones registradas</h5>
+                        )}
+                      </>
+                    )}
                   </div>
 
                   <aside className="col-lg-5 sticky-sidebar-wrapper">
@@ -244,6 +282,49 @@ function Checkout(props) {
                                 </td>
                               </tr>
                             ))}
+                            <thead>
+                              <tr>
+                                <th>Dirección de envió</th>
+                              </tr>
+                            </thead>
+                            <tr>
+                              <td className="product-name">
+                                <p style={{ textAlign: "left" }}>
+                                  Calle Principal: &nbsp;
+                                  {
+                                    availableAdresses.filter(
+                                      (address) =>
+                                        address.id === selectedAdressId
+                                    )[0]?.mainStreet
+                                  }
+                                  <br />
+                                  Secundaria: &nbsp;
+                                  {
+                                    availableAdresses.filter(
+                                      (address) =>
+                                        address.id === selectedAdressId
+                                    )[0]?.secondaryStreet
+                                  }
+                                  <br />
+                                  Número de casa: &nbsp;
+                                  {
+                                    availableAdresses.filter(
+                                      (address) =>
+                                        address.id === selectedAdressId
+                                    )[0]?.houseNumber
+                                  }
+                                  <br />
+                                  Referencia: &nbsp;
+                                  {
+                                    availableAdresses.filter(
+                                      (address) =>
+                                        address.id === selectedAdressId
+                                    )[0]?.reference
+                                  }
+                                  <br />
+                                </p>
+                              </td>
+                            </tr>
                             <tr className="summary-total">
                               <td className="pb-0">
                                 <h4 className="summary-subtitle">Total</h4>

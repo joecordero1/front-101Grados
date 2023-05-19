@@ -34,11 +34,15 @@ export default function AddressesList({ addresses }: { addresses: Address[] }) {
                   edge="start"
                   checked={selectedAdressId === address.id ? true : false}
                   tabIndex={-1}
+                  sx={{ "& .MuiSvgIcon-root": { fontSize: 24 } }}
                   disableRipple
                   inputProps={{ "aria-labelledby": address.id.toString() }}
                 />
               </ListItemIcon>
-              <p id={address.id.toString()} style={{ fontSize: 16, margin: 8 }}>
+              <p
+                id={address.id.toString()}
+                style={{ fontSize: 18, margin: 8, color: "blue" }}
+              >
                 {`${address.alias} - ${address.mainStreet} ${address.secondaryStreet}`}
               </p>
             </ListItemButton>
