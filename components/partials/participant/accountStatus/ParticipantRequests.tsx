@@ -78,7 +78,7 @@ export const AccountStatus = () => {
       <div className="income-container">
         {accountStatus.incomePoints.length > 0 && status === "complete" ? (
           <>
-            <h4>{coinName} Ganados</h4>
+            <h4 style={{ textAlign: "center" }}>{coinName} Ganados</h4>
             <table className="order-table">
               <thead>
                 <tr>
@@ -124,7 +124,7 @@ export const AccountStatus = () => {
       <div className="expense-container">
         {accountStatus.expensePoints.length > 0 && status === "complete" ? (
           <>
-            <h4>{coinName} Descontados</h4>
+            <h4 style={{ textAlign: "center" }}>{coinName} Descontados</h4>
             <table className="order-table">
               <thead>
                 <tr>
