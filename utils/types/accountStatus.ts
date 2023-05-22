@@ -8,3 +8,8 @@ export interface EPoint {
   year: number;
   points: string;
 }
+
+export interface AccountBalance {
+  incomePoints: string;
+  expensePoints: string;
+}

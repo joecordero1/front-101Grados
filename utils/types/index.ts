@@ -6,3 +6,4 @@ export * from "./catalogueItem";
 export * from "./address";
 export * from "./request";
 export * from "./accountStatus";
+export * from "./transaction";
