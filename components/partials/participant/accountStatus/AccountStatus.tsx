@@ -52,7 +52,7 @@ export const AccountStatus = () => {
               <CardContent>
                 <Typography variant="h5" component="div">
                   {`${
-                    accountBalance.incomePoints !== "0"
+                    accountBalance.incomePoints !== null
                       ? accountBalance.incomePoints
                       : 0
                   } ${coinName}`}
@@ -68,7 +68,7 @@ export const AccountStatus = () => {
               <CardContent>
                 <Typography variant="h5" component="div">
                   {`${
-                    accountBalance.expensePoints !== "0"
+                    accountBalance.expensePoints !== null
                       ? accountBalance.expensePoints
                       : 0
                   } ${coinName}`}
