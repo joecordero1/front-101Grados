@@ -1,8 +1,8 @@
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
-import ALink from '~/components/features/custom-link';
+import ALink from "~/components/features/custom-link";
 
-import { useProgram } from 'hooks';
+import { useProgram } from "hooks";
 
 export default function Footer() {
   const { program } = useProgram();

@@ -9,9 +9,11 @@ import { introSlider } from "~/utils/data/carousel";
 import { fadeInRightShorter, fadeInLeftShorter } from "~/utils/data/keyframes";
 
 import { useProgram } from "hooks";
+import useSpecialCatalogues from "~/hooks/useCatalogues";
 
 function IntroSection(props) {
   const { program } = useProgram();
+  const { myCatalogues } = useSpecialCatalogues();
   const [screenSize, getDimension] = useState({
     dynamicWidth: window.innerWidth,
     dynamicHeight: window.innerHeight,
@@ -71,41 +73,34 @@ function IntroSection(props) {
               </Reveal>
             </div> */}
             </div>
-            {/* <div
-            className="banner banner-fixed content-middle intro-slide intro-slide2 banner-radius"
-            style={{ backgroundColor: '#e2e2e3' }}
-          >
-            <figure>
-              <LazyLoadImage
-                src="images/home/slides/2.jpg"
-                alt="Banner"
-                width="1030"
-                height="450"
-              />
-            </figure>
-            <div className="banner-content text-right">
-              <Reveal keyframes={fadeInRightShorter} duration={1000}>
-                <h5 className="banner-subtitle text-capitalize font-weight-normal">
-                  Find Your Trending
-                </h5>
-                <h3 className="banner-title text-uppercase font-weight-bold ls-m">
-                  Autumn style
-                </h3>
-                <div className="banner-price-info font-weight-semi-bold text-dark text-uppercase ls-m">
-                  Get Up To <span className="text-primary">20% Off</span>
-                </div>
-                <p className="text-dark font-weight-normal">
-                  * Only until the end of this week
-                </p>
-                <ALink
-                  href="/shop"
-                  className="btn btn-dark btn-outline btn-rounded"
+            {myCatalogues.length > 0 &&
+              myCatalogues.map((catalogue) => (
+                <div
+                  className="banner banner-fixed content-middle intro-slide intro-slide2 banner-radius"
+                  style={{ backgroundColor: "#e2e2e3" }}
                 >
-                  Shop Now<i className="d-icon-arrow-right"></i>
-                </ALink>
-              </Reveal>
-            </div>
-          </div> */}
+                  <figure>
+                    <LazyLoadImage src={catalogue.coverImage2} alt="Banner" />
+                  </figure>
+                  <div className="banner-content text-right">
+                    {/* 
+                        // @ts-ignore */}
+                    <Reveal keyframes={fadeInRightShorter} duration={1000}>
+                      <ALink
+                        href={{
+                          pathname: "/shop",
+                          query: { catalogueId: catalogue.id },
+                        }}
+                        className="btn btn-dark btn-contained btn-rounded"
+                      >
+                        Premios especiales para tí
+                        <i className="d-icon-arrow-right"></i>
+                      </ALink>
+                    </Reveal>
+                  </div>
+                </div>
+              ))}
+
             {/* <div
             className="banner banner-fixed content-middle intro-slide intro-slide3 banner-radius"
             style={{ backgroundColor: '#d8dee4' }}

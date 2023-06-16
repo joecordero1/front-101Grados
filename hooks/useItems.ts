@@ -16,6 +16,7 @@ type FilterOptions = {
   categoriesIds?: number[];
   buyable?: boolean;
   toSearch?: string;
+  catalogueId?: number;
 };
 
 type UseItemsProps = {
@@ -55,7 +56,6 @@ export function useItems({ metaProps, filterOptions = {} }: UseItemsProps) {
       };
 
       const query = queryString.stringify(params);
-      console.log(query);
 
       const response = await get<Page<CatalogueItem>>(
         "/catalogue-items/store?" + query
