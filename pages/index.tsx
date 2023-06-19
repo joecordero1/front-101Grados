@@ -17,8 +17,14 @@ import { useAuth, useProgram } from "hooks";
 import MultipleCategories from "components/partials/home/multiple-categories";
 import { useRouter } from "next/router";
 
+import SpecialCatalogues from "~/components/partials/home/SpecialCatalogues";
+import SpecialBannerFirst from "~/components/partials/home/SpecialCatalogues/SpecialBannerFirst";
+import SpecialBannerSecond from "~/components/partials/home/SpecialCatalogues/SpecialBannerSecond";
+import useSpecialCatalogues from "~/hooks/useCatalogues";
+
 function HomePage() {
   const { availablePoints, loginWithToken } = useAuth();
+  const { myCatalogues } = useSpecialCatalogues();
   const { program } = useProgram();
   const router = useRouter();
 
@@ -46,6 +52,8 @@ function HomePage() {
 
         <DealCollection />
 
+        {myCatalogues.length > 0 && <SpecialBannerFirst />}
+
         <CategorySection />
 
         <BannerOneSection />
@@ -54,11 +62,15 @@ function HomePage() {
 
         {availablePoints > 0 && <Buyable />}
 
+        {myCatalogues.length > 0 && <SpecialCatalogues />}
+
         <BannerTwoSection />
 
         <BestCollection />
 
         <MultipleCategories />
+
+        {myCatalogues.length > 0 && <SpecialBannerSecond />}
       </div>
 
       <NewsletterModal />

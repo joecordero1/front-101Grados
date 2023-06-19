@@ -73,6 +73,7 @@ type FilterOptions = {
   lastDigits: string;
   toSearch?: string;
   buyable?: boolean;
+  catalogueId?: number;
 };
 
 export type FilterOptionsToString =
@@ -82,6 +83,7 @@ export type FilterOptionsToString =
   | "toSearch"
   | "orderPoints"
   | "buyable"
+  | "catalogueId"
   | "lastDigits";
 
 type State = {
@@ -110,6 +112,7 @@ const initialState: State = {
     justOnSale: false,
     lastDigits: null,
     toSearch: null,
+    catalogueId: null,
   },
   categories: [],
   brands: [],
@@ -201,7 +204,7 @@ export const useItems = (): ReducerValue => {
       };
 
       const query = queryString.stringify(params);
-      console.log(query);
+
       const response = await get<Page<CatalogueItem>>(
         "/catalogue-items/store?" + query
       );
@@ -301,6 +304,9 @@ export const useItems = (): ReducerValue => {
         handleFiltersChange("orderPoints", query.orderPoints);
       // if (query.justOnSale) handleFiltersChange('justOnSale', query.justOnSale);
       if (query.buyable) handleFiltersChange("buyable", query.buyable);
+
+      if (query.catalogueId)
+        handleFiltersChange("catalogueId", query.catalogueId);
     } else {
       cleanFilters();
     }
