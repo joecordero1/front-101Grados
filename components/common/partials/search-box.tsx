@@ -134,6 +134,7 @@ function SearchForm() {
           value={search}
           onChange={onSearchChange}
           placeholder="Buscar..."
+          disabled={!program.isStoreActive}
           required
         />
 

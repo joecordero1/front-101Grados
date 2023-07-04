@@ -49,30 +49,40 @@ function HomePage() {
             <ServiceBox />
           </div>
         </div>
+        {program.isStoreActive && <DealCollection />}
 
-        <DealCollection />
+        {program.isStoreActive && myCatalogues.length > 0 && (
+          <SpecialBannerFirst />
+        )}
 
-        {myCatalogues.length > 0 && <SpecialBannerFirst />}
+        {program.isStoreActive && <CategorySection />}
 
-        <CategorySection />
+        {program.isStoreActive && <BannerOneSection />}
 
-        <BannerOneSection />
+        {program.isStoreActive && <VendorSection />}
 
-        <VendorSection />
+        {program.isStoreActive && availablePoints > 0 && <Buyable />}
 
-        {availablePoints > 0 && <Buyable />}
+        {program.isStoreActive && myCatalogues.length > 0 && (
+          <SpecialCatalogues />
+        )}
 
-        {myCatalogues.length > 0 && <SpecialCatalogues />}
+        {program.isStoreActive && <BannerTwoSection />}
 
-        <BannerTwoSection />
+        {program.isStoreActive && <BestCollection />}
 
-        <BestCollection />
+        {program.isStoreActive && <MultipleCategories />}
 
-        <MultipleCategories />
-
-        {myCatalogues.length > 0 && <SpecialBannerSecond />}
+        {program.isStoreActive && myCatalogues.length > 0 && (
+          <SpecialBannerSecond />
+        )}
       </div>
-
+      {!program.isStoreActive && (
+        <h4 style={{ textAlign: "center", marginBottom: 60 }}>
+          La tienda se encuentra inhabilitada temporalmente <br />
+          Vuelve a ingresar más tarde
+        </h4>
+      )}
       <NewsletterModal />
     </div>
   );

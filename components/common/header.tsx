@@ -159,9 +159,7 @@ export default function Header(props) {
       <div
         className={`header-bottom ${router.pathname === "/" ? "" : "pb-50"}`}
       >
-        <div className="container">
-          <MainMenu />
-        </div>
+        <div className="container">{program.isStoreActive && <MainMenu />}</div>
       </div>
 
       <div className="welcome-message">
