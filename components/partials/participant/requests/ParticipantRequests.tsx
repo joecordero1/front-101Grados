@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useRequests } from "./reducer";
-import { formatRelative, subDays } from "date-fns";
+import { format, formatRelative, subDays } from "date-fns";
 import { es } from "date-fns/locale";
 import { StatusTypes } from "../../../../utils/types";
 
@@ -59,18 +59,12 @@ export const ParticipantRequests = () => {
                       {request.points}
                     </td>
                     <td className="order-date" align="center">
-                      {" "}
-                      {formatRelative(
-                        subDays(new Date(request.requestedAt), 0),
-                        new Date(),
-                        {
-                          locale: es,
-                        }
-                      )}
+                      {format(new Date(request.requestedAt), "dd/MM/yyyy", {
+                        locale: es,
+                      })}
                     </td>
                     <td>
                       {request.status === StatusTypes.APPROVED ||
-                      request.status === StatusTypes.CELLAR ||
                       request.status === StatusTypes.REQUESTED ||
                       request.status === StatusTypes.SPECIALS ||
                       request.status === StatusTypes.ORDERRED ||
@@ -80,9 +74,11 @@ export const ParticipantRequests = () => {
                         <Alert severity="info">DESPACHADO</Alert>
                       ) : request.status === StatusTypes.DELIVERED ? (
                         <Alert severity="success">RECIBIDO</Alert>
-                      ) : (
+                      ) : request.status === StatusTypes.WAREHOUSE ? (
+                        <Alert severity="info">EN BODEGA</Alert>
+                      ) : request.status === StatusTypes.CANCELED ? (
                         <Alert severity="error">ANULADO</Alert>
-                      )}
+                      ) : null}
                     </td>
                   </tr>
                 </>
