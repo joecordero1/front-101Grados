@@ -14,12 +14,23 @@ import ProductSidebar from "~/components/partials/product/product-sidebar";
 import ProductNav from "~/components/partials/product/product-nav";
 
 import { mainSlider17 } from "~/utils/data/carousel";
-import { useItem } from "~/hooks";
+import { useAuth, useItem } from "~/hooks";
+import useLogs from "~/hooks/useLogs";
+import { LogType } from "~/utils/types/logType";
 
 function ProductRightSidebar() {
   const slug = useRouter().query.slug;
   const { item, loading } = useItem(slug);
-
+  const { dispatchLog } = useLogs();
+  const { participant } = useAuth();
+  useEffect(() => {
+    if (item) {
+      console.log("veces");
+      dispatchLog(LogType.OPEN_AWARD, participant.id, {
+        awardId: item.award.id,
+      });
+    }
+  }, [item]);
   return (
     <main className="main market1-product single-product">
       <Helmet>

@@ -8,8 +8,10 @@ import { modalActions } from "~/store/modal";
 import { wishlistActions } from "~/store/wishlist";
 import { toDecimal } from "~/utils";
 
-import { useProgram, useGeneral } from "hooks";
+import { useProgram, useGeneral, useAuth } from "hooks";
 import { CatalogueItem } from "../../../utils/types/catalogueItem";
+import { LogType } from "~/utils/types/logType";
+import useLogs from "~/hooks/useLogs";
 
 type Props = {
   item: CatalogueItem;
@@ -35,6 +37,8 @@ const ProductTwo: FC<Props> = (props) => {
   } = props;
   const { coinName } = useProgram();
   const { openModal } = useGeneral();
+  const { dispatchLog } = useLogs();
+  const { participant } = useAuth();
 
   // decide if the product is wishlisted
   // let isWishlisted;
@@ -144,7 +148,12 @@ const ProductTwo: FC<Props> = (props) => {
             href="#"
             className="btn-product btn-quickview"
             title="Quick View"
-            onClick={() => openModal(item)}
+            onClick={() => {
+              openModal(item);
+              dispatchLog(LogType.OPEN_AWARD, participant.id, {
+                awardId: item.award.id,
+              });
+            }}
           >
             Vista Rápida
           </ALink>

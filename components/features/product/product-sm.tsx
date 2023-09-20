@@ -4,8 +4,10 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import ALink from "~/components/features/custom-link";
 
 import { CatalogueItem } from "../../../utils/types/catalogueItem";
-import { useProgram, useGeneral } from "hooks";
+import { useProgram, useGeneral, useAuth } from "hooks";
 import { toDecimal } from "~/utils";
+import useLogs from "~/hooks/useLogs";
+import { LogType } from "~/utils/types/logType";
 
 type Props = {
   product: CatalogueItem;
@@ -33,6 +35,8 @@ const SmallProduct: FC<Props> = (props) => {
 
   // Get a random number between 1 and 100
   const reviewCount = Math.floor(Math.random() * 100) + 1;
+  const { dispatchLog } = useLogs();
+  const { participant } = useAuth();
 
   return (
     <div className={`product product-list-sm ${adClass}`}>
@@ -73,7 +77,12 @@ const SmallProduct: FC<Props> = (props) => {
             href="#"
             className="btn-product btn-quickview"
             title="Quick View"
-            onClick={() => openModal(product)}
+            onClick={() => {
+              openModal(product);
+              dispatchLog(LogType.OPEN_AWARD, participant.id, {
+                awardId: product.award.id,
+              });
+            }}
           >
             Vista Rápida
           </ALink>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Helmet } from "react-helmet";
 import { useRouter } from "next/router";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -11,6 +11,9 @@ import filterData from "~/utils/data/shop";
 
 import { useCategories } from "hooks/useCategories";
 import { useItems } from "../../reducers/useItems";
+import useLogs from "~/hooks/useLogs";
+import { useAuth } from "~/hooks";
+import { LogType } from "~/utils/types/logType";
 
 function ShopHorizontalFilter() {
   const { categories } = useCategories({
@@ -25,6 +28,8 @@ function ShopHorizontalFilter() {
     meta,
     handlePageChange,
   } = useItems();
+  const { dispatchLog } = useLogs();
+  const { participant } = useAuth();
   const router = useRouter();
   const query = router.query;
 
@@ -66,6 +71,19 @@ function ShopHorizontalFilter() {
   const cleanAllHandler = () => {
     document.querySelector(".select-items").removeAttribute("style");
   };
+
+  useEffect(() => {
+    console.log(query);
+    if (query.category) {
+      dispatchLog(LogType.OPEN_CATEGORY, participant.id, {
+        categoryId: parseInt(query.category.toString()),
+      });
+    } else if (query.subcategory) {
+      dispatchLog(LogType.OPEN_SUBCATEGORY, participant.id, {
+        subcategoryId: parseInt(query.subcategory.toString()),
+      });
+    }
+  }, [query]);
 
   return (
     <main className="main">
