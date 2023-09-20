@@ -21,9 +21,10 @@ import SpecialCatalogues from "~/components/partials/home/SpecialCatalogues";
 import SpecialBannerFirst from "~/components/partials/home/SpecialCatalogues/SpecialBannerFirst";
 import SpecialBannerSecond from "~/components/partials/home/SpecialCatalogues/SpecialBannerSecond";
 import useSpecialCatalogues from "~/hooks/useCatalogues";
+import Head from "next/head";
 
 function HomePage() {
-  const { availablePoints, loginWithToken } = useAuth();
+  const { availablePoints, loginWithToken, isLoggedIn } = useAuth();
   const { myCatalogues } = useSpecialCatalogues();
   const { program } = useProgram();
   const router = useRouter();
@@ -32,6 +33,24 @@ function HomePage() {
     const { token } = router.query;
     loginWithToken(token.toLocaleString());
   } */
+
+  useEffect(() => {
+    if (program.id === 5 && isLoggedIn) {
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.async = true;
+      script.id = "smcx-sdk";
+      script.src =
+        "https://widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgdyTgR1EBWkJ2U6IMXw0lOaZw2ZnSQ4VRvkKm6DXt8yVI.js";
+
+      document.head.appendChild(script);
+
+      return () => {
+        // Cleanup: Remove the script when the component unmounts
+        document.head.removeChild(script);
+      };
+    }
+  }, []);
 
   return (
     <div className="main home">
@@ -77,6 +96,7 @@ function HomePage() {
           <SpecialBannerSecond />
         )}
       </div>
+
       {!program.isStoreActive && (
         <h4 style={{ textAlign: "center", marginBottom: 60 }}>
           La tienda se encuentra inhabilitada temporalmente <br />
