@@ -278,7 +278,7 @@ function Checkout(props) {
                                   </span>
                                 </td>
                                 <td className="product-total text-body">
-                                  {totalAmount()} {program.coinName}
+                                  {item.points} {program.coinName}
                                 </td>
                               </tr>
                             ))}
