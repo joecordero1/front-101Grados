@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import Helmet from "react-helmet";
-import imagesLoaded from "imagesloaded";
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import Helmet from 'react-helmet';
+import imagesLoaded from 'imagesloaded';
 
-import ALink from "~/components/features/custom-link";
-import OwlCarousel from "~/components/features/owl-carousel";
+import ALink from '~/components/features/custom-link';
+import OwlCarousel from '~/components/features/owl-carousel';
 
-import MediaFive from "~/components/partials/product/media/media-five";
-import DetailThree from "~/components/partials/product/detail/detail-three";
-import DescOne from "~/components/partials/product/desc/desc-one";
-import RelatedProducts from "~/components/partials/product/related-products";
-import ProductSidebar from "~/components/partials/product/product-sidebar";
-import ProductNav from "~/components/partials/product/product-nav";
+import MediaFive from '~/components/partials/product/media/media-five';
+import DetailThree from '~/components/partials/product/detail/detail-three';
+import DescOne from '~/components/partials/product/desc/desc-one';
+import RelatedProducts from '~/components/partials/product/related-products';
+import ProductSidebar from '~/components/partials/product/product-sidebar';
+import ProductNav from '~/components/partials/product/product-nav';
 
-import { mainSlider17 } from "~/utils/data/carousel";
-import { useAuth, useItem } from "~/hooks";
-import useLogs from "~/hooks/useLogs";
-import { LogType } from "~/utils/types/logType";
+import { mainSlider17 } from '~/utils/data/carousel';
+import { useAuth, useItem } from '~/hooks';
+import useLogs from '~/hooks/useLogs';
+import { LogType } from '~/utils/types/logType';
 
 function ProductRightSidebar() {
   const slug = useRouter().query.slug;
@@ -25,9 +25,10 @@ function ProductRightSidebar() {
   const { participant } = useAuth();
   useEffect(() => {
     if (item) {
-      console.log("veces");
-      dispatchLog(LogType.OPEN_AWARD, participant.id, {
+      console.log('veces');
+      dispatchLog(LogType.OPEN_AWARD, {
         awardId: item.award.id,
+        awardPoints: item.points,
       });
     }
   }, [item]);
@@ -83,7 +84,7 @@ function ProductRightSidebar() {
         </div>
       )}
       {!loading ? (
-        ""
+        ''
       ) : (
         <div className="skeleton-body container mb-10">
           <div className="row mt-6 gutter-lg">
@@ -117,7 +118,7 @@ function ProductRightSidebar() {
                   {[1, 2, 3, 4, 5, 6].map((item) => (
                     <div
                       className="product-loading-overlay"
-                      key={"popup-skel-" + item}
+                      key={'popup-skel-' + item}
                     ></div>
                   ))}
                 </OwlCarousel>

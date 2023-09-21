@@ -1,17 +1,17 @@
-import React, { FC } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import { connect } from "react-redux";
+import React, { FC } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { connect } from 'react-redux';
 
-import ALink from "~/components/features/custom-link";
-import { cartActions } from "~/store/cart";
-import { modalActions } from "~/store/modal";
-import { wishlistActions } from "~/store/wishlist";
-import { toDecimal } from "~/utils";
+import ALink from '~/components/features/custom-link';
+import { cartActions } from '~/store/cart';
+import { modalActions } from '~/store/modal';
+import { wishlistActions } from '~/store/wishlist';
+import { toDecimal } from '~/utils';
 
-import { useProgram, useGeneral, useAuth } from "hooks";
-import { CatalogueItem } from "../../../utils/types/catalogueItem";
-import { LogType } from "~/utils/types/logType";
-import useLogs from "~/hooks/useLogs";
+import { useProgram, useGeneral, useAuth } from 'hooks';
+import { CatalogueItem } from '../../../utils/types/catalogueItem';
+import { LogType } from '~/utils/types/logType';
+import useLogs from '~/hooks/useLogs';
 
 type Props = {
   item: CatalogueItem;
@@ -28,7 +28,7 @@ type Props = {
 const ProductTwo: FC<Props> = (props) => {
   const {
     item,
-    adClass = "text-center",
+    adClass = 'text-center',
     addToCart,
     openQuickview,
     isCategory = true,
@@ -97,8 +97,8 @@ const ProductTwo: FC<Props> = (props) => {
         </ALink>
 
         <div className="product-label-group">
-          {isNew ? <label className="product-label label-new">New</label> : ""}
-          {isTop ? <label className="product-label label-top">Top</label> : ""}
+          {isNew ? <label className="product-label label-new">New</label> : ''}
+          {isTop ? <label className="product-label label-top">Top</label> : ''}
           {/* {product.discount > 0 ? (
             product.variants.length === 0 ? (
               <label className="product-label label-sale">
@@ -150,8 +150,9 @@ const ProductTwo: FC<Props> = (props) => {
             title="Quick View"
             onClick={() => {
               openModal(item);
-              dispatchLog(LogType.OPEN_AWARD, participant.id, {
+              dispatchLog(LogType.OPEN_AWARD, {
                 awardId: item.award.id,
+                awardPoints: item.points,
               });
             }}
           >
@@ -163,15 +164,15 @@ const ProductTwo: FC<Props> = (props) => {
       <div className="product-details">
         <div className="product-cat">
           {item.award.subcategories.map((subcategory, index) => (
-            <React.Fragment key={subcategory.name + "-" + index}>
+            <React.Fragment key={subcategory.name + '-' + index}>
               <ALink
                 href={{
-                  pathname: "/shop",
+                  pathname: '/shop',
                   query: { subcategory: subcategory.id },
                 }}
               >
                 {subcategory.name}
-                {index < item.award.subcategories.length - 1 ? ", " : ""}
+                {index < item.award.subcategories.length - 1 ? ', ' : ''}
               </ALink>
             </React.Fragment>
           ))}

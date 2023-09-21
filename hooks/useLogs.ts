@@ -1,30 +1,47 @@
-import { LogType } from "~/utils/types/logType";
-import { useApiAuth } from "./useApiAuth";
+import { LogType } from '~/utils/types/logType';
+import { useApiAuth } from './useApiAuth';
 // hook for logging user actions
 
-type LogsParams = {
-  categoryId?: number;
-  subcategoryId?: number;
-  awardId?: number;
-};
+type LogParams<T extends LogType> = T extends LogType.OPEN_CATEGORY
+  ? { categoryId: number }
+  : T extends LogType.OPEN_SUBCATEGORY
+  ? { subcategoryId: number }
+  : T extends
+      | LogType.OPEN_AWARD
+      | LogType.OPEN_QUICK_VIEW_AWARD
+      | LogType.ADD_TO_WISHLIST
+      | LogType.REMOVE_FROM_WISHLIST
+      | LogType.ADD_TO_CART
+      | LogType.REMOVE_FROM_CART
+      | LogType.BUY_AWARD
+  ? { awardId: number; awardPoints: number }
+  : T extends
+      | LogType.CLICK_MORE_FEATURED_AWARDS
+      | LogType.CLICK_MORE_MOST_REDEEMED_AWARDS
+      | LogType.CLICK_MORE_REACHABLE_AWARDS
+      | LogType.OPEN_MY_REQUESTS
+      | LogType.OPEN_MY_ACCOUNT_BALANCE
+  ? {}
+  : T extends LogType.CLICK_MORE_FROM_CATEGORY
+  ? { categoryId: number }
+  : T extends LogType.SEARCH_AWARD
+  ? { searchText: string }
+  : never;
 
 const useLogs = () => {
   const api = useApiAuth();
-  const dispatchLog = async (
-    logType: LogType,
-    participantId: number,
-    { categoryId, subcategoryId, awardId }: LogsParams
+
+  const dispatchLog = async <T extends LogType>(
+    type: T,
+    params: LogParams<T>
   ) => {
     try {
-      await api.post("/logs", {
-        type: logType,
-        participantId,
-        ...(categoryId && { categoryId }),
-        ...(subcategoryId && { subcategoryId }),
-        ...(awardId && { awardId }),
+      await api.post('/logs', {
+        type,
+        ...params,
       });
     } catch (error) {
-      console.log(error);
+      console.error('dispatchLog() ->', error);
     }
   };
 
