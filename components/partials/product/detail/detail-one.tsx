@@ -1,19 +1,20 @@
-import React, { FC, useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { useRouter } from "next/router";
-import Collapse from "react-bootstrap/Collapse";
+import React, { FC, useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { useRouter } from 'next/router';
+import Collapse from 'react-bootstrap/Collapse';
 
-import ALink from "~/components/features/custom-link";
-import Countdown from "~/components/features/countdown";
-import Quantity from "~/components/features/quantity";
-import ProductNav from "~/components/partials/product/product-nav";
-import { wishlistActions } from "~/store/wishlist";
-import { cartActions } from "~/store/cart";
+import ALink from '~/components/features/custom-link';
+import Countdown from '~/components/features/countdown';
+import Quantity from '~/components/features/quantity';
+import ProductNav from '~/components/partials/product/product-nav';
+import { wishlistActions } from '~/store/wishlist';
+import { cartActions } from '~/store/cart';
 
-import { toDecimal } from "~/utils";
-import { CatalogueItem } from "../../../../utils/types/catalogueItem";
-import { useCart, useProgram } from "hooks";
-import { AwardVariant, VariantType } from "~/utils/types";
+import { toDecimal } from '~/utils';
+import { CatalogueItem } from '../../../../utils/types/catalogueItem';
+import { useCart, useProgram, useLogs } from 'hooks';
+import { AwardVariant, VariantType } from '~/utils/types';
+import { LogType } from '~/utils/types/logType';
 
 type Props = {
   product: CatalogueItem;
@@ -29,9 +30,10 @@ type Props = {
 const DetailOne: FC<Props> = (props) => {
   const { coinName } = useProgram();
   let router = useRouter();
-  const { product, isStickyCart = false, adClass = "", isNav = true } = props;
+  const { product, isStickyCart = false, adClass = '', isNav = true } = props;
   const { addToCart, items } = useCart();
   const [quantity, setQuantity] = useState(1);
+  const { dispatchLog } = useLogs();
 
   // // decide if the product is wishlisted
   // let isWishlisted,
@@ -137,7 +139,7 @@ const DetailOne: FC<Props> = (props) => {
   }
 
   return (
-    <div className={"product-details " + adClass}>
+    <div className={'product-details ' + adClass}>
       {isNav ? (
         <div className="product-navigation">
           <ul className="breadcrumb breadcrumb-lg">
@@ -157,7 +159,7 @@ const DetailOne: FC<Props> = (props) => {
           <ProductNav product={product} />
         </div>
       ) : (
-        ""
+        ''
       )}
 
       <h2 className="product-name">{product.award.name}</h2>
@@ -166,16 +168,16 @@ const DetailOne: FC<Props> = (props) => {
         Código: <span className="product-sku">{product.award.code}</span>
         Modelo: <span className="product-sku">{product.award.model}</span>
         Marca: <span className="product-sku">{product.award.brand.name}</span>
-        Subcategorías:{" "}
+        Subcategorías:{' '}
         <span className="product-brand">
           {product.award.subcategories.map((item, index) => (
-            <React.Fragment key={item.name + "-" + index}>
+            <React.Fragment key={item.name + '-' + index}>
               <ALink
-                href={{ pathname: "/shop", query: { subcategory: item.id } }}
+                href={{ pathname: '/shop', query: { subcategory: item.id } }}
               >
                 {item.name}
               </ALink>
-              {index < product.award.subcategories.length - 1 ? ", " : ""}
+              {index < product.award.subcategories.length - 1 ? ', ' : ''}
             </React.Fragment>
           ))}
         </span>
@@ -218,12 +220,18 @@ const DetailOne: FC<Props> = (props) => {
           {product.award.variants.length <= 0 && (
             <button
               className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${
-                /* cartActive ? "" : "disabled" */ ""
+                /* cartActive ? "" : "disabled" */ ''
               }`}
               disabled={
                 items.filter((item) => item.id === product.id)[0] ? true : false
               }
-              onClick={() => addToCartHandler()}
+              onClick={() => {
+                addToCartHandler();
+                dispatchLog(LogType.ADD_TO_CART, {
+                  awardId: product.award.id,
+                  awardPoints: product.points,
+                });
+              }}
             >
               <i className="d-icon-bag"></i>Agregar Al Carrito
             </button>
@@ -244,7 +252,13 @@ const DetailOne: FC<Props> = (props) => {
                     /* className={"color"} */
                     key={variant.id}
                     /*  style={{ backgroundColor: `${variant.name}` }} */
-                    onClick={() => addToCartHandler(variant)}
+                    onClick={() => {
+                      addToCartHandler(variant);
+                      dispatchLog(LogType.ADD_TO_CART, {
+                        awardId: product.award.id,
+                        awardPoints: product.points,
+                      });
+                    }}
                   >
                     {`${variant.name}-Agregar al carrito`}
                   </ALink>
@@ -258,8 +272,14 @@ const DetailOne: FC<Props> = (props) => {
                     <ALink
                       href="#"
                       className={`size`}
-                      key={"size-" + variant.id}
-                      onClick={() => addToCartHandler(variant)}
+                      key={'size-' + variant.id}
+                      onClick={() => {
+                        addToCartHandler(variant);
+                        dispatchLog(LogType.ADD_TO_CART, {
+                          awardId: product.award.id,
+                          awardPoints: product.points,
+                        });
+                      }}
                     >
                       {`${variant.name}-Agregar al carrito`}
                     </ALink>
@@ -274,8 +294,14 @@ const DetailOne: FC<Props> = (props) => {
                     <ALink
                       href="#"
                       className={`size`}
-                      key={"size-" + variant.id}
-                      onClick={() => addToCartHandler(variant)}
+                      key={'size-' + variant.id}
+                      onClick={() => {
+                        addToCartHandler(variant);
+                        dispatchLog(LogType.ADD_TO_CART, {
+                          awardId: product.award.id,
+                          awardPoints: product.points,
+                        });
+                      }}
                     >
                       {`${variant.name}-Agregar al carrito`}
                     </ALink>
@@ -283,12 +309,12 @@ const DetailOne: FC<Props> = (props) => {
                 </div>
               </div>
             ) : (
-              ""
+              ''
             )
           )}
         </>
       ) : (
-        ""
+        ''
       )}
     </div>
   );

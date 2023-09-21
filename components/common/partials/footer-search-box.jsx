@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useLazyQuery } from '@apollo/react-hooks';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 
-import ALink from '~/components/features/custom-link';
-
-import { GET_PRODUCTS } from '~/server/queries';
 import withApollo from '~/server/apollo';
 
-import { toDecimal } from '~/utils';
+import { useLogs } from 'hooks';
+import { LogType } from '~/utils/types/logType';
 
 function SearchForm() {
   const router = useRouter();
   const [search, setSearch] = useState('');
   // const [ searchProducts, { data } ] = useLazyQuery( GET_PRODUCTS );
   const [timer, setTimer] = useState(null);
+  const { dispatchLog } = useLogs();
 
   useEffect(() => {
     document.querySelector('body').addEventListener('click', onBodyClick);
@@ -100,6 +97,9 @@ function SearchForm() {
       query: {
         search: search,
       },
+    });
+    dispatchLog(LogType.SEARCH_AWARD, {
+      searchText: search,
     });
   }
 

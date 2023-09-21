@@ -11,7 +11,7 @@ import filterData from '~/utils/data/shop';
 
 import { useCategories } from 'hooks/useCategories';
 import { useItems } from '../../reducers/useItems';
-import useLogs from '~/hooks/useLogs';
+import { useLogs } from 'hooks';
 import { useAuth } from '~/hooks';
 import { LogType } from '~/utils/types/logType';
 
@@ -73,7 +73,6 @@ function ShopHorizontalFilter() {
   };
 
   useEffect(() => {
-    console.log(query);
     if (query.category) {
       dispatchLog(LogType.OPEN_CATEGORY, {
         categoryId: parseInt(query.category.toString()),

@@ -6,7 +6,7 @@ import ALink from '~/components/features/custom-link';
 import { CatalogueItem } from '../../../utils/types/catalogueItem';
 import { useProgram, useGeneral, useAuth } from 'hooks';
 import { toDecimal } from '~/utils';
-import useLogs from '~/hooks/useLogs';
+import { useLogs } from 'hooks';
 import { LogType } from '~/utils/types/logType';
 
 type Props = {
@@ -79,7 +79,7 @@ const SmallProduct: FC<Props> = (props) => {
             title="Quick View"
             onClick={() => {
               openModal(product);
-              dispatchLog(LogType.OPEN_AWARD, {
+              dispatchLog(LogType.OPEN_QUICK_VIEW_AWARD, {
                 awardId: product.award.id,
                 awardPoints: product.points,
               });

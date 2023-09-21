@@ -15,7 +15,7 @@ import ProductNav from '~/components/partials/product/product-nav';
 
 import { mainSlider17 } from '~/utils/data/carousel';
 import { useAuth, useItem } from '~/hooks';
-import useLogs from '~/hooks/useLogs';
+import { useLogs } from 'hooks';
 import { LogType } from '~/utils/types/logType';
 
 function ProductRightSidebar() {
@@ -25,7 +25,6 @@ function ProductRightSidebar() {
   const { participant } = useAuth();
   useEffect(() => {
     if (item) {
-      console.log('veces');
       dispatchLog(LogType.OPEN_AWARD, {
         awardId: item.award.id,
         awardPoints: item.points,

@@ -1,38 +1,42 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { CatalogueItem, Page } from "~/utils/types";
-import queryString from "query-string";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import { useApiAuth, useProgram } from "~/hooks";
-import ALink from "~/components/features/custom-link";
+import React, { useEffect, useState } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { useRouter } from 'next/router';
+import queryString from 'query-string';
+
+import ALink from '~/components/features/custom-link';
+
+import { useApiAuth, useProgram, useLogs } from '~/hooks';
+import { CatalogueItem, Page } from '~/utils/types';
+import { LogType } from '~/utils/types/logType';
 
 function SearchForm() {
   const router = useRouter();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const { program } = useProgram();
   const api = useApiAuth();
   const [items, setItems] = useState<CatalogueItem[]>([]);
   const [timer, setTimer] = useState(null);
+  const { dispatchLog } = useLogs();
 
   const getItems = async () => {
     const params = { toSearch: search.length > 2 && search };
     const query = queryString.stringify(params);
     const { data } = await api.get<Page<CatalogueItem>>(
-      "/catalogue-items/store?" + query
+      '/catalogue-items/store?' + query
     );
     setItems(data);
   };
 
   useEffect(() => {
-    document.querySelector("body").addEventListener("click", onBodyClick);
+    document.querySelector('body').addEventListener('click', onBodyClick);
 
     return () => {
-      document.querySelector("body").removeEventListener("click", onBodyClick);
+      document.querySelector('body').removeEventListener('click', onBodyClick);
     };
   }, []);
 
   useEffect(() => {
-    setSearch("");
+    setSearch('');
   }, [router.query.slug]);
 
   useEffect(() => {
@@ -48,10 +52,10 @@ function SearchForm() {
   }, [search]);
 
   useEffect(() => {
-    document.querySelector(".header-search.show-results") &&
+    document.querySelector('.header-search.show-results') &&
       document
-        .querySelector(".header-search.show-results")
-        .classList.remove("show-results");
+        .querySelector('.header-search.show-results')
+        .classList.remove('show-results');
   }, [router.pathname]);
 
   function removeXSSAttacks(html) {
@@ -59,11 +63,11 @@ function SearchForm() {
 
     // Removing the <script> tags
     while (SCRIPT_REGEX.test(html)) {
-      html = html.replace(SCRIPT_REGEX, "");
+      html = html.replace(SCRIPT_REGEX, '');
     }
 
     // Removing all events from tags...
-    html = html.replace(/ on\w+="[^"]*"/g, "");
+    html = html.replace(/ on\w+="[^"]*"/g, '');
 
     return {
       __html: html,
@@ -71,29 +75,29 @@ function SearchForm() {
   }
 
   function matchEmphasize(name) {
-    let regExp = new RegExp(search, "i");
-    return name.replace(regExp, (match) => "<strong>" + match + "</strong>");
+    let regExp = new RegExp(search, 'i');
+    return name.replace(regExp, (match) => '<strong>' + match + '</strong>');
   }
 
   function onSearchClick(e) {
     e.preventDefault();
     e.stopPropagation();
-    e.currentTarget.parentNode.classList.toggle("show");
+    e.currentTarget.parentNode.classList.toggle('show');
   }
 
   function onBodyClick(e) {
-    if (e.target.closest(".header-search"))
+    if (e.target.closest('.header-search'))
       return (
-        e.target.closest(".header-search").classList.contains("show-results") ||
-        e.target.closest(".header-search").classList.add("show-results")
+        e.target.closest('.header-search').classList.contains('show-results') ||
+        e.target.closest('.header-search').classList.add('show-results')
       );
 
-    document.querySelector(".header-search.show") &&
-      document.querySelector(".header-search.show").classList.remove("show");
-    document.querySelector(".header-search.show-results") &&
+    document.querySelector('.header-search.show') &&
+      document.querySelector('.header-search.show').classList.remove('show');
+    document.querySelector('.header-search.show-results') &&
       document
-        .querySelector(".header-search.show-results")
-        .classList.remove("show-results");
+        .querySelector('.header-search.show-results')
+        .classList.remove('show-results');
   }
 
   function onSearchChange(e) {
@@ -103,10 +107,13 @@ function SearchForm() {
   function onSubmitSearchForm(e) {
     e.preventDefault();
     router.push({
-      pathname: "/shop",
+      pathname: '/shop',
       query: {
         search: search,
       },
+    });
+    dispatchLog(LogType.SEARCH_AWARD, {
+      searchText: search,
     });
   }
 

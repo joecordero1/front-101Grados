@@ -1,13 +1,14 @@
-import Helmet from "react-helmet";
+import Helmet from 'react-helmet';
 
-import ALink from "~/components/features/custom-link";
+import ALink from '~/components/features/custom-link';
 
-import { useAuth, useCart, useProgram } from "~/hooks";
-import AddressesList from "~/components/partials/addresses/AddressesList";
-import { Autocomplete, Button, TextField } from "@mui/material";
-import { cities } from "~/utils/types/city";
-import { OptionLabel } from "~/utils/types";
-import { useEffect, useState } from "react";
+import { useAuth, useCart, useProgram, useLogs } from '~/hooks';
+import AddressesList from '~/components/partials/addresses/AddressesList';
+import { Autocomplete, Button, TextField } from '@mui/material';
+import { cities } from '~/utils/types/city';
+import { OptionLabel } from '~/utils/types';
+import { useEffect, useState } from 'react';
+import { LogType } from '~/utils/types/logType';
 
 function Checkout(props) {
   const {
@@ -22,6 +23,7 @@ function Checkout(props) {
   } = useCart();
   const { program } = useProgram();
   const { availablePoints } = useAuth();
+  const { dispatchLog } = useLogs();
 
   const [width, setWidth] = useState(0);
   useEffect(() => {
@@ -29,9 +31,9 @@ function Checkout(props) {
   }, []);
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -45,7 +47,7 @@ function Checkout(props) {
 
       <div
         className={`page-content pt-7 pb-10 ${
-          items.length > 0 ? "mb-10" : "mb-2"
+          items.length > 0 ? 'mb-10' : 'mb-2'
         }`}
       >
         <div className="step-by pr-4 pl-4">
@@ -93,7 +95,7 @@ function Checkout(props) {
                           type="text"
                           className="form-control"
                           name="alias"
-                          placeholder={"casa, trabajo, casa2"}
+                          placeholder={'casa, trabajo, casa2'}
                           required
                         />
                       </div>
@@ -104,14 +106,14 @@ function Checkout(props) {
                           disablePortal
                           options={cities}
                           getOptionLabel={(option: OptionLabel) =>
-                            option ? `${option.label}` : ""
+                            option ? `${option.label}` : ''
                           }
                           renderInput={(params) => (
                             <TextField {...params} label="Ciudad" />
                           )}
                           onChange={(_, value: OptionLabel) =>
                             handleNewAddressChange(
-                              "city",
+                              'city',
                               value ? value.value : null
                             )
                           }
@@ -223,7 +225,7 @@ function Checkout(props) {
                     <Button
                       size="large"
                       variant="contained"
-                      disabled={status === "loading" ? true : false}
+                      disabled={status === 'loading' ? true : false}
                       onClick={() => saveAddress()}
                       style={{ fontSize: 12 }}
                     >
@@ -264,14 +266,14 @@ function Checkout(props) {
                           </thead>
                           <tbody>
                             {items.map((item) => (
-                              <tr key={"checkout-" + item.award.name}>
+                              <tr key={'checkout-' + item.award.name}>
                                 <td className="product-name">
                                   {`${item.award.name} ${
                                     item.award.model
-                                      ? "-" + item.award.model
-                                      : ""
+                                      ? '-' + item.award.model
+                                      : ''
                                   }-${item.award.brand.name}${
-                                    item.variant ? "-" + item.variant.name : ""
+                                    item.variant ? '-' + item.variant.name : ''
                                   }`}
                                   <span className="product-quantity">
                                     ×&nbsp;{item.quantity}
@@ -289,7 +291,7 @@ function Checkout(props) {
                             </thead>
                             <tr>
                               <td className="product-name">
-                                <p style={{ textAlign: "left" }}>
+                                <p style={{ textAlign: 'left' }}>
                                   Calle Principal: &nbsp;
                                   {
                                     availableAdresses.filter(
@@ -337,32 +339,22 @@ function Checkout(props) {
                             </tr>
                           </tbody>
                         </table>
-                        {availablePoints >= totalAmount() &&
-                        selectedAdressId ? (
-                          items.length > 1 ? (
-                            <ALink
-                              href={"/pages/order"}
-                              className="btn btn-dark btn-rounded btn-order"
-                              onClick={() => redeemAll()}
-                            >
-                              Canjear Premios
-                            </ALink>
-                          ) : (
-                            <ALink
-                              href={"/pages/order"}
-                              className="btn btn-dark btn-rounded btn-order"
-                              onClick={() => redeemAll()}
-                            >
-                              Canjear Premio
-                            </ALink>
-                          )
-                        ) : (
-                          <button
-                            disabled={true}
+                        {availablePoints >= totalAmount() && (
+                          <ALink
+                            href={'/pages/order'}
                             className="btn btn-dark btn-rounded btn-order"
+                            onClick={() => {
+                              items.map((item) =>
+                                dispatchLog(LogType.BUY_AWARD, {
+                                  awardId: item.award.id,
+                                  awardPoints: item.points,
+                                })
+                              );
+                              redeemAll();
+                            }}
                           >
-                            Selecciona una dirección de envío
-                          </button>
+                            Canjear Premios
+                          </ALink>
                         )}
                       </div>
                     </div>

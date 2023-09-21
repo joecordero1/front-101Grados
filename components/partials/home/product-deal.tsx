@@ -1,17 +1,18 @@
-import { useState, useEffect, FC } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import { connect } from "react-redux";
-import Collapse from "react-bootstrap/Collapse";
+import { useState, useEffect, FC } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { connect } from 'react-redux';
+import Collapse from 'react-bootstrap/Collapse';
 
-import ALink from "~/components/features/custom-link";
-import Countdown from "~/components/features/countdown";
-import Quantity from "~/components/features/quantity";
-import { cartActions } from "~/store/cart";
-import { toDecimal } from "~/utils";
+import ALink from '~/components/features/custom-link';
+import Countdown from '~/components/features/countdown';
+import Quantity from '~/components/features/quantity';
+import { cartActions } from '~/store/cart';
+import { toDecimal } from '~/utils';
 
-import { CatalogueItem } from "../../../utils/types/catalogueItem";
-import { useCart, useProgram } from "hooks";
-import { AwardVariant } from "~/utils/types";
+import { CatalogueItem } from '../../../utils/types/catalogueItem';
+import { useCart, useProgram, useLogs } from 'hooks';
+import { AwardVariant } from '~/utils/types';
+import { LogType } from '~/utils/types/logType';
 
 type Props = {
   product: CatalogueItem;
@@ -23,9 +24,10 @@ type Props = {
 };
 
 const ProductOne: FC<Props> = (props) => {
-  const { product, adClass = "", isNew, isTop } = props;
+  const { product, adClass = '', isNew, isTop } = props;
   const { addToCart, items } = useCart();
   const [quantity, setQuantity] = useState(1);
+  const { dispatchLog } = useLogs();
 
   const { coinName } = useProgram();
 
@@ -78,12 +80,12 @@ const ProductOne: FC<Props> = (props) => {
                 {isNew ? (
                   <label className="product-label label-new">New</label>
                 ) : (
-                  ""
+                  ''
                 )}
                 {isTop ? (
                   <label className="product-label label-top">Top</label>
                 ) : (
-                  ""
+                  ''
                 )}
                 {/* {product.discount > 0 ? (
                   product.variants.length === 0 ? (
@@ -167,7 +169,7 @@ const ProductOne: FC<Props> = (props) => {
               <div className="ratings-full">
                 <span
                   className="ratings"
-                  style={{ width: 20 * rating + "%" }}
+                  style={{ width: 20 * rating + '%' }}
                 ></span>
               </div>
             </div>
@@ -310,14 +312,20 @@ const ProductOne: FC<Props> = (props) => {
                 {product.award.variants.length <= 0 ? (
                   <button
                     className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${
-                      /* cartActive ? "" : "disabled" */ ""
+                      /* cartActive ? "" : "disabled" */ ''
                     }`}
                     disabled={
                       items.filter((item) => item.id === product.id)[0]
                         ? true
                         : false
                     }
-                    onClick={() => addToCartHandler()}
+                    onClick={() => {
+                      addToCartHandler();
+                      dispatchLog(LogType.ADD_TO_CART, {
+                        awardId: product.award.id,
+                        awardPoints: product.points,
+                      });
+                    }}
                   >
                     <i className="d-icon-bag"></i>Agregar Al Carrito
                   </button>

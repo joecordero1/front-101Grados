@@ -11,7 +11,7 @@ import { toDecimal } from '~/utils';
 import { useProgram, useGeneral, useAuth } from 'hooks';
 import { CatalogueItem } from '../../../utils/types/catalogueItem';
 import { LogType } from '~/utils/types/logType';
-import useLogs from '~/hooks/useLogs';
+import { useLogs } from 'hooks';
 
 type Props = {
   item: CatalogueItem;
@@ -150,7 +150,7 @@ const ProductTwo: FC<Props> = (props) => {
             title="Quick View"
             onClick={() => {
               openModal(item);
-              dispatchLog(LogType.OPEN_AWARD, {
+              dispatchLog(LogType.OPEN_QUICK_VIEW_AWARD, {
                 awardId: item.award.id,
                 awardPoints: item.points,
               });
