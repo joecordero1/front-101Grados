@@ -4,8 +4,9 @@ import ALink from '~/components/features/custom-link';
 import ProductSm from '~/components/features/product/product-sm';
 import ProductDeal from '~/components/partials/home/product-deal';
 
-import { useItems } from 'hooks';
+import { useItems, useLogs } from 'hooks';
 import { Category } from '~/utils/types';
+import { LogType } from '~/utils/types/logType';
 
 type Props = {
   category: Category;
@@ -18,6 +19,7 @@ const CategoryCollection: FC<Props> = (props) => {
       random: true,
     },
   });
+  const { dispatchLog } = useLogs();
 
   const items = rawItems.slice(0, 5);
 
@@ -29,6 +31,11 @@ const CategoryCollection: FC<Props> = (props) => {
           <ALink
             href="/shop"
             className="btn btn-dark btn-link text-capitalize font-weight-semi-bold btn-more"
+            onClick={() => {
+              dispatchLog(LogType.CLICK_MORE_FROM_CATEGORY, {
+                categoryId: props.category.id,
+              });
+            }}
           >
             Más Premios<i className="d-icon-arrow-right"></i>
           </ALink>

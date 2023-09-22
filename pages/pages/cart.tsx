@@ -1,18 +1,20 @@
-import { connect } from "react-redux";
-import { useEffect, useState } from "react";
+import { connect } from 'react-redux';
+import { useEffect, useState } from 'react';
 
-import ALink from "~/components/features/custom-link";
-import Quantity from "~/components/features/quantity";
+import ALink from '~/components/features/custom-link';
+import Quantity from '~/components/features/quantity';
 
-import { toDecimal, getTotalPrice } from "~/utils";
-import { useAuth, useCart, useProgram } from "~/hooks";
-import { CartItem } from "~/utils/types";
+import { toDecimal, getTotalPrice } from '~/utils';
+import { useAuth, useCart, useProgram, useLogs } from '~/hooks';
+import { CartItem } from '~/utils/types';
+import { LogType } from '~/utils/types/logType';
 
 function Cart() {
   const { removeFromCart, items, totalAmount, sumQuantity, substractQuantity } =
     useCart();
   const { program } = useProgram();
   const { availablePoints } = useAuth();
+  const { dispatchLog } = useLogs();
 
   return (
     <div className="main cart border-no">
@@ -23,7 +25,7 @@ function Cart() {
           </h3>
           <h3 className="title title-simple title-step">
             <ALink
-              href={availablePoints >= totalAmount() ? "/pages/checkout" : ""}
+              href={availablePoints >= totalAmount() ? '/pages/checkout' : ''}
             >
               2.Envío
             </ALink>
@@ -52,10 +54,10 @@ function Cart() {
                     </thead>
                     <tbody>
                       {items.map((item) => (
-                        <tr key={"cart" + item.award.id}>
+                        <tr key={'cart' + item.award.id}>
                           <td className="product-thumbnail">
                             <figure>
-                              <ALink href={"/award/" + item.award.id}>
+                              <ALink href={'/award/' + item.award.id}>
                                 <img
                                   src={item.award.mainImage}
                                   width="100"
@@ -67,11 +69,11 @@ function Cart() {
                           </td>
                           <td className="product-name">
                             <div className="product-name-section">
-                              <ALink href={"/award/" + item.award.id}>
+                              <ALink href={'/award/' + item.award.id}>
                                 {`${item.award.name} ${
-                                  item.award.model ? "-" + item.award.model : ""
+                                  item.award.model ? '-' + item.award.model : ''
                                 }-${item.award.brand.name}${
-                                  item.variant ? "-" + item.variant.name : ""
+                                  item.variant ? '-' + item.variant.name : ''
                                 }`}
                               </ALink>
                             </div>
@@ -107,7 +109,13 @@ function Cart() {
                               href="#"
                               className="product-remove"
                               title="Remove this product"
-                              onClick={() => removeFromCart(item.id)}
+                              onClick={() => {
+                                removeFromCart(item.id);
+                                dispatchLog(LogType.REMOVE_FROM_CART, {
+                                  awardId: item.award.id,
+                                  awardPoints: item.points,
+                                });
+                              }}
                             >
                               <i className="fas fa-times"></i>
                             </ALink>
@@ -158,10 +166,10 @@ function Cart() {
                               {items.map((item: CartItem, index: number) => (
                                 <div
                                   className="product product-cart"
-                                  key={"cart-menu-product-" + index}
+                                  key={'cart-menu-product-' + index}
                                 >
                                   <figure className="product-media pure-media">
-                                    <ALink href={"/award/" + item.award.id}>
+                                    <ALink href={'/award/' + item.award.id}>
                                       <img
                                         src={item.award.mainImage}
                                         alt="product"
@@ -172,17 +180,17 @@ function Cart() {
                                   </figure>
                                   <div className="product-detail">
                                     <ALink
-                                      href={"/award/" + item.award.id}
+                                      href={'/award/' + item.award.id}
                                       className="product-name"
                                     >
                                       {`${item.award.name} ${
                                         item.award.model
-                                          ? "-" + item.award.model
-                                          : ""
+                                          ? '-' + item.award.model
+                                          : ''
                                       }-${item.award.brand.name}${
                                         item.variant
-                                          ? "-" + item.variant.name
-                                          : ""
+                                          ? '-' + item.variant.name
+                                          : ''
                                       }`}
                                     </ALink>
                                     <div className="price-box">

@@ -1,32 +1,35 @@
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import { connect } from "react-redux";
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { connect } from 'react-redux';
 
-import ALink from "~/components/features/custom-link";
+import ALink from '~/components/features/custom-link';
 
-import { cartActions } from "~/store/cart";
+import { cartActions } from '~/store/cart';
 
-import { getTotalPrice, getCartCount, toDecimal } from "~/utils";
-import { CartItem } from "~/utils/types";
-import { useAuth, useCart, useProgram } from "~/hooks";
+import { getTotalPrice, getCartCount, toDecimal } from '~/utils';
+import { CartItem } from '~/utils/types';
+import { useAuth, useCart, useProgram, useLogs } from '~/hooks';
+import { LogType } from '~/utils/types/logType';
 
 function CartMenu() {
   const { removeFromCart, items, totalAmount } = useCart();
   const { program } = useProgram();
   const { availablePoints } = useAuth();
   const router = useRouter();
+  const { dispatchLog } = useLogs();
+
   useEffect(() => {
     hideCartMenu();
   }, [router.asPath]);
 
   const showCartMenu = (e) => {
     e.preventDefault();
-    e.currentTarget.closest(".cart-dropdown").classList.add("opened");
+    e.currentTarget.closest('.cart-dropdown').classList.add('opened');
   };
 
   const hideCartMenu = () => {
-    if (document.querySelector(".cart-dropdown").classList.contains("opened"))
-      document.querySelector(".cart-dropdown").classList.remove("opened");
+    if (document.querySelector('.cart-dropdown').classList.contains('opened'))
+      document.querySelector('.cart-dropdown').classList.remove('opened');
   };
 
   return (
@@ -65,10 +68,10 @@ function CartMenu() {
               {items.map((item: CartItem, index: number) => (
                 <div
                   className="product product-cart"
-                  key={"cart-menu-product-" + index}
+                  key={'cart-menu-product-' + index}
                 >
                   <figure className="product-media pure-media">
-                    <ALink href={"/award/" + item.award.id}>
+                    <ALink href={'/award/' + item.award.id}>
                       <img
                         src={item.award.mainImage}
                         alt="product"
@@ -80,6 +83,10 @@ function CartMenu() {
                       className="btn btn-link btn-close"
                       onClick={() => {
                         removeFromCart(item.id);
+                        dispatchLog(LogType.REMOVE_FROM_CART, {
+                          awardId: item.award.id,
+                          awardPoints: item.points,
+                        });
                       }}
                     >
                       <i className="fas fa-times"></i>
@@ -88,13 +95,13 @@ function CartMenu() {
                   </figure>
                   <div className="product-detail">
                     <ALink
-                      href={"/award/" + item.award.id}
+                      href={'/award/' + item.award.id}
                       className="product-name"
                     >
                       {`${item.award.name} ${
-                        item.award.model ? "-" + item.award.model : ""
+                        item.award.model ? '-' + item.award.model : ''
                       }-${item.award.brand.name}${
-                        item.variant ? "-" + item.variant.name : ""
+                        item.variant ? '-' + item.variant.name : ''
                       }`}
                     </ALink>
                     <div className="price-box">
