@@ -262,9 +262,9 @@ export const showScrollTopHandler = function () {
   let scrollTop = document.querySelector('.scroll-top');
 
   if (window.pageYOffset >= 768) {
-    scrollTop.classList.add('show');
+    scrollTop?.classList.add('show');
   } else {
-    scrollTop.classList.remove('show');
+    scrollTop?.classList.remove('show');
   }
 };
 

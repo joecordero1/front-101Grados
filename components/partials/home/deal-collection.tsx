@@ -4,7 +4,8 @@ import ALink from '~/components/features/custom-link';
 import ProductSm from '~/components/features/product/product-sm';
 import ProductDeal from '~/components/partials/home/product-deal';
 
-import { useItems } from 'hooks';
+import { useItems, useLogs } from 'hooks';
+import { LogType } from '~/utils/types/logType';
 
 function BestCollection(props) {
   const { items: rawItems, loading } = useItems({
@@ -13,6 +14,7 @@ function BestCollection(props) {
       orderPoints: 'DESC',
     },
   });
+  const { dispatchLog } = useLogs();
 
   const items = rawItems.slice(0, 9);
 
@@ -24,6 +26,9 @@ function BestCollection(props) {
           <ALink
             href="/shop"
             className="btn btn-dark btn-link text-capitalize font-weight-semi-bold btn-more"
+            onClick={() => {
+              dispatchLog(LogType.CLICK_MORE_FEATURED_AWARDS, {});
+            }}
           >
             Más Premios<i className="d-icon-arrow-right"></i>
           </ALink>

@@ -2,12 +2,13 @@ import Helmet from "react-helmet";
 
 import ALink from "~/components/features/custom-link";
 
-import { useAuth, useCart, useProgram } from "~/hooks";
+import { useAuth, useCart, useProgram, useLogs } from "~/hooks";
 import AddressesList from "~/components/partials/addresses/AddressesList";
 import { Autocomplete, Button, TextField } from "@mui/material";
 import { cities } from "~/utils/types/city";
 import { OptionLabel } from "~/utils/types";
 import { useEffect, useState } from "react";
+import { LogType } from "~/utils/types/logType";
 
 function Checkout(props) {
   const {
@@ -22,6 +23,7 @@ function Checkout(props) {
   } = useCart();
   const { program } = useProgram();
   const { availablePoints } = useAuth();
+  const { dispatchLog } = useLogs();
 
   const [width, setWidth] = useState(0);
   useEffect(() => {
@@ -357,12 +359,16 @@ function Checkout(props) {
                             </ALink>
                           )
                         ) : (
-                          <button
-                            disabled={true}
-                            className="btn btn-dark btn-rounded btn-order"
+                          <Button
+                            type="button"
+                            size="medium"
+                            color="error"
+                            variant="contained"
+                            sx={{ m: 1, fontSize: 13 }}
                           >
-                            Selecciona una dirección de envío
-                          </button>
+                            Necesitas registrar una dirección para realizar el
+                            canje
+                          </Button>
                         )}
                       </div>
                     </div>

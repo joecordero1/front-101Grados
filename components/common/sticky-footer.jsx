@@ -1,68 +1,66 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
-import ALink from "~/components/features/custom-link";
+import ALink from '~/components/features/custom-link';
 
-import FooterSearchBox from "~/components/common/partials/footer-search-box";
-import { useAuth } from "~/hooks";
+import FooterSearchBox from '~/components/common/partials/footer-search-box';
+import { useAuth, useLogs } from '~/hooks';
 
 export default function StickyFooter() {
   let tmp = 0;
   const { logOut } = useAuth();
+  const { dispatchLog } = useLogs();
 
   useEffect(() => {
-    window.addEventListener("scroll", stickyFooterHandler);
+    window.addEventListener('scroll', stickyFooterHandler);
 
     return () => {
-      window.removeEventListener("scroll", stickyFooterHandler);
+      window.removeEventListener('scroll', stickyFooterHandler);
     };
   }, []);
 
   // this function is used to handle sticky footer i changed it to always show the footer
   const stickyFooterHandler = (e) => {
-    let top = document.querySelector(".page-content")
-      ? document.querySelector(".page-content").offsetTop +
-        document.querySelector("header").offsetHeight +
+    let top = document.querySelector('.page-content')
+      ? document.querySelector('.page-content').offsetTop +
+        document.querySelector('header').offsetHeight +
         100
       : 600;
-    let stickyFooter = document.querySelector(".sticky-footer.sticky-content");
+    let stickyFooter = document.querySelector('.sticky-footer.sticky-content');
     let height = 0;
 
     if (stickyFooter) {
       height = stickyFooter.offsetHeight;
     }
 
-      if (stickyFooter) {
-        stickyFooter.classList.add("fixed");
-        stickyFooter.setAttribute("style", "margin-bottom: 0");
-        if (!document.querySelector(".sticky-content-wrapper")) {
-          let newNode = document.createElement("div");
-          newNode.className = "sticky-content-wrapper";
-          stickyFooter.parentNode.insertBefore(newNode, stickyFooter);
-          document
-            .querySelector(".sticky-content-wrapper")
-            .insertAdjacentElement("beforeend", stickyFooter);
-          document
-            .querySelector(".sticky-content-wrapper")
-            .setAttribute("style", "height: " + height + "px");
-        }
-
-        if (
-          !document
-            .querySelector(".sticky-content-wrapper")
-            .getAttribute("style")
-        ) {
-          document
-            .querySelector(".sticky-content-wrapper")
-            .setAttribute("style", "height: " + height + "px");
-        }
+    if (stickyFooter) {
+      stickyFooter.classList.add('fixed');
+      stickyFooter.setAttribute('style', 'margin-bottom: 0');
+      if (!document.querySelector('.sticky-content-wrapper')) {
+        let newNode = document.createElement('div');
+        newNode.className = 'sticky-content-wrapper';
+        stickyFooter.parentNode.insertBefore(newNode, stickyFooter);
+        document
+          .querySelector('.sticky-content-wrapper')
+          .insertAdjacentElement('beforeend', stickyFooter);
+        document
+          .querySelector('.sticky-content-wrapper')
+          .setAttribute('style', 'height: ' + height + 'px');
       }
-    
+
+      if (
+        !document.querySelector('.sticky-content-wrapper').getAttribute('style')
+      ) {
+        document
+          .querySelector('.sticky-content-wrapper')
+          .setAttribute('style', 'height: ' + height + 'px');
+      }
+    }
 
     if (
       window.outerWidth > 767 &&
-      document.querySelector(".sticky-content-wrapper")
+      document.querySelector('.sticky-content-wrapper')
     ) {
-      document.querySelector(".sticky-content-wrapper").style.height = "auto";
+      document.querySelector('.sticky-content-wrapper').style.height = 'auto';
     }
 
     tmp = e.currentTarget.scrollY;
@@ -74,8 +72,16 @@ export default function StickyFooter() {
         <i className="d-icon-home"></i>
         <span>Inicio</span>
       </ALink>
-     
-      <ALink href="/pages/my-requests" className="sticky-link">
+
+      <ALink
+        href="/pages/my-requests"
+        className="sticky-link"
+        onClick={() => {
+          dispatchLog(LogType.MY_REQUESTS, {
+            searchText: search,
+          });
+        }}
+      >
         <i className="d-icon-user"></i>
         <span>Mis Solicitudes</span>
       </ALink>
