@@ -4,10 +4,11 @@ import Helmet from "react-helmet";
 import ALink from "~/components/features/custom-link";
 
 import { toDecimal, getTotalPrice } from "~/utils";
+import { useCart } from "~/hooks";
 
 function Order(props) {
   const { cartList } = props;
-
+  const { status } = useCart();
   return (
     <main className="main order">
       <Helmet>
@@ -66,14 +67,25 @@ function Order(props) {
                   </g>
                 </svg>
               </div>
+
               <div className="icon-box-content text-left">
-                <h5 className="icon-box-title font-weight-bold lh-1 mb-1">
-                  Canje realizado con exito!
-                </h5>
-                <p>
-                  Los premios canjeados te llegarán en un máximo de 15 días
-                  laborables. ¡Espéralos!
-                </p>
+                {status !== "error" ? (
+                  <div className="message">
+                    <h5 className="icon-box-title font-weight-bold lh-1 mb-1">
+                      Canje realizado con exito!
+                    </h5>
+                    <p>
+                      Los premios canjeados te llegarán en un máximo de 15 días
+                      laborables. ¡Espéralos!
+                    </p>
+                  </div>
+                ) : (
+                  <div className="message">
+                    <h5 className=" font-weight-bold lh-1 mb-1">
+                      Error al realizar el canje
+                    </h5>
+                  </div>
+                )}
               </div>
             </div>
           </div>
