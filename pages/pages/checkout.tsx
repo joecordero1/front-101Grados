@@ -341,7 +341,7 @@ function Checkout(props) {
                         selectedAdressId ? (
                           items.length > 1 ? (
                             <ALink
-                              href={"/pages/order"}
+                              href={status !== "error" ? "/pages/order" : "#"}
                               className="btn btn-dark btn-rounded btn-order"
                               onClick={() => redeemAll()}
                             >
@@ -349,7 +349,7 @@ function Checkout(props) {
                             </ALink>
                           ) : (
                             <ALink
-                              href={"/pages/order"}
+                              href={status !== "error" ? "/pages/order" : "#"}
                               className="btn btn-dark btn-rounded btn-order"
                               onClick={() => redeemAll()}
                             >

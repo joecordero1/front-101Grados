@@ -18,7 +18,7 @@ import { toast } from "react-toastify";
 import CartPopup from "../components/features/product/common/cart-popup";
 
 interface State {
-  status: "idle" | "loading";
+  status: "idle" | "loading" | "error";
   items: CartItem[];
   pointsSimulation: number;
   availableAdresses: Address[];
@@ -49,8 +49,10 @@ type SendRequest = {
   type: "send-request";
   payload: {
     request: CreateRequestDto;
+    status: "idle" | "loading" | "error";
   };
 };
+
 type SendedRequest = {
   type: "request-sended";
 };
@@ -267,10 +269,11 @@ const reducer = (state: State, action: Action): State => {
       };
     }
     case "send-request": {
-      const { request } = action.payload;
+      const { request, status } = action.payload;
       return {
         ...state,
         sending: true,
+        status,
         request,
       };
     }
@@ -454,6 +457,7 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
               type: "send-request",
               payload: {
                 request: createRequestData,
+                status: "idle",
               },
             });
             await api.post(`/requests`, createRequestData);
@@ -476,8 +480,15 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
         });
       } catch (e) {
         console.error(e);
+        enqueueSnackbar("Lo sentimos, no se pudo realizar la solicitud", {
+          variant: "error",
+        });
         dispatch({
-          type: "request-sended",
+          type: "send-request",
+          payload: {
+            request: {} as CreateRequestDto,
+            status: "error",
+          },
         });
       }
     } else {
