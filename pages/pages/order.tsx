@@ -68,8 +68,8 @@ function Order(props) {
                 </svg>
               </div>
 
-              <div className="icon-box-content text-left">
-                {status !== "error" ? (
+              {status !== "error" ? (
+                <div className="icon-box-content text-left">
                   <div className="message">
                     <h5 className="icon-box-title font-weight-bold lh-1 mb-1">
                       Canje realizado con exito!
@@ -79,14 +79,16 @@ function Order(props) {
                       laborables. ¡Espéralos!
                     </p>
                   </div>
-                ) : (
+                </div>
+              ) : (
+                <div className="error">
                   <div className="message">
                     <h5 className=" font-weight-bold lh-1 mb-1">
                       Error al realizar el canje
                     </h5>
                   </div>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
           {/* 
