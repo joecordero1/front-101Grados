@@ -83,7 +83,7 @@ function Order(props) {
               ) : (
                 <div className="error">
                   <div className="message">
-                    <h5 className=" font-weight-bold lh-1 mb-1">
+                    <h5 className="font-weight-bold lh-1 mb-1">
                       Error al realizar el canje
                     </h5>
                   </div>
