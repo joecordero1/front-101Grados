@@ -1,40 +1,45 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
-import ALink from '~/components/features/custom-link';
+import ALink from "~/components/features/custom-link";
 
-import CartMenu from '~/components/common/partials/cart-menu';
-import MainMenu from '~/components/common/partials/main-menu';
-import SearchBox from '~/components/common/partials/search-box';
-import LoginModal from '~/components/features/modals/login-modal';
+import CartMenu from "~/components/common/partials/cart-menu";
+import MainMenu from "~/components/common/partials/main-menu";
+import SearchBox from "~/components/common/partials/search-box";
+import LoginModal from "~/components/features/modals/login-modal";
 
-import { headerBorderRemoveList } from '~/utils/data/menu';
-import { useAuth, useProgram, useLogs } from 'hooks';
-import { LogType } from '~/utils/types/logType';
+import { headerBorderRemoveList } from "~/utils/data/menu";
+import { useAuth, useProgram, useLogs } from "hooks";
+import { LogType } from "~/utils/types/logType";
 
 export default function Header(props) {
-  const { logOut, availablePoints, participant, getAvailablePoints } =
-    useAuth();
+  const {
+    logOut,
+    availablePoints,
+    participant,
+    getAvailablePoints,
+    accessToken,
+  } = useAuth();
   const { program } = useProgram();
   const router = useRouter();
   const { dispatchLog } = useLogs();
 
   useEffect(() => {
-    let header = document.querySelector('header');
+    let header = document.querySelector("header");
     if (header) {
       if (
         headerBorderRemoveList.includes(router.pathname) &&
-        header.classList.contains('header-border')
+        header.classList.contains("header-border")
       )
-        header.classList.remove('header-border');
+        header.classList.remove("header-border");
       else if (!headerBorderRemoveList.includes(router.pathname))
-        document.querySelector('header').classList.add('header-border');
+        document.querySelector("header").classList.add("header-border");
     }
     getAvailablePoints();
   }, [router.pathname]);
 
   const showMobileMenu = () => {
-    document.querySelector('body').classList.add('mmenu-active');
+    document.querySelector("body").classList.add("mmenu-active");
   };
 
   return (
@@ -65,6 +70,15 @@ export default function Header(props) {
 
           <div className="header-right">
             <div className="icon-box icon-box-side">
+              <div className="icon-box-content d-lg-show mr-2">
+                {program.hasAcademy && (
+                  <p>
+                    <ALink href={`${program.academyUrl}?token=${accessToken}`}>
+                      Capacitaciones
+                    </ALink>
+                  </p>
+                )}
+              </div>
               <div className="icon-box-icon mr-0 mr-lg-2">
                 <i className="fab fa-whatsapp"></i>
               </div>
@@ -75,7 +89,7 @@ export default function Header(props) {
                     className="text-primary d-inline-block"
                   >
                     Soporte:
-                  </ALink>{' '}
+                  </ALink>{" "}
                 </h4>
                 <p>
                   <ALink
@@ -103,7 +117,7 @@ export default function Header(props) {
                   // pathname.includes('/blog') && !pathname.includes('/elements')
                   //   ? 'active'
                   //   : ''
-                  ''
+                  ""
                 }`}
               >
                 {/* <ALink href={`/blog/classic`}>Blog</ALink> */}
@@ -113,7 +127,7 @@ export default function Header(props) {
                   </div>
                 </div>
 
-                <ul style={{ marginLeft: '-60px' }}>
+                <ul style={{ marginLeft: "-60px" }}>
                   {/* {mainMenu.blog.map((item, index) => ( */}
 
                   <li>
@@ -137,7 +151,7 @@ export default function Header(props) {
                     </ALink>
                   </li>
                   <li
-                    key={'blog'}
+                    key={"blog"}
                     // className={item.subPages ? 'submenu' : ''}
                   >
                     <ALink
@@ -171,7 +185,7 @@ export default function Header(props) {
       </div>
 
       <div
-        className={`header-bottom ${router.pathname === '/' ? '' : 'pb-50'}`}
+        className={`header-bottom ${router.pathname === "/" ? "" : "pb-50"}`}
       >
         <div className="container">{program.isStoreActive && <MainMenu />}</div>
       </div>
@@ -179,16 +193,16 @@ export default function Header(props) {
       <div className="welcome-message">
         <h6
           style={{
-            textAlign: 'center',
-            margin: '0 auto',
+            textAlign: "center",
+            margin: "0 auto",
           }}
         >
           ¡Hola {participant?.firstName}!
         </h6>
         <h5
           style={{
-            textAlign: 'center',
-            margin: '0 auto',
+            textAlign: "center",
+            margin: "0 auto",
           }}
         >
           Tienes {availablePoints && availablePoints} {program.coinName}
