@@ -9,7 +9,7 @@ const MultipleCategories = () => {
     random: true,
   });
 
-  const categories = rawCategories.slice(0, 2);
+  const categories = rawCategories.slice(0, 5);
 
   return (
     <>
