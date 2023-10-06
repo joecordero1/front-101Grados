@@ -55,7 +55,6 @@ export function useItems(
   const { get } = useApiAuth();
 
   const getItems = async () => {
-    console.log('Buscando aaa');
     try {
       setLoading(true);
       const params = {
