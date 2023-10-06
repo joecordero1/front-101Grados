@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import ALink from '~/components/features/custom-link';
 
 import FooterSearchBox from '~/components/common/partials/footer-search-box';
+import FooterAccountBox from '~/components/common/partials/footer-account-box';
 import { useAuth, useLogs } from '~/hooks';
 
 export default function StickyFooter() {
@@ -21,7 +22,8 @@ export default function StickyFooter() {
   // this function is used to handle sticky footer i changed it to always show the footer
   const stickyFooterHandler = (e) => {
     let top = document.querySelector('.page-content')
-      ? document.querySelector('.page-content').offsetTop +
+      ? // @ts-ignore
+        document.querySelector('.page-content').offsetTop +
         document.querySelector('header').offsetHeight +
         100
       : 600;
@@ -29,6 +31,7 @@ export default function StickyFooter() {
     let height = 0;
 
     if (stickyFooter) {
+      // @ts-ignore
       height = stickyFooter.offsetHeight;
     }
 
@@ -60,6 +63,7 @@ export default function StickyFooter() {
       window.outerWidth > 767 &&
       document.querySelector('.sticky-content-wrapper')
     ) {
+      // @ts-ignore
       document.querySelector('.sticky-content-wrapper').style.height = 'auto';
     }
 
@@ -73,29 +77,14 @@ export default function StickyFooter() {
         <span>Inicio</span>
       </ALink>
 
-      <ALink
-        href="/pages/my-requests"
-        className="sticky-link"
-        onClick={() => {
-          dispatchLog(LogType.MY_REQUESTS, {
-            searchText: search,
-          });
-        }}
-      >
-        <i className="d-icon-user"></i>
-        <span>Mis Solicitudes</span>
+      <ALink href="/shop" className="sticky-link">
+        <i className="d-icon-shoppingbag"></i>
+        <span>Premios</span>
       </ALink>
-      <ALink
-        href="/"
-        onClick={() => {
-          logOut();
-        }}
-        className="sticky-link"
-      >
-        <i className="d-icon-close"></i>
-        <span>Salir</span>
-      </ALink>
+
       <FooterSearchBox />
+
+      <FooterAccountBox />
     </div>
   );
 }
