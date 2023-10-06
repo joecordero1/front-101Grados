@@ -119,6 +119,9 @@ function SearchForm() {
         method="get"
         onSubmit={onSubmitSearchForm}
         className="input-wrapper"
+        style={{
+          marginRight: '-50px',
+        }}
       >
         <input
           type="text"
