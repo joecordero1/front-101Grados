@@ -93,7 +93,9 @@ function HomePage() {
 
             {myCatalogues.length > 0 && <SpecialBannerSecond />}
 
-            <InfiniteScrollComponent />
+            <div className="container">
+              <InfiniteScrollComponent />
+            </div>
           </>
         )}
       </div>

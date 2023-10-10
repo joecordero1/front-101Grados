@@ -76,7 +76,7 @@ export function InfiniteScrollComponent(props) {
         )}
 
         {gridType === 'grid' ? (
-          <div className={`row product-wrapper cols-2 cols-sm-4`}>
+          <div className={`row product-wrapper cols-2 cols-sm-4 cols-lg-8`}>
             {localProducts.length > 0 &&
               localProducts.map((item) => (
                 <div

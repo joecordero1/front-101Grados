@@ -19,7 +19,7 @@ function CategorySection() {
       }}
     >
       <div className="container">
-        <div className="row cols-xl-5 cols-lg-4 cols-md-3 cols-sm-2 cols-1">
+        <div className="row cols-xl-5 cols-lg-4 cols-md-3 cols-sm-2 cols-2">
           {categories.map((category) => (
             <div className="category category-ellipse mb-4" key={category.id}>
               <figure className="category-media mr-2">
@@ -34,8 +34,8 @@ function CategorySection() {
                       category.image ? category.image : '../../images/empty.jpg'
                     }
                     alt="Category"
-                    width="100"
-                    height="100"
+                    // width="100"
+                    // height="100"
                   />
                 </ALink>
               </figure>
