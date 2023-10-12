@@ -1,27 +1,27 @@
-import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet';
+import React, { useEffect } from "react";
+import { Helmet } from "react-helmet";
 
 // Import Apollo Server and Query
-import NewsletterModal from '~/components/features/modals/newsletter-modal';
-import IntroSection from '~/components/partials/home/intro-section';
-import ServiceBox from '~/components/partials/home/service-section';
-import DealCollection from '~/components/partials/home/deal-collection';
-import CategorySection from '~/components/partials/home/category-section';
-import BannerOneSection from '~/components/partials/home/banner-one-section';
-import VendorSection from '~/components/partials/home/vendor-section';
-import Buyable from '~/components/partials/home/buyable';
-import BannerTwoSection from '~/components/partials/home/banner-two-section';
-import BestCollection from '~/components/partials/home/best-collection';
+import NewsletterModal from "~/components/features/modals/newsletter-modal";
+import IntroSection from "~/components/partials/home/intro-section";
+import ServiceBox from "~/components/partials/home/service-section";
+import DealCollection from "~/components/partials/home/deal-collection";
+import CategorySection from "~/components/partials/home/category-section";
+import BannerOneSection from "~/components/partials/home/banner-one-section";
+import VendorSection from "~/components/partials/home/vendor-section";
+import Buyable from "~/components/partials/home/buyable";
+import BannerTwoSection from "~/components/partials/home/banner-two-section";
+import BestCollection from "~/components/partials/home/best-collection";
 
-import { useAuth, useProgram } from 'hooks';
-import MultipleCategories from 'components/partials/home/multiple-categories';
-import { useRouter } from 'next/router';
+import { useAuth, useProgram } from "hooks";
+import MultipleCategories from "components/partials/home/multiple-categories";
+import { useRouter } from "next/router";
 
-import SpecialCatalogues from '~/components/partials/home/SpecialCatalogues';
-import SpecialBannerFirst from '~/components/partials/home/SpecialCatalogues/SpecialBannerFirst';
-import SpecialBannerSecond from '~/components/partials/home/SpecialCatalogues/SpecialBannerSecond';
-import useSpecialCatalogues from '~/hooks/useCatalogues';
-import { InfiniteScrollComponent } from 'components/partials/shop/product-list/product-list-two';
+import SpecialCatalogues from "~/components/partials/home/SpecialCatalogues";
+import SpecialBannerFirst from "~/components/partials/home/SpecialCatalogues/SpecialBannerFirst";
+import SpecialBannerSecond from "~/components/partials/home/SpecialCatalogues/SpecialBannerSecond";
+import useSpecialCatalogues from "~/hooks/useCatalogues";
+import { InfiniteScrollComponent } from "components/partials/shop/product-list/product-list-two";
 
 function HomePage() {
   const { availablePoints, loginWithToken, isLoggedIn } = useAuth();
@@ -36,12 +36,12 @@ function HomePage() {
 
   useEffect(() => {
     if (program.id === 5 && isLoggedIn) {
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
+      const script = document.createElement("script");
+      script.type = "text/javascript";
       script.async = true;
-      script.id = 'smcx-sdk';
+      script.id = "smcx-sdk";
       script.src =
-        'https://widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgdyTgR1EBWkJ2U6IMXw0lOaZw2ZnSQ4VRvkKm6DXt8yVI.js';
+        "https://widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgdyTgR1EBWkJ2U6IMXw0lOaZw2ZnSQ4VRvkKm6DXt8yVI.js";
 
       document.head.appendChild(script);
 
@@ -71,6 +71,7 @@ function HomePage() {
 
         {program.isStoreActive && (
           <>
+            {availablePoints > 0 && <Buyable />}
             <DealCollection />
 
             {myCatalogues.length > 0 && <SpecialBannerFirst />}
@@ -80,8 +81,6 @@ function HomePage() {
             <BannerOneSection />
 
             <VendorSection />
-
-            {availablePoints > 0 && <Buyable />}
 
             {myCatalogues.length > 0 && <SpecialCatalogues />}
 
@@ -101,7 +100,7 @@ function HomePage() {
       </div>
 
       {!program.isStoreActive && (
-        <h4 style={{ textAlign: 'center', marginBottom: 60 }}>
+        <h4 style={{ textAlign: "center", marginBottom: 60 }}>
           La tienda se encuentra inhabilitada temporalmente <br />
           Vuelve a ingresar más tarde
         </h4>
