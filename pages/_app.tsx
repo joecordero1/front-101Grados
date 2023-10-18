@@ -43,8 +43,8 @@ const App = ({ Component, pageProps }) => {
       <ApiProvider>
         <ProgramProvider>
           <AuthProvider>
-            <ApiAuthProvider>
-              <GeneralProvider>
+            <GeneralProvider>
+              <ApiAuthProvider>
                 <CartProvider>
                   <Provider store={store}>
                     <Helmet>
@@ -70,8 +70,8 @@ const App = ({ Component, pageProps }) => {
                     </Layout>
                   </Provider>
                 </CartProvider>
-              </GeneralProvider>
-            </ApiAuthProvider>
+              </ApiAuthProvider>
+            </GeneralProvider>
           </AuthProvider>
         </ProgramProvider>
       </ApiProvider>

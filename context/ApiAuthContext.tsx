@@ -1,9 +1,9 @@
-import React, { useEffect, useState, createContext } from 'react';
-import { AxiosError } from 'axios';
-import { useSnackbar } from 'notistack';
+import React, { useEffect, useState, createContext } from "react";
+import { AxiosError } from "axios";
+import { useSnackbar } from "notistack";
 
-import { useAuth } from '../hooks';
-import { createAuthRequestMethods, FetchFunction } from '../utils/apiAuth';
+import { useAuth } from "../hooks";
+import { createAuthRequestMethods, FetchFunction } from "../utils/apiAuth";
 
 interface ApiContextValue {
   get: FetchFunction;
@@ -34,46 +34,46 @@ export enum HandledAuthErrors {
 type ErrorMessagesType = {
   [key in HandledAuthErrors]: {
     title: string;
-    variant: 'error' | 'warning' | 'info' | 'success';
+    variant: "error" | "warning" | "info" | "success";
     message: string;
   };
 };
 
 const ErroMessages: ErrorMessagesType = {
   [HandledAuthErrors.BAD_REQUEST]: {
-    title: 'Error',
-    variant: 'error',
-    message: 'Hay un error con la información que nos proporcionaste.',
+    title: "Error",
+    variant: "error",
+    message: "Hay un error con la información que nos proporcionaste.",
   },
   [HandledAuthErrors.UNAUTHORIZED]: {
-    title: 'Error',
-    variant: 'error',
-    message: 'Tu sesión ha finalizado. Ingresa nuevamente.',
+    title: "Error",
+    variant: "error",
+    message: "Tu sesión ha finalizado. Ingresa nuevamente.",
   },
   [HandledAuthErrors.FORBIDDEN]: {
-    title: 'Error',
-    variant: 'error',
-    message: 'No puedes realizar esa operación. Ponte en contacto con soporte.',
+    title: "Error",
+    variant: "error",
+    message: "No puedes realizar esa operación. Ponte en contacto con soporte.",
   },
   [HandledAuthErrors.NOT_FOUND]: {
-    title: 'Error',
-    variant: 'error',
-    message: 'No podemos encontrar lo que nos solicitaste.',
+    title: "Error",
+    variant: "error",
+    message: "No podemos encontrar lo que nos solicitaste.",
   },
   [HandledAuthErrors.CONFLICT]: {
-    title: 'Error',
-    variant: 'error',
-    message: 'El recurso ya se encuentra creado.',
+    title: "Error",
+    variant: "error",
+    message: "El recurso ya se encuentra creado.",
   },
   [HandledAuthErrors.INTERNAL_SERVER_ERROR]: {
-    title: 'Error',
-    variant: 'error',
-    message: 'Ha ocurrido algo inesperado. Por favor intenta más tarde.',
+    title: "Error",
+    variant: "error",
+    message: "Ha ocurrido algo inesperado. Por favor intenta más tarde.",
   },
 };
 
 export function ApiAuthProvider({ children }: { children: React.ReactNode }) {
-  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const { logOut, accessToken } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -84,12 +84,13 @@ export function ApiAuthProvider({ children }: { children: React.ReactNode }) {
         const isHandledError = Object.values(HandledAuthErrors).includes(
           error.response.status
         );
+
         setErrorMessage(
           isHandledError
             ? ErroMessages[error.response.status].message
             : ErroMessages[HandledAuthErrors.INTERNAL_SERVER_ERROR].message
         );
-        setErrorMessage('');
+        setErrorMessage("");
 
         // This if is for the validation errors | Usually are 400 errors when the sent data is not valid
         if (
@@ -109,16 +110,20 @@ export function ApiAuthProvider({ children }: { children: React.ReactNode }) {
           });
 
           errorMessages.forEach((message) => {
+            message.length > 0 &&
+              enqueueSnackbar(message, {
+                variant: "error",
+              });
             setErrorMessage(message);
-            setErrorMessage('');
+            setErrorMessage("");
           });
         } else {
           if (
             error.response.data.message &&
-            error.response.data.message !== 'Unauthorized'
+            error.response.data.message !== "Unauthorized"
           ) {
             setErrorMessage(error.response.data.message);
-            setErrorMessage('');
+            setErrorMessage("");
           }
         }
 
@@ -135,12 +140,12 @@ export function ApiAuthProvider({ children }: { children: React.ReactNode }) {
     return createAuthRequestMethods(accessToken, handleError);
   }, [logOut, accessToken]);
 
-  useEffect(() => {
-    if (errorMessage.length === 0) return;
+  /* useEffect(() => {
+    if (errorMessage.length < 0) return;
     enqueueSnackbar(errorMessage, {
-      variant: 'error',
+      variant: "error",
     });
-  }, [errorMessage]);
+  }, [errorMessage]); */
 
   return (
     <ApiAuthContext.Provider value={value}>{children}</ApiAuthContext.Provider>
