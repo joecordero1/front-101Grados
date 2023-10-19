@@ -72,17 +72,17 @@ function HomePage() {
         {program.isStoreActive && (
           <>
             {availablePoints > 0 && <Buyable />}
+
+            {myCatalogues.length > 0 && <SpecialCatalogues />}
             <DealCollection />
 
             {myCatalogues.length > 0 && <SpecialBannerFirst />}
 
             <CategorySection />
-
+            {myCatalogues.length > 0 && <SpecialCatalogues />}
             <BannerOneSection />
 
             <VendorSection />
-
-            {myCatalogues.length > 0 && <SpecialCatalogues />}
 
             <BannerTwoSection />
 
