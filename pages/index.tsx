@@ -34,7 +34,7 @@ function HomePage() {
     loginWithToken(token.toLocaleString());
   } */
 
-  useEffect(() => {
+  /*   useEffect(() => {
     if (program.id === 5 && isLoggedIn) {
       const script = document.createElement("script");
       script.type = "text/javascript";
@@ -50,7 +50,7 @@ function HomePage() {
         document.head.removeChild(script);
       };
     }
-  }, []);
+  }, []); */
 
   return (
     <div className="main home">
