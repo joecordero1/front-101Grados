@@ -17,25 +17,23 @@ export const ParticipantRequests = () => {
         display: "flex",
         marginBottom: 52,
         marginTop: 5,
-        justifyContent: "center",
-        alignContent: "center",
-        alignItems: "center",
+
+        overflow: "scroll",
       }}
     >
       <div className="requests-container">
         {requestsParticipant.length > 0 && status === "complete" ? (
           <table className="order-table">
-            <thead>
-              <tr>
-                <th>Codigo Solicitud</th>
-                <th>Premio</th>
-                <th>Nombre</th>
-                <th>Modelo</th>
-                <th>{coinName}</th>
-                <th>Fecha Solicitud</th>
-                <th>Estado</th>
-              </tr>
-            </thead>
+            <tr>
+              <th>Codigo</th>
+              <th>Premio</th>
+              <th>Nombre</th>
+              <th>Modelo</th>
+              <th>{coinName}</th>
+              <th>Fecha Solicitud</th>
+              <th>Estado</th>
+            </tr>
+
             <tbody>
               {requestsParticipant.map((request) => (
                 <>
