@@ -129,13 +129,13 @@ export default function Header(props) {
 
                 <ul style={{ marginLeft: "-60px" }}>
                   {/* {mainMenu.blog.map((item, index) => ( */}
-                  {program.id === 2 && (
+                  {/*  {program.id === 2 && (
                     <li>
                       <ALink href="/pages/upload-invoices">
                         Cargar Facturas
                       </ALink>
                     </li>
-                  )}
+                  )} */}
 
                   <li>
                     <ALink
