@@ -129,6 +129,13 @@ export default function Header(props) {
 
                 <ul style={{ marginLeft: "-60px" }}>
                   {/* {mainMenu.blog.map((item, index) => ( */}
+                  {program.id === 2 && (
+                    <li>
+                      <ALink href="/pages/upload-invoices">
+                        Cargar Facturas
+                      </ALink>
+                    </li>
+                  )}
 
                   <li>
                     <ALink
@@ -150,6 +157,7 @@ export default function Header(props) {
                       Mi estado de cuenta
                     </ALink>
                   </li>
+
                   <li
                     key={"blog"}
                     // className={item.subPages ? 'submenu' : ''}

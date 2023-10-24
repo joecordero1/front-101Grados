@@ -9,3 +9,4 @@ export * from "./accountStatus";
 export * from "./transaction";
 export * from "./catalogue";
 export * from "./positions";
+export * from "./snap";
