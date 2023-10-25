@@ -21,6 +21,7 @@ function MainMenu() {
               className="d-icon-category"
               style={{
                 color: "#2D2D2D",
+                paddingTop: 25,
               }}
             ></i>
           </figure>
@@ -45,15 +46,32 @@ function MainMenu() {
               query: { category: category.id },
             }}
           >
-            <figure className="categroy-media">
-              {/* <i className="fas fa-car"></i> */}
-              <i
-                className={category.icon ? category.icon : category.image}
-                style={{
-                  color: "#2D2D2D",
-                }}
-              ></i>
-            </figure>
+            {category.icon ? (
+              <figure className="categroy-media">
+                {/* <i className="fas fa-car"></i> */}
+                <i
+                  className={category.icon ? category.icon : "fas fa-award"}
+                  style={{
+                    color: "#2D2D2D",
+                    paddingTop: 25,
+                  }}
+                ></i>
+              </figure>
+            ) : (
+              <figure className="categroy-media">
+                <img
+                  src={category.image}
+                  alt={category.name}
+                  style={{
+                    width: 50,
+                    height: 40,
+                    paddingBottom: 5,
+                    backgroundColor: "transparent",
+                  }}
+                />
+              </figure>
+            )}
+
             <div className="category-content">
               <h4
                 className="category-name"
