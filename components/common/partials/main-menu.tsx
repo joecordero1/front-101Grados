@@ -46,18 +46,7 @@ function MainMenu() {
               query: { category: category.id },
             }}
           >
-            {category.icon ? (
-              <figure className="categroy-media">
-                {/* <i className="fas fa-car"></i> */}
-                <i
-                  className={category.icon ? category.icon : "fas fa-award"}
-                  style={{
-                    color: "#2D2D2D",
-                    paddingTop: 25,
-                  }}
-                ></i>
-              </figure>
-            ) : (
+            {category.image ? (
               <figure className="categroy-media">
                 <img
                   src={category.image}
@@ -69,6 +58,17 @@ function MainMenu() {
                     backgroundColor: "transparent",
                   }}
                 />
+              </figure>
+            ) : (
+              <figure className="categroy-media">
+                {/* <i className="fas fa-car"></i> */}
+                <i
+                  className={category.icon ? category.icon : "fas fa-award"}
+                  style={{
+                    color: "#2D2D2D",
+                    paddingTop: 25,
+                  }}
+                ></i>
               </figure>
             )}
 
