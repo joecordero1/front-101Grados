@@ -11,6 +11,7 @@ import LoginModal from "~/components/features/modals/login-modal";
 import { headerBorderRemoveList } from "~/utils/data/menu";
 import { useAuth, useProgram, useLogs } from "hooks";
 import { LogType } from "~/utils/types/logType";
+import useDishsItems from "~/hooks/useDishsItems";
 
 export default function Header(props) {
   const {
@@ -20,6 +21,7 @@ export default function Header(props) {
     getAvailablePoints,
     accessToken,
   } = useAuth();
+  const { items, getMyCatalogues } = useDishsItems();
   const { program } = useProgram();
   const router = useRouter();
   const { dispatchLog } = useLogs();
@@ -36,6 +38,7 @@ export default function Header(props) {
         document.querySelector("header").classList.add("header-border");
     }
     getAvailablePoints();
+    getMyCatalogues();
   }, [router.pathname]);
 
   const showMobileMenu = () => {
