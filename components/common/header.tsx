@@ -46,8 +46,6 @@ export default function Header(props) {
     document.querySelector("body").classList.add("mmenu-active");
   };
 
-  console.log(items);
-
   return (
     <header className="header">
       <div className="header-middle sticky-header fix-top sticky-content">
@@ -163,9 +161,10 @@ export default function Header(props) {
                       Mi estado de cuenta
                     </ALink>
                   </li>
-                  {items.filter((item) => {
-                    item.ingredient.code === IngredientCodes.IN_SNAPS_05;
-                  }).length > 0 && (
+                  {items.filter(
+                    (item) =>
+                      item.ingredient.code === IngredientCodes.IN_SNAPS_05
+                  ).length > 0 && (
                     <li>
                       <ALink href="/pages/upload-invoices">
                         Subir Facturas
