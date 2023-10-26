@@ -116,8 +116,12 @@ export const useAccountBalance = (): ReducerValue => {
   };
 
   const getMyTransactions = async () => {
+    const params = {
+      order: "DESC",
+    };
+    const query = queryString.stringify(params);
     try {
-      const data = await api.get<Transaction[]>(`/transactions/mine`);
+      const data = await api.get<Transaction[]>(`/transactions/mine?${query}`);
       dispatch({
         type: "RETRIEVE_MY_TRANSACTIONS",
         payload: {

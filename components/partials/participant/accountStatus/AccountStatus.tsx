@@ -44,8 +44,8 @@ export const AccountStatus = () => {
           <div className="income">
             <Card
               sx={{
-                minWidth: 130,
                 backgroundColor: "rgba(40, 237, 103, 0.22)",
+                textAlign: "center",
               }}
             >
               <CardHeader title="Puntos Ganados" />
@@ -62,7 +62,10 @@ export const AccountStatus = () => {
           </div>
           <div className="expenses">
             <Card
-              sx={{ minWidth: 150, backgroundColor: "rgba(243, 62, 62, 0.22)" }}
+              sx={{
+                backgroundColor: "rgba(243, 62, 62, 0.22)",
+                textAlign: "center",
+              }}
             >
               <CardHeader title="Puntos Descontados" />
               <CardContent>

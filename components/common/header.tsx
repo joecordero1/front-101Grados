@@ -217,6 +217,7 @@ export default function Header(props) {
           style={{
             textAlign: "center",
             margin: "0 auto",
+            color: "#5d5e5e",
           }}
         >
           ¡Hola {participant?.firstName}!
@@ -225,6 +226,7 @@ export default function Header(props) {
           style={{
             textAlign: "center",
             margin: "0 auto",
+            color: "#5d5e5e",
           }}
         >
           Tienes {availablePoints && availablePoints} {program.coinName}
