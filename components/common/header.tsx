@@ -46,8 +46,6 @@ export default function Header(props) {
     document.querySelector("body").classList.add("mmenu-active");
   };
 
-  console.log(items);
-
   return (
     <header className="header">
       <div className="header-middle sticky-header fix-top sticky-content">
