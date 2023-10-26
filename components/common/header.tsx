@@ -11,6 +11,8 @@ import LoginModal from "~/components/features/modals/login-modal";
 import { headerBorderRemoveList } from "~/utils/data/menu";
 import { useAuth, useProgram, useLogs } from "hooks";
 import { LogType } from "~/utils/types/logType";
+import useDishsItems from "~/hooks/useDishsItems";
+import { IngredientCodes } from "~/utils/types";
 
 export default function Header(props) {
   const {
@@ -20,6 +22,7 @@ export default function Header(props) {
     getAvailablePoints,
     accessToken,
   } = useAuth();
+  const { items, getMyDishsItems } = useDishsItems();
   const { program } = useProgram();
   const router = useRouter();
   const { dispatchLog } = useLogs();
@@ -36,11 +39,14 @@ export default function Header(props) {
         document.querySelector("header").classList.add("header-border");
     }
     getAvailablePoints();
+    getMyDishsItems();
   }, [router.pathname]);
 
   const showMobileMenu = () => {
     document.querySelector("body").classList.add("mmenu-active");
   };
+
+  console.log(items);
 
   return (
     <header className="header">
@@ -157,6 +163,15 @@ export default function Header(props) {
                       Mi estado de cuenta
                     </ALink>
                   </li>
+                  {items.filter((item) => {
+                    item.ingredient.code === IngredientCodes.IN_SNAPS_05;
+                  }).length > 0 && (
+                    <li>
+                      <ALink href="/pages/upload-invoices">
+                        Subir Facturas
+                      </ALink>
+                    </li>
+                  )}
 
                   <li
                     key={"blog"}

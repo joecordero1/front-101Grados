@@ -10,3 +10,5 @@ export * from "./transaction";
 export * from "./catalogue";
 export * from "./positions";
 export * from "./snap";
+export * from "./ingredient";
+export * from "./dishItem";

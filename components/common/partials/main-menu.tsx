@@ -21,7 +21,9 @@ function MainMenu() {
               className="d-icon-category"
               style={{
                 color: "#2D2D2D",
-                paddingTop: 25,
+
+                height: 35,
+                paddingTop: 20,
               }}
             ></i>
           </figure>
@@ -53,7 +55,7 @@ function MainMenu() {
                   alt={category.name}
                   style={{
                     width: 50,
-                    height: 40,
+                    height: 50,
                     paddingBottom: 5,
                     backgroundColor: "transparent",
                   }}
