@@ -1,24 +1,22 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useApiAuth } from "./useApiAuth";
-import { useAuth } from "./useAuth";
+import { DishItem } from "~/utils/types";
 
 const useDishsItems = () => {
-  const [items, setItems] = useState<any>([]);
+  const [items, setItems] = useState<DishItem[]>([]);
   const api = useApiAuth();
-  const { isLoggedIn } = useAuth();
-  const getMyCatalogues = async () => {
-    const myDishsItemsData = await api.get("/dishs-items/my-dishs-items");
-    console.log(myDishsItemsData);
+
+  const getMyDishsItems = async () => {
+    const myDishsItemsData = await api.get<DishItem[]>(
+      "/dishs-items/my-dishs-items"
+    );
+
     setItems(myDishsItemsData);
   };
 
-  useEffect(() => {
-    getMyCatalogues();
-  }, [isLoggedIn]);
-
   return {
     items,
-    getMyCatalogues,
+    getMyDishsItems,
   };
 };
 export default useDishsItems;

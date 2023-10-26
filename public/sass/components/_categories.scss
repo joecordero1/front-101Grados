@@ -125,13 +125,13 @@
     position: relative;
     transition: padding 0.3s;
     &::after {
-      content: '\e97f';
+      content: "\e97f";
       display: inline-block;
       position: absolute;
       right: 0;
       top: 50%;
       transform: translateY(-50%);
-      font-family: 'riode';
+      font-family: "riode";
       font-size: 1.6rem;
       font-weight: 400;
       opacity: 0;
@@ -442,9 +442,9 @@
     li {
       white-space: nowrap;
       &::before {
-        content: '\f105';
+        content: "\f105";
         padding-right: 0.8rem;
-        font-family: 'Font Awesome 5 Free';
+        font-family: "Font Awesome 5 Free";
         font-size: 1.3rem;
         font-weight: 600;
         color: #fff;
