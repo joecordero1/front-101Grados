@@ -3,7 +3,6 @@ import { Program } from "./program";
 
 export interface Catalogue {
   id: number;
-  cxp: number;
   name: string;
   coverImage: string;
   coverImage2: string;

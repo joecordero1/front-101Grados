@@ -62,14 +62,16 @@ export const ParticipantRequests = () => {
                       })}
                     </td>
                     <td>
-                      {request.status === StatusTypes.APPROVED ||
-                      request.status === StatusTypes.REQUESTED ||
-                      request.status === StatusTypes.SPECIALS ||
+                      {request.status === StatusTypes.SPECIALS ||
                       request.status === StatusTypes.ORDERRED ||
                       request.status === StatusTypes.NEWS ? (
-                        <Alert severity="success">SOLICITADO</Alert>
+                        <Alert severity="warning">PENDIENTE</Alert>
+                      ) : request.status === StatusTypes.APPROVED ? (
+                        <Alert severity="info">APROBADO</Alert>
+                      ) : request.status === StatusTypes.REQUESTED ? (
+                        <Alert severity="info">SOLICITADO</Alert>
                       ) : request.status === StatusTypes.DISPATCHED ? (
-                        <Alert severity="info">DESPACHADO</Alert>
+                        <Alert severity="info">EN BODEGA</Alert>
                       ) : request.status === StatusTypes.DELIVERED ? (
                         <Alert severity="success">RECIBIDO</Alert>
                       ) : request.status === StatusTypes.WAREHOUSE ? (
