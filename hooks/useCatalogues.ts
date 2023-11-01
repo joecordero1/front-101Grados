@@ -4,7 +4,6 @@ import { useAuth } from "./useAuth";
 import { useApi } from "./useApi";
 
 const useSpecialCatalogues = () => {
-  const { participant } = useAuth();
   const api = useApi();
   const [myCatalogues, setMyCatalogues] = useState<Catalogue[]>([]);
 
@@ -21,7 +20,7 @@ const useSpecialCatalogues = () => {
 
   useEffect(() => {
     getMyCatalogues();
-  }, [participant]);
+  }, []);
 
   return {
     myCatalogues,
