@@ -24,7 +24,8 @@ import useSpecialCatalogues from "~/hooks/useCatalogues";
 import { InfiniteScrollComponent } from "components/partials/shop/product-list/product-list-two";
 
 function HomePage() {
-  const { availablePoints, loginWithToken, isLoggedIn } = useAuth();
+  const { availablePoints, loginWithToken, isLoggedIn, getAvailablePoints } =
+    useAuth();
   const { myCatalogues } = useSpecialCatalogues();
   const { program } = useProgram();
   const router = useRouter();
@@ -51,7 +52,9 @@ function HomePage() {
       };
     }
   }, []); */
-
+  useEffect(() => {
+    getAvailablePoints();
+  }, []);
   return (
     <div className="main home">
       <Helmet>

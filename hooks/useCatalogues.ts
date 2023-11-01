@@ -4,7 +4,7 @@ import { useAuth } from "./useAuth";
 import { useApi } from "./useApi";
 
 const useSpecialCatalogues = () => {
-  const { isLoggedIn } = useAuth();
+  const { participant } = useAuth();
   const api = useApi();
   const [myCatalogues, setMyCatalogues] = useState<Catalogue[]>([]);
 
@@ -21,7 +21,7 @@ const useSpecialCatalogues = () => {
 
   useEffect(() => {
     getMyCatalogues();
-  }, [isLoggedIn]);
+  }, [participant]);
 
   return {
     myCatalogues,
