@@ -229,7 +229,7 @@ export default function Header(props) {
             color: "#5d5e5e",
           }}
         >
-          Tienes {availablePoints && availablePoints} {program.coinName}
+          Tienes {availablePoints} {program.coinName}
         </h5>
       </div>
     </header>
