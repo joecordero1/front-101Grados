@@ -29,9 +29,9 @@ function Layout({ children, closeQuickview }) {
     useAuth();
   const router = useRouter();
 
-  useLayoutEffect(() => {
+  /* useLayoutEffect(() => {
     document.querySelector("body").classList.remove("loaded");
-  }, [router.pathname]);
+  }, [router.pathname]); */
 
   useEffect(() => {
     window.addEventListener("scroll", showScrollTopHandler, true);
