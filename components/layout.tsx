@@ -25,13 +25,18 @@ import { useProgram, useAuth } from "hooks";
 
 function Layout({ children, closeQuickview }) {
   const { program } = useProgram();
-  const { isLoggedIn, participant, loginWithToken, getAvailablePoints } =
-    useAuth();
+  const {
+    isLoggedIn,
+    participant,
+    loginWithToken,
+    getAvailablePoints,
+    availablePoints,
+  } = useAuth();
   const router = useRouter();
 
-  /* useLayoutEffect(() => {
+  useLayoutEffect(() => {
     document.querySelector("body").classList.remove("loaded");
-  }, [router.pathname]); */
+  }, [router.pathname]);
 
   useEffect(() => {
     window.addEventListener("scroll", showScrollTopHandler, true);
@@ -115,7 +120,7 @@ function Layout({ children, closeQuickview }) {
   return (
     <>
       <div className="page-wrapper">
-        {isLoggedIn && <Header />}
+        {isLoggedIn && <Header availablePoints={availablePoints} />}
 
         {children}
 

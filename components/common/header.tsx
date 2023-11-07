@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import ALink from "~/components/features/custom-link";
@@ -14,21 +14,25 @@ import { LogType } from "~/utils/types/logType";
 import useDishsItems from "~/hooks/useDishsItems";
 import { IngredientCodes } from "~/utils/types";
 
-export default function Header(props) {
-  const {
-    logOut,
-    availablePoints,
-    participant,
-    getAvailablePoints,
-    accessToken,
-  } = useAuth();
+interface props {
+  availablePoints: number;
+}
+
+export default function Header(props: props) {
+  const { logOut, participant, accessToken } = useAuth();
   const { items, getMyDishsItems } = useDishsItems();
   const { program } = useProgram();
+  const [myAvailablePoints, setAvailablePoints] = useState(0);
+  useEffect(() => {
+    setAvailablePoints(props.availablePoints);
+  }, [props.availablePoints]);
   const router = useRouter();
   const { dispatchLog } = useLogs();
 
   useEffect(() => {
+    getMyDishsItems();
     let header = document.querySelector("header");
+
     if (header) {
       if (
         headerBorderRemoveList.includes(router.pathname) &&
@@ -38,8 +42,6 @@ export default function Header(props) {
       else if (!headerBorderRemoveList.includes(router.pathname))
         document.querySelector("header").classList.add("header-border");
     }
-    getAvailablePoints();
-    getMyDishsItems();
   }, [router.pathname]);
 
   const showMobileMenu = () => {
@@ -229,7 +231,7 @@ export default function Header(props) {
             color: "#5d5e5e",
           }}
         >
-          Tienes {availablePoints} {program.coinName}
+          Tienes {myAvailablePoints} {program.coinName}
         </h5>
       </div>
     </header>
