@@ -168,7 +168,12 @@ function SearchForm() {
                 <div
                   className="search-name ml-4"
                   dangerouslySetInnerHTML={removeXSSAttacks(
-                    matchEmphasize(product.award.name)
+                    matchEmphasize(
+                      `${product.award.name} ${
+                        product.award.brand.name &&
+                        `|${product.award.brand.name}`
+                      }${product.award.model && `|${product.award.model}`}`
+                    )
                   )}
                 ></div>
                 <span className="search-price">
