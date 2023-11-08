@@ -171,8 +171,8 @@ function SearchForm() {
                     matchEmphasize(
                       `${product.award.name} ${
                         product.award.brand.name &&
-                        `|${product.award.brand.name}`
-                      }${product.award.model && `|${product.award.model}`}`
+                        `| ${product.award.brand.name}`
+                      }${product.award.model && `| ${product.award.model}`}`
                     )
                   )}
                 ></div>

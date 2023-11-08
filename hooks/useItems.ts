@@ -69,6 +69,7 @@ export const useItems = ({ metaProps, filterOptions = {} }: UseItemsProps) => {
       setLoading(true);
       const params = {
         // order: 'DESC',
+        random,
         order: metaProps?.order || "ASC",
         take: meta.take.toString(),
         page: meta.page.toString(),
@@ -80,7 +81,7 @@ export const useItems = ({ metaProps, filterOptions = {} }: UseItemsProps) => {
           return acc;
         }, {}) as FilterOptions),
       };
-      console.info("Buscando productos...");
+
       const query = queryString.stringify(params);
       const response = await api.get<Page<CatalogueItem>>(
         "/catalogue-items/store?" + query
