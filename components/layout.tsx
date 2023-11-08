@@ -106,13 +106,7 @@ function Layout({ children, closeQuickview }) {
             justifyContent: "center",
             alignItems: "center",
           }}
-        >
-          <div className="lds-facebook">
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
+        ></div>
       </>
     );
   }
@@ -125,25 +119,9 @@ function Layout({ children, closeQuickview }) {
         {children}
 
         {isLoggedIn && <Footer />}
-        {isLoggedIn && <StickyFooter />}
+        {/*   seems that causes a bug the node to be removed is not a child of this node */}
+        {/*  {isLoggedIn && <StickyFooter />} */}
       </div>
-
-      {/* {isLoggedIn && (
-        <>
-          <ALink
-            id="scroll-top"
-            href="#"
-            title="Top"
-            role="button"
-            className="scroll-top"
-            onClick={() => scrollTopHandler(false)}
-          >
-            <i className="d-icon-arrow-up"></i>
-          </ALink>
-
-          <MobileMenu />
-        </>
-      )} */}
 
       <ToastContainer
         autoClose={3000}
