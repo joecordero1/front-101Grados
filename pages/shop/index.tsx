@@ -28,7 +28,7 @@ function ShopHorizontalFilter() {
     /* cleanFilters, */
     meta,
     handlePageChange,
-  } = useItems({});
+  } = useItems({ useQueryParams: true, metaProps: { page: 1, take: 50 } });
   const { dispatchLog } = useLogs();
 
   const { participant } = useAuth();
@@ -128,7 +128,9 @@ function ShopHorizontalFilter() {
                     },
                   }}
                   scroll={false}
-                  onClick={() => handleFiltersChange({ categoriesIds: [] })}
+                  onClick={() =>
+                    handleFiltersChange({ categoriesIds: [] }, true)
+                  }
                 >
                   <figure className="categroy-media">
                     <i className={"fas fa-award"}></i>

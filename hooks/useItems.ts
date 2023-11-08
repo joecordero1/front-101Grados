@@ -6,11 +6,6 @@ import { CatalogueItem, Page, PaginationMetaDto } from "utils/types";
 
 import { useApiAuth } from "./useApiAuth";
 
-type MetaProps = {
-  take?: number;
-  page?: number;
-  order?: "ASC" | "DESC";
-};
 type FilterOptions = {
   brandId?: number;
   random?: boolean;
@@ -23,31 +18,23 @@ type FilterOptions = {
   catalogueId?: number;
 };
 
-/* type FilterOptions = {
-  random?: boolean;
-  toSearch?: string;
-  justExtras?: boolean;
-  categoriesIds?: number[] | string[];
-  subcategoriesIds?: number[] | string[];
-  minPrice?: number;
-  maxPrice?: number;
-  catalogueSlug?: string;
-}; */
-
 type UseItemsProps = {
-  metaProps?: MetaProps;
+  metaProps?: PaginationMetaDto;
   filterOptions?: FilterOptions;
+  useQueryParams?: boolean;
 };
 
-export const useItems = ({ metaProps, filterOptions = {} }: UseItemsProps) => {
-  const { take = 100, page = 1 } = metaProps || {};
+export const useItems = ({
+  metaProps,
+  filterOptions = {},
+  useQueryParams = false,
+}: UseItemsProps) => {
   const { random = false } = filterOptions;
   const api = useApiAuth();
-
   const [products, setProducts] = useState<CatalogueItem[]>([]);
   const [meta, setMeta] = useState<PaginationMetaDto>({
-    page,
-    take,
+    page: metaProps?.page || 1,
+    take: metaProps?.take || 10,
     itemCount: 0,
     pageCount: 0,
     hasPreviousPage: false,
@@ -112,8 +99,8 @@ export const useItems = ({ metaProps, filterOptions = {} }: UseItemsProps) => {
   );
 
   const handleMetaChange = useCallback(
-    (newMeta: MetaProps) => {
-      setMeta({ ...meta, ...newMeta });
+    (newMeta: PaginationMetaDto, replace = false) => {
+      replace ? setMeta(newMeta) : setMeta({ ...meta, ...newMeta });
     },
     [meta]
   );
@@ -121,10 +108,6 @@ export const useItems = ({ metaProps, filterOptions = {} }: UseItemsProps) => {
   useEffect(() => {
     handleFilterOptionsChange({
       categoriesIds: query.category ? [query.category as any] : null,
-      /*  subcategoriesIds: query.subcategory ? [query.subcategory as any] : null, */
-      /* minPrice: query.min_price ? parseFloat(query.min_price as any) : null,
-      maxPrice: query.max_price ? parseFloat(query.max_price as any) : null,
-      catalogueSlug: query.catalogue ? (query.catalogue as any) : null, */
       brandId: query.brand ? (query.brand as any) : null,
       random: query.random ? true : null,
       buyable: query.buyable ? true : null,
@@ -134,12 +117,35 @@ export const useItems = ({ metaProps, filterOptions = {} }: UseItemsProps) => {
       toSearch: query.search ? (query.search as any) : null,
       orderPoints: query.orderPoints ? (query.orderPoints as any) : null,
     });
+    if (useQueryParams && isInitialised) {
+      handleMetaChange({
+        page: query.page ? parseInt(query.page as any) : metaProps.page,
+        take: query.take ? parseInt(query.take as any) : metaProps.take,
+      });
+    }
   }, [query]);
+
+  /*   // initialize query based on meta
+  useEffect(() => {
+    if (useQueryParams) {
+      setIsInitialised(false);
+      router.push({
+        pathname: router.pathname,
+        query: {
+          ...router.query,
+          page: meta.page,
+          take: meta.take,
+        },
+      });
+      setIsInitialised(true);
+    }
+  }, []); */
 
   useEffect(() => {
     if (!isInitialised) return;
     getProducts();
   }, [isInitialised, meta.take, meta.page, localFilterOptions]);
+
   return {
     items: products,
     loading,

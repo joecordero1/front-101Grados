@@ -10,7 +10,7 @@ import { PaginationMetaDto } from "../../../../utils/types/common";
 type Props = {
   items: CatalogueItem[];
   meta: PaginationMetaDto;
-  handlePageChange: (page: number) => void;
+  handlePageChange: (newMeta: PaginationMetaDto) => void;
   loading?: boolean;
   itemsPerRow?: number;
   type?: string;
