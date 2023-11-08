@@ -37,7 +37,7 @@ export const ParticipantRequests = () => {
             <tbody>
               {requestsParticipant.map((request) => (
                 <>
-                  <tr>
+                  <tr key={request.id}>
                     <td className="order-total" align="center">
                       {request.code}
                     </td>

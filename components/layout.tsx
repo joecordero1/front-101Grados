@@ -112,7 +112,7 @@ function Layout({ children, closeQuickview }) {
   }
 
   return (
-    <>
+    <div>
       <div className="page-wrapper">
         {isLoggedIn && <Header availablePoints={availablePoints} />}
 
@@ -120,7 +120,7 @@ function Layout({ children, closeQuickview }) {
 
         {isLoggedIn && <Footer />}
 
-        {isLoggedIn && <StickyFooter />}
+        {isLoggedIn ? <StickyFooter /> : <div></div>}
       </div>
 
       <ToastContainer
@@ -138,7 +138,7 @@ function Layout({ children, closeQuickview }) {
       <Quickview />
 
       <VideoModal />
-    </>
+    </div>
   );
 }
 
