@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import ALink from '~/components/features/custom-link';
-import OwlCarousel from '~/components/features/owl-carousel';
-import ProductNine from '~/components/features/product/product-nine';
-import { productSlider } from '~/utils/data/carousel';
+import ALink from "~/components/features/custom-link";
+import OwlCarousel from "~/components/features/owl-carousel";
+import ProductNine from "~/components/features/product/product-nine";
+import { productSlider } from "~/utils/data/carousel";
 
-import { useItems, useLogs } from 'hooks';
-import { LogType } from '~/utils/types/logType';
+import { useItems, useLogs } from "hooks";
+import { LogType } from "~/utils/types/logType";
 
 function BestCollection(props) {
   const { items, loading } = useItems({
@@ -40,7 +40,7 @@ function BestCollection(props) {
             {[1, 2, 3, 4, 5].map((item) => (
               <div
                 className="product-loading-overlay"
-                key={'best-selling-skel-' + item}
+                key={"best-selling-skel-" + item}
               ></div>
             ))}
           </OwlCarousel>

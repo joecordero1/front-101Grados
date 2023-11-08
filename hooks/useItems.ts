@@ -69,11 +69,16 @@ export const useItems = ({ metaProps, filterOptions = {} }: UseItemsProps) => {
       setLoading(true);
       const params = {
         // order: 'DESC',
-        random,
         order: metaProps?.order || "ASC",
         take: meta.take.toString(),
         page: meta.page.toString(),
         // Add just the filter options that are not null or undefined or empty string
+        ...(Object.keys(filterOptions).reduce((acc, key) => {
+          if (filterOptions[key]) {
+            acc[key] = filterOptions[key];
+          }
+          return acc;
+        }, {}) as FilterOptions),
         ...(Object.keys(localFilterOptions).reduce((acc, key) => {
           if (localFilterOptions[key]) {
             acc[key] = localFilterOptions[key];
@@ -131,15 +136,10 @@ export const useItems = ({ metaProps, filterOptions = {} }: UseItemsProps) => {
     });
   }, [query]);
 
-  function areArraysEqual(arr1 = [], arr2 = []) {
-    if (arr1.length !== arr2.length) return false;
-    return arr1.every((element, index) => element === arr2[index]);
-  }
   useEffect(() => {
     if (!isInitialised) return;
     getProducts();
-  }, [isInitialised, meta.take, meta.page, JSON.stringify(localFilterOptions)]);
-
+  }, [isInitialised, meta.take, meta.page, localFilterOptions]);
   return {
     items: products,
     loading,
