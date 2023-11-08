@@ -163,6 +163,11 @@ export default function Header(props: props) {
                       Mi estado de cuenta
                     </ALink>
                   </li>
+                  <li>
+                    <ALink href="/pages/change-my-password">
+                      Cambiar Mi Contraseña
+                    </ALink>
+                  </li>
                   {items.filter(
                     (item) =>
                       item.ingredient.code === IngredientCodes.IN_SNAPS_05

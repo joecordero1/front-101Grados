@@ -119,8 +119,8 @@ function Layout({ children, closeQuickview }) {
         {children}
 
         {isLoggedIn && <Footer />}
-        {/*   seems that causes a bug the node to be removed is not a child of this node */}
-        {/*  {isLoggedIn && <StickyFooter />} */}
+
+        {isLoggedIn && <StickyFooter />}
       </div>
 
       <ToastContainer
