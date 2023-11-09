@@ -73,7 +73,6 @@ function Layout({ children, closeQuickview }) {
       const { token } = router.query;
       loginWithToken(token.toString());
     }
-
     if (isLoggedIn) {
       const { pathname } = router;
       if (pathname === "/signin" || pathname === "/signup") {
@@ -81,7 +80,6 @@ function Layout({ children, closeQuickview }) {
       } else {
         router.push(pathname);
       }
-      getAvailablePoints();
     } else if (!isLoggedIn) {
       const { pathname } = router;
       if (pathname === "/pages/privacy-policy") {
@@ -92,6 +90,7 @@ function Layout({ children, closeQuickview }) {
     } else {
       router.push("/signin");
     }
+    getAvailablePoints();
   }, [isLoggedIn, participant]);
 
   if (!program) {

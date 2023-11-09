@@ -14,22 +14,22 @@ import { LogType } from "~/utils/types/logType";
 import useDishsItems from "~/hooks/useDishsItems";
 import { IngredientCodes } from "~/utils/types";
 
-interface props {
-  availablePoints: number;
-}
-
-export default function Header(props: props) {
-  const { logOut, participant, accessToken } = useAuth();
+export default function Header() {
+  const {
+    logOut,
+    participant,
+    accessToken,
+    availablePoints,
+    getAvailablePoints,
+  } = useAuth();
   const { items, getMyDishsItems } = useDishsItems();
   const { program } = useProgram();
-  const [myAvailablePoints, setAvailablePoints] = useState(0);
-  useEffect(() => {
-    setAvailablePoints(props.availablePoints);
-  }, [props.availablePoints]);
+
   const router = useRouter();
   const { dispatchLog } = useLogs();
 
   useEffect(() => {
+    getAvailablePoints();
     getMyDishsItems();
     let header = document.querySelector("header");
 
@@ -236,7 +236,7 @@ export default function Header(props: props) {
             color: "#5d5e5e",
           }}
         >
-          Tienes {myAvailablePoints} {program.coinName}
+          Tienes {availablePoints && availablePoints} {program.coinName}
         </h5>
       </div>
     </header>
