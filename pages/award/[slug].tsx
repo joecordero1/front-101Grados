@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Helmet from 'react-helmet';
-import imagesLoaded from 'imagesloaded';
 
 import ALink from '~/components/features/custom-link';
 import OwlCarousel from '~/components/features/owl-carousel';
-
 import MediaFive from '~/components/partials/product/media/media-five';
 import DetailThree from '~/components/partials/product/detail/detail-three';
-import DescOne from '~/components/partials/product/desc/desc-one';
 import RelatedProducts from '~/components/partials/product/related-products';
-import ProductSidebar from '~/components/partials/product/product-sidebar';
 import ProductNav from '~/components/partials/product/product-nav';
-
 import { mainSlider17 } from '~/utils/data/carousel';
-import { useAuth, useItem } from '~/hooks';
-import { useLogs } from 'hooks';
+
+import { useAuth, useItem, useLogs } from '~/hooks';
 import { LogType } from '~/utils/types/logType';
+import { withAuth } from 'components/AuthGuard';
 
 function ProductRightSidebar() {
   const slug = useRouter().query.slug;
@@ -130,4 +126,4 @@ function ProductRightSidebar() {
   );
 }
 
-export default ProductRightSidebar;
+export default withAuth(ProductRightSidebar);

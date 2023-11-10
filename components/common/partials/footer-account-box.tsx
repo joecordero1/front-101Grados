@@ -79,7 +79,7 @@ function SearchForm() {
           <i className="d-icon-money mr-1"></i>
           Estado de Cuenta
         </Link>
-        <Link href="/pages/my-requests" onClick={logOut}>
+        <Link href="/" onClick={logOut}>
           <i className="d-icon-cancel mr-1"></i>
           Salir
         </Link>

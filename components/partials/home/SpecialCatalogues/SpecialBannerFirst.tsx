@@ -1,13 +1,13 @@
-import React from "react";
-import Reveal from "react-awesome-reveal";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import React from 'react';
+import Reveal from 'react-awesome-reveal';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
-import ALink from "~/components/features/custom-link";
-import OwlCarousel from "~/components/features/owl-carousel";
-import useSpecialCatalogues from "~/hooks/useCatalogues";
+import ALink from '~/components/features/custom-link';
+import OwlCarousel from '~/components/features/owl-carousel';
 
-import { introSlider, mainSlider3 } from "~/utils/data/carousel";
-import { fadeInRightShorter } from "~/utils/data/keyframes";
+import { introSlider } from '~/utils/data/carousel';
+import { fadeInRightShorter } from '~/utils/data/keyframes';
+import { useSpecialCatalogues } from 'hooks';
 
 function SpecialBannerFirst() {
   const { myCatalogues } = useSpecialCatalogues();
@@ -30,7 +30,7 @@ function SpecialBannerFirst() {
                   <Reveal keyframes={fadeInRightShorter} duration={1000}>
                     <ALink
                       href={{
-                        pathname: "/shop",
+                        pathname: '/shop',
                         query: { catalogueId: catalogue.id },
                       }}
                       className="btn btn-dark btn-outline btn-rounded mt-1"

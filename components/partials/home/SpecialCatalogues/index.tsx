@@ -1,6 +1,7 @@
-import React from "react";
-import useSpecialCatalogues from "~/hooks/useCatalogues";
-import SpecialCollection from "./SpecialCollection";
+import React from 'react';
+
+import SpecialCollection from './SpecialCollection';
+import { useSpecialCatalogues } from 'hooks';
 
 const SpecialCatalogues = () => {
   const { myCatalogues } = useSpecialCatalogues();

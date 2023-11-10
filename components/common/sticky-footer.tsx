@@ -4,12 +4,9 @@ import ALink from '~/components/features/custom-link';
 
 import FooterSearchBox from '~/components/common/partials/footer-search-box';
 import FooterAccountBox from '~/components/common/partials/footer-account-box';
-import { useAuth, useLogs } from '~/hooks';
 
 export default function StickyFooter() {
   let tmp = 0;
-  const { logOut } = useAuth();
-  const { dispatchLog } = useLogs();
 
   useEffect(() => {
     window.addEventListener('scroll', stickyFooterHandler);
@@ -29,12 +26,10 @@ export default function StickyFooter() {
       : 600;
     let stickyFooter = document.querySelector('.sticky-footer.sticky-content');
     let height = 0;
-
     if (stickyFooter) {
       // @ts-ignore
       height = stickyFooter.offsetHeight;
     }
-
     if (stickyFooter) {
       stickyFooter.classList.add('fixed');
       stickyFooter.setAttribute('style', 'margin-bottom: 0');
@@ -49,7 +44,6 @@ export default function StickyFooter() {
           .querySelector('.sticky-content-wrapper')
           .setAttribute('style', 'height: ' + height + 'px');
       }
-
       if (
         !document.querySelector('.sticky-content-wrapper').getAttribute('style')
       ) {
@@ -58,7 +52,6 @@ export default function StickyFooter() {
           .setAttribute('style', 'height: ' + height + 'px');
       }
     }
-
     if (
       window.outerWidth > 767 &&
       document.querySelector('.sticky-content-wrapper')
@@ -66,7 +59,6 @@ export default function StickyFooter() {
       // @ts-ignore
       document.querySelector('.sticky-content-wrapper').style.height = 'auto';
     }
-
     tmp = e.currentTarget.scrollY;
   };
 

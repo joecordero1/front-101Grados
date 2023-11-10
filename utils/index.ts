@@ -178,14 +178,11 @@ export const stickyFooterHandler = function () {
   let top = document.querySelector('main')
     ? document.querySelector('main').offsetTop
     : 300;
-
   let height = 0;
-
   if (stickyFooter) {
     // @ts-ignore
     height = stickyFooter.offsetHeight;
   }
-
   if (window.pageYOffset >= top && window.innerWidth < 768) {
     if (stickyFooter) {
       stickyFooter.classList.add('fixed');
@@ -197,7 +194,6 @@ export const stickyFooterHandler = function () {
           .querySelector('.sticky-content-wrapper')
           .insertAdjacentElement('beforeend', stickyFooter);
       }
-
       document
         .querySelector('.sticky-content-wrapper')
         .setAttribute('style', 'height: ' + height + 'px');
@@ -206,14 +202,12 @@ export const stickyFooterHandler = function () {
     if (stickyFooter) {
       stickyFooter.classList.remove('fixed');
     }
-
     if (document.querySelector('.sticky-content-wrapper')) {
       document
         .querySelector('.sticky-content-wrapper')
         .removeAttribute('style');
     }
   }
-
   if (
     window.innerWidth > 768 &&
     document.querySelector('.sticky-content-wrapper')

@@ -1,5 +1,7 @@
-import React from "react";
-import { AccountStatus } from "~/components/partials/participant/accountStatus/AccountStatus";
+import React from 'react';
+
+import { AccountStatus } from '~/components/partials/participant/accountStatus/AccountStatus';
+import { withAuth } from 'components/AuthGuard';
 
 const MyAccountStatus = () => {
   return (
@@ -9,4 +11,4 @@ const MyAccountStatus = () => {
   );
 };
 
-export default MyAccountStatus;
+export default withAuth(MyAccountStatus);

@@ -14,6 +14,7 @@ import { useItems } from '../../reducers/useItems';
 import { useLogs } from 'hooks';
 import { useAuth } from '~/hooks';
 import { LogType } from '~/utils/types/logType';
+import { withAuth } from 'components/AuthGuard';
 
 function ShopHorizontalFilter() {
   const { categories } = useCategories({
@@ -280,4 +281,4 @@ function ShopHorizontalFilter() {
   );
 }
 
-export default React.memo(ShopHorizontalFilter);
+export default withAuth(React.memo(ShopHorizontalFilter));

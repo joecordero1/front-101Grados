@@ -4,6 +4,8 @@ import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
 
 import ALink from '~/components/features/custom-link';
 
+import { withAuth } from 'components/AuthGuard';
+
 function Account() {
   return (
     <main className="main account">
@@ -369,4 +371,4 @@ function Account() {
   );
 }
 
-export default React.memo(Account);
+export default withAuth(React.memo(Account));

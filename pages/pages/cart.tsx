@@ -1,13 +1,9 @@
-import { connect } from 'react-redux';
-import { useEffect, useState } from 'react';
-
 import ALink from '~/components/features/custom-link';
-import Quantity from '~/components/features/quantity';
 
-import { toDecimal, getTotalPrice } from '~/utils';
 import { useAuth, useCart, useProgram, useLogs } from '~/hooks';
 import { CartItem } from '~/utils/types';
 import { LogType } from '~/utils/types/logType';
+import { withAuth } from 'components/AuthGuard';
 
 function Cart() {
   const { removeFromCart, items, totalAmount, sumQuantity, substractQuantity } =
@@ -303,4 +299,4 @@ function Cart() {
     </div>
   );
 }
-export default Cart;
+export default withAuth(Cart);

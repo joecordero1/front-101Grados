@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
-import Reveal from "react-awesome-reveal";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import React, { useEffect, useState } from 'react';
+import Reveal from 'react-awesome-reveal';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 // import Custom Components
-import ALink from "~/components/features/custom-link";
-import OwlCarousel from "~/components/features/owl-carousel";
-import { introSlider } from "~/utils/data/carousel";
-import { fadeInRightShorter, fadeInLeftShorter } from "~/utils/data/keyframes";
+import ALink from '~/components/features/custom-link';
+import OwlCarousel from '~/components/features/owl-carousel';
+import { introSlider } from '~/utils/data/carousel';
+import { fadeInRightShorter, fadeInLeftShorter } from '~/utils/data/keyframes';
 
-import { useProgram } from "hooks";
-import useSpecialCatalogues from "~/hooks/useCatalogues";
+import { useProgram, useSpecialCatalogues } from 'hooks';
 
 function IntroSection(props) {
   const { program } = useProgram();
@@ -26,10 +25,10 @@ function IntroSection(props) {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", setDimension);
+    window.addEventListener('resize', setDimension);
 
     return () => {
-      window.removeEventListener("resize", setDimension);
+      window.removeEventListener('resize', setDimension);
     };
   }, [screenSize]);
   return (
@@ -42,7 +41,7 @@ function IntroSection(props) {
           >
             <div
               className="banner banner-fixed content-middle intro-slide intro-slide1 banner-radius"
-              style={{ backgroundColor: "#f8f8f8" }}
+              style={{ backgroundColor: '#f8f8f8' }}
             >
               <figure>
                 <LazyLoadImage
@@ -77,7 +76,7 @@ function IntroSection(props) {
               myCatalogues.map((catalogue) => (
                 <div
                   className="banner banner-fixed content-middle intro-slide intro-slide2 banner-radius"
-                  style={{ backgroundColor: "#e2e2e3" }}
+                  style={{ backgroundColor: '#e2e2e3' }}
                 >
                   <figure>
                     <LazyLoadImage src={catalogue.coverImage2} alt="Banner" />
@@ -88,7 +87,7 @@ function IntroSection(props) {
                     <Reveal keyframes={fadeInRightShorter} duration={1000}>
                       <ALink
                         href={{
-                          pathname: "/shop",
+                          pathname: '/shop',
                           query: { catalogueId: catalogue.id },
                         }}
                         className="btn btn-dark btn-contained btn-rounded"
@@ -144,7 +143,7 @@ function IntroSection(props) {
           <div className="intro-banner mb-4">
             <div
               className="banner banner-fixed content-middle banner-radius overlay-zoom"
-              style={{ backgroundColor: "#232323" }}
+              style={{ backgroundColor: '#232323' }}
             >
               <figure>
                 <LazyLoadImage
@@ -159,7 +158,7 @@ function IntroSection(props) {
           <div className="intro-banner mb-4">
             <div
               className="banner banner-fixed content-middle banner-radius overlay-zoom"
-              style={{ backgroundColor: "#eca5a9" }}
+              style={{ backgroundColor: '#eca5a9' }}
             >
               <figure>
                 <LazyLoadImage
