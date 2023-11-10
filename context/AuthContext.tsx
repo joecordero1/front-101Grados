@@ -1,13 +1,15 @@
-import { createContext, FC, ReactNode, useReducer, useEffect } from "react";
-import { useRouter } from "next/router";
+import { createContext, FC, ReactNode, useReducer, useEffect } from 'react';
+import { useRouter } from 'next/router';
 
-import { useProgram, useApi, useApiAuth } from "hooks";
-import { Participant } from "utils/types";
-import { parseCredentials } from "utils";
+import { useProgram, useApi, useApiAuth } from 'hooks';
+import { Participant } from 'utils/types';
+import { parseCredentials } from 'utils';
+import { useCart } from 'hooks';
 
 interface AuthState {
-  status: "idle" | "login";
-  error: "wrong-user-password" | any | null;
+  status: 'idle' | 'login';
+  loadingPoints: boolean;
+  error: 'wrong-user-password' | any | null;
   accessToken: string | null;
   participant: Participant;
   isLoggedIn: boolean;
@@ -16,7 +18,6 @@ interface AuthState {
 }
 
 interface AuthContextValue extends AuthState {
-  haveToUpdateHisInfo: boolean;
   logIn: (username: string, password: string, isGoogleLogin?: boolean) => void;
   logOut: () => void;
   loginWithToken: (token: string) => void;
@@ -28,23 +29,27 @@ interface AuthProviderProps {
 }
 
 type LoginAction = {
-  type: "login";
+  type: 'login';
   payload: {
     accessToken: string;
     participant: Participant;
   };
 };
 
+type LoadingPoints = {
+  type: 'loading-points';
+};
+
 type LogoutAction = {
-  type: "logout";
+  type: 'logout';
 };
 
 type WrongUserPasswordAction = {
-  type: "wrong-user-password";
+  type: 'wrong-user-password';
 };
 
 type UpdateAvailablePoints = {
-  type: "UPDATE_AVAILABLE_POINTS";
+  type: 'UPDATE_AVAILABLE_POINTS';
   payload: number;
 };
 
@@ -52,10 +57,12 @@ type Action =
   | LoginAction
   | LogoutAction
   | WrongUserPasswordAction
-  | UpdateAvailablePoints;
+  | UpdateAvailablePoints
+  | LoadingPoints;
 
 const initialState: AuthState = {
-  status: "idle",
+  status: 'idle',
+  loadingPoints: true,
   accessToken: null,
   participant: {} as Participant,
   error: null,
@@ -65,14 +72,14 @@ const initialState: AuthState = {
 };
 export const setSessionWithToken = (accessToken: string | null): void => {
   if (accessToken) {
-    localStorage.setItem("accessTokenLala4Store", accessToken);
+    localStorage.setItem('accessTokenLala4Store', accessToken);
   } else {
-    localStorage.removeItem("accessTokenLala4Store");
+    localStorage.removeItem('accessTokenLala4Store');
   }
 };
 const reducer = (state: AuthState, action: Action): AuthState => {
   switch (action.type) {
-    case "login":
+    case 'login':
       const { accessToken, participant } = action.payload;
       return {
         ...state,
@@ -84,12 +91,12 @@ const reducer = (state: AuthState, action: Action): AuthState => {
         isInitialised: true,
         isLoggedIn: true,
       };
-    case "wrong-user-password":
+    case 'wrong-user-password':
       return {
         ...state,
-        error: "wrong-user-password",
+        error: 'wrong-user-password',
       };
-    case "logout":
+    case 'logout':
       /* Router.push('/login'); */
       return {
         ...state,
@@ -98,10 +105,17 @@ const reducer = (state: AuthState, action: Action): AuthState => {
         isInitialised: true,
         isLoggedIn: false,
       };
-    case "UPDATE_AVAILABLE_POINTS":
+    case 'loading-points': {
+      return {
+        ...state,
+        loadingPoints: true,
+      };
+    }
+    case 'UPDATE_AVAILABLE_POINTS':
       return {
         ...state,
         availablePoints: action.payload,
+        loadingPoints: false,
       };
     default:
       return state;
@@ -114,7 +128,6 @@ export const AuthContext = createContext<AuthContextValue>({
   logIn: () => {},
   logOut: () => {},
   getAvailablePoints: () => {},
-  haveToUpdateHisInfo: true,
   loginWithToken: (token: string) => {},
 });
 
@@ -122,7 +135,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [auth, dispatch] = useReducer(reducer, initialState);
   const { program } = useProgram();
   const { get, post } = useApi();
-  const router = useRouter();
+  const { items } = useCart();
 
   const loginWithToken = (token: string | null) => {
     setSessionWithToken(token);
@@ -151,26 +164,17 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
       setSession();
     } catch (e) {
       console.error(e);
-      // dispatch({
-      //   type: 'wrong-user-password',
-      // });
-      // notification.open({
-      //   message: 'Tu usuario o contraseña son incorrectos.',
-      //   type: 'error',
-      //   description: 'Inténtalo de nuevo!',
-      //   duration: 3,
-      // });
     }
   };
 
   const logOut = () => {
-    localStorage.removeItem("accessTokenLala4Store");
+    localStorage.removeItem('accessTokenLala4Store');
     setSession();
   };
 
   const setSession = async () => {
     // First I retrieve the token saved on localStorage
-    const accessToken = localStorage.getItem("accessTokenLala4Store");
+    const accessToken = localStorage.getItem('accessTokenLala4Store');
 
     // If there is a token, I proceed to validate it
     if (accessToken) {
@@ -180,33 +184,37 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         // If all is OK, I send a Login action
         // and i need to verify if participant is active if is active i dispatch action else i send alert for not active
         dispatch({
-          type: "login",
+          type: 'login',
           payload: {
             accessToken,
             participant,
           },
         });
       } catch (e: any) {
-        console.error("setSession() ->", e);
+        console.error('setSession() ->', e);
         if (e.statusCode === 401) {
           dispatch({
-            type: "logout",
+            type: 'logout',
           });
         }
       }
     } else {
-      localStorage.setItem("cart", JSON.stringify([]));
+      localStorage.setItem('cart', JSON.stringify([]));
       dispatch({
-        type: "logout",
+        type: 'logout',
       });
     }
   };
 
   const getAvailablePoints = async () => {
+    dispatch({
+      type: 'loading-points',
+    });
     try {
+      console.info('Cargando puntos');
       const availablePoints = await get<number>(`/points/my-available-points`);
       dispatch({
-        type: "UPDATE_AVAILABLE_POINTS",
+        type: 'UPDATE_AVAILABLE_POINTS',
         payload: availablePoints,
       });
     } catch (e) {
@@ -216,51 +224,8 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
   useEffect(() => {
     if (auth.isLoggedIn) getAvailablePoints();
-  }, [auth.isLoggedIn]);
+  }, [auth.isLoggedIn, auth.participant, items]);
 
-  // const updatedAccountInfo = async (changes: UpdateProfileInfo) => {
-  //   try {
-  //     await axios.put(`/participants/${auth.participant.id}`, {
-  //       ...changes,
-  //       lastUpdateOfInfo: new Date(),
-  //     });
-  //     notification.open({
-  //       message: '¡Gracias!',
-  //       description: 'Has actualizado tus datos correctamente.',
-  //       type: 'success',
-  //       duration: 3,
-  //     });
-  //     setSession();
-  //   } catch (e) {
-  //     console.error(e);
-  //     notification.open({
-  //       message: 'Error',
-  //       description:
-  //         'Lo sentimos, algo inesperado ha ocurrido. Inténtalo más tarde',
-  //       type: 'error',
-  //       duration: 3,
-  //     });
-  //   }
-  // };
-
-  const verifyIfHasToUpdateHisInfo = (): boolean => {
-    // const { participant } = auth;
-    // if (participant.lastUpdateOfInfo) {
-    //   const now = new Date();
-    //   const daysOfDifference = differenceInCalendarDays(
-    //     now,
-    //     new Date(participant.lastUpdateOfInfo)
-    //   );
-    //   if (daysOfDifference > 31) {
-    //     return true;
-    //   } else {
-    //     return false;
-    //   }
-    // } else {
-    //   return true;
-    // }
-    return false;
-  };
   useEffect(() => {
     setSession();
   }, []);
@@ -268,8 +233,6 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     <AuthContext.Provider
       value={{
         ...auth,
-        // isLoggedIn: auth.accessToken ? true : false,
-        haveToUpdateHisInfo: verifyIfHasToUpdateHisInfo(),
         logIn,
         logOut,
         getAvailablePoints,

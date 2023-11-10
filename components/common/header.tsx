@@ -15,13 +15,8 @@ import useDishsItems from '~/hooks/useDishsItems';
 import { IngredientCodes } from '~/utils/types';
 
 export default function Header(props) {
-  const {
-    logOut,
-    availablePoints,
-    participant,
-    getAvailablePoints,
-    accessToken,
-  } = useAuth();
+  const { logOut, availablePoints, participant, accessToken, loadingPoints } =
+    useAuth();
   const { items, getMyDishsItems } = useDishsItems();
   const { program } = useProgram();
   const router = useRouter();
@@ -38,7 +33,7 @@ export default function Header(props) {
       else if (!headerBorderRemoveList.includes(router.pathname))
         document.querySelector('header').classList.add('header-border');
     }
-    getAvailablePoints();
+    // getAvailablePoints();
     getMyDishsItems();
   }, [router.pathname]);
 
@@ -229,7 +224,15 @@ export default function Header(props) {
             color: '#5d5e5e',
           }}
         >
-          Tienes {availablePoints && availablePoints} {program.coinName}
+          Tienes{' '}
+          {loadingPoints ? (
+            <>
+              <i className="fa fa-spinner fa-spin"></i>
+            </>
+          ) : (
+            availablePoints
+          )}{' '}
+          {program.coinName}
         </h5>
       </div>
     </header>
