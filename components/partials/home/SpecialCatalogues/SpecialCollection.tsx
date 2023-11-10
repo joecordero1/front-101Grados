@@ -1,11 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import ALink from "~/components/features/custom-link";
-import ProductNine from "~/components/features/product/product-nine";
+import ALink from '~/components/features/custom-link';
+import ProductNine from '~/components/features/product/product-nine';
 
-import { useItems, useAuth, useProgram } from "hooks";
-import useSpecialCatalogues from "~/hooks/useCatalogues";
-import { Catalogue } from "~/utils/types";
+import { useItems, useAuth, useProgram } from 'hooks';
+import { Catalogue } from '~/utils/types';
 
 interface SpecialCollectionProps {
   catalogue: Catalogue;
@@ -31,7 +30,7 @@ function SpecialCollection({ catalogue }: SpecialCollectionProps) {
         <h2 className="title title-line title-underline with-link">
           {catalogue.name}
           <ALink
-            href={{ pathname: "/shop", query: { catalogueId: catalogue.id } }}
+            href={{ pathname: '/shop', query: { catalogueId: catalogue.id } }}
             className="btn btn-dark btn-link font-weight-semi-bold text-capitalize btn-more"
           >
             Más Premios<i className="d-icon-arrow-right"></i>
@@ -44,7 +43,7 @@ function SpecialCollection({ catalogue }: SpecialCollectionProps) {
               <img
                 src={catalogue.coverImage}
                 alt="cover-image"
-                style={{ width: "auto", height: "auto" }}
+                style={{ width: 'auto', height: 'auto' }}
               />
             </div>
           </div>
@@ -52,7 +51,7 @@ function SpecialCollection({ catalogue }: SpecialCollectionProps) {
             ? [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
                 <div
                   className="product-loading-overlay"
-                  key={"electronic-" + item}
+                  key={'electronic-' + item}
                 ></div>
               ))
             : items.map((item, index) => (

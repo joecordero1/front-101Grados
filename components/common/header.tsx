@@ -1,28 +1,22 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
-import ALink from "~/components/features/custom-link";
+import ALink from '~/components/features/custom-link';
 
-import CartMenu from "~/components/common/partials/cart-menu";
-import MainMenu from "~/components/common/partials/main-menu";
-import SearchBox from "~/components/common/partials/search-box";
-import LoginModal from "~/components/features/modals/login-modal";
+import CartMenu from '~/components/common/partials/cart-menu';
+import MainMenu from '~/components/common/partials/main-menu';
+import SearchBox from '~/components/common/partials/search-box';
+import LoginModal from '~/components/features/modals/login-modal';
 
-import { headerBorderRemoveList } from "~/utils/data/menu";
-import { useAuth, useProgram, useLogs } from "hooks";
-import { LogType } from "~/utils/types/logType";
-import useDishsItems from "~/hooks/useDishsItems";
-import { IngredientCodes } from "~/utils/types";
-import { CircularProgress } from "@mui/material";
+import { headerBorderRemoveList } from '~/utils/data/menu';
+import { useAuth, useProgram, useLogs } from 'hooks';
+import { LogType } from '~/utils/types/logType';
+import useDishsItems from '~/hooks/useDishsItems';
+import { IngredientCodes } from '~/utils/types';
 
-export default function Header() {
-  const {
-    logOut,
-    participant,
-    accessToken,
-    availablePoints,
-    getAvailablePoints,
-  } = useAuth();
+export default function Header(props) {
+  const { logOut, availablePoints, participant, accessToken, loadingPoints } =
+    useAuth();
   const { items, getMyDishsItems } = useDishsItems();
   const { program } = useProgram();
 
@@ -30,23 +24,22 @@ export default function Header() {
   const { dispatchLog } = useLogs();
 
   useEffect(() => {
-    getAvailablePoints();
-    getMyDishsItems();
-    let header = document.querySelector("header");
-
+    let header = document.querySelector('header');
     if (header) {
       if (
         headerBorderRemoveList.includes(router.pathname) &&
-        header.classList.contains("header-border")
+        header.classList.contains('header-border')
       )
-        header.classList.remove("header-border");
+        header.classList.remove('header-border');
       else if (!headerBorderRemoveList.includes(router.pathname))
-        document.querySelector("header").classList.add("header-border");
+        document.querySelector('header').classList.add('header-border');
     }
+    // getAvailablePoints();
+    getMyDishsItems();
   }, [router.pathname]);
 
   const showMobileMenu = () => {
-    document.querySelector("body").classList.add("mmenu-active");
+    document.querySelector('body').classList.add('mmenu-active');
   };
 
   return (
@@ -96,7 +89,7 @@ export default function Header() {
                     className="text-primary d-inline-block"
                   >
                     Soporte:
-                  </ALink>{" "}
+                  </ALink>{' '}
                 </h4>
                 <p>
                   <ALink
@@ -124,7 +117,7 @@ export default function Header() {
                   // pathname.includes('/blog') && !pathname.includes('/elements')
                   //   ? 'active'
                   //   : ''
-                  ""
+                  ''
                 }`}
               >
                 {/* <ALink href={`/blog/classic`}>Blog</ALink> */}
@@ -134,7 +127,7 @@ export default function Header() {
                   </div>
                 </div>
 
-                <ul style={{ marginLeft: "-60px" }}>
+                <ul style={{ marginLeft: '-60px' }}>
                   {/* {mainMenu.blog.map((item, index) => ( */}
                   {/*  {program.id === 2 && (
                     <li>
@@ -181,7 +174,7 @@ export default function Header() {
                   )}
 
                   <li
-                    key={"blog"}
+                    key={'blog'}
                     // className={item.subPages ? 'submenu' : ''}
                   >
                     <ALink
@@ -215,7 +208,7 @@ export default function Header() {
       </div>
 
       <div
-        className={`header-bottom ${router.pathname === "/" ? "" : "pb-50"}`}
+        className={`header-bottom ${router.pathname === '/' ? '' : 'pb-50'}`}
       >
         <div className="container">{program.isStoreActive && <MainMenu />}</div>
       </div>
@@ -223,31 +216,30 @@ export default function Header() {
       <div className="welcome-message">
         <h6
           style={{
-            textAlign: "center",
-            margin: "0 auto",
-            color: "#5d5e5e",
+            textAlign: 'center',
+            margin: '0 auto',
+            color: '#5d5e5e',
           }}
         >
           ¡Hola {participant?.firstName}!
         </h6>
-        {availablePoints ? (
-          <h5
-            style={{
-              textAlign: "center",
-              margin: "0 auto",
-              color: "#5d5e5e",
-            }}
-          >
-            Tienes {availablePoints} {program.coinName}
-          </h5>
-        ) : (
-          <div
-            className="spinner-container"
-            style={{ display: "flex", justifyContent: "center", marginTop: 10 }}
-          >
-            <CircularProgress />
-          </div>
-        )}
+        <h5
+          style={{
+            textAlign: 'center',
+            margin: '0 auto',
+            color: '#5d5e5e',
+          }}
+        >
+          Tienes{' '}
+          {loadingPoints ? (
+            <>
+              <i className="fa fa-spinner fa-spin"></i>
+            </>
+          ) : (
+            availablePoints
+          )}{' '}
+          {program.coinName}
+        </h5>
       </div>
     </header>
   );

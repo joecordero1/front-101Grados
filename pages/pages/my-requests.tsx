@@ -1,5 +1,7 @@
-import React from "react";
-import { ParticipantRequests } from "../../components/partials/participant/requests/ParticipantRequests";
+import React from 'react';
+
+import { ParticipantRequests } from '../../components/partials/participant/requests/ParticipantRequests';
+import { withAuth } from 'components/AuthGuard';
 
 const MyRequests = () => {
   return (
@@ -9,4 +11,4 @@ const MyRequests = () => {
   );
 };
 
-export default MyRequests;
+export default withAuth(MyRequests);

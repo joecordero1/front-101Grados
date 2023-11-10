@@ -9,3 +9,4 @@ export * from './useGeneral';
 export * from './useCart';
 export * from './useItem';
 export * from './useLogs';
+export * from './useCatalogues';

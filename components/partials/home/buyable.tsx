@@ -7,7 +7,7 @@ import { useItems, useAuth, useProgram, useLogs } from 'hooks';
 import { LogType } from '~/utils/types/logType';
 
 function ElectronicCollection() {
-  const { availablePoints } = useAuth();
+  const { availablePoints, loadingPoints } = useAuth();
   const { coinName } = useProgram();
   const { items, loading } = useItems({
     metaProps: {
@@ -57,7 +57,14 @@ function ElectronicCollection() {
                 <div className="banner-price-info text-white font-weight-semi-bold ls-m">
                   Hasta{' '}
                   <strong className="text-secondary">
-                    {availablePoints} {coinName}
+                    {loadingPoints ? (
+                      <>
+                        <i className="fa fa-spinner fa-spin"></i>
+                      </>
+                    ) : (
+                      availablePoints
+                    )}{' '}
+                    {coinName}
                   </strong>
                 </div>
                 <ALink

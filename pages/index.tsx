@@ -1,60 +1,32 @@
-import React, { useEffect } from "react";
-import { Helmet } from "react-helmet";
+import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 
 // Import Apollo Server and Query
-import NewsletterModal from "~/components/features/modals/newsletter-modal";
-import IntroSection from "~/components/partials/home/intro-section";
-import ServiceBox from "~/components/partials/home/service-section";
-import DealCollection from "~/components/partials/home/deal-collection";
-import CategorySection from "~/components/partials/home/category-section";
-import BannerOneSection from "~/components/partials/home/banner-one-section";
-import VendorSection from "~/components/partials/home/vendor-section";
-import Buyable from "~/components/partials/home/buyable";
-import BannerTwoSection from "~/components/partials/home/banner-two-section";
-import BestCollection from "~/components/partials/home/best-collection";
+import NewsletterModal from '~/components/features/modals/newsletter-modal';
+import IntroSection from '~/components/partials/home/intro-section';
+import ServiceBox from '~/components/partials/home/service-section';
+import DealCollection from '~/components/partials/home/deal-collection';
+import CategorySection from '~/components/partials/home/category-section';
+import BannerOneSection from '~/components/partials/home/banner-one-section';
+import VendorSection from '~/components/partials/home/vendor-section';
+import Buyable from '~/components/partials/home/buyable';
+import BannerTwoSection from '~/components/partials/home/banner-two-section';
+import BestCollection from '~/components/partials/home/best-collection';
 
-import { useAuth, useProgram } from "hooks";
-import MultipleCategories from "components/partials/home/multiple-categories";
-import { useRouter } from "next/router";
-
-import SpecialCatalogues from "~/components/partials/home/SpecialCatalogues";
-import SpecialBannerFirst from "~/components/partials/home/SpecialCatalogues/SpecialBannerFirst";
-import SpecialBannerSecond from "~/components/partials/home/SpecialCatalogues/SpecialBannerSecond";
-import useSpecialCatalogues from "~/hooks/useCatalogues";
-import { InfiniteScrollComponent } from "components/partials/shop/product-list/product-list-two";
+import { useAuth, useProgram, useSpecialCatalogues } from 'hooks';
+import MultipleCategories from 'components/partials/home/multiple-categories';
+import SpecialCatalogues from '~/components/partials/home/SpecialCatalogues';
+import SpecialBannerFirst from '~/components/partials/home/SpecialCatalogues/SpecialBannerFirst';
+import SpecialBannerSecond from '~/components/partials/home/SpecialCatalogues/SpecialBannerSecond';
+import { InfiniteScrollComponent } from 'components/partials/shop/product-list/product-list-two';
+import { withAuth } from 'components/AuthGuard';
 
 function HomePage() {
   const { availablePoints, loginWithToken, isLoggedIn, getAvailablePoints } =
     useAuth();
   const { myCatalogues } = useSpecialCatalogues();
   const { program } = useProgram();
-  const router = useRouter();
 
-  /* if (router.isReady && router.query.token !== undefined) {
-    const { token } = router.query;
-    loginWithToken(token.toLocaleString());
-  } */
-
-  /*   useEffect(() => {
-    if (program.id === 5 && isLoggedIn) {
-      const script = document.createElement("script");
-      script.type = "text/javascript";
-      script.async = true;
-      script.id = "smcx-sdk";
-      script.src =
-        "https://widget.surveymonkey.com/collect/website/js/tRaiETqnLgj758hTBazgdyTgR1EBWkJ2U6IMXw0lOaZw2ZnSQ4VRvkKm6DXt8yVI.js";
-
-      document.head.appendChild(script);
-
-      return () => {
-        // Cleanup: Remove the script when the component unmounts
-        document.head.removeChild(script);
-      };
-    }
-  }, []); */
-  useEffect(() => {
-    getAvailablePoints();
-  }, []);
   return (
     <div className="main home">
       <Helmet>
@@ -103,7 +75,7 @@ function HomePage() {
       </div>
 
       {!program.isStoreActive && (
-        <h4 style={{ textAlign: "center", marginBottom: 60 }}>
+        <h4 style={{ textAlign: 'center', marginBottom: 60 }}>
           La tienda se encuentra inhabilitada temporalmente <br />
           Vuelve a ingresar más tarde
         </h4>
@@ -113,4 +85,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default withAuth(HomePage);

@@ -1,10 +1,8 @@
-import { connect } from "react-redux";
-import Helmet from "react-helmet";
+import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 
-import ALink from "~/components/features/custom-link";
-
-import { toDecimal, getTotalPrice } from "~/utils";
-import { useCart } from "~/hooks";
+import ALink from '~/components/features/custom-link';
+import { useCart } from '~/hooks';
 
 function Order(props) {
   const { cartList } = props;
@@ -68,7 +66,7 @@ function Order(props) {
                 </svg>
               </div>
 
-              {status !== "error" ? (
+              {status !== 'error' ? (
                 <div className="icon-box-content text-left">
                   <div className="message">
                     <h5 className="icon-box-title font-weight-bold lh-1 mb-1">
