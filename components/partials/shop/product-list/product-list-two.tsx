@@ -1,18 +1,18 @@
-import { useEffect, useState, useLayoutEffect, use } from 'react';
-import { useRouter } from 'next/router';
-import { useLazyQuery } from '@apollo/react-hooks';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import { useEffect, useState, useLayoutEffect, use } from "react";
+import { useRouter } from "next/router";
+import { useLazyQuery } from "@apollo/react-hooks";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-import withApollo from '~/server/apollo';
-import { GET_PRODUCTS } from '~/server/queries';
-import ToolBox from '~/components/partials/shop/toolbox';
-import ProductTwo from '~/components/features/product/product-two';
-import ProductEight from '~/components/features/product/product-eight';
+import withApollo from "~/server/apollo";
+import { GET_PRODUCTS } from "~/server/queries";
+import ToolBox from "~/components/partials/shop/toolbox";
+import ProductTwo from "~/components/features/product/product-two";
+import ProductEight from "~/components/features/product/product-eight";
 
-import { useItems } from 'hooks';
+import { useItems } from "hooks";
 
 export function InfiniteScrollComponent(props) {
-  const { items, meta, handleMetaChange, loading } = useItems({
+  const { items, meta, handlePageChange, loading } = useItems({
     filterOptions: {
       random: true,
     },
@@ -24,10 +24,10 @@ export function InfiniteScrollComponent(props) {
   const router = useRouter();
   const query = router.query;
   const [localProducts, setProducts] = useState(items || []);
-  const gridType = query.type ? query.type : 'grid';
+  const gridType = query.type ? query.type : "grid";
 
   const loadMore = () => {
-    handleMetaChange({
+    handlePageChange({
       page: meta.page + 1,
       take: 50,
     });
@@ -47,17 +47,17 @@ export function InfiniteScrollComponent(props) {
       <InfiniteScroll
         dataLength={localProducts ? localProducts.length : 0}
         next={productLoadHandler}
-        style={{ overflow: 'visible' }}
+        style={{ overflow: "visible" }}
         hasMore={localProducts.length >= meta.itemCount ? false : true}
         loader={<div className="d-loading"></div>}
       >
         {loading ? (
-          gridType === 'grid' ? (
+          gridType === "grid" ? (
             <div className={`row product-wrapper cols-2 cols-sm-3`}>
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
                 <div
                   className="product-loading-overlay"
-                  key={'popup-skel-' + item}
+                  key={"popup-skel-" + item}
                 ></div>
               ))}
             </div>
@@ -66,22 +66,22 @@ export function InfiniteScrollComponent(props) {
               {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((item) => (
                 <div
                   className="skel-pro skel-pro-list mb-4"
-                  key={'list-skel-' + item}
+                  key={"list-skel-" + item}
                 ></div>
               ))}
             </div>
           )
         ) : (
-          ''
+          ""
         )}
 
-        {gridType === 'grid' ? (
+        {gridType === "grid" ? (
           <div className={`row product-wrapper cols-2 cols-sm-4 cols-lg-8`}>
             {localProducts.length > 0 &&
               localProducts.map((item) => (
                 <div
                   className="product-wrap"
-                  key={'shop-' + item.id + Math.random()}
+                  key={"shop-" + item.id + Math.random()}
                   //   key={'shop-' + item.id}
                 >
                   <ProductTwo item={item} adClass="" />
@@ -105,13 +105,13 @@ export function InfiniteScrollComponent(props) {
             No products were found matching your selection.
           </p>
         ) : (
-          ''
+          ""
         )}
       </InfiniteScroll>
     </>
   );
 }
 
-export default withApollo({ ssr: typeof window === 'undefined' })(
+export default withApollo({ ssr: typeof window === "undefined" })(
   InfiniteScrollComponent
 );

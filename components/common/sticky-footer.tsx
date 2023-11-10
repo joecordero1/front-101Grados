@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import ALink from '~/components/features/custom-link';
 
@@ -71,20 +71,22 @@ export default function StickyFooter() {
   };
 
   return (
-    <div className="sticky-footer sticky-content fix-bottom fixed">
-      <ALink href="/" className="sticky-link active">
-        <i className="d-icon-home"></i>
-        <span>Inicio</span>
-      </ALink>
+    <div>
+      <div className="sticky-footer sticky-content fix-bottom fixed">
+        <ALink href="/" className="sticky-link active">
+          <i className="d-icon-home"></i>
+          <span>Inicio</span>
+        </ALink>
 
-      <ALink href="/shop" className="sticky-link">
-        <i className="d-icon-shoppingbag"></i>
-        <span>Premios</span>
-      </ALink>
+        <ALink href="/shop" className="sticky-link">
+          <i className="d-icon-shoppingbag"></i>
+          <span>Premios</span>
+        </ALink>
 
-      <FooterSearchBox />
+        <FooterSearchBox />
 
-      <FooterAccountBox />
+        <FooterAccountBox />
+      </div>
     </div>
   );
 }

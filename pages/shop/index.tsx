@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { useRouter } from 'next/router';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -10,9 +10,7 @@ import ProductListOne from '~/components/partials/shop/product-list/product-list
 import filterData from '~/utils/data/shop';
 
 import { useCategories } from 'hooks/useCategories';
-import { useItems } from '../../reducers/useItems';
-import { useLogs } from 'hooks';
-import { useAuth } from '~/hooks';
+import { useItems, useLogs, useAuth } from 'hooks';
 import { LogType } from '~/utils/types/logType';
 import { withAuth } from 'components/AuthGuard';
 
@@ -25,11 +23,12 @@ function ShopHorizontalFilter() {
     items,
     loading,
     handleFiltersChange,
-    cleanFilters,
+    /* cleanFilters, */
     meta,
     handlePageChange,
-  } = useItems();
+  } = useItems({ useQueryParams: true, metaProps: { page: 1, take: 50 } });
   const { dispatchLog } = useLogs();
+
   const { participant } = useAuth();
   const router = useRouter();
   const query = router.query;
@@ -127,7 +126,9 @@ function ShopHorizontalFilter() {
                     },
                   }}
                   scroll={false}
-                  onClick={() => handleFiltersChange('categoriesIds', null)}
+                  onClick={() =>
+                    handleFiltersChange({ categoriesIds: [] }, true)
+                  }
                 >
                   <figure className="categroy-media">
                     <i className={'fas fa-award'}></i>
@@ -168,12 +169,7 @@ function ShopHorizontalFilter() {
             ))}
           </div>
 
-          <ToolBox
-            type="horizontal"
-            handleFiltersChange={handleFiltersChange}
-            cleanFilters={cleanFilters}
-          />
-
+          <ToolBox type="horizontal" />
           <div className="select-items">
             {filterData.sizes.map((item, index) =>
               containsAttrInUrl('sizes', item.slug) ? (

@@ -2,6 +2,7 @@ import { useReducer, useEffect, useCallback } from "react";
 import { useApiAuth } from "~/hooks";
 import { useAuth } from "../../../../hooks/useAuth";
 import { Page, Request } from "../../../../utils/types";
+import queryString from "query-string";
 export type RetrieveRequestsParticipant = {
   type: "retrive-requests-participant";
   payload: {
@@ -38,9 +39,13 @@ export const useRequests = (): ReducerValue => {
   const api = useApiAuth();
   const [state, dispatch] = useReducer(reducer, initialState);
   const { participant } = useAuth();
+  const params = {
+    order: "DESC",
+  };
+  const query = queryString.stringify(params);
   const getParticipantRequests = useCallback(async () => {
     try {
-      const data = (await api.get<Request[]>("/requests/mine")).reverse();
+      const data = await api.get<Request[]>(`/requests/mine?${query}`);
       dispatch({
         type: "retrive-requests-participant",
         payload: {

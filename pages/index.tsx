@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
-import { useRouter } from 'next/router';
 
 // Import Apollo Server and Query
 import NewsletterModal from '~/components/features/modals/newsletter-modal';
@@ -23,7 +22,8 @@ import { InfiniteScrollComponent } from 'components/partials/shop/product-list/p
 import { withAuth } from 'components/AuthGuard';
 
 function HomePage() {
-  const { availablePoints, loginWithToken, isLoggedIn } = useAuth();
+  const { availablePoints, loginWithToken, isLoggedIn, getAvailablePoints } =
+    useAuth();
   const { myCatalogues } = useSpecialCatalogues();
   const { program } = useProgram();
 

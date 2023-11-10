@@ -1,12 +1,12 @@
-import React, { FC } from 'react';
+import React, { FC } from "react";
 
-import ALink from '~/components/features/custom-link';
-import ProductSm from '~/components/features/product/product-sm';
-import ProductDeal from '~/components/partials/home/product-deal';
+import ALink from "~/components/features/custom-link";
+import ProductSm from "~/components/features/product/product-sm";
+import ProductDeal from "~/components/partials/home/product-deal";
 
-import { useItems, useLogs } from 'hooks';
-import { Category } from '~/utils/types';
-import { LogType } from '~/utils/types/logType';
+import { useItems, useLogs } from "hooks";
+import { Category } from "~/utils/types";
+import { LogType } from "~/utils/types/logType";
 
 type Props = {
   category: Category;
@@ -29,7 +29,10 @@ const CategoryCollection: FC<Props> = (props) => {
         <h2 className="title title-line title-underline with-link">
           {props.category.name}
           <ALink
-            href="/shop"
+            href={{
+              pathname: "/shop",
+              query: { category: props.category.id },
+            }}
             className="btn btn-dark btn-link text-capitalize font-weight-semi-bold btn-more"
             onClick={() => {
               dispatchLog(LogType.CLICK_MORE_FROM_CATEGORY, {
@@ -62,7 +65,7 @@ const CategoryCollection: FC<Props> = (props) => {
             ? [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
                 <div
                   className="product-loading-overlay"
-                  key={'deal-skel-' + item}
+                  key={"deal-skel-" + item}
                 ></div>
               ))
             : items &&

@@ -21,7 +21,7 @@ export const useSpecialCatalogues = () => {
 
   useEffect(() => {
     getMyCatalogues();
-  }, [isLoggedIn]);
+  }, []);
 
   return {
     myCatalogues,

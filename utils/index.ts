@@ -282,7 +282,7 @@ export function scrollTopHandler(isCustom = true, speed = 15) {
           .getBoundingClientRect().top +
         window.pageYOffset -
         // @ts-ignore
-        document.querySelector('.sticky-header').offsetHeight +
+        document.querySelector('.sticky-header')?.offsetHeight +
         2;
     }
   } else {

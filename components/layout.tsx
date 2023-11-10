@@ -25,8 +25,13 @@ import { useProgram, useAuth } from 'hooks';
 
 function Layout({ children, closeQuickview }) {
   const { program } = useProgram();
-  const { isLoggedIn, participant, loginWithToken, getAvailablePoints } =
-    useAuth();
+  const {
+    isLoggedIn,
+    participant,
+    loginWithToken,
+    getAvailablePoints,
+    availablePoints,
+  } = useAuth();
   const router = useRouter();
 
   useLayoutEffect(() => {
@@ -101,44 +106,22 @@ function Layout({ children, closeQuickview }) {
             justifyContent: 'center',
             alignItems: 'center',
           }}
-        >
-          <div className="lds-facebook">
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-        </div>
+        ></div>
       </>
     );
   }
 
   return (
-    <>
+    <div>
       <div className="page-wrapper">
         {isLoggedIn && <Header />}
 
         {children}
 
         {isLoggedIn && <Footer />}
-        {isLoggedIn && <StickyFooter />}
+
+        {isLoggedIn ? <StickyFooter /> : <div></div>}
       </div>
-
-      {/* {isLoggedIn && (
-        <>
-          <ALink
-            id="scroll-top"
-            href="#"
-            title="Top"
-            role="button"
-            className="scroll-top"
-            onClick={() => scrollTopHandler(false)}
-          >
-            <i className="d-icon-arrow-up"></i>
-          </ALink>
-
-          <MobileMenu />
-        </>
-      )} */}
 
       <ToastContainer
         autoClose={3000}
@@ -155,7 +138,7 @@ function Layout({ children, closeQuickview }) {
       <Quickview />
 
       <VideoModal />
-    </>
+    </div>
   );
 }
 

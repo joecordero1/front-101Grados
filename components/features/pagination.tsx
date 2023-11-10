@@ -1,13 +1,13 @@
-import React, { FC } from 'react';
-import { useRouter } from 'next/router';
+import React, { FC } from "react";
+import { useRouter } from "next/router";
 
-import ALink from '~/components/features/custom-link';
+import ALink from "~/components/features/custom-link";
 
-import { PaginationMetaDto } from '../../utils/types/common';
+import { PaginationMetaDto } from "../../utils/types/common";
 
 type Props = {
   meta: PaginationMetaDto;
-  handlePageChange: (page: number) => void;
+  handlePageChange: (metaProps: PaginationMetaDto) => void;
 };
 
 const Pagination: FC<Props> = (props) => {
@@ -27,21 +27,21 @@ const Pagination: FC<Props> = (props) => {
       for (let i = 1; i <= 5; i++) {
         pages.push(i);
       }
-      pages.push('...');
+      pages.push("...");
       pages.push(meta.pageCount);
     } else if (currentPage >= meta.pageCount - 3) {
       pages.push(1);
-      pages.push('...');
+      pages.push("...");
       for (let i = meta.pageCount - 4; i <= meta.pageCount; i++) {
         pages.push(i);
       }
     } else {
       pages.push(1);
-      pages.push('...');
+      pages.push("...");
       for (let i = currentPage - 1; i <= currentPage + 1; i++) {
         pages.push(i);
       }
-      pages.push('...');
+      pages.push("...");
       pages.push(meta.pageCount);
     }
   }
@@ -50,7 +50,7 @@ const Pagination: FC<Props> = (props) => {
     <>
       {meta.pageCount > 1 && (
         <ul className="pagination">
-          <li className={`page-item ${meta.page === 1 ? 'disabled' : ''}`}>
+          <li className={`page-item ${meta.page === 1 ? "disabled" : ""}`}>
             <ALink
               className="page-link page-link-prev"
               href={
@@ -59,7 +59,7 @@ const Pagination: FC<Props> = (props) => {
                       pathname: router.pathname,
                       query: { ...query, page: meta.page - 1 },
                     }
-                  : '#'
+                  : "#"
               }
               scroll={false}
             >
@@ -69,21 +69,21 @@ const Pagination: FC<Props> = (props) => {
 
           {pages.map((page, index) => (
             <li
-              className={`page-item ${page === currentPage ? 'active' : ''}`}
+              className={`page-item ${page === currentPage ? "active" : ""}`}
               key={index}
             >
               <ALink
                 className="page-link"
                 href={
                   page === currentPage
-                    ? '#'
+                    ? "#"
                     : {
                         pathname: router.pathname,
                         query: { ...query, page },
                       }
                 }
                 scroll={false}
-                onClick={() => handlePageChange(page)}
+                onClick={() => handlePageChange({ page })}
               >
                 {page}
                 {page === currentPage && (
@@ -176,7 +176,7 @@ const Pagination: FC<Props> = (props) => {
 
           <li
             className={`page-item ${
-              meta.page > meta.pageCount - 1 ? 'disabled' : ''
+              meta.page > meta.pageCount - 1 ? "disabled" : ""
             }`}
           >
             <ALink
@@ -187,7 +187,7 @@ const Pagination: FC<Props> = (props) => {
                       pathname: router.pathname,
                       query: { ...query, page: meta.page + 1 },
                     }
-                  : '#'
+                  : "#"
               }
               scroll={false}
             >

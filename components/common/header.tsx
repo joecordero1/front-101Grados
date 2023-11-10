@@ -19,6 +19,7 @@ export default function Header(props) {
     useAuth();
   const { items, getMyDishsItems } = useDishsItems();
   const { program } = useProgram();
+
   const router = useRouter();
   const { dispatchLog } = useLogs();
 
@@ -154,6 +155,11 @@ export default function Header(props) {
                       }}
                     >
                       Mi estado de cuenta
+                    </ALink>
+                  </li>
+                  <li>
+                    <ALink href="/pages/change-my-password">
+                      Cambiar Mi Contraseña
                     </ALink>
                   </li>
                   {items.filter(
