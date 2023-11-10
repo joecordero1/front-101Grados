@@ -113,7 +113,7 @@ function Layout({ children, closeQuickview }) {
   return (
     <div>
       <div className="page-wrapper">
-        {isLoggedIn && <Header availablePoints={availablePoints} />}
+        {isLoggedIn && <Header />}
 
         {children}
 
