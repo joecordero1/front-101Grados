@@ -204,13 +204,13 @@ export const useItems = (): ReducerValue => {
       };
 
       const query = queryString.stringify(params);
-
       const response = await get<Page<CatalogueItem>>(
         "/catalogue-items/store?" + query
       );
 
       const items = response.data;
       const meta = response.meta;
+
       dispatch({
         type: "GET_VEHICLES",
         payload: {
@@ -319,7 +319,7 @@ export const useItems = (): ReducerValue => {
 
   useEffect(() => {
     getItems();
-  }, [getItems, state.meta.page, state.filterOptions]);
+  }, [state.meta.page, state.filterOptions, state.meta.take]);
 
   useEffect(() => {
     localHandleFiltersChange();

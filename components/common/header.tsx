@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import ALink from "~/components/features/custom-link";
@@ -15,21 +15,25 @@ import useDishsItems from "~/hooks/useDishsItems";
 import { IngredientCodes } from "~/utils/types";
 import { CircularProgress } from "@mui/material";
 
-export default function Header(props) {
+export default function Header() {
   const {
     logOut,
-    availablePoints,
     participant,
-    getAvailablePoints,
     accessToken,
+    availablePoints,
+    getAvailablePoints,
   } = useAuth();
   const { items, getMyDishsItems } = useDishsItems();
   const { program } = useProgram();
+
   const router = useRouter();
   const { dispatchLog } = useLogs();
 
   useEffect(() => {
+    getAvailablePoints();
+    getMyDishsItems();
     let header = document.querySelector("header");
+
     if (header) {
       if (
         headerBorderRemoveList.includes(router.pathname) &&
@@ -39,8 +43,6 @@ export default function Header(props) {
       else if (!headerBorderRemoveList.includes(router.pathname))
         document.querySelector("header").classList.add("header-border");
     }
-    getAvailablePoints();
-    getMyDishsItems();
   }, [router.pathname]);
 
   const showMobileMenu = () => {
@@ -160,6 +162,11 @@ export default function Header(props) {
                       }}
                     >
                       Mi estado de cuenta
+                    </ALink>
+                  </li>
+                  <li>
+                    <ALink href="/pages/change-my-password">
+                      Cambiar Mi Contraseña
                     </ALink>
                   </li>
                   {items.filter(

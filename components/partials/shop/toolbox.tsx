@@ -7,13 +7,11 @@ import { FilterOptionsToString } from "../../../reducers/useItems";
 import useSpecialCatalogues from "~/hooks/useCatalogues";
 
 type Props = {
-  handleFiltersChange: (field: FilterOptionsToString, value: any) => void;
-  cleanFilters: () => void;
   type?: string;
 };
 
 const ToolBox: FC<Props> = (props) => {
-  const { type = "left", handleFiltersChange, cleanFilters } = props;
+  const { type = "left" } = props;
   const router = useRouter();
   const query = router.query;
   const { myCatalogues } = useSpecialCatalogues();
@@ -204,11 +202,11 @@ const ToolBox: FC<Props> = (props) => {
           <select
             name="orderby"
             className="form-control"
-            defaultValue={query.orderPoints ? query.orderPoints : "DESC"}
+            value={query.orderPoints ? query.orderPoints : "ASC"}
             onChange={(e) => onChangeAttri(e, "orderPoints")}
           >
-            <option value="DESC">Más caros primero</option>
             <option value="ASC">Más baratos primero</option>
+            <option value="DESC">Más caros primero</option>
           </select>
         </div>
       </div>
