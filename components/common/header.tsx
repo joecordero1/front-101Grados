@@ -13,6 +13,7 @@ import { useAuth, useProgram, useLogs } from "hooks";
 import { LogType } from "~/utils/types/logType";
 import useDishsItems from "~/hooks/useDishsItems";
 import { IngredientCodes } from "~/utils/types";
+import { CircularProgress } from "@mui/material";
 
 export default function Header(props) {
   const {
@@ -222,15 +223,24 @@ export default function Header(props) {
         >
           ¡Hola {participant?.firstName}!
         </h6>
-        <h5
-          style={{
-            textAlign: "center",
-            margin: "0 auto",
-            color: "#5d5e5e",
-          }}
-        >
-          Tienes {availablePoints && availablePoints} {program.coinName}
-        </h5>
+        {availablePoints ? (
+          <h5
+            style={{
+              textAlign: "center",
+              margin: "0 auto",
+              color: "#5d5e5e",
+            }}
+          >
+            Tienes {availablePoints} {program.coinName}
+          </h5>
+        ) : (
+          <div
+            className="spinner-container"
+            style={{ display: "flex", justifyContent: "center", marginTop: 10 }}
+          >
+            <CircularProgress />
+          </div>
+        )}
       </div>
     </header>
   );
