@@ -231,7 +231,6 @@ export default function Header(props) {
         >
           Tienes {availablePoints && availablePoints} {program.coinName}
         </h5>
-        <button onClick={logOut}>Salir</button>
       </div>
     </header>
   );
