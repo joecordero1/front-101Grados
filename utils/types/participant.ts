@@ -7,6 +7,7 @@ export interface Participant {
   lastName: string;
   fullName: string;
   email: string;
+  mobile: string;
   document: string;
   isActive: boolean;
 }

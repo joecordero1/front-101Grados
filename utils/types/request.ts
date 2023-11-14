@@ -1,22 +1,22 @@
-import { Address } from "./address";
-import { Award, AwardVariant } from "./award";
-import { Participant } from "./participant";
+import { Address } from './address';
+import { Award, AwardVariant } from './award';
+import { Participant } from './participant';
 
 export enum RequestTypes {
-  PARTICIPANT = "PARTICIPANT",
-  PERSONAL_SHOPPER = "PERSONAL_SHOPPER",
+  PARTICIPANT = 'PARTICIPANT',
+  PERSONAL_SHOPPER = 'PERSONAL_SHOPPER',
 }
 
 export enum StatusTypes {
-  REQUESTED = "REQUESTED",
-  APPROVED = "APPROVED",
-  ORDERRED = "ORDERRED",
-  NEWS = "NEWS",
-  DELIVERED = "DELIVERED",
-  WAREHOUSE = "WAREHOUSE",
-  DISPATCHED = "DISPATCHED",
-  SPECIALS = "SPECIALS",
-  CANCELED = "CANCELED",
+  REQUESTED = 'REQUESTED',
+  APPROVED = 'APPROVED',
+  ORDERRED = 'ORDERRED',
+  NEWS = 'NEWS',
+  DELIVERED = 'DELIVERED',
+  WAREHOUSE = 'WAREHOUSE',
+  DISPATCHED = 'DISPATCHED',
+  SPECIALS = 'SPECIALS',
+  CANCELED = 'CANCELED',
 }
 
 export interface CreateRequestDto {
@@ -37,7 +37,7 @@ export interface Request {
   usedCost: number;
   margin: number;
   points: number;
-  status: string;
+  status: StatusTypes;
   requestedAt: string;
   approvedAt: null;
   downloadedAt: null;

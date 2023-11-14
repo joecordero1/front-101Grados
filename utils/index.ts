@@ -1,3 +1,5 @@
+import { formatDistance as formatDistanceLibrary } from 'date-fns';
+import { es } from 'date-fns/locale';
 /**
  * utils to parse options string to object
  * @param {string} options
@@ -380,4 +382,17 @@ export const getBusinessDatesCount = (startDate: any, endDate: any) => {
     curDate.setDate(curDate.getDate() + 1);
   }
   return count;
+};
+
+export const formatDistance = (date: string | Date): string => {
+  return capitalizeFirstChar(
+    formatDistanceLibrary(new Date(date), new Date(), {
+      addSuffix: true,
+      locale: es,
+    })
+  );
+};
+
+export const capitalizeFirstChar = (str: string): string => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 };

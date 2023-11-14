@@ -5,12 +5,16 @@ import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
 import ALink from '~/components/features/custom-link';
 
 import { withAuth } from 'components/AuthGuard';
+import { useAuth } from 'hooks';
+import { AccountDetails, Requests, Statement } from 'components/account';
 
 function Account() {
+  const { participant, logOut } = useAuth();
+
   return (
     <main className="main account">
       <Helmet>
-        <title>Tienda | Account</title>
+        <title>Tienda | Cuenta</title>
       </Helmet>
 
       <h1 className="d-none">Tienda - Account</h1>
@@ -23,14 +27,14 @@ function Account() {
                 <i className="d-icon-home"></i>
               </ALink>
             </li>
-            <li>Account</li>
+            <li>Cuenta</li>
           </ul>
         </div>
       </nav>
 
       <div className="page-content mt-4 mb-10 pb-6">
         <div className="container">
-          <h2 className="title title-center mb-10">My Account</h2>
+          <h2 className="title title-center mb-10">Mi Cuenta</h2>
 
           <Tabs
             selectedTabClassName="show"
@@ -43,50 +47,52 @@ function Account() {
               role="tablist"
             >
               <Tab className="nav-item">
-                <a className="nav-link">Dashboard</a>
+                <a className="nav-link">Panel</a>
               </Tab>
               <Tab className="nav-item">
-                <a className="nav-link">Orders</a>
+                <a className="nav-link">Detalles de cuenta</a>
               </Tab>
               <Tab className="nav-item">
-                <a className="nav-link">Downloads</a>
+                <a className="nav-link">Solicitudes</a>
               </Tab>
               <Tab className="nav-item">
-                <a className="nav-link">Address</a>
+                <a className="nav-link">Estado de Cuenta</a>
               </Tab>
               <Tab className="nav-item">
-                <a className="nav-link">Account details</a>
-              </Tab>
-              <Tab className="nav-item">
-                <ALink className="nav-link" href="/">
-                  Logout
+                <ALink className="nav-link" href="#" onClick={logOut}>
+                  Salir
                 </ALink>
               </Tab>
             </TabList>
+
             <div className="tab-content col-lg-9 col-md-8">
               <TabPanel className="tab-pane dashboard">
                 <p className="mb-0">
-                  Hello <span>User</span> (not <span>User</span>?{' '}
-                  <ALink href="/" className="text-primary">
-                    Log out
+                  Hola! <span>{participant.fullName}</span> (no eres{' '}
+                  <span>{participant.firstName}</span>?{' '}
+                  <ALink href="#" className="text-primary">
+                    Salir
                   </ALink>
                   )
                 </p>
                 <p className="mb-8">
-                  From your account dashboard you can view your{' '}
-                  <ALink href="#" className="link-to-tab text-primary">
-                    recent orders
+                  Desde el panel de tu cuenta podrás ver{' '}
+                  <ALink
+                    href="/pages/my-requests"
+                    className="link-to-tab text-primary"
+                  >
+                    tus solicitudes
                   </ALink>
-                  , manage your shipping and billing addresses,
-                  <br />
-                  and edit your password and account details.
+                  , administrar tus direcciones de envío,
+                  <br />y editar tu contraseña y los detalles de tu cuenta.
                 </p>
                 <ALink href="/shop" className="btn btn-dark btn-rounded">
-                  Go To Shop<i className="d-icon-arrow-right"></i>
+                  Ir a la tienda<i className="d-icon-arrow-right"></i>
                 </ALink>
               </TabPanel>
               <TabPanel className="tab-pane">
-                <table className="order-table">
+                <AccountDetails />
+                {/* <table className="order-table">
                   <thead>
                     <tr>
                       <th className="pl-2">Order</th>
@@ -230,19 +236,21 @@ function Account() {
                       </td>
                     </tr>
                   </tbody>
-                </table>
+                </table> */}
               </TabPanel>
               <TabPanel className="tab-pane downloads">
-                <p className="mb-4 text-body">No downloads available yet.</p>
+                {/* <p className="mb-4 text-body">No downloads available yet.</p>
                 <ALink
                   href="/shop"
                   className="btn btn-primary btn-link btn-underline"
                 >
                   Browser Products<i className="d-icon-arrow-right"></i>
-                </ALink>
+                </ALink> */}
+                <Requests />
               </TabPanel>
               <TabPanel className="tab-pane">
-                <p className="mb-2">
+                <Statement />
+                {/* <p className="mb-2">
                   The following addresses will be used on the checkout page by
                   default.
                 </p>
@@ -287,7 +295,7 @@ function Account() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </TabPanel>
               <TabPanel className="tab-pane">
                 <form action="#" className="form">

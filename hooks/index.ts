@@ -10,3 +10,5 @@ export * from './useCart';
 export * from './useItem';
 export * from './useLogs';
 export * from './useCatalogues';
+export * from './useRequests';
+export * from './useTransactions';

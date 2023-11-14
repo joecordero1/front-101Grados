@@ -68,6 +68,14 @@ function SearchForm() {
         }}
       >
         <Link
+          href="/pages/account"
+          className="mb-2"
+          onClick={() => dispatchLog(LogType.OPEN_MY_REQUESTS, {})}
+        >
+          <i className="d-icon-user mr-1"></i>
+          Mi Cuenta
+        </Link>
+        <Link
           href="/pages/my-requests"
           className="mb-2"
           onClick={() => dispatchLog(LogType.OPEN_MY_REQUESTS, {})}
