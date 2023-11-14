@@ -7,7 +7,8 @@ import { TransactionType } from '~/utils/types';
 import { capitalizeFirstChar } from 'utils';
 
 export const Statement = () => {
-  const { transactions, loading } = useTransactions({});
+  const { transactions, loading, filters, handleFilterChange } =
+    useTransactions({});
   const { coinName } = useProgram();
 
   // If loading return spinner
@@ -25,6 +26,125 @@ export const Statement = () => {
 
   return (
     <div>
+      {/* Filtros */}
+      <div
+        style={{
+          backgroundColor: '#F5F5F5',
+          borderRadius: '0.5rem',
+          padding: '1.5rem 1rem',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={filters.includeRolledBackTransactions}
+            onChange={() =>
+              handleFilterChange({
+                includeRolledBackTransactions:
+                  !filters.includeRolledBackTransactions,
+              })
+            }
+            style={{
+              background: 'red',
+              WebkitAppearance: 'checkbox',
+            }}
+            name="includeRolledBackTransactions"
+            id="includeRolledBackTransactions"
+          />
+          <label
+            htmlFor="includeRolledBackTransactions"
+            style={{
+              fontSize: '1.2rem',
+              fontWeight: 'lighter',
+              margin: 0,
+              userSelect: 'none',
+            }}
+          >
+            Transacciones anuladas
+          </label>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={
+              filters.types && filters.types.includes(TransactionType.INCOME)
+            }
+            onChange={() =>
+              handleFilterChange({
+                types: filters.types?.includes(TransactionType.INCOME)
+                  ? []
+                  : [TransactionType.INCOME],
+              })
+            }
+            style={{
+              background: 'red',
+              WebkitAppearance: 'checkbox',
+            }}
+            name="justIncomes"
+            id="justIncomes"
+          />
+          <label
+            htmlFor="justIncomes"
+            style={{
+              fontSize: '1.2rem',
+              fontWeight: 'lighter',
+              margin: 0,
+              userSelect: 'none',
+            }}
+          >
+            Solo Ingresos
+          </label>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={
+              filters.types && filters.types.includes(TransactionType.EXPENSE)
+            }
+            onChange={() =>
+              handleFilterChange({
+                types: filters.types?.includes(TransactionType.EXPENSE)
+                  ? []
+                  : [TransactionType.EXPENSE],
+              })
+            }
+            style={{
+              background: 'red',
+              WebkitAppearance: 'checkbox',
+            }}
+            name="justExpenses"
+            id="justExpenses"
+          />
+          <label
+            htmlFor="justExpenses"
+            style={{
+              fontSize: '1.2rem',
+              fontWeight: 'lighter',
+              margin: 0,
+              userSelect: 'none',
+            }}
+          >
+            Solo Egresos
+          </label>
+        </div>
+      </div>
+
+      {/* Transacciones */}
       {transactions.map((transaction) => (
         <div
           key={transaction.id}
@@ -40,6 +160,7 @@ export const Statement = () => {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'flex-start',
+              width: '60%',
             }}
           >
             <span
@@ -116,6 +237,7 @@ export const Statement = () => {
               style={{
                 textAlign: 'right',
                 lineHeight: '1.5rem',
+                marginTop: '0.5rem',
               }}
             >
               {transaction.afterPoints} {capitalizeFirstChar(coinName)}

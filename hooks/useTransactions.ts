@@ -95,5 +95,7 @@ export const useTransactions = ({
     error,
     handleFilterChange,
     handleMetaChange,
+    filters,
+    meta,
   };
 };
