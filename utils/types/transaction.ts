@@ -18,6 +18,7 @@ export interface Transaction {
   isPending: boolean;
   isDeleted: boolean;
   deletedAt: null;
+  createdAt: string;
   participant: Participant;
   request: Request | null;
   rollbackTransaction: null;
