@@ -27,9 +27,9 @@ export const Addresses = () => {
       <p className="mb-2">
         Las siguientes direcciones las podrás utilizar en el proceso de canje.
         <br />
-        <ALink href="#" className="btn btn-link btn-secondary btn-underline">
+        {/* <ALink href="#" className="btn btn-link btn-secondary btn-underline">
           Agregar dirección <i className="far fa-add"></i>
-        </ALink>
+        </ALink> */}
       </p>
       {/* <div className="row"> */}
       {/* <div className="col-sm-6 mb-4"> */}
@@ -89,12 +89,12 @@ export const Addresses = () => {
               {address.contactPhone}
               <br />
             </p>
-            <ALink
+            {/* <ALink
               href="#"
               className="btn btn-link btn-secondary btn-underline"
             >
               Editar <i className="far fa-edit"></i>
-            </ALink>
+            </ALink> */}
           </div>
         </div>
       ))}

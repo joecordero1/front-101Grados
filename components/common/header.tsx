@@ -112,14 +112,7 @@ export default function Header(props) {
 
             {/* <nav className="main-nav mr-4"> */}
             <ul className="menu menu-active-underline">
-              <li
-                className={`submenu blog-menu  ${
-                  // pathname.includes('/blog') && !pathname.includes('/elements')
-                  //   ? 'active'
-                  //   : ''
-                  ''
-                }`}
-              >
+              <li className={`submenu blog-menu  ${''}`}>
                 {/* <ALink href={`/blog/classic`}>Blog</ALink> */}
                 <div className="icon-box icon-box-side">
                   <div className="icon-box-icon mr-0 mr-lg-2">
@@ -136,8 +129,10 @@ export default function Header(props) {
                       </ALink>
                     </li>
                   )} */}
-
                   <li>
+                    <ALink href="/pages/account">Mi Cuenta</ALink>
+                  </li>
+                  {/* <li>
                     <ALink
                       href="/pages/my-requests"
                       onClick={() => {
@@ -146,8 +141,8 @@ export default function Header(props) {
                     >
                       Mis Solicitudes
                     </ALink>
-                  </li>
-                  <li>
+                  </li> */}
+                  {/* <li>
                     <ALink
                       href="/pages/my-account-status"
                       onClick={() => {
@@ -156,12 +151,12 @@ export default function Header(props) {
                     >
                       Mi estado de cuenta
                     </ALink>
-                  </li>
-                  <li>
+                  </li> */}
+                  {/* <li>
                     <ALink href="/pages/change-my-password">
                       Cambiar Mi Contraseña
                     </ALink>
-                  </li>
+                  </li> */}
                   {items.filter(
                     (item) =>
                       item.ingredient.code === IngredientCodes.IN_SNAPS_05

@@ -231,6 +231,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     setSession();
   }, []);
+
   return (
     <AuthContext.Provider
       value={{

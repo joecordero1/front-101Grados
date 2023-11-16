@@ -1,20 +1,66 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
+import { useRouter } from 'next/router';
 
 import ALink from '~/components/features/custom-link';
 
 import { withAuth } from 'components/AuthGuard';
-import { useAuth } from 'hooks';
+import { useAuth, useLogs } from 'hooks';
 import {
   AccountDetails,
   Requests,
   Statement,
   Addresses,
 } from 'components/account';
+import { LogType } from '~/utils/types/logType';
 
 function Account() {
   const { participant, logOut } = useAuth();
+  const { dispatchLog } = useLogs();
+  const router = useRouter();
+  const query = router.query;
+
+  const parseIndexIntoTab = (index: number) => {
+    switch (index) {
+      case 0:
+        return 'dashboard';
+      case 1:
+        return 'details';
+      case 2:
+        return 'requests';
+      case 3:
+        return 'account-statement';
+      case 4:
+        return 'addresses';
+      default:
+        return 'dashboard';
+    }
+  };
+
+  const parseTabIntoIndex = (
+    tab:
+      | 'dashboard'
+      | 'details'
+      | 'requests'
+      | 'account-statement'
+      | 'addresses'
+  ) => {
+    switch (tab) {
+      case 'dashboard':
+        return 0;
+      case 'details':
+        return 1;
+      case 'requests':
+        return 2;
+      case 'account-statement':
+        return 3;
+      case 'addresses':
+        return 4;
+      default:
+        return 0;
+    }
+  };
 
   return (
     <main className="main account">
@@ -44,8 +90,28 @@ function Account() {
           <Tabs
             selectedTabClassName="show"
             selectedTabPanelClassName="active"
-            defaultIndex={0}
+            defaultIndex={parseTabIntoIndex(
+              query.tab as
+                | 'dashboard'
+                | 'details'
+                | 'requests'
+                | 'account-statement'
+                | 'addresses'
+            )}
             className="tab tab-vertical gutter-lg"
+            onSelect={(index: number) => {
+              const tab = parseIndexIntoTab(index);
+              if (index === 5) {
+                router.push(`/`, undefined, {
+                  shallow: true,
+                });
+                logOut();
+              } else {
+                router.push(`/pages/account?tab=${tab}`, undefined, {
+                  shallow: true,
+                });
+              }
+            }}
           >
             <TabList
               className="nav nav-tabs mb-4 col-lg-3 col-md-4"
@@ -57,10 +123,20 @@ function Account() {
               <Tab className="nav-item">
                 <a className="nav-link">Detalles de cuenta</a>
               </Tab>
-              <Tab className="nav-item">
+              <Tab
+                className="nav-item"
+                onClick={() => {
+                  dispatchLog(LogType.OPEN_MY_REQUESTS, {});
+                }}
+              >
                 <a className="nav-link">Solicitudes</a>
               </Tab>
-              <Tab className="nav-item">
+              <Tab
+                className="nav-item"
+                onClick={() => {
+                  dispatchLog(LogType.OPEN_MY_ACCOUNT_BALANCE, {});
+                }}
+              >
                 <a className="nav-link">Estado de Cuenta</a>
               </Tab>
               <Tab className="nav-item">
@@ -110,80 +186,7 @@ function Account() {
               <TabPanel className="tab-pane">
                 <Addresses />
               </TabPanel>
-              <TabPanel className="tab-pane">
-                {/* <form action="#" className="form">
-                  <div className="row">
-                    <div className="col-sm-6">
-                      <label>First Name *</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="first_name"
-                        required
-                      />
-                    </div>
-                    <div className="col-sm-6">
-                      <label>Last Name *</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="last_name"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <label>Display Name *</label>
-                  <input
-                    type="text"
-                    className="form-control mb-0"
-                    name="display_name"
-                    required
-                  />
-                  <small className="d-block form-text mb-7">
-                    This will be how your name will be displayed in the account
-                    section and in reviews
-                  </small>
-
-                  <label>Email Address *</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    name="email"
-                    required
-                  />
-                  <fieldset>
-                    <legend>Password Change</legend>
-                    <label>
-                      Current password (leave blank to leave unchanged)
-                    </label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      name="current_password"
-                    />
-
-                    <label>New password (leave blank to leave unchanged)</label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      name="new_password"
-                    />
-
-                    <label>Confirm new password</label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      name="confirm_password"
-                    />
-                  </fieldset>
-
-                  <button type="submit" className="btn btn-primary">
-                    SAVE CHANGES
-                  </button>
-                </form> */}
-              </TabPanel>
-              {/* <TabPanel className="tab-pane"></TabPanel> */}
+              <TabPanel className="tab-pane"></TabPanel>
             </div>
           </Tabs>
         </div>

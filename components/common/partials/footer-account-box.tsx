@@ -66,6 +66,9 @@ function SearchForm() {
           flexDirection: 'column',
           justifyContent: 'flex-start',
         }}
+        onClick={(e: any) => {
+          e.currentTarget.parentNode.classList.toggle('show');
+        }}
       >
         <Link
           href="/pages/account"
@@ -75,7 +78,7 @@ function SearchForm() {
           <i className="d-icon-user mr-1"></i>
           Mi Cuenta
         </Link>
-        <Link
+        {/* <Link
           href="/pages/my-requests"
           className="mb-2"
           onClick={() => dispatchLog(LogType.OPEN_MY_REQUESTS, {})}
@@ -91,7 +94,7 @@ function SearchForm() {
         <Link href="/pages/change-my-password" className="mb-2">
           <i className="d-icon-lock mr-1"></i>
           Cambiar Mi Contraseña
-        </Link>
+        </Link> */}
 
         <Link href="/pages/my-requests" onClick={logOut}>
           <i className="d-icon-cancel mr-1"></i>
