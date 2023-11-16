@@ -12,3 +12,4 @@ export * from './useLogs';
 export * from './useCatalogues';
 export * from './useRequests';
 export * from './useTransactions';
+export * from './useAddresses';

@@ -60,3 +60,9 @@ export interface Request {
   variant: null;
   address: Address;
 }
+
+export interface GroupedRequest {
+  // awardId: number;
+  award: Award;
+  requests: Request[];
+}

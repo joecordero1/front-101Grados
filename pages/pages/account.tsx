@@ -6,7 +6,12 @@ import ALink from '~/components/features/custom-link';
 
 import { withAuth } from 'components/AuthGuard';
 import { useAuth } from 'hooks';
-import { AccountDetails, Requests, Statement } from 'components/account';
+import {
+  AccountDetails,
+  Requests,
+  Statement,
+  Addresses,
+} from 'components/account';
 
 function Account() {
   const { participant, logOut } = useAuth();
@@ -57,6 +62,9 @@ function Account() {
               </Tab>
               <Tab className="nav-item">
                 <a className="nav-link">Estado de Cuenta</a>
+              </Tab>
+              <Tab className="nav-item">
+                <a className="nav-link">Direcciones</a>
               </Tab>
               <Tab className="nav-item">
                 <ALink className="nav-link" href="#" onClick={logOut}>
@@ -250,52 +258,9 @@ function Account() {
               </TabPanel>
               <TabPanel className="tab-pane">
                 <Statement />
-                {/* <p className="mb-2">
-                  The following addresses will be used on the checkout page by
-                  default.
-                </p>
-                <div className="row">
-                  <div className="col-sm-6 mb-4">
-                    <div className="card card-address">
-                      <div className="card-body">
-                        <h5 className="card-title text-uppercase">
-                          Billing Address
-                        </h5>
-                        <p>
-                          John Doe
-                          <br />
-                          Riode Company
-                          <br />
-                          Steven street
-                          <br />
-                          El Carjon, CA 92020
-                        </p>
-                        <ALink
-                          href="#"
-                          className="btn btn-link btn-secondary btn-underline"
-                        >
-                          Edit <i className="far fa-edit"></i>
-                        </ALink>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-sm-6 mb-4">
-                    <div className="card card-address">
-                      <div className="card-body">
-                        <h5 className="card-title text-uppercase">
-                          Shipping Address
-                        </h5>
-                        <p>You have not set up this type of address yet.</p>
-                        <ALink
-                          href="#"
-                          className="btn btn-link btn-secondary btn-underline"
-                        >
-                          Edit <i className="far fa-edit"></i>
-                        </ALink>
-                      </div>
-                    </div>
-                  </div>
-                </div> */}
+              </TabPanel>
+              <TabPanel className="tab-pane">
+                <Addresses />
               </TabPanel>
               <TabPanel className="tab-pane">
                 <form action="#" className="form">

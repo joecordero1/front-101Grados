@@ -1,12 +1,12 @@
 import React from 'react';
+import SlideToggle from 'react-slide-toggle';
 
 import { useRequests, useProgram } from 'hooks';
 import { capitalizeFirstChar, formatDistance } from 'utils';
 import { statusField } from '../partials/requests';
-import { StatusTypes } from '~/utils/types';
 
 export const Requests = () => {
-  const { requests, loading } = useRequests();
+  const { loading, groupedRequests } = useRequests(true);
   const { coinName } = useProgram();
 
   // If loading return spinner
@@ -24,7 +24,238 @@ export const Requests = () => {
 
   return (
     <div>
-      {requests.map((request) => (
+      {groupedRequests.map((group) => (
+        <>
+          {group.requests.length === 1 ? (
+            <div className="card" key={group.requests[0].id}>
+              <div
+                style={{
+                  background: '#E3E3E3',
+                  height: '2px',
+                  width: '100%',
+                }}
+              ></div>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'start',
+                  justifyContent: 'start',
+                  padding: '1rem',
+                }}
+              >
+                <img
+                  src={group.award.mainImage}
+                  alt={group.award.name}
+                  width={75}
+                  style={{
+                    marginRight: '1rem',
+                  }}
+                />
+                <div>
+                  <h2
+                    style={{
+                      fontSize: '1.5rem',
+                      margin: '0',
+                    }}
+                  >
+                    {group.award.name} | {group.award.model}
+                  </h2>
+                  <p className="m-0">
+                    Código: {''}
+                    <span className="font-weight-bold">
+                      {group.requests[0].code}
+                    </span>
+                  </p>
+
+                  <p className="m-0">
+                    <span className="font-weight-light">Estado: </span>
+                    {statusField(group.requests[0].status)}
+                  </p>
+                </div>
+              </div>
+              <div>
+                <p className="m-0">
+                  <span className="font-weight-bold">Comprado en: </span>
+                  {group.requests[0].points} {capitalizeFirstChar(coinName)}
+                </p>
+                <p className="m-0">
+                  <span className="font-weight-bold">Fecha: </span>
+                  {formatDistance(group.requests[0].requestedAt)}
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div className="widget-collapsible">
+              <SlideToggle collapsed={true}>
+                {({ onToggle, setCollapsibleElement, toggleState }) => (
+                  <>
+                    <div
+                      className={`widget-title ${toggleState.toLowerCase()}`}
+                      onClick={onToggle}
+                    >
+                      <div className="card" key={group.requests[0].id}>
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'start',
+                            justifyContent: 'start',
+                            padding: '1rem',
+                          }}
+                        >
+                          <img
+                            src={group.award.mainImage}
+                            alt={group.award.name}
+                            width={75}
+                            style={{
+                              marginRight: '1rem',
+                            }}
+                          />
+                          <div>
+                            <h2
+                              style={{
+                                fontSize: '1.5rem',
+                                margin: '0',
+                              }}
+                            >
+                              {group.award.name} | {group.award.model}
+                            </h2>
+                            <p className="m-0">
+                              Cantidad: {''}
+                              <span className="font-weight-bold">
+                                {group.requests.length}
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                        <div>
+                          <p className="m-0">
+                            <span className="font-weight-bold">
+                              Comprado en:{' '}
+                            </span>
+                            {group.requests[0].points}{' '}
+                            {capitalizeFirstChar(coinName)}
+                          </p>
+                          <p className="m-0">
+                            <span className="font-weight-bold">Fecha: </span>
+                            {formatDistance(group.requests[0].requestedAt)}
+                          </p>
+                        </div>
+                      </div>
+                      <div
+                        style={{
+                          display: 'flex',
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontSize: '1.2rem',
+                            textTransform: 'uppercase',
+                            textDecoration: 'underline',
+                            textAlign: 'right',
+                            width: '100%',
+                          }}
+                        >
+                          Ver Detalle
+                        </span>
+                        <span className="toggle-btn parse-content"></span>
+                      </div>
+                    </div>
+
+                    <div
+                      className="overflow-hidden"
+                      ref={setCollapsibleElement}
+                    >
+                      {group.requests.map((request, index) => (
+                        <div className="card" key={request.id}>
+                          <div
+                            style={{
+                              background: '#E3E3E3',
+                              height: '2px',
+                              width: '100%',
+                            }}
+                          ></div>
+                          <div
+                            style={{
+                              display: 'flex',
+                              alignItems: 'start',
+                              justifyContent: 'start',
+                              padding: '1rem',
+                            }}
+                          >
+                            <img
+                              src={group.award.mainImage}
+                              alt={group.award.name}
+                              width={75}
+                              style={{
+                                marginRight: '1rem',
+                              }}
+                            />
+                            <div>
+                              <h2
+                                style={{
+                                  fontSize: '1.5rem',
+                                  margin: '0',
+                                }}
+                              >
+                                {index + 1}.- {group.award.name} |{' '}
+                                {group.award.model}
+                              </h2>
+                              <p className="m-0">
+                                Código: {''}
+                                <span className="font-weight-bold">
+                                  {request.code}
+                                </span>
+                              </p>
+
+                              <p className="m-0">
+                                <span className="font-weight-light">
+                                  Estado:{' '}
+                                </span>
+                                {statusField(request.status)}
+                              </p>
+                            </div>
+                          </div>
+                          <div>
+                            <p className="m-0">
+                              <span className="font-weight-bold">
+                                Comprado en:{' '}
+                              </span>
+                              {request.points} {capitalizeFirstChar(coinName)}
+                            </p>
+                            <p className="m-0">
+                              <span className="font-weight-bold">Fecha: </span>
+                              {formatDistance(request.requestedAt)}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                      <div
+                        onClick={onToggle}
+                        style={{
+                          display: 'flex',
+                        }}
+                      >
+                        <span
+                          style={{
+                            fontSize: '1.2rem',
+                            textTransform: 'uppercase',
+                            textDecoration: 'underline',
+                            textAlign: 'right',
+                            width: '100%',
+                          }}
+                        >
+                          Ocultar Detalle
+                        </span>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </SlideToggle>
+            </div>
+          )}
+        </>
+      ))}
+      {/* {requests.map((request) => (
         <div className="card" key={request.id}>
           <div
             style={{
@@ -70,7 +301,6 @@ export const Requests = () => {
             </div>
           </div>
           <div>
-            {/* <p className="m-0">Marca: {request.award.brand?.name}</p> */}
             <p className="m-0">
               <span className="font-weight-bold">Comprado en: </span>
               {request.points} {capitalizeFirstChar(coinName)}
@@ -81,7 +311,7 @@ export const Requests = () => {
             </p>
           </div>
         </div>
-      ))}
+      ))} */}
     </div>
   );
 };
