@@ -1,4 +1,4 @@
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect } from 'react';
 
 import { useApiAuth } from '~/hooks';
 import { GroupedRequest, Request } from 'utils/types';
@@ -8,12 +8,12 @@ export const useRequests = (parseToGrouped = false) => {
   const [groupedRequests, setGroupedRequests] = useState<GroupedRequest[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { get } = useApiAuth();
+  const api = useApiAuth();
 
   const getRequests = async () => {
     try {
       setLoading(true);
-      const data = await get<Request[]>('/requests/mine');
+      const data = await api.get<Request[]>('/requests/mine');
       setRequests(data);
       setLoading(false);
     } catch (e) {

@@ -22,6 +22,7 @@ interface AuthContextValue extends AuthState {
   logOut: () => void;
   loginWithToken: (token: string) => void;
   getAvailablePoints: () => void;
+  setSession: () => void;
 }
 
 interface AuthProviderProps {
@@ -129,6 +130,7 @@ export const AuthContext = createContext<AuthContextValue>({
   logOut: () => {},
   getAvailablePoints: () => {},
   loginWithToken: (token: string) => {},
+  setSession: () => {},
 });
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
@@ -237,6 +239,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         logOut,
         getAvailablePoints,
         loginWithToken,
+        setSession,
       }}
     >
       {children}

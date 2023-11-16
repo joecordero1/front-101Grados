@@ -1,19 +1,58 @@
 import React from 'react';
+import { useSnackbar } from 'notistack';
+import { useRouter } from 'next/navigation';
 
-import { useAuth } from 'hooks';
+import { useAuth, useForm, useApiAuth } from 'hooks';
+import { EditParticipant } from '~/utils/types';
 
 export const AccountDetails = () => {
-  const { participant } = useAuth();
+  const { participant, setSession } = useAuth();
+  const { put } = useApiAuth();
+  const { values, onChange, touched } = useForm<EditParticipant>({
+    username: participant.username,
+    firstName: participant.firstName,
+    lastName: participant.lastName,
+    document: participant.document,
+    email: participant.email,
+    mobile: participant.mobile,
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  });
+  const { enqueueSnackbar } = useSnackbar();
+  const { push } = useRouter();
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    onChange(name as keyof EditParticipant, value);
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log('touched', touched);
+    try {
+      await put(`/participants/mine`, touched);
+      setSession();
+      if (touched.newPassword) {
+        enqueueSnackbar('Contraseña actualizada', { variant: 'success' });
+      } else {
+        enqueueSnackbar('Información actualizada', { variant: 'success' });
+      }
+      push('/');
+    } catch (e) {
+      console.error('Error updating participant info', e);
+    }
+  };
 
   return (
-    <form action="#" className="form">
+    <form action="#" className="form" onSubmit={handleSubmit}>
       <label>Usuario *</label>
       <input
-        type="email"
         className="form-control"
-        name="email"
+        name="username"
         required
-        value={participant.username}
+        value={values.username}
+        onChange={handleInputChange}
       />
 
       <div className="row">
@@ -22,9 +61,10 @@ export const AccountDetails = () => {
           <input
             type="text"
             className="form-control"
-            name="first_name"
+            name="firstName"
             required
-            value={participant.firstName}
+            value={values.firstName}
+            onChange={handleInputChange}
           />
         </div>
         <div className="col-sm-6">
@@ -32,9 +72,10 @@ export const AccountDetails = () => {
           <input
             type="text"
             className="form-control"
-            name="last_name"
+            name="lastName"
             required
-            value={participant.lastName}
+            value={values.lastName}
+            onChange={handleInputChange}
           />
         </div>
       </div>
@@ -43,9 +84,9 @@ export const AccountDetails = () => {
       <input
         type="text"
         className="form-control"
-        name="mobile"
-        required
-        value={participant.document}
+        name="document"
+        value={values.document}
+        onChange={handleInputChange}
       />
 
       <label>Correo electrónico</label>
@@ -53,8 +94,8 @@ export const AccountDetails = () => {
         type="email"
         className="form-control"
         name="email"
-        required
-        value={participant.email}
+        value={values.email}
+        onChange={handleInputChange}
       />
 
       <label>Teléfono</label>
@@ -63,7 +104,8 @@ export const AccountDetails = () => {
         className="form-control"
         name="mobile"
         required
-        value={participant.mobile}
+        value={values.mobile}
+        onChange={handleInputChange}
       />
 
       <fieldset>
@@ -72,17 +114,27 @@ export const AccountDetails = () => {
         <input
           type="password"
           className="form-control"
-          name="current_password"
+          name="currentPassword"
+          value={values.currentPassword}
+          onChange={handleInputChange}
         />
 
         <label>Nueva contraseña</label>
-        <input type="password" className="form-control" name="new_password" />
+        <input
+          type="password"
+          className="form-control"
+          name="newPassword"
+          value={values.newPassword}
+          onChange={handleInputChange}
+        />
 
         <label>Confirmar nueva contraseña</label>
         <input
           type="password"
           className="form-control"
-          name="confirm_password"
+          name="confirmPassword"
+          value={values.confirmPassword}
+          onChange={handleInputChange}
         />
       </fieldset>
 

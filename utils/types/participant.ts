@@ -11,3 +11,10 @@ export interface Participant {
   document: string;
   isActive: boolean;
 }
+
+export interface EditParticipant
+  extends Omit<Partial<Participant>, 'id' | 'identifier'> {
+  currentPassword?: string;
+  newPassword?: string;
+  confirmPassword?: string;
+}
