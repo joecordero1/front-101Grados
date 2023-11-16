@@ -7,7 +7,7 @@ import { TransactionType } from '~/utils/types';
 import { capitalizeFirstChar } from 'utils';
 
 export const Statement = () => {
-  const { transactions, loading, filters, handleFilterChange } =
+  const { transactions, loading, filters, handleFilterChange, accountBalance } =
     useTransactions({});
   const { coinName } = useProgram();
 
@@ -26,6 +26,70 @@ export const Statement = () => {
 
   return (
     <div>
+      {/* Account Balance */}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'space-around',
+          borderRadius: '0.5rem',
+          padding: '1.5rem 0rem',
+          backgroundColor: '#EBEBEB',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <h2
+            style={{
+              margin: 0,
+              fontSize: '1.9rem',
+              color: '#74D575',
+              textTransform: 'uppercase',
+            }}
+          >
+            Ingresos
+          </h2>
+          <span
+            style={{
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+            }}
+          >
+            {accountBalance?.incomePoints}
+          </span>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <h2
+            style={{
+              margin: 0,
+              fontSize: '1.9rem',
+              color: '#D5635F',
+              textTransform: 'uppercase',
+            }}
+          >
+            Egresos
+          </h2>
+          <span
+            style={{
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+            }}
+          >
+            {accountBalance?.expensePoints}
+          </span>
+        </div>
+      </div>
+
       {/* Filtros */}
       <div
         style={{
@@ -34,40 +98,6 @@ export const Statement = () => {
           padding: '1.5rem 1rem',
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <input
-            type="checkbox"
-            checked={filters.includeRolledBackTransactions}
-            onChange={() =>
-              handleFilterChange({
-                includeRolledBackTransactions:
-                  !filters.includeRolledBackTransactions,
-              })
-            }
-            style={{
-              background: 'red',
-              WebkitAppearance: 'checkbox',
-            }}
-            name="includeRolledBackTransactions"
-            id="includeRolledBackTransactions"
-          />
-          <label
-            htmlFor="includeRolledBackTransactions"
-            style={{
-              fontSize: '1.2rem',
-              fontWeight: 'lighter',
-              margin: 0,
-              userSelect: 'none',
-            }}
-          >
-            Transacciones anuladas
-          </label>
-        </div>
         <div
           style={{
             display: 'flex',
@@ -140,6 +170,40 @@ export const Statement = () => {
             }}
           >
             Solo Egresos
+          </label>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={filters.includeRolledBackTransactions}
+            onChange={() =>
+              handleFilterChange({
+                includeRolledBackTransactions:
+                  !filters.includeRolledBackTransactions,
+              })
+            }
+            style={{
+              background: 'red',
+              WebkitAppearance: 'checkbox',
+            }}
+            name="includeRolledBackTransactions"
+            id="includeRolledBackTransactions"
+          />
+          <label
+            htmlFor="includeRolledBackTransactions"
+            style={{
+              fontSize: '1.2rem',
+              fontWeight: 'lighter',
+              margin: 0,
+              userSelect: 'none',
+            }}
+          >
+            Transacciones anuladas
           </label>
         </div>
       </div>

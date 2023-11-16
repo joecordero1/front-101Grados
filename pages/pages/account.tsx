@@ -100,160 +100,8 @@ function Account() {
               </TabPanel>
               <TabPanel className="tab-pane">
                 <AccountDetails />
-                {/* <table className="order-table">
-                  <thead>
-                    <tr>
-                      <th className="pl-2">Order</th>
-                      <th>Date</th>
-                      <th>Status</th>
-                      <th>Total</th>
-                      <th className="pr-2">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="order-number">
-                        <ALink href="#">#3596</ALink>
-                      </td>
-                      <td className="order-date">
-                        <time>February 24, 2021</time>
-                      </td>
-                      <td className="order-status">
-                        <span>On hold</span>
-                      </td>
-                      <td className="order-total">
-                        <span>$900.00 for 5 items</span>
-                      </td>
-                      <td className="order-action">
-                        <ALink
-                          href="#"
-                          className="btn btn-primary btn-link btn-underline"
-                        >
-                          View
-                        </ALink>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="order-number">
-                        <ALink href="#">#3593</ALink>
-                      </td>
-                      <td className="order-date">
-                        <time>February 21, 2021</time>
-                      </td>
-                      <td className="order-status">
-                        <span>On hold</span>
-                      </td>
-                      <td className="order-total">
-                        <span>$290.00 for 2 items</span>
-                      </td>
-                      <td className="order-action">
-                        <ALink
-                          href="#"
-                          className="btn btn-primary btn-link btn-underline"
-                        >
-                          View
-                        </ALink>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="order-number">
-                        <ALink href="#">#2547</ALink>
-                      </td>
-                      <td className="order-date">
-                        <time>January 4, 2021</time>
-                      </td>
-                      <td className="order-status">
-                        <span>On hold</span>
-                      </td>
-                      <td className="order-total">
-                        <span>$480.00 for 8 items</span>
-                      </td>
-                      <td className="order-action">
-                        <ALink
-                          href="#"
-                          className="btn btn-primary btn-link btn-underline"
-                        >
-                          View
-                        </ALink>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="order-number">
-                        <ALink href="#">#2549</ALink>
-                      </td>
-                      <td className="order-date">
-                        <time>January 19, 2021</time>
-                      </td>
-                      <td className="order-status">
-                        <span>On hold</span>
-                      </td>
-                      <td className="order-total">
-                        <span>$680.00 for 5 items</span>
-                      </td>
-                      <td className="order-action">
-                        <ALink
-                          href="#"
-                          className="btn btn-primary btn-link btn-underline"
-                        >
-                          View
-                        </ALink>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="order-number">
-                        <ALink href="#">#4523</ALink>
-                      </td>
-                      <td className="order-date">
-                        <time>Jun 6, 2021</time>
-                      </td>
-                      <td className="order-status">
-                        <span>On hold</span>
-                      </td>
-                      <td className="order-total">
-                        <span>$564.00 for 3 items</span>
-                      </td>
-                      <td className="order-action">
-                        <ALink
-                          href="#"
-                          className="btn btn-primary btn-link btn-underline"
-                        >
-                          View
-                        </ALink>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="order-number">
-                        <ALink href="#">#4526</ALink>
-                      </td>
-                      <td className="order-date">
-                        <time>Jun 19, 2021</time>
-                      </td>
-                      <td className="order-status">
-                        <span>On hold</span>
-                      </td>
-                      <td className="order-total">
-                        <span>$123.00 for 8 items</span>
-                      </td>
-                      <td className="order-action">
-                        <ALink
-                          href="#"
-                          className="btn btn-primary btn-link btn-underline"
-                        >
-                          View
-                        </ALink>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table> */}
               </TabPanel>
               <TabPanel className="tab-pane downloads">
-                {/* <p className="mb-4 text-body">No downloads available yet.</p>
-                <ALink
-                  href="/shop"
-                  className="btn btn-primary btn-link btn-underline"
-                >
-                  Browser Products<i className="d-icon-arrow-right"></i>
-                </ALink> */}
                 <Requests />
               </TabPanel>
               <TabPanel className="tab-pane">
@@ -263,7 +111,7 @@ function Account() {
                 <Addresses />
               </TabPanel>
               <TabPanel className="tab-pane">
-                <form action="#" className="form">
+                {/* <form action="#" className="form">
                   <div className="row">
                     <div className="col-sm-6">
                       <label>First Name *</label>
@@ -333,9 +181,9 @@ function Account() {
                   <button type="submit" className="btn btn-primary">
                     SAVE CHANGES
                   </button>
-                </form>
+                </form> */}
               </TabPanel>
-              <TabPanel className="tab-pane"></TabPanel>
+              {/* <TabPanel className="tab-pane"></TabPanel> */}
             </div>
           </Tabs>
         </div>
