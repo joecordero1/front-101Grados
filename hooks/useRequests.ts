@@ -13,6 +13,7 @@ export const useRequests = (parseToGrouped = false) => {
   const getRequests = async () => {
     try {
       setLoading(true);
+      console.info('Getting requests');
       const data = await api.get<Request[]>('/requests/mine');
       setRequests(data);
       setLoading(false);
@@ -28,6 +29,7 @@ export const useRequests = (parseToGrouped = false) => {
 
   const groupAndSortRequests = () => {
     setLoading(true);
+    console.info('Grouping and sorting requests');
 
     // Create an object to store grouped requests
     const groupedRequests = {};
@@ -100,7 +102,7 @@ export const useRequests = (parseToGrouped = false) => {
   };
 
   useEffect(() => {
-    if (parseToGrouped) groupAndSortRequests();
+    if (parseToGrouped && requests.length > 1) groupAndSortRequests();
   }, [requests]);
 
   return {
