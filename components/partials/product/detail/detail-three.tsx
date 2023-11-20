@@ -6,7 +6,7 @@ import ALink from '~/components/features/custom-link';
 import DescTwo from '~/components/partials/product/desc/desc-two';
 
 import { AwardVariant, CartItem, VariantType } from '~/utils/types';
-import { useCart, useProgram, useLogs } from '~/hooks';
+import { useCart, useProgram, useLogs, useForm } from '~/hooks';
 import { LogType } from '~/utils/types/logType';
 
 function DetailAward(props: {
@@ -17,7 +17,10 @@ function DetailAward(props: {
   isNav: boolean;
 }) {
   const { addToCart, items } = useCart();
-  const [quantity, setQuantity] = useState(1);
+  const { values, onChange } = useForm({
+    quantity: 1,
+  });
+  const { quantity } = values;
   const { program } = useProgram();
   const {
     data: catalogueItem,
@@ -28,6 +31,7 @@ function DetailAward(props: {
   const { dispatchLog } = useLogs();
 
   let product = catalogueItem && catalogueItem;
+
   const addToCartHandler = (variant?: AwardVariant) => {
     items.filter((item) => item.id === product.id)[0]
       ? null
@@ -60,21 +64,6 @@ function DetailAward(props: {
         <ins className="new-price">{`${product.points} ${program.coinName}`}</ins>
       </div>
 
-      {/* <div className='ratings-container'>
-        <div className='ratings-full'>
-          <span
-            className='ratings'
-            style={{ width: 20 * product.data.ratings + '%' }}></span>
-          <span className='tooltiptext tooltip-top'>
-            {toDecimal(product.data.ratings)}
-          </span>
-        </div>
-
-        <ALink href='#' className='rating-reviews'>
-          ( {product.data.reviews} reviews )
-        </ALink>
-      </div> */}
-
       <p
         className="product-short-desc"
         dangerouslySetInnerHTML={{ __html: product.award.description }}
@@ -86,28 +75,42 @@ function DetailAward(props: {
             <button
               className="quantity-minus d-icon-minus"
               onClick={() =>
-                setQuantity(quantity > 0 && quantity !== 1 ? quantity - 1 : 1)
+                onChange(
+                  'quantity',
+                  quantity > 0 && quantity !== 1 ? quantity - 1 : 1
+                )
               }
             ></button>
             <input
               className="quantity form-control"
               type="number"
-              min="1"
-              max="300"
+              min={1}
               value={quantity}
+              name="quantity"
+              onChange={(e) =>
+                onChange(
+                  'quantity',
+                  parseInt(
+                    e.target.value && e.target.value !== ''
+                      ? e.target.value
+                      : ''
+                  )
+                )
+              }
             />
             <button
               className="quantity-plus d-icon-plus"
               onClick={() =>
-                setQuantity(quantity >= 1 && quantity <= 300 ? quantity + 1 : 1)
+                onChange(
+                  'quantity',
+                  quantity >= 1 && quantity <= 300 ? quantity + 1 : 1
+                )
               }
             ></button>
           </div>
           {product.award.variants.length <= 0 && (
             <button
-              className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold ${
-                /* cartActive ? "" : "disabled" */ ''
-              }`}
+              className={`btn-product btn-cart text-normal ls-normal font-weight-semi-bold`}
               disabled={
                 items.filter((item) => item.id === product.id)[0] ? true : false
               }
@@ -126,18 +129,16 @@ function DetailAward(props: {
       </div>
       {product && product.award.variants.length > 0 ? (
         <>
-          <h5>escoge la cantidad y da click en la variante</h5>
-          {product.award.variants.map((variant) =>
+          <h5>Escoge la cantidad y también selecciona una variación:</h5>
+          {product.award.variants.map((variant, index) =>
             variant.type === VariantType.COLOR && variant.isActive ? (
-              <div className="product-form product-color">
+              <div className="product-form product-color" key={variant.id}>
                 <label>Color:</label>
 
                 <div className="product-variations">
                   <ALink
                     href="#"
-                    /* className={"color"} */
                     key={variant.id}
-                    /*  style={{ backgroundColor: `${variant.name}` }} */
                     onClick={() => {
                       addToCartHandler(variant);
                       dispatchLog(LogType.ADD_TO_CART, {
@@ -151,7 +152,10 @@ function DetailAward(props: {
                 </div>
               </div>
             ) : variant.type === VariantType.SIZE && variant.isActive ? (
-              <div className="product-form product-size mb-0 pb-2">
+              <div
+                className="product-form product-size mb-0 pb-2"
+                key={variant.id}
+              >
                 <label>Talla:</label>
                 <div className="product-form-group">
                   <div className="product-variations">
@@ -173,7 +177,10 @@ function DetailAward(props: {
                 </div>
               </div>
             ) : variant.type === VariantType.GENERAL && variant.isActive ? (
-              <div className="product-form product-size mb-0 pb-2">
+              <div
+                className="product-form product-size mb-0 pb-2"
+                key={variant.id}
+              >
                 <label>Tipo:</label>
                 <div className="product-form-group">
                   <div className="product-variations">
