@@ -1,8 +1,10 @@
 import React from 'react';
 import SlideToggle from 'react-slide-toggle';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
 
 import { useRequests, useProgram } from 'hooks';
-import { capitalizeFirstChar, formatDistance } from 'utils';
+import { capitalizeFirstChar } from 'utils';
 import { statusField } from '../partials/requests';
 
 export const Requests = () => {
@@ -80,7 +82,14 @@ export const Requests = () => {
                 </p>
                 <p className="m-0">
                   <span className="font-weight-bold">Fecha: </span>
-                  {formatDistance(group.requests[0].requestedAt)}
+                  {/* {formatDistance(group.requests[0].requestedAt)} */}
+                  {format(
+                    new Date(group.requests[0].requestedAt),
+                    'dd/MMMM/yyyy',
+                    {
+                      locale: es,
+                    }
+                  )}
                 </p>
               </div>
             </div>
@@ -137,7 +146,14 @@ export const Requests = () => {
                           </p>
                           <p className="m-0">
                             <span className="font-weight-bold">Fecha: </span>
-                            {formatDistance(group.requests[0].requestedAt)}
+                            {/* {formatDistance(group.requests[0].requestedAt)} */}
+                            {format(
+                              new Date(group.requests[0].requestedAt),
+                              'dd/MMMM/yyyy',
+                              {
+                                locale: es,
+                              }
+                            )}
                           </p>
                         </div>
                       </div>
@@ -224,7 +240,14 @@ export const Requests = () => {
                             </p>
                             <p className="m-0">
                               <span className="font-weight-bold">Fecha: </span>
-                              {formatDistance(request.requestedAt)}
+                              {/* {formatDistance(request.requestedAt)} */}
+                              {format(
+                                new Date(request.requestedAt),
+                                'dd/MMMM/yyyy',
+                                {
+                                  locale: es,
+                                }
+                              )}
                             </p>
                           </div>
                         </div>

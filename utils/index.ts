@@ -396,3 +396,7 @@ export const formatDistance = (date: string | Date): string => {
 export const capitalizeFirstChar = (str: string): string => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
+
+export const removeFirstChar = (str: string): string => {
+  return str.slice(1);
+};

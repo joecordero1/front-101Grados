@@ -26,6 +26,7 @@ export interface CreateRequestDto {
   awardId: number;
   variantId?: number;
   addressId: number;
+  quantity: number;
 }
 
 export interface Request {

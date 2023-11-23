@@ -2,11 +2,15 @@ import React from 'react';
 import { useSnackbar } from 'notistack';
 import { useRouter } from 'next/navigation';
 
-import { useAuth, useForm, useApiAuth } from 'hooks';
+import ALink from '~/components/features/custom-link';
+
+import { useAuth, useForm, useApiAuth, useProgram } from 'hooks';
 import { EditParticipant } from '~/utils/types';
+import { parseCredentials, removeFirstChar } from '~/utils';
 
 export const AccountDetails = () => {
   const { participant, setSession } = useAuth();
+  const { program } = useProgram();
   const { put } = useApiAuth();
   const { values, onChange, touched } = useForm<EditParticipant>({
     username: participant.username,
@@ -117,8 +121,31 @@ export const AccountDetails = () => {
           name="currentPassword"
           value={values.currentPassword}
           onChange={handleInputChange}
-        />
-
+        />{' '}
+        <div
+          style={{
+            display: 'flex',
+          }}
+        >
+          <a
+            href={`https://api.whatsapp.com/send?phone=${removeFirstChar(
+              program.supportPhone
+            )}&text=https://api.whatsapp.com/send?phone=99143091&text=Hola!%20Soy%20${
+              participant.fullName
+            }%20podr%C3%ADan%20ayudarme%20reseteando%20mi%20contrase%C3%B1a%20por%20favor?%20Mi%20ID%20de%20usuario%20es%20el:%20${
+              participant.id
+            }%20y%20mi%20identificador%20es%20el%20${parseCredentials(
+              participant.identifier
+            )}.%20Muchas%20gracias!%20`}
+            style={{
+              textAlign: 'right',
+              width: '100%',
+            }}
+            target="_blank"
+          >
+            ¿Olvidaste tu contraseña?
+          </a>
+        </div>
         <label>Nueva contraseña</label>
         <input
           type="password"
@@ -127,7 +154,6 @@ export const AccountDetails = () => {
           value={values.newPassword}
           onChange={handleInputChange}
         />
-
         <label>Confirmar nueva contraseña</label>
         <input
           type="password"
