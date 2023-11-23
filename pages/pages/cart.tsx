@@ -1,13 +1,18 @@
 import ALink from '~/components/features/custom-link';
 
 import { useAuth, useCart, useProgram, useLogs } from '~/hooks';
-import { CartItem } from '~/utils/types';
-import { LogType } from '~/utils/types/logType';
+import { CartItem, LogType } from '~/utils/types';
 import { withAuth } from 'components/AuthGuard';
 
 function Cart() {
-  const { removeFromCart, items, totalAmount, sumQuantity, substractQuantity } =
-    useCart();
+  const {
+    removeFromCart,
+    items,
+    totalAmount,
+    sumQuantity,
+    substractQuantity,
+    setQuantity,
+  } = useCart();
   const { program } = useProgram();
   const { availablePoints } = useAuth();
   const { dispatchLog } = useLogs();
@@ -84,18 +89,34 @@ function Cart() {
                             <div className="mr-2 input-group">
                               <button
                                 className="quantity-minus d-icon-minus"
-                                onClick={() => substractQuantity(item.id)}
+                                // onClick={() => substractQuantity(item.id)}
+                                onClick={() =>
+                                  setQuantity(item.id, item.quantity - 1)
+                                }
                               ></button>
                               <input
                                 className="quantity form-control"
                                 type="number"
                                 min="1"
-                                max="100"
+                                // max="100"
                                 value={item.quantity}
+                                onChange={(e) =>
+                                  setQuantity(
+                                    item.id,
+                                    parseInt(
+                                      e.target.value && e.target.value !== ''
+                                        ? e.target.value
+                                        : ''
+                                    )
+                                  )
+                                }
                               />
                               <button
                                 className="quantity-plus d-icon-plus"
-                                onClick={() => sumQuantity(item.id)}
+                                // onClick={() => sumQuantity(item.id)}
+                                onClick={() =>
+                                  setQuantity(item.id, item.quantity + 1)
+                                }
                               ></button>
                             </div>
                           </td>
@@ -128,23 +149,6 @@ function Cart() {
                       <i className="d-icon-arrow-left"></i>Seguir Comprando
                     </ALink>
                   </div>
-                  {/* <div className='cart-coupon-box mb-8'>
-                    <h4 className='title coupon-title text-uppercase ls-m'>
-                      Coupon Discount
-                    </h4>
-                    <input
-                      type='text'
-                      name='coupon_code'
-                      className='input-text form-control text-grey ls-m mb-4'
-                      id='coupon_code'
-                      placeholder='Enter coupon code here...'
-                    />
-                    <button
-                      type='submit'
-                      className='btn btn-md btn-dark btn-rounded btn-outline'>
-                      Apply Coupon
-                    </button>
-                  </div> */}
                 </div>
                 <aside className="col-lg-4 sticky-sidebar-wrapper">
                   <div
@@ -202,50 +206,7 @@ function Cart() {
                           </tr>
                         </tbody>
                       </table>
-                      {/*     <div className='shipping-address'>
-                        <label>
-                          Shipping to <strong>CA.</strong>
-                        </label>
-                        <div className='select-box'>
-                          <select
-                            name='country'
-                            className='form-control'
-                            defaultValue='us'>
-                            <option value='us'>United States (US)</option>
-                            <option value='uk'> United Kingdom</option>
-                            <option value='fr'>France</option>
-                            <option value='aus'>Austria</option>
-                          </select>
-                        </div>
-                        <div className='select-box'>
-                          <select
-                            name='country'
-                            className='form-control'
-                            defaultValue='us'>
-                            <option value='us'>California</option>
-                            <option value='uk'>Alaska</option>
-                            <option value='fr'>Delaware</option>
-                            <option value='aus'>Hawaii</option>
-                          </select>
-                        </div>
-                        <input
-                          type='text'
-                          className='form-control'
-                          name='code'
-                          placeholder='Town / City'
-                        />
-                        <input
-                          type='text'
-                          className='form-control'
-                          name='code'
-                          placeholder='ZIP'
-                        />
-                        <ALink
-                          href='#'
-                          className='btn btn-md btn-dark btn-rounded btn-outline'>
-                          Update totals
-                        </ALink>
-                      </div> */}
+
                       <table className="total">
                         <tbody>
                           <tr className="summary-subtotal">

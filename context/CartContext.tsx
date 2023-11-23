@@ -39,6 +39,7 @@ interface ContextValue extends State {
   removeAddress: (addressId: number) => void;
   sumQuantity: (itemId: number) => void;
   substractQuantity: (itemId: number) => void;
+  setQuantity: (itemId: number, quantity: number) => void;
   resetQuantity: () => void;
 }
 
@@ -130,6 +131,14 @@ type SubstractQuantity = {
   };
 };
 
+type SetQuantity = {
+  type: 'set-quantity';
+  payload: {
+    itemId: number;
+    quantity: number;
+  };
+};
+
 type Action =
   | AddToCart
   | RemoveFromCart
@@ -143,6 +152,7 @@ type Action =
   | SendedRequest
   | SumQuantity
   | SubstractQuantity
+  | SetQuantity
   | ResetQuantity;
 
 const initialState: State = {
@@ -168,7 +178,7 @@ const reducer = (state: State, action: Action): State => {
         items,
         pointsSimulation,
       };
-    case 'add-to-cart':
+    case 'add-to-cart': {
       const { item: itemToAdd, itemQuantity, variant } = action.payload;
       return {
         ...state,
@@ -181,7 +191,9 @@ const reducer = (state: State, action: Action): State => {
           },
         ],
       };
-    case 'sum-quantity':
+    }
+
+    case 'sum-quantity': {
       const { itemId: itemSumId } = action.payload;
       return {
         ...state,
@@ -197,6 +209,21 @@ const reducer = (state: State, action: Action): State => {
             : item
         ),
       };
+    }
+    case 'set-quantity': {
+      const { itemId: itemSetId, quantity: itemQuantity } = action.payload;
+      return {
+        ...state,
+        items: state.items.map((item) =>
+          item.id === itemSetId
+            ? {
+                ...item,
+                quantity: itemQuantity,
+              }
+            : item
+        ),
+      };
+    }
     case 'substract-quantity':
       const { itemId: itemSubstractId } = action.payload;
       return {
@@ -299,6 +326,7 @@ export const CartContext = createContext<ContextValue>({
   removeAddress: () => {},
   sumQuantity: (itemId: number) => {},
   substractQuantity: (itemId: number) => {},
+  setQuantity: (itemId: number, quantity: number) => {},
   resetQuantity: () => {},
 });
 
@@ -349,6 +377,21 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
       type: 'substract-quantity',
       payload: {
         itemId,
+      },
+    });
+  };
+
+  const setQuantity = (itemId: number, rawQuantity: number) => {
+    let quantity = rawQuantity;
+    if (!quantity || isNaN(quantity)) quantity = 1;
+    if (!isNaN(quantity)) quantity = Math.floor(quantity);
+    if (quantity < 1) quantity = 1;
+
+    dispatch({
+      type: 'set-quantity',
+      payload: {
+        itemId,
+        quantity,
       },
     });
   };
@@ -434,31 +477,50 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
     if (ammountToRedeem <= availablePoints && state.items.length > 0) {
       try {
         for (const item of state.items) {
-          for (let index = 0; index < item.quantity; index++) {
-            const createRequestData: CreateRequestDto = {
-              type: RequestTypes.PARTICIPANT,
-              participantId: participant.id,
-              awardId: item.award.id,
-              addressId: state.selectedAdressId,
-              points: item.points,
-              ...(item.variant && { variantId: item.variant.id }),
-              //cause in cases i have some awards with variants in cart i need to do a array with selected variants and filter one by one by catalogueItemId
-              /*      awardVariantId:
-                state.selectedVariant && item.award.variants.length > 0 
-                  ? state.selectedVariant.filter(
-                      (variant) => variant.awardId === item.award.variants.
-                    )[0].id
-                  : null, */
-            };
-            dispatch({
-              type: 'send-request',
-              payload: {
-                request: createRequestData,
-                status: 'idle',
-              },
-            });
-            await api.post(`/requests`, createRequestData);
-          }
+          const createRequestData: CreateRequestDto = {
+            type: RequestTypes.PARTICIPANT,
+            participantId: participant.id,
+            awardId: item.award.id,
+            addressId: state.selectedAdressId,
+            // points: item.points,
+            points: item.points * item.quantity,
+            ...(item.variant && { variantId: item.variant.id }),
+            quantity: item.quantity,
+          };
+          dispatch({
+            type: 'send-request',
+            payload: {
+              request: createRequestData,
+              status: 'idle',
+            },
+          });
+          await api.post(`/requests`, createRequestData);
+          // for (let index = 0; index < item.quantity; index++) {
+          //   const createRequestData: CreateRequestDto = {
+          //     type: RequestTypes.PARTICIPANT,
+          //     participantId: participant.id,
+          //     awardId: item.award.id,
+          //     addressId: state.selectedAdressId,
+          //     points: item.points,
+          //     ...(item.variant && { variantId: item.variant.id }),
+          //     quantity:
+          //     //cause in cases i have some awards with variants in cart i need to do a array with selected variants and filter one by one by catalogueItemId
+          //     /*      awardVariantId:
+          //       state.selectedVariant && item.award.variants.length > 0
+          //         ? state.selectedVariant.filter(
+          //             (variant) => variant.awardId === item.award.variants.
+          //           )[0].id
+          //         : null, */
+          //   };
+          //   dispatch({
+          //     type: 'send-request',
+          //     payload: {
+          //       request: createRequestData,
+          //       status: 'idle',
+          //     },
+          //   });
+          //   await api.post(`/requests`, createRequestData);
+          // }
         }
         dispatch({
           type: 'request-sended',
@@ -594,6 +656,7 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
         sumQuantity,
         substractQuantity,
         resetQuantity,
+        setQuantity,
       }}
     >
       {children}
