@@ -8,16 +8,16 @@ export const statusField = (status: StatusTypes) => {
 
   switch (status) {
     case StatusTypes.REQUESTED:
-      statusColor = 'bg-warning';
+      statusColor = 'bg-info';
       statusText = 'Solicitado';
       break;
     case StatusTypes.APPROVED:
-      statusColor = 'bg-success';
+      statusColor = 'bg-info';
       statusText = 'Aprobado';
       break;
     case StatusTypes.ORDERRED:
       // statusColor = 'bg-info';
-      statusColor = 'bg-success';
+      statusColor = 'bg-primary';
       // statusText = 'Ordenado';
       statusText = 'Aprobado';
       break;
