@@ -176,7 +176,7 @@
       &::before,
       &::after {
         position: absolute;
-        content: "";
+        content: '';
         display: inline-block;
         border-radius: 50%;
         top: 50%;
@@ -334,7 +334,7 @@
     padding: 2.3rem 0 2.1rem;
   }
 }
-@include mq(xs, "max") {
+@include mq(xs, 'max') {
   .order-table {
     tbody {
       .product-name,
