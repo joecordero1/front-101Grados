@@ -1,7 +1,7 @@
 import { createContext, FC, ReactNode, useReducer, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-import { useProgram, useApi, useApiAuth } from 'hooks';
+import { useProgram, useApi } from 'hooks';
 import { Participant } from 'utils/types';
 import { parseCredentials } from 'utils';
 import { useCart } from 'hooks';
@@ -71,6 +71,7 @@ const initialState: AuthState = {
   isInitialised: false,
   availablePoints: 0,
 };
+
 export const setSessionWithToken = (accessToken: string | null): void => {
   if (accessToken) {
     localStorage.setItem('accessTokenLala4Store', accessToken);
@@ -78,6 +79,7 @@ export const setSessionWithToken = (accessToken: string | null): void => {
     localStorage.removeItem('accessTokenLala4Store');
   }
 };
+
 const reducer = (state: AuthState, action: Action): AuthState => {
   switch (action.type) {
     case 'login':
@@ -138,6 +140,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const { program } = useProgram();
   const { get, post } = useApi();
   const { items } = useCart();
+  const router = useRouter();
 
   const loginWithToken = (token: string | null) => {
     setSessionWithToken(token);
@@ -176,6 +179,9 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
 
   const setSession = async () => {
     // First I retrieve the token saved on localStorage
+    const token = router.query.token;
+    if (token) localStorage.setItem('accessTokenLala4Store', token.toString());
+
     const accessToken = localStorage.getItem('accessTokenLala4Store');
 
     // If there is a token, I proceed to validate it
