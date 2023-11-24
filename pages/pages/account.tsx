@@ -20,6 +20,7 @@ function Account() {
   const { dispatchLog } = useLogs();
   const router = useRouter();
   const query = router.query;
+  const [activeTab, setActiveTab] = React.useState(0);
 
   const parseIndexIntoTab = (index: number) => {
     switch (index) {
@@ -62,6 +63,21 @@ function Account() {
     }
   };
 
+  const handleTabChange = () => {
+    const queryTab = query.tab as
+      | 'dashboard'
+      | 'details'
+      | 'requests'
+      | 'account-statement'
+      | 'addresses';
+    const index = parseTabIntoIndex(queryTab);
+    setActiveTab(index);
+  };
+
+  React.useEffect(() => {
+    handleTabChange();
+  }, [query]);
+
   return (
     <main className="main account">
       <Helmet>
@@ -90,14 +106,6 @@ function Account() {
           <Tabs
             selectedTabClassName="show"
             selectedTabPanelClassName="active"
-            defaultIndex={parseTabIntoIndex(
-              query.tab as
-                | 'dashboard'
-                | 'details'
-                | 'requests'
-                | 'account-statement'
-                | 'addresses'
-            )}
             className="tab tab-vertical gutter-lg"
             onSelect={(index: number) => {
               const tab = parseIndexIntoTab(index);
@@ -112,6 +120,7 @@ function Account() {
                 });
               }
             }}
+            selectedIndex={activeTab}
           >
             <TabList
               className="nav nav-tabs mb-4 col-lg-3 col-md-4"

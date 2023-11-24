@@ -20,8 +20,6 @@ export const Addresses = () => {
       </div>
     );
 
-  console.log('addresses', addresses);
-
   return (
     <div>
       <p className="mb-2">

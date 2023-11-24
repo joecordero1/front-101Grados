@@ -33,7 +33,6 @@ export const AccountDetails = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('touched', touched);
     try {
       await put(`/participants/mine`, touched);
       setSession();

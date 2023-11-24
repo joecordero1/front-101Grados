@@ -102,7 +102,7 @@ export const useRequests = (parseToGrouped = false) => {
   };
 
   useEffect(() => {
-    if (parseToGrouped && requests.length > 1) groupAndSortRequests();
+    if (parseToGrouped) groupAndSortRequests();
   }, [requests]);
 
   return {

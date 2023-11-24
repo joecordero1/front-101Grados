@@ -78,20 +78,20 @@ function SearchForm() {
           <i className="d-icon-user mr-1"></i>
           Mi Cuenta
         </Link>
-        {/* <Link
-          href="/pages/my-requests"
+        <Link
+          href="/pages/account/?tab=requests"
           className="mb-2"
           onClick={() => dispatchLog(LogType.OPEN_MY_REQUESTS, {})}
         >
           <i className="d-icon-truck mr-1"></i>
-          Solicitudes
+          Mis Solicitudes
         </Link>
-        <Link href="/pages/my-account-status" className="mb-2">
+        <Link href="/pages/account/?tab=account-statement" className="mb-2">
           <i className="d-icon-money mr-1"></i>
           Estado de Cuenta
         </Link>
 
-        <Link href="/pages/change-my-password" className="mb-2">
+        {/* <Link href="/pages/change-my-password" className="mb-2">
           <i className="d-icon-lock mr-1"></i>
           Cambiar Mi Contraseña
         </Link> */}
