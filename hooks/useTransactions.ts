@@ -42,7 +42,6 @@ export const useTransactions = ({
   const getTransactions = async () => {
     try {
       setLoading(true);
-      console.log('Buscando transacciones');
       await getAccountBalance();
       const params = {
         ...filters,
@@ -98,8 +97,6 @@ export const useTransactions = ({
 
   const getAccountBalance = async () => {
     try {
-      // setLoading(true);
-      console.log('Buscando balance');
       const data = await get<AccountBalance>(`/points/my-account-balance`);
       setAccountBalance(data);
       // setLoading(false);

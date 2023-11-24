@@ -26,10 +26,10 @@ export const Requests = () => {
 
   return (
     <div>
-      {groupedRequests.map((group) => (
-        <>
+      {groupedRequests.map((group, index) => (
+        <div key={index}>
           {group.requests.length === 1 ? (
-            <div className="card" key={group.requests[0].id}>
+            <div className="card" key={index}>
               <div
                 style={{
                   background: '#E3E3E3',
@@ -94,7 +94,7 @@ export const Requests = () => {
               </div>
             </div>
           ) : (
-            <div className="widget-collapsible">
+            <div className="widget-collapsible" key={index}>
               <SlideToggle collapsed={true}>
                 {({ onToggle, setCollapsibleElement, toggleState }) => (
                   <>
@@ -276,65 +276,8 @@ export const Requests = () => {
               </SlideToggle>
             </div>
           )}
-        </>
-      ))}
-      {/* {requests.map((request) => (
-        <div className="card" key={request.id}>
-          <div
-            style={{
-              background: '#E3E3E3',
-              height: '2px',
-              width: '100%',
-            }}
-          ></div>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'start',
-              justifyContent: 'start',
-              padding: '1rem',
-            }}
-          >
-            <img
-              src={request.award.mainImage}
-              alt={request.award.name}
-              width={75}
-              style={{
-                marginRight: '1rem',
-              }}
-            />
-            <div>
-              <h2
-                style={{
-                  fontSize: '1.5rem',
-                  margin: '0',
-                }}
-              >
-                {request.award.name} | {request.award.model}
-              </h2>
-              <p className="m-0">
-                Código: {''}
-                <span className="font-weight-bold">{request.code}</span>
-              </p>
-
-              <p className="m-0">
-                <span className="font-weight-light">Estado: </span>
-                {statusField(request.status)}
-              </p>
-            </div>
-          </div>
-          <div>
-            <p className="m-0">
-              <span className="font-weight-bold">Comprado en: </span>
-              {request.points} {capitalizeFirstChar(coinName)}
-            </p>
-            <p className="m-0">
-              <span className="font-weight-bold">Fecha: </span>
-              {formatDistance(request.requestedAt)}
-            </p>
-          </div>
         </div>
-      ))} */}
+      ))}
     </div>
   );
 };
