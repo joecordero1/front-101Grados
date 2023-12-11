@@ -1,50 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
-import withApollo from '~/server/apollo';
-import { useLogs, useAuth } from 'hooks';
-import { LogType } from '~/utils/types/logType';
+import withApollo from "~/server/apollo";
+import { useLogs, useAuth } from "hooks";
+import { LogType } from "~/utils/types/logType";
+import useDishsItems from "~/hooks/useDishsItems";
 
 function SearchForm() {
   const router = useRouter();
   const { logOut } = useAuth();
   const { dispatchLog } = useLogs();
-
+  const { items, getMyDishsItems } = useDishsItems();
+  const codesToGetSnapsMenu = ["IN_SNAPS_01", "IN_SNAPS_05"];
   useEffect(() => {
-    document.querySelector('body').addEventListener('click', onBodyClick);
+    document.querySelector("body").addEventListener("click", onBodyClick);
 
     return () => {
-      document.querySelector('body').removeEventListener('click', onBodyClick);
+      document.querySelector("body").removeEventListener("click", onBodyClick);
     };
   }, []);
 
   useEffect(() => {
-    document.querySelector('.header-search.show-results') &&
+    document.querySelector(".header-search.show-results") &&
       document
-        .querySelector('.header-search.show-results')
-        .classList.remove('show-results');
+        .querySelector(".header-search.show-results")
+        .classList.remove("show-results");
+    getMyDishsItems();
   }, [router.pathname]);
 
   function onMenuClick(e) {
     e.preventDefault();
     e.stopPropagation();
-    e.currentTarget.parentNode.classList.toggle('show');
+    e.currentTarget.parentNode.classList.toggle("show");
   }
 
   function onBodyClick(e) {
-    if (e.target.closest('.header-search'))
+    if (e.target.closest(".header-search"))
       return (
-        e.target.closest('.header-search').classList.contains('show-results') ||
-        e.target.closest('.header-search').classList.add('show-results')
+        e.target.closest(".header-search").classList.contains("show-results") ||
+        e.target.closest(".header-search").classList.add("show-results")
       );
 
-    document.querySelector('.header-search.show') &&
-      document.querySelector('.header-search.show').classList.remove('show');
-    document.querySelector('.header-search.show-results') &&
+    document.querySelector(".header-search.show") &&
+      document.querySelector(".header-search.show").classList.remove("show");
+    document.querySelector(".header-search.show-results") &&
       document
-        .querySelector('.header-search.show-results')
-        .classList.remove('show-results');
+        .querySelector(".header-search.show-results")
+        .classList.remove("show-results");
   }
 
   return (
@@ -62,12 +65,12 @@ function SearchForm() {
       <div
         className="input-wrapper"
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-start',
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-start",
         }}
         onClick={(e: any) => {
-          e.currentTarget.parentNode.classList.toggle('show');
+          e.currentTarget.parentNode.classList.toggle("show");
         }}
       >
         <Link
@@ -90,7 +93,17 @@ function SearchForm() {
           <i className="d-icon-money mr-1"></i>
           Estado de Cuenta
         </Link>
-
+        {
+          //todo: change this to filter by ingredient code and validate groups can upload invoices
+          items.find((item) =>
+            codesToGetSnapsMenu.includes(item.ingredient.code)
+          ) && (
+            <Link href="/pages/upload-invoices">
+              <i className="d-icon-camera1 mr-1 mb-1"></i>
+              Subir Facturas
+            </Link>
+          )
+        }
         {/* <Link href="/pages/change-my-password" className="mb-2">
           <i className="d-icon-lock mr-1"></i>
           Cambiar Mi Contraseña
@@ -105,4 +118,4 @@ function SearchForm() {
   );
 }
 
-export default withApollo({ ssr: typeof window === 'undefined' })(SearchForm);
+export default withApollo({ ssr: typeof window === "undefined" })(SearchForm);
