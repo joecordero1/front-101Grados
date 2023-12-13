@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
-import Helmet from 'react-helmet';
-import { Autocomplete, Button, TextField } from '@mui/material';
+import { useEffect, useState } from "react";
+import Helmet from "react-helmet";
+import { Autocomplete, Button, TextField } from "@mui/material";
 
-import ALink from '~/components/features/custom-link';
-import AddressesList from '~/components/partials/addresses/AddressesList';
+import ALink from "~/components/features/custom-link";
+import AddressesList from "~/components/partials/addresses/AddressesList";
 
-import { useAuth, useCart, useProgram, useLogs } from '~/hooks';
-import { cities } from '~/utils/types/city';
-import { OptionLabel } from '~/utils/types';
-import { withAuth } from 'components/AuthGuard';
+import { useAuth, useCart, useProgram, useLogs } from "~/hooks";
+import { cities } from "~/utils/types/city";
+import { OptionLabel } from "~/utils/types";
+import { withAuth } from "components/AuthGuard";
 
 function Checkout(props) {
   const {
@@ -31,9 +31,9 @@ function Checkout(props) {
   }, []);
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -47,7 +47,7 @@ function Checkout(props) {
 
       <div
         className={`page-content pt-7 pb-10 ${
-          items.length > 0 ? 'mb-10' : 'mb-2'
+          items.length > 0 ? "mb-10" : "mb-2"
         }`}
       >
         <div className="step-by pr-4 pl-4">
@@ -95,7 +95,7 @@ function Checkout(props) {
                           type="text"
                           className="form-control"
                           name="alias"
-                          placeholder={'casa, trabajo, casa2'}
+                          placeholder={"casa, trabajo, casa2"}
                           required
                         />
                       </div>
@@ -106,14 +106,14 @@ function Checkout(props) {
                           disablePortal
                           options={cities}
                           getOptionLabel={(option: OptionLabel) =>
-                            option ? `${option.label}` : ''
+                            option ? `${option.label}` : ""
                           }
                           renderInput={(params) => (
                             <TextField {...params} label="Ciudad" />
                           )}
                           onChange={(_, value: OptionLabel) =>
                             handleNewAddressChange(
-                              'city',
+                              "city",
                               value ? value.value : null
                             )
                           }
@@ -225,7 +225,7 @@ function Checkout(props) {
                     <Button
                       size="large"
                       variant="contained"
-                      disabled={status === 'loading' ? true : false}
+                      disabled={status === "loading" ? true : false}
                       onClick={() => saveAddress()}
                       style={{ fontSize: 12 }}
                     >
@@ -266,14 +266,14 @@ function Checkout(props) {
                           </thead>
                           <tbody>
                             {items.map((item) => (
-                              <tr key={'checkout-' + item.award.name}>
+                              <tr key={"checkout-" + item.award.name}>
                                 <td className="product-name">
                                   {`${item.award.name} ${
                                     item.award.model
-                                      ? '-' + item.award.model
-                                      : ''
+                                      ? "-" + item.award.model
+                                      : ""
                                   }-${item.award.brand.name}${
-                                    item.variant ? '-' + item.variant.name : ''
+                                    item.variant ? "-" + item.variant.name : ""
                                   }`}
                                   <span className="product-quantity">
                                     ×&nbsp;{item.quantity}
@@ -291,7 +291,44 @@ function Checkout(props) {
                             </thead>
                             <tr>
                               <td className="product-name">
-                                <p style={{ textAlign: 'left' }}>
+                                <p style={{ textAlign: "left" }}>
+                                  Ciudad : &nbsp;
+                                  {
+                                    availableAdresses.filter(
+                                      (address) =>
+                                        address.id === selectedAdressId
+                                    )[0]?.city
+                                  }
+                                  <br />
+                                  Sector: &nbsp;
+                                  {availableAdresses.filter(
+                                    (address) => address.id === selectedAdressId
+                                  )[0]?.sector || "No especificado"}
+                                  <br />
+                                  Nombre: &nbsp;
+                                  {
+                                    availableAdresses.filter(
+                                      (address) =>
+                                        address.id === selectedAdressId
+                                    )[0]?.alias
+                                  }
+                                  <br />
+                                  Contacto: &nbsp;
+                                  {
+                                    availableAdresses.filter(
+                                      (address) =>
+                                        address.id === selectedAdressId
+                                    )[0]?.contactName
+                                  }
+                                  <br />
+                                  Teléfono: &nbsp;
+                                  {
+                                    availableAdresses.filter(
+                                      (address) =>
+                                        address.id === selectedAdressId
+                                    )[0]?.contactPhone
+                                  }
+                                  <br />
                                   Calle Principal: &nbsp;
                                   {
                                     availableAdresses.filter(
@@ -343,7 +380,7 @@ function Checkout(props) {
                         selectedAdressId ? (
                           items.length > 1 ? (
                             <ALink
-                              href={status !== 'error' ? '/pages/order' : '#'}
+                              href={status !== "error" ? "/pages/order" : "#"}
                               className="btn btn-dark btn-rounded btn-order"
                               onClick={() => redeemAll()}
                             >
@@ -351,7 +388,7 @@ function Checkout(props) {
                             </ALink>
                           ) : (
                             <ALink
-                              href={status !== 'error' ? '/pages/order' : '#'}
+                              href={status !== "error" ? "/pages/order" : "#"}
                               className="btn btn-dark btn-rounded btn-order"
                               onClick={() => redeemAll()}
                             >
