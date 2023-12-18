@@ -6,17 +6,14 @@ import "react-toastify/dist/ReactToastify.min.css";
 import "react-image-lightbox/style.css";
 import "react-input-range/lib/css/index.css";
 
-import ALink from "~/components/features/custom-link";
 import Header from "~/components/common/header";
 import Footer from "~/components/common/footer";
 import StickyFooter from "~/components/common/sticky-footer";
 import Quickview from "~/components/features/product/common/quickview-modal";
 import VideoModal from "~/components/features/modals/video-modal";
-import MobileMenu from "~/components/common/partials/mobile-menu";
 import { modalActions } from "~/store/modal";
 import {
   showScrollTopHandler,
-  scrollTopHandler,
   stickyHeaderHandler,
   stickyFooterHandler,
 } from "~/utils";
@@ -25,13 +22,7 @@ import { useProgram, useAuth } from "hooks";
 
 function Layout({ children, closeQuickview }) {
   const { program } = useProgram();
-  const {
-    isLoggedIn,
-    participant,
-    loginWithToken,
-    getAvailablePoints,
-    availablePoints,
-  } = useAuth();
+  const { isLoggedIn, participant } = useAuth();
   const router = useRouter();
 
   useLayoutEffect(() => {
