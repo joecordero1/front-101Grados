@@ -74,6 +74,12 @@ function Layout({ children, closeQuickview }) {
     }
   }, [isLoggedIn, participant]);
 
+  useEffect(() => {
+    if (isLoggedIn && !program?.isStoreActive) {
+      router.push("/");
+    }
+  }, [isLoggedIn, program?.isStoreActive]);
+
   if (!program) {
     return (
       <>
