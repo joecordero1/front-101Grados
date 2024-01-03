@@ -91,13 +91,23 @@ export default function Header(props) {
                     Soporte:
                   </ALink>{" "}
                 </h4>
-                <p>
-                  <ALink
-                    href={`https://api.whatsapp.com/send?phone=593${program.supportPhone}&text=Hola!%20Soy%20un%20participante%20del%20programa%20${program.name},%20mi%20usuario%20es%20${participant.fullName},%20y%20tengo%20una%20duda%20sobre...`}
-                  >
-                    {program.supportPhone}
-                  </ALink>
-                </p>
+                {program.supportPhone.length > 1 ? (
+                  <p>
+                    <ALink
+                      href={`https://api.whatsapp.com/send?phone=593${program.supportPhone}&text=Hola!%20Soy%20un%20participante%20del%20programa%20${program.name},%20mi%20usuario%20es%20${participant.fullName},%20y%20tengo%20una%20duda%20sobre...`}
+                    >
+                      {program.supportPhone}
+                    </ALink>
+                  </p>
+                ) : (
+                  <p>
+                    <ALink
+                      href={`mailto:${program.supportEmail}&text=Hola!%20Soy%20un%20participante%20del%20programa%20${program.name},%20mi%20usuario%20es%20${participant.fullName},%20y%20tengo%20una%20duda%20sobre...`}
+                    >
+                      {program.supportEmail}
+                    </ALink>
+                  </p>
+                )}
               </div>
             </div>
             <span className="divider mr-4"></span>

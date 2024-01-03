@@ -68,17 +68,23 @@ const PrivacyPolicy = () => {
           organismo regulador. ¿Cómo puede acceder y controlar su información?
           Puede acceder y actualizar su información personal iniciando sesión en
           su cuenta en la Aplicación. También puede solicitar que eliminemos su
-          información personal contactándonos en {program.supportPhone}. Tenga
-          en cuenta que podemos conservar cierta información según lo requerido
-          por la ley o para fines comerciales legítimos. Cambios en nuestra
-          Política de privacidad Podemos actualizar esta Política de privacidad
-          de vez en cuando para reflejar cambios en nuestras prácticas o para
-          cumplir con las leyes aplicables. Le notificaremos de cualquier cambio
-          importante publicando un aviso en la Aplicación o por correo
-          electrónico. Contáctenos Si tiene alguna pregunta o inquietud sobre
-          esta Política de privacidad, comuníquese con nosotros en{" "}
-          {program.supportPhone}. Al utilizar la Aplicación, usted acepta
-          nuestra recopilación, uso y divulgación de su información
+          información personal contactándonos en{" "}
+          {program.supportPhone.length > 0
+            ? program.supportPhone
+            : program.supportEmail}
+          . Tenga en cuenta que podemos conservar cierta información según lo
+          requerido por la ley o para fines comerciales legítimos. Cambios en
+          nuestra Política de privacidad Podemos actualizar esta Política de
+          privacidad de vez en cuando para reflejar cambios en nuestras
+          prácticas o para cumplir con las leyes aplicables. Le notificaremos de
+          cualquier cambio importante publicando un aviso en la Aplicación o por
+          correo electrónico. Contáctenos Si tiene alguna pregunta o inquietud
+          sobre esta Política de privacidad, comuníquese con nosotros en{" "}
+          {program.supportPhone.length > 0
+            ? program.supportPhone
+            : program.supportEmail}
+          . Al utilizar la Aplicación, usted acepta nuestra recopilación, uso y
+          divulgación de su información
         </p>
         <Button
           type="button"
