@@ -1,4 +1,3 @@
-// alert('11 Hello from snake.js');
 // https://tetris.fandom.com/wiki/Tetris_Guideline
 
 // get a random integer between the range of [min,max]
@@ -13,7 +12,7 @@ function getRandomInt(min, max) {
 // generate a new tetromino sequence
 // @see https://tetris.fandom.com/wiki/Random_Generator
 function generateSequence() {
-  const sequence = ['I', 'J', 'L', 'O', 'S', 'T', 'Z'];
+  const sequence = ["I", "J", "L", "O", "S", "T", "Z"];
 
   while (sequence.length) {
     const rand = getRandomInt(0, sequence.length - 1);
@@ -35,7 +34,7 @@ function getNextTetromino() {
   const col = playfield[0].length / 2 - Math.ceil(matrix[0].length / 2);
 
   // I starts on row 21 (-1), all others start on row 22 (-2)
-  const row = name === 'I' ? -1 : -2;
+  const row = name === "I" ? -1 : -2;
 
   return {
     name: name, // name of the piece (L, O, etc.)
@@ -112,20 +111,20 @@ function showGameOver() {
   cancelAnimationFrame(rAF);
   gameOver = true;
 
-  context.fillStyle = 'black';
+  context.fillStyle = "black";
   context.globalAlpha = 0.75;
   context.fillRect(0, canvas.height / 2 - 30, canvas.width, 60);
 
   context.globalAlpha = 1;
-  context.fillStyle = 'white';
-  context.font = '36px monospace';
-  context.textAlign = 'center';
-  context.textBaseline = 'middle';
-  context.fillText('GAME OVER!', canvas.width / 2, canvas.height / 2);
+  context.fillStyle = "white";
+  context.font = "36px monospace";
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  context.fillText("GAME OVER!", canvas.width / 2, canvas.height / 2);
 }
 
-const canvas = document.getElementById('game');
-const context = canvas.getContext('2d');
+const canvas = document.getElementById("game");
+const context = canvas.getContext("2d");
 
 const grid = 32;
 const tetrominoSequence = [];
@@ -185,13 +184,13 @@ const tetrominos = {
 
 // color of each tetromino
 const colors = {
-  I: 'cyan',
-  O: 'yellow',
-  T: 'purple',
-  S: 'green',
-  Z: 'red',
-  J: 'blue',
-  L: 'orange',
+  I: "gray",
+  O: "gray",
+  T: "gray",
+  S: "gray",
+  Z: "gray",
+  J: "gray",
+  L: "gray",
 };
 
 let count = 0;
@@ -250,7 +249,7 @@ function loop() {
 }
 
 // listen to keyboard events to move the active tetromino
-document.addEventListener('keydown', function (e) {
+document.addEventListener("keydown", function (e) {
   if (gameOver) return;
 
   // left and right arrow keys (move)
