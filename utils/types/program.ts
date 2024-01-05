@@ -38,4 +38,5 @@ export interface Program {
   hasAcademy: boolean;
   academyUrl: null;
   isDeleted: boolean;
+  supportEmail: string;
 }
