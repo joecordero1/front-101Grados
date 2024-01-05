@@ -32,9 +32,9 @@ const TetrisBoard: React.FC<TetrisBoardProps> = (props) => {
     <div className="tetris-board">
       {/* Game info */}
       <div className="tetris-board__info">
-        <p className="tetris-board__text">Level: {props.level}</p>
+        <p className="tetris-board__text">Nivel: {props.level}</p>
 
-        <p className="tetris-board__text">Score: {props.score}</p>
+        <p className="tetris-board__text">Puntaje: {props.score}</p>
 
         {props.gameOver && (
           <p className="tetris-board__text">
