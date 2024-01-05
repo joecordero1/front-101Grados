@@ -27,11 +27,6 @@ function HomePage() {
   const { myCatalogues } = useSpecialCatalogues();
   const { program } = useProgram();
 
-  useEffect(() => {
-    // @ts-ignore
-    import("../public/js/tetris.js/index.js").then(() => {});
-  }, []);
-
   return (
     <div className="main home">
       <Helmet>

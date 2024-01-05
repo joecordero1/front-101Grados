@@ -4,7 +4,7 @@ import Tetris from "./tetris/tetris";
 const GamesHome = () => {
   return (
     <div>
-      <Tetris boardWidth="10" boardHeight="20" />
+      <Tetris boardWidth={10} boardHeight={20} />
     </div>
   );
 };

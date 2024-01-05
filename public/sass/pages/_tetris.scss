@@ -7,6 +7,7 @@
 .tetris-board {
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
 }
 
 .tetris-board__info {
@@ -35,31 +36,31 @@
 
 /* Colors for tiles */
 .col-tetris-1 {
-  background-color: #f21620;
+  background-color: #969696;
 }
 
 .col-tetris-2 {
-  background-color: #10ac84;
+  background-color: #cecccc;
 }
 
 .col-tetris-3 {
-  background-color: #5f27cd;
+  background-color: #868585;
 }
 
 .col-tetris-4 {
-  background-color: #d925cf;
+  background-color: #e4e1e1;
 }
 
 .col-tetris-5 {
-  background-color: #48dbfb;
+  background-color: #a3a2a2;
 }
 
 .col-tetris-6 {
-  background-color: #fd4964;
+  background-color: #b2b2b2;
 }
 
 .col-tetris-7 {
-  background-color: #72fa4e;
+  background-color: #9c9b9b;
 }
 
 /* Styles for buttons */
