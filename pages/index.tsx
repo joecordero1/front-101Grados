@@ -27,6 +27,11 @@ function HomePage() {
   const { myCatalogues } = useSpecialCatalogues();
   const { program } = useProgram();
 
+  useEffect(() => {
+    // @ts-ignore
+    import('../public/js/snake.js').then(() => {});
+  }, []);
+
   return (
     <div className="main home">
       <Helmet>
@@ -43,6 +48,15 @@ function HomePage() {
             <ServiceBox />
           </div>
         </div>
+
+        <canvas
+          style={{
+            border: '1px solid red',
+          }}
+          width="320"
+          height="640"
+          id="game"
+        ></canvas>
 
         {program.isStoreActive && (
           <>
