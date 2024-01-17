@@ -1,13 +1,13 @@
-import React, { FC } from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import React, { FC } from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
-import ALink from '~/components/features/custom-link';
+import ALink from "~/components/features/custom-link";
 
-import { CatalogueItem } from '../../../utils/types/catalogueItem';
-import { useProgram, useGeneral, useAuth } from 'hooks';
-import { toDecimal } from '~/utils';
-import { useLogs } from 'hooks';
-import { LogType } from '~/utils/types/logType';
+import { CatalogueItem } from "../../../utils/types/catalogueItem";
+import { useProgram, useGeneral, useAuth } from "hooks";
+import { toDecimal } from "~/utils";
+import { useLogs } from "hooks";
+import { LogType } from "~/utils/types/logType";
 
 type Props = {
   product: CatalogueItem;
@@ -68,8 +68,8 @@ const SmallProduct: FC<Props> = (props) => {
         </ALink>
 
         <div className="product-label-group">
-          {isNew ? <label className="product-label label-new">New</label> : ''}
-          {isTop ? <label className="product-label label-top">Top</label> : ''}
+          {isNew ? <label className="product-label label-new">New</label> : ""}
+          {isTop ? <label className="product-label label-top">Top</label> : ""}
         </div>
 
         <div className="product-action">
@@ -93,12 +93,12 @@ const SmallProduct: FC<Props> = (props) => {
       <div className="product-details">
         <div className="product-cat">
           {product.award.subcategories.map((item, index) => (
-            <React.Fragment key={item.name + '-' + index}>
+            <React.Fragment key={item.name + "-" + index}>
               <ALink
-                href={{ pathname: '/shop', query: { subcategory: item.id } }}
+                href={{ pathname: "/shop", query: { subcategory: item.id } }}
               >
                 {item.name}
-                {index < product.award.subcategories.length - 1 ? ', ' : ''}
+                {index < product.award.subcategories.length - 1 ? ", " : ""}
               </ALink>
             </React.Fragment>
           ))}
@@ -134,7 +134,7 @@ const SmallProduct: FC<Props> = (props) => {
           <div className="ratings-full">
             <span
               className="ratings"
-              style={{ width: 20 * rating + '%' }}
+              style={{ width: 20 * rating + "%" }}
             ></span>
             <span className="tooltiptext tooltip-top">{toDecimal(rating)}</span>
           </div>

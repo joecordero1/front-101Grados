@@ -1,9 +1,9 @@
-import React from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import React from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
-import ALink from '~/components/features/custom-link';
+import ALink from "~/components/features/custom-link";
 
-import { useCategories } from 'hooks';
+import { useCategories } from "hooks";
 
 function CategorySection() {
   const { categories } = useCategories({
@@ -15,7 +15,7 @@ function CategorySection() {
     <section
       className="grey-section pt-8 pb-4"
       style={{
-        backgroundColor: '#EDEDED',
+        backgroundColor: "#EDEDED",
       }}
     >
       <div className="container">
@@ -25,13 +25,13 @@ function CategorySection() {
               <figure className="category-media mr-2">
                 <ALink
                   href={{
-                    pathname: '/shop',
+                    pathname: "/shop",
                     query: { category: category.id },
                   }}
                 >
                   <LazyLoadImage
                     src={
-                      category.image ? category.image : '../../images/empty.jpg'
+                      category.image ? category.image : "../../images/empty.jpg"
                     }
                     alt="Category"
                     // width="100"
@@ -43,8 +43,8 @@ function CategorySection() {
                 <h4 className="category-name font-weight-normal ls-s">
                   <ALink
                     href={{
-                      pathname: '/shop',
-                      query: { category: 'hand-bag-and-backpacks' },
+                      pathname: "/shop",
+                      query: { category: category.id },
                     }}
                   >
                     {category.name}
