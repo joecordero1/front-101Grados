@@ -3,11 +3,12 @@ import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 import React from "react";
 import Helmet from "react-helmet";
-import { useApiAuth, useProgram } from "~/hooks";
+import { useApiAuth, useAuth, useProgram } from "~/hooks";
 const PrivacyPolicy = () => {
   const { program } = useProgram();
   const router = useRouter();
   const { put } = useApiAuth();
+  const { isLoggedIn } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
   const acceptTerms = async () => {
     try {
@@ -86,16 +87,19 @@ const PrivacyPolicy = () => {
           . Al utilizar la Aplicación, usted acepta nuestra recopilación, uso y
           divulgación de su información
         </p>
-        <Button
-          type="button"
-          variant="contained"
-          size="large"
-          style={{ fontSize: 15 }}
-          color="primary"
-          onClick={() => acceptTerms()}
-        >
-          Acepto los terminos y condiciones
-        </Button>
+        {isLoggedIn && (
+          <Button
+            type="button"
+            variant="contained"
+            size="large"
+            style={{ fontSize: 15 }}
+            color="primary"
+            onClick={() => acceptTerms()}
+          >
+            Acepto la política de privacidad de datos y los terminos y
+            condiciones
+          </Button>
+        )}
       </Container>
     </div>
   );
