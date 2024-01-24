@@ -14,10 +14,14 @@ const PrivacyPolicy = () => {
     try {
       await put("/participants/mine", {
         approvedPolicy: true,
+        approvedTermsAndConditions: true,
       });
-      enqueueSnackbar("Términos y condiciones aceptados correctamente", {
-        variant: "success",
-      });
+      enqueueSnackbar(
+        "Politica de privacidad de datos y términos y condiciones aceptados correctamente",
+        {
+          variant: "success",
+        }
+      );
       router.push("/");
     } catch (error) {
       console.error(error, "acceptTerms");
@@ -29,7 +33,7 @@ const PrivacyPolicy = () => {
   return (
     <div>
       <Helmet>
-        <title>Politica de privacidad</title>
+        <title>Politica de privacidad de datos y Terminos y condiciones</title>
       </Helmet>
       <Container sx={{ mt: 2, mb: 7, fontSize: 20 }}>
         <p>
