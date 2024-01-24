@@ -49,7 +49,10 @@ function DetailAward(props: {
           {product.award.subcategories.map((item, index) => (
             <React.Fragment key={item.name + "-" + index}>
               <ALink
-                href={{ pathname: "/shop", query: { category: item.name } }}
+                href={{
+                  pathname: "/shop",
+                  query: { category: item.category.id },
+                }}
               >
                 {item.name}
               </ALink>

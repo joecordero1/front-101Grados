@@ -31,7 +31,7 @@ const TetrisBoard: React.FC<TetrisBoardProps> = (props) => {
   return (
     <div className="tetris-board">
       {/* Game info */}
-      <div className="tetris-board__info">
+      <div className="tetris-board__info" style={{ background: "black" }}>
         <p className="tetris-board__text">Nivel: {props.level}</p>
 
         <p className="tetris-board__text">Puntaje: {props.score}</p>
