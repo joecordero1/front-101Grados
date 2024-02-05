@@ -60,6 +60,7 @@ function Layout({ children, closeQuickview }) {
   }, [router.pathname]);
 
   useEffect(() => {
+    //todo add terms and conditions
     if (isLoggedIn && !participant.approvedPolicy) {
       router.push("/pages/privacy-policy");
     }
