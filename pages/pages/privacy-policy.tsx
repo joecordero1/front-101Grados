@@ -25,9 +25,12 @@ const PrivacyPolicy = () => {
       router.push("/");
     } catch (error) {
       console.error(error, "acceptTerms");
-      enqueueSnackbar("Error al aceptar los términos y condiciones", {
-        variant: "error",
-      });
+      enqueueSnackbar(
+        "Error al aceptar la política de privacidad de datos y términos y condiciones",
+        {
+          variant: "error",
+        }
+      );
     }
   };
   return (
