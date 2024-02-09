@@ -60,7 +60,11 @@ function Layout({ children, closeQuickview }) {
   }, [router.pathname]);
 
   useEffect(() => {
-    if (isLoggedIn && !participant.approvedPolicy) {
+    if (
+      isLoggedIn &&
+      !participant.approvedPolicy &&
+      !participant.approvedTermsAndConditions
+    ) {
       router.push("/pages/privacy-policy");
     }
   }, [isLoggedIn, participant]);

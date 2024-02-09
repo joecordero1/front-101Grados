@@ -11,6 +11,7 @@ export interface Participant {
   document: string;
   isActive: boolean;
   approvedPolicy: boolean;
+  approvedTermsAndConditions: boolean;
 }
 
 export interface EditParticipant
