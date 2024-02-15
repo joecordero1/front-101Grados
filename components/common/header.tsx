@@ -69,7 +69,7 @@ export default function Header(props) {
           </div>
 
           <div className="header-right">
-            <div className="icon-box icon-box-side">
+            <div className="icon-box-side mr-2">
               <div className="icon-box-content d-lg-show mr-2">
                 {program.hasAcademy && (
                   <p>
@@ -80,24 +80,27 @@ export default function Header(props) {
                 )}
               </div>
               <div className="icon-box-icon mr-0 mr-lg-2">
-                <i className="fab fa-whatsapp"></i>
-              </div>
-              <div className="icon-box-content d-lg-show">
-                <h4 className="icon-box-title text-dark text-normal">
-                  <ALink
-                    href="mailto:riode@mail.com"
-                    className="text-primary d-inline-block"
+                {program.supportPhone.length > 1 && (
+                  <a
+                    href={`https://api.whatsapp.com/send?phone=593${program.supportPhone}&text=Hola!%20Soy%20un%20participante%20del%20programa%20${program.name},%20mi%20usuario%20es%20${participant.fullName},%20y%20tengo%20una%20duda%20sobre...`}
+                    target="_blank"
                   >
-                    Soporte:
-                  </ALink>{" "}
+                    <i className="fab fa-whatsapp"></i>
+                  </a>
+                )}
+              </div>
+              <div className="icon-box-content d-lg-show mt-4">
+                <h4 className="icon-box-title text-dark text-normal">
+                  Soporte:
                 </h4>
                 {program.supportPhone.length > 1 ? (
                   <p>
-                    <ALink
+                    <a
                       href={`https://api.whatsapp.com/send?phone=593${program.supportPhone}&text=Hola!%20Soy%20un%20participante%20del%20programa%20${program.name},%20mi%20usuario%20es%20${participant.fullName},%20y%20tengo%20una%20duda%20sobre...`}
+                      target="_blank"
                     >
                       {program.supportPhone}
-                    </ALink>
+                    </a>
                   </p>
                 ) : (
                   <p>
