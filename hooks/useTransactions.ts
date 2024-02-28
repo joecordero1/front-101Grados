@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
-import queryString from 'querystring';
+import { useState, useEffect } from "react";
+import queryString from "querystring";
 
-import { useApiAuth } from '~/hooks';
+import { useApiAuth, useAuth, useProgram } from "~/hooks";
 import {
   Transaction,
   TransactionType,
   PaginationMetaDto,
   AccountBalance,
-} from 'utils/types';
+} from "utils/types";
 
 interface TransactionFilter {
   types?: TransactionType[];
@@ -24,6 +24,7 @@ export const useTransactions = ({
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [accountBalance, setAccountBalance] = useState<AccountBalance>();
   const [loading, setLoading] = useState(false);
+  const { program } = useProgram();
   const [error, setError] = useState(null);
   const { get } = useApiAuth();
   const [filters, setFilters] = useState<TransactionFilter>(
@@ -35,7 +36,7 @@ export const useTransactions = ({
     initialMeta || {
       // page: 1,
       // take: 10,
-      order: 'DESC',
+      order: "DESC",
     }
   );
 
@@ -97,7 +98,11 @@ export const useTransactions = ({
 
   const getAccountBalance = async () => {
     try {
-      const data = await get<AccountBalance>(`/points/my-account-balance`);
+      const data = await get<AccountBalance>(
+        program.id !== 9
+          ? `/points/my-account-balance`
+          : `/points/my-account-balance-hdt`
+      );
       setAccountBalance(data);
       // setLoading(false);
     } catch (e) {
