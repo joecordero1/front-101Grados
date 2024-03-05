@@ -20,6 +20,7 @@ export default function Header(props) {
   const { items, getMyDishsItems } = useDishsItems();
   const { program } = useProgram();
   const codesToGetSnapsMenu = ["IN_SNAPS_01", "IN_SNAPS_05"];
+  const codesToCreatePdvMenu = ["IN_SNAPS_05"];
   const router = useRouter();
   const { dispatchLog } = useLogs();
 
@@ -170,6 +171,7 @@ export default function Header(props) {
                       Cambiar Mi Contraseña
                     </ALink>
                   </li> */}
+
                   {
                     //todo: change this to filter by ingredient code and validate groups can upload invoices
                     items.find((item) =>
@@ -182,6 +184,15 @@ export default function Header(props) {
                       </li>
                     )
                   }
+                  {items.find((item) =>
+                    codesToCreatePdvMenu.includes(item.ingredient.code)
+                  ) && (
+                    <li>
+                      <ALink href="/pages/create-pdv">
+                        Crear Punto de Venta
+                      </ALink>
+                    </li>
+                  )}
 
                   <li
                     key={"blog"}

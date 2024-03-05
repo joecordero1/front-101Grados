@@ -13,6 +13,7 @@ function SearchForm() {
   const { dispatchLog } = useLogs();
   const { items, getMyDishsItems } = useDishsItems();
   const codesToGetSnapsMenu = ["IN_SNAPS_01", "IN_SNAPS_05"];
+  const codesToCreatePdvMenu = ["IN_SNAPS_05"];
   useEffect(() => {
     document.querySelector("body").addEventListener("click", onBodyClick);
 
@@ -104,6 +105,15 @@ function SearchForm() {
             </Link>
           )
         }
+
+        {items.find((item) =>
+          codesToCreatePdvMenu.includes(item.ingredient.code)
+        ) && (
+          <Link href="/pages/create-pdv">
+            <i className="d-icon-map mr-1"></i>
+            Crear Punto de Venta
+          </Link>
+        )}
         {/* <Link href="/pages/change-my-password" className="mb-2">
           <i className="d-icon-lock mr-1"></i>
           Cambiar Mi Contraseña
