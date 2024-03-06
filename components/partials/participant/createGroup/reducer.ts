@@ -20,7 +20,11 @@ type GetParticipants = {
   };
 };
 
-type ActionTypes = HandlePdvData | GetParticipants;
+type clearPdvData = {
+  type: "clear-pdv-data";
+};
+
+type ActionTypes = HandlePdvData | GetParticipants | clearPdvData;
 
 type PdvData = {
   name: string | null;
@@ -60,6 +64,12 @@ const Reducer = (state: State, action: ActionTypes) => {
         participants,
       };
     }
+
+    case "clear-pdv-data":
+      return {
+        ...state,
+        pdvData: initialPdvData,
+      };
     default:
       return state;
   }
@@ -69,7 +79,7 @@ export const useRegisterPdvReducer = () => {
   const [state, dispatch] = useReducer(Reducer, initialState);
   const api = useApi();
   const { enqueueSnackbar } = useSnackbar();
-  const { participant } = useAuth();
+
   const { program } = useProgram();
 
   const handlePdvData = (field: string, value: any) => {
@@ -125,15 +135,20 @@ export const useRegisterPdvReducer = () => {
     }
   };
 
+  const clearPdvData = () => {
+    dispatch({
+      type: "clear-pdv-data",
+    });
+  };
+
   useEffect(() => {
     getParticipants();
   }, []);
-
-  console.log(state.pdvData, "state.pdvData");
 
   return {
     ...state,
     handlePdvData,
     createPdv,
+    clearPdvData,
   };
 };

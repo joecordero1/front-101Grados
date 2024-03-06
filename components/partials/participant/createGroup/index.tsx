@@ -8,7 +8,7 @@ import {
 import { useRegisterPdvReducer } from "./reducer";
 
 const CreateGroup = () => {
-  const { handlePdvData, participants, createPdv, pdvData } =
+  const { handlePdvData, participants, createPdv, pdvData, clearPdvData } =
     useRegisterPdvReducer();
   return (
     <div
@@ -40,7 +40,7 @@ const CreateGroup = () => {
         <Input
           onChange={(e) => handlePdvData("name", e.target.value.toUpperCase())}
           placeholder="Nombre del punto de venta"
-          value={pdvData.name}
+          value={pdvData.name || ""}
           style={{
             fontSize: 16,
           }}
@@ -52,6 +52,7 @@ const CreateGroup = () => {
           onChange={(e, value) =>
             handlePdvData("participantSupervisorId", value)
           }
+          value={pdvData.participantSupervisorId || ""}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -63,7 +64,10 @@ const CreateGroup = () => {
           )}
         />
         <Button
-          onClick={createPdv}
+          onClick={() => {
+            createPdv();
+            clearPdvData();
+          }}
           variant="contained"
           color="primary"
           style={{
