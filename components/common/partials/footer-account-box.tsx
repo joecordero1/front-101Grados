@@ -9,11 +9,11 @@ import useDishsItems from "~/hooks/useDishsItems";
 
 function SearchForm() {
   const router = useRouter();
-  const { logOut } = useAuth();
+  const { logOut, participant } = useAuth();
   const { dispatchLog } = useLogs();
   const { items, getMyDishsItems } = useDishsItems();
   const codesToGetSnapsMenu = ["IN_SNAPS_01", "IN_SNAPS_05"];
-  const codesToCreatePdvMenu = ["IN_SNAPS_05"];
+
   useEffect(() => {
     document.querySelector("body").addEventListener("click", onBodyClick);
 
@@ -106,9 +106,7 @@ function SearchForm() {
           )
         }
 
-        {items.find((item) =>
-          codesToCreatePdvMenu.includes(item.ingredient.code)
-        ) && (
+        {participant.isAConsumerRegistrar && (
           <Link href="/pages/create-pdv">
             <i className="d-icon-map mr-1"></i>
             Crear Punto de Venta
