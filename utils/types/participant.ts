@@ -12,6 +12,7 @@ export interface Participant {
   isActive: boolean;
   approvedPolicy: boolean;
   approvedTermsAndConditions: boolean;
+  isAConsumerRegistrar: boolean;
 }
 
 export interface EditParticipant
