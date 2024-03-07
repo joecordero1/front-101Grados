@@ -1,62 +1,78 @@
-import React from 'react';
-import Helmet from 'react-helmet';
-import { Tabs, Tab, TabList, TabPanel } from 'react-tabs';
-import { useRouter } from 'next/router';
+import React from "react";
+import Helmet from "react-helmet";
+import { Tabs, Tab, TabList, TabPanel } from "react-tabs";
+import { useRouter } from "next/router";
 
-import ALink from '~/components/features/custom-link';
+import ALink from "~/components/features/custom-link";
 
-import { withAuth } from 'components/AuthGuard';
-import { useAuth, useLogs } from 'hooks';
+import { withAuth } from "components/AuthGuard";
+import { useAuth, useLogs, useProgram } from "hooks";
 import {
   AccountDetails,
   Requests,
   Statement,
   Addresses,
-} from 'components/account';
-import { LogType } from '~/utils/types/logType';
+} from "components/account";
+import { LogType } from "~/utils/types/logType";
 
 function Account() {
   const { participant, logOut } = useAuth();
+  const { program } = useProgram();
   const { dispatchLog } = useLogs();
   const router = useRouter();
   const query = router.query;
   const [activeTab, setActiveTab] = React.useState(0);
 
+  const parseIndexIntoTabWithOutAccountStatement = (index: number) => {
+    switch (index) {
+      case 0:
+        return "dashboard";
+      case 1:
+        return "details";
+      case 2:
+        return "requests";
+      case 3:
+        return "addresses";
+      default:
+        return "dashboard";
+    }
+  };
+
   const parseIndexIntoTab = (index: number) => {
     switch (index) {
       case 0:
-        return 'dashboard';
+        return "dashboard";
       case 1:
-        return 'details';
+        return "details";
       case 2:
-        return 'requests';
+        return "requests";
       case 3:
-        return 'account-statement';
+        return "account-statement";
       case 4:
-        return 'addresses';
+        return "addresses";
       default:
-        return 'dashboard';
+        return "dashboard";
     }
   };
 
   const parseTabIntoIndex = (
     tab:
-      | 'dashboard'
-      | 'details'
-      | 'requests'
-      | 'account-statement'
-      | 'addresses'
+      | "dashboard"
+      | "details"
+      | "requests"
+      | "account-statement"
+      | "addresses"
   ) => {
     switch (tab) {
-      case 'dashboard':
+      case "dashboard":
         return 0;
-      case 'details':
+      case "details":
         return 1;
-      case 'requests':
+      case "requests":
         return 2;
-      case 'account-statement':
+      case "account-statement":
         return 3;
-      case 'addresses':
+      case "addresses":
         return 4;
       default:
         return 0;
@@ -65,11 +81,11 @@ function Account() {
 
   const handleTabChange = () => {
     const queryTab = query.tab as
-      | 'dashboard'
-      | 'details'
-      | 'requests'
-      | 'account-statement'
-      | 'addresses';
+      | "dashboard"
+      | "details"
+      | "requests"
+      | "account-statement"
+      | "addresses";
     const index = parseTabIntoIndex(queryTab);
     setActiveTab(index);
   };
@@ -108,7 +124,10 @@ function Account() {
             selectedTabPanelClassName="active"
             className="tab tab-vertical gutter-lg"
             onSelect={(index: number) => {
-              const tab = parseIndexIntoTab(index);
+              const tab =
+                program.id === 7
+                  ? parseIndexIntoTabWithOutAccountStatement(index)
+                  : parseIndexIntoTab(index);
               if (index === 5) {
                 router.push(`/`, undefined, {
                   shallow: true,
@@ -140,14 +159,17 @@ function Account() {
               >
                 <a className="nav-link">Solicitudes</a>
               </Tab>
-              <Tab
-                className="nav-item"
-                onClick={() => {
-                  dispatchLog(LogType.OPEN_MY_ACCOUNT_BALANCE, {});
-                }}
-              >
-                <a className="nav-link">Estado de Cuenta</a>
-              </Tab>
+              {program.id !== 7 && (
+                <Tab
+                  className="nav-item"
+                  onClick={() => {
+                    dispatchLog(LogType.OPEN_MY_ACCOUNT_BALANCE, {});
+                  }}
+                >
+                  <a className="nav-link">Estado de Cuenta</a>
+                </Tab>
+              )}
+
               <Tab className="nav-item">
                 <a className="nav-link">Direcciones</a>
               </Tab>
@@ -161,15 +183,15 @@ function Account() {
             <div className="tab-content col-lg-9 col-md-8">
               <TabPanel className="tab-pane dashboard">
                 <p className="mb-0">
-                  Hola! <span>{participant.fullName}</span> (no eres{' '}
-                  <span>{participant.firstName}</span>?{' '}
+                  Hola! <span>{participant.fullName}</span> (no eres{" "}
+                  <span>{participant.firstName}</span>?{" "}
                   <ALink href="#" className="text-primary">
                     Salir
                   </ALink>
                   )
                 </p>
                 <p className="mb-8">
-                  Desde el panel de tu cuenta podrás ver{' '}
+                  Desde el panel de tu cuenta podrás ver{" "}
                   <ALink
                     href="/pages/my-requests"
                     className="link-to-tab text-primary"

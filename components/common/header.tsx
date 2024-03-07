@@ -156,16 +156,19 @@ export default function Header(props) {
                       Mis Solicitudes
                     </ALink>
                   </li>
-                  <li>
-                    <ALink
-                      href="/pages/account/?tab=account-statement"
-                      onClick={() => {
-                        dispatchLog(LogType.OPEN_MY_ACCOUNT_BALANCE, {});
-                      }}
-                    >
-                      Estado de cuenta
-                    </ALink>
-                  </li>
+                  {program.id !== 7 && (
+                    <li>
+                      <ALink
+                        href="/pages/account/?tab=account-statement"
+                        onClick={() => {
+                          dispatchLog(LogType.OPEN_MY_ACCOUNT_BALANCE, {});
+                        }}
+                      >
+                        Estado de cuenta
+                      </ALink>
+                    </li>
+                  )}
+
                   {/* <li>
                     <ALink href="/pages/change-my-password">
                       Cambiar Mi Contraseña

@@ -3,13 +3,14 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 import withApollo from "~/server/apollo";
-import { useLogs, useAuth } from "hooks";
+import { useLogs, useAuth, useProgram } from "hooks";
 import { LogType } from "~/utils/types/logType";
 import useDishsItems from "~/hooks/useDishsItems";
 
 function SearchForm() {
   const router = useRouter();
   const { logOut, participant } = useAuth();
+  const { program } = useProgram();
   const { dispatchLog } = useLogs();
   const { items, getMyDishsItems } = useDishsItems();
   const codesToGetSnapsMenu = ["IN_SNAPS_01", "IN_SNAPS_05"];
@@ -90,10 +91,13 @@ function SearchForm() {
           <i className="d-icon-truck mr-1"></i>
           Mis Solicitudes
         </Link>
-        <Link href="/pages/account/?tab=account-statement" className="mb-2">
-          <i className="d-icon-money mr-1"></i>
-          Estado de Cuenta
-        </Link>
+        {program.id !== 7 && (
+          <Link href="/pages/account/?tab=account-statement" className="mb-2">
+            <i className="d-icon-money mr-1"></i>
+            Estado de Cuenta
+          </Link>
+        )}
+
         {
           //todo: change this to filter by ingredient code and validate groups can upload invoices
           items.find((item) =>
