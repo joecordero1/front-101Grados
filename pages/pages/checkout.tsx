@@ -84,7 +84,7 @@ function Checkout(props) {
                     <h5>Nueva dirección</h5>
                     <div className="row">
                       <div className="col-xs-6">
-                        <label>Nombre de la dirección *</label>
+                        <label>Alias *</label>
                         <input
                           onChange={(e) =>
                             handleNewAddressChange(
@@ -95,7 +95,7 @@ function Checkout(props) {
                           type="text"
                           className="form-control"
                           name="alias"
-                          placeholder={"casa, trabajo, casa2"}
+                          placeholder={"Por ejemplo: casa, trabajo, casa2"}
                           required
                         />
                       </div>
