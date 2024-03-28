@@ -156,7 +156,7 @@ export default function Header(props) {
                       Mis Solicitudes
                     </ALink>
                   </li>
-                  {program.id !== 7 && (
+                  {program.id !== 7 && program.id !== 6 && (
                     <li>
                       <ALink
                         href="/pages/account/?tab=account-statement"
