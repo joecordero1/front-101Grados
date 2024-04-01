@@ -9,8 +9,7 @@ import {
 } from '@mui/material';
 import { Divider, Stack } from '@mui/material';
 
-import { useAuth } from 'hooks';
-// import { useDishsItems } from '~/hooks';
+import { useAuth, useProgram } from 'hooks';
 import { useResult } from './reducer';
 
 const LinearProgressWrapper = styled(LinearProgress)(
@@ -31,9 +30,9 @@ const LinearProgressWrapper = styled(LinearProgress)(
 );
 
 const ResultsCard = () => {
-  const { participant } = useAuth();
-  // const { couldSeeResults } = useDishsItems();
+  const { participant, availablePoints, loadingPoints } = useAuth();
   const { result } = useResult();
+  const { program } = useProgram();
 
   return (
     <div className="page-content w-100">
@@ -46,9 +45,28 @@ const ResultsCard = () => {
           spacing={0}
         >
           <Box p={2} flexGrow={1}>
-            <Typography variant="h3" textAlign="center">
-              <b>¡Hola {participant?.firstName}!</b>
-            </Typography>
+            <Box>
+              <Typography variant="h3" textAlign="center">
+                <b>¡Hola {participant?.firstName}!</b>
+              </Typography>
+              <h5
+                style={{
+                  textAlign: 'center',
+                  margin: '0 auto',
+                  color: '#5d5e5e',
+                }}
+              >
+                Tienes{' '}
+                {loadingPoints ? (
+                  <>
+                    <i className="fa fa-spinner fa-spin"></i>
+                  </>
+                ) : (
+                  availablePoints
+                )}{' '}
+                {program.coinName}
+              </h5>
+            </Box>
             <Stack
               sx={{
                 mt: 2.5,
@@ -62,9 +80,9 @@ const ResultsCard = () => {
             >
               <Box>
                 <Typography gutterBottom variant="h5">
-                  Te Falta
+                  Objetivo
                 </Typography>
-                <Typography variant="h4">${result.remaining}</Typography>
+                <Typography variant="h4">${result.objective}</Typography>
               </Box>
               <Box>
                 <Typography gutterBottom variant="h5">
@@ -74,9 +92,9 @@ const ResultsCard = () => {
               </Box>
               <Box>
                 <Typography gutterBottom variant="h5">
-                  Objetivo
+                  Te Falta
                 </Typography>
-                <Typography variant="h4">${result.objective}</Typography>
+                <Typography variant="h4">${result.remaining}</Typography>
               </Box>
             </Stack>
           </Box>
