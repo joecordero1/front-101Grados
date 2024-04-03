@@ -159,7 +159,7 @@ function Account() {
               >
                 <a className="nav-link">Solicitudes</a>
               </Tab>
-              {program.id !== 7 && program.id !== 6 && (
+              {program.id !== 7 &&  (
                 <Tab
                   className="nav-item"
                   onClick={() => {

@@ -91,7 +91,7 @@ function SearchForm() {
           <i className="d-icon-truck mr-1"></i>
           Mis Solicitudes
         </Link>
-        {program.id !== 7 && program.id !== 6 && (
+        {program.id !== 7 && (
           <Link href="/pages/account/?tab=account-statement" className="mb-2">
             <i className="d-icon-money mr-1"></i>
             Estado de Cuenta
