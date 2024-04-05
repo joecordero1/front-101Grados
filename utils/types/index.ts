@@ -13,3 +13,4 @@ export * from './snap';
 export * from './ingredient';
 export * from './dishItem';
 export * from './logType';
+export * from './result';
