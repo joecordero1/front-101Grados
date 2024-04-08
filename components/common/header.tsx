@@ -1,42 +1,42 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
-import ALink from '~/components/features/custom-link';
+import ALink from "~/components/features/custom-link";
 
-import CartMenu from '~/components/common/partials/cart-menu';
-import MainMenu from '~/components/common/partials/main-menu';
-import SearchBox from '~/components/common/partials/search-box';
-import { headerBorderRemoveList } from '~/utils/data/menu';
-import { useAuth, useProgram, useLogs } from 'hooks';
-import { LogType } from '~/utils/types/logType';
-import ResultsCard from './partials/results';
-import { useDishsItems } from '~/hooks';
+import CartMenu from "~/components/common/partials/cart-menu";
+import MainMenu from "~/components/common/partials/main-menu";
+import SearchBox from "~/components/common/partials/search-box";
+import { headerBorderRemoveList } from "~/utils/data/menu";
+import { useAuth, useProgram, useLogs } from "hooks";
+import { LogType } from "~/utils/types/logType";
+import ResultsCard from "./partials/results";
+import { useDishsItems } from "~/hooks";
 
 export default function Header(props) {
   const { logOut, availablePoints, participant, accessToken, loadingPoints } =
     useAuth();
   const { items, getMyDishsItems, couldSeeResults } = useDishsItems();
   const { program } = useProgram();
-  const codesToGetSnapsMenu = ['IN_SNAPS_01', 'IN_SNAPS_05'];
+  const codesToGetSnapsMenu = ["IN_SNAPS_01", "IN_SNAPS_05", "IN_SNAPS_08"];
   const router = useRouter();
   const { dispatchLog } = useLogs();
 
   useEffect(() => {
-    let header = document.querySelector('header');
+    let header = document.querySelector("header");
     if (header) {
       if (
         headerBorderRemoveList.includes(router.pathname) &&
-        header.classList.contains('header-border')
+        header.classList.contains("header-border")
       )
-        header.classList.remove('header-border');
+        header.classList.remove("header-border");
       else if (!headerBorderRemoveList.includes(router.pathname))
-        document.querySelector('header').classList.add('header-border');
+        document.querySelector("header").classList.add("header-border");
     }
     getMyDishsItems();
   }, [router.pathname]);
 
   const showMobileMenu = () => {
-    document.querySelector('body').classList.add('mmenu-active');
+    document.querySelector("body").classList.add("mmenu-active");
   };
 
   return (
@@ -103,14 +103,14 @@ export default function Header(props) {
             <span className="divider mr-4"></span>
 
             <ul className="menu menu-active-underline">
-              <li className={`submenu blog-menu  ${''}`}>
+              <li className={`submenu blog-menu  ${""}`}>
                 <div className="icon-box icon-box-side">
                   <div className="icon-box-icon mr-0 mr-lg-2">
                     <i className="d-icon-user"></i>
                   </div>
                 </div>
 
-                <ul style={{ marginLeft: '-60px' }}>
+                <ul style={{ marginLeft: "-60px" }}>
                   <li>
                     <ALink href="/pages/account">Mi Cuenta</ALink>
                   </li>
@@ -124,7 +124,7 @@ export default function Header(props) {
                       Mis Solicitudes
                     </ALink>
                   </li>
-                  {program.id !== 7 &&  (
+                  {program.id !== 7 && (
                     <li>
                       <ALink
                         href="/pages/account/?tab=account-statement"
@@ -157,7 +157,7 @@ export default function Header(props) {
                     </li>
                   )}
 
-                  <li key={'blog'}>
+                  <li key={"blog"}>
                     <ALink
                       href="#"
                       onClick={() => {
@@ -175,7 +175,7 @@ export default function Header(props) {
       </div>
 
       <div
-        className={`header-bottom ${router.pathname === '/' ? '' : 'pb-50'}`}
+        className={`header-bottom ${router.pathname === "/" ? "" : "pb-50"}`}
       >
         <div className="container">{program.isStoreActive && <MainMenu />}</div>
       </div>
@@ -184,28 +184,28 @@ export default function Header(props) {
         <div className="welcome-message">
           <h6
             style={{
-              textAlign: 'center',
-              margin: '0 auto',
-              color: '#5d5e5e',
+              textAlign: "center",
+              margin: "0 auto",
+              color: "#5d5e5e",
             }}
           >
             ¡Hola {participant?.firstName}!
           </h6>
           <h5
             style={{
-              textAlign: 'center',
-              margin: '0 auto',
-              color: '#5d5e5e',
+              textAlign: "center",
+              margin: "0 auto",
+              color: "#5d5e5e",
             }}
           >
-            Tienes{' '}
+            Tienes{" "}
             {loadingPoints ? (
               <>
                 <i className="fa fa-spinner fa-spin"></i>
               </>
             ) : (
               availablePoints
-            )}{' '}
+            )}{" "}
             {program.coinName}
           </h5>
         </div>

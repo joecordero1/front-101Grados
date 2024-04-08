@@ -10,6 +10,7 @@ export enum IngredientCodes {
   "IN_SNAPS_05" = "IN_SNAPS_05",
   "IN_SNAPS_06" = "IN_SNAPS_06",
   "IN_SNAPS_07" = "IN_SNAPS_07",
+  "IN_SNAPS_08" = "IN_SNAPS_08",
   "IN_BAGXX_01" = "IN_BAGXX_01",
   "IN_BAGXX_02" = "IN_BAGXX_02",
   "IN_SKUUL_01" = "IN_SKUUL_01",

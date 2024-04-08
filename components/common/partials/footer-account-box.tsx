@@ -13,7 +13,7 @@ function SearchForm() {
   const { program } = useProgram();
   const { dispatchLog } = useLogs();
   const { items, getMyDishsItems } = useDishsItems();
-  const codesToGetSnapsMenu = ["IN_SNAPS_01", "IN_SNAPS_05"];
+  const codesToGetSnapsMenu = ["IN_SNAPS_01", "IN_SNAPS_05", "IN_SNAPS_08"];
 
   useEffect(() => {
     document.querySelector("body").addEventListener("click", onBodyClick);
