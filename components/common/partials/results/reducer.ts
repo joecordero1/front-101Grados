@@ -82,7 +82,10 @@ export function useResult() {
             type: 'load',
             result: {
               name: result.periodResult.name,
-              remaining: result.value1 - result.result,
+              remaining:
+                result.value1 - result.value2 < 0
+                  ? 0
+                  : result.value1 - result.value2,
               obtained: result.value2,
               objective: result.value1,
               percentage: parseFloat(

@@ -79,19 +79,19 @@ const ResultsCard = () => {
               spacing={2}
             >
               <Box>
-                <Typography gutterBottom variant="h5">
+                <Typography gutterBottom variant="h4">
                   Objetivo
                 </Typography>
                 <Typography variant="h4">${result.objective}</Typography>
               </Box>
               <Box>
-                <Typography gutterBottom variant="h5">
+                <Typography gutterBottom variant="h4">
                   Tienes
                 </Typography>
                 <Typography variant="h4">${result.obtained}</Typography>
               </Box>
               <Box>
-                <Typography gutterBottom variant="h5">
+                <Typography gutterBottom variant="h4">
                   Te Falta
                 </Typography>
                 <Typography variant="h4">${result.remaining}</Typography>
@@ -110,7 +110,7 @@ const ResultsCard = () => {
               alignItems="center"
               justifyContent="space-between"
             >
-              <Typography variant="h5">{result.name}</Typography>
+              <Typography variant="h4">{result.name}</Typography>
               <Typography variant="h5" fontWeight="bold" color="text.primary">
                 {result.percentage}%
               </Typography>
@@ -120,7 +120,7 @@ const ResultsCard = () => {
                 my: 0.5,
               }}
               variant="determinate"
-              value={result.percentage}
+              value={result.percentage > 100 ? 100 : result.percentage}
             />
             <Box
               display="flex"
