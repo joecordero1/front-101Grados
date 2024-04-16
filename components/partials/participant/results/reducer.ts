@@ -1,0 +1,223 @@
+import queryString from "query-string";
+import { useCallback, useEffect, useReducer } from "react";
+import { useApiAuth, useAuth } from "~/hooks";
+import { Result } from "~/utils/types";
+
+type GetMyResults = {
+  type: "GET_MY_RESULTS";
+  payload: {
+    results: Result[];
+  };
+};
+
+type GetGroupedResults = {
+  type: "GET_GROUPED_RESULTS";
+  payload: {
+    results: {
+      parent: Result;
+      children: Result[];
+    }[];
+  };
+};
+
+type HandleStatus = {
+  type: "HANDLE_STATUS";
+  payload: {
+    status: "idle" | "complete";
+  };
+};
+
+type HandleFilter = {
+  type: "HANDLE_FILTER";
+  payload: {
+    name: string;
+    value: any;
+  };
+};
+
+type ActionTypes =
+  | GetMyResults
+  | HandleStatus
+  | HandleFilter
+  | GetGroupedResults;
+
+export type State = {
+  status: "idle" | "complete";
+  results: any;
+  groupedResults: any;
+  filters: {
+    month: number | null;
+    year: number | null;
+  };
+};
+
+const initialState: State = {
+  status: "idle",
+  results: [],
+  groupedResults: [],
+  filters: {
+    // default month is before the current month
+    month: new Date().getMonth(),
+    year: new Date().getFullYear(),
+  },
+};
+
+const reducer = (state: State, action: ActionTypes): State => {
+  switch (action.type) {
+    case "GET_MY_RESULTS":
+      const { results } = action.payload;
+      return {
+        ...state,
+        results,
+      };
+
+    case "GET_GROUPED_RESULTS":
+      const groupedResults = action.payload.results;
+      return {
+        ...state,
+        groupedResults,
+      };
+
+    case "HANDLE_STATUS":
+      const { status } = action.payload;
+      return {
+        ...state,
+        status,
+      };
+
+    case "HANDLE_FILTER":
+      const { name, value } = action.payload;
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          [name]: value,
+        },
+      };
+
+    default:
+      return state;
+  }
+};
+
+export interface ReducerValue extends State {
+  getMyResults: () => void;
+  handleFilter: (name: string, value: any) => void;
+}
+
+export const useMyResults = (): ReducerValue => {
+  const api = useApiAuth();
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { participant } = useAuth();
+
+  const handleFilter = useCallback((name: string, value: string) => {
+    dispatch({
+      type: "HANDLE_FILTER",
+      payload: {
+        name,
+        value,
+      },
+    });
+  }, []);
+
+  const getMyResults = useCallback(async () => {
+    try {
+      const params = {
+        order: "DESC",
+        ignorePagination: true,
+        // just send the filters that are not null
+        ...Object.keys(state.filters).reduce((acc, key) => {
+          if (state.filters[key] !== null) {
+            acc[key] = state.filters[key];
+          }
+          return acc;
+        }, {}),
+      };
+      const query = queryString.stringify(params);
+      const data = await api.get<Result[]>(`/results/my-results?${query}`);
+
+      dispatch({
+        type: "GET_MY_RESULTS",
+        payload: {
+          results: data,
+        },
+      });
+      dispatch({
+        type: "HANDLE_STATUS",
+        payload: {
+          status: "complete",
+        },
+      });
+      console.log("getMyResults", data);
+    } catch (e) {
+      console.error("getMyResults", e);
+    }
+  }, [participant, state.filters]);
+
+  useEffect(() => {
+    getMyResults();
+  }, [getMyResults]);
+
+  const groupResults = () => {
+    dispatch({
+      type: "HANDLE_STATUS",
+      payload: {
+        status: "idle",
+      },
+    });
+
+    const groupedResults: {
+      [key: number]: { parent: Result | null; children: Result[] };
+    } = {};
+    state.results.forEach((result: Result) => {
+      const parentId = result.parent?.id;
+      if (parentId !== undefined && parentId !== null) {
+        if (!groupedResults[parentId]) {
+          groupedResults[parentId] = {
+            parent: null,
+            children: [],
+          };
+        }
+        groupedResults[parentId].children.push(result);
+      } else {
+        groupedResults[result.id] = {
+          parent: result,
+          children: [],
+        };
+      }
+    });
+
+    const result = Object.values(groupedResults).map((group) => {
+      return {
+        parent: group.parent,
+        children: group.children,
+      };
+    });
+
+    dispatch({
+      type: "GET_GROUPED_RESULTS",
+      payload: {
+        results: result,
+      },
+    });
+
+    dispatch({
+      type: "HANDLE_STATUS",
+      payload: {
+        status: "complete",
+      },
+    });
+
+    return result;
+  };
+
+  useEffect(() => {
+    groupResults();
+  }, [state.results]);
+
+  return {
+    ...state,
+    getMyResults,
+    handleFilter,
+  };
+};

@@ -1,4 +1,4 @@
-import { Participant } from './participant';
+import { Participant } from "./participant";
 
 export interface Result {
   id: number;
@@ -12,6 +12,7 @@ export interface Result {
   isAMonthlyResult: boolean;
   participant: Participant;
   periodResult: PeriodResult;
+  parent: Result;
 }
 
 export interface PeriodResult {
