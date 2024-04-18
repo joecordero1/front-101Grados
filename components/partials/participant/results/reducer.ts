@@ -46,7 +46,7 @@ export type State = {
   results: any;
   groupedResults: any;
   filters: {
-    month: number | null;
+    // month?: number | null;
     year: number | null;
   };
 };
@@ -57,7 +57,7 @@ const initialState: State = {
   groupedResults: [],
   filters: {
     // default month is before the current month
-    month: new Date().getMonth(),
+    //month: new Date().getMonth(),
     year: new Date().getFullYear(),
   },
 };
@@ -148,7 +148,6 @@ export const useMyResults = (): ReducerValue => {
           status: "complete",
         },
       });
-      console.log("getMyResults", data);
     } catch (e) {
       console.error("getMyResults", e);
     }
@@ -166,33 +165,25 @@ export const useMyResults = (): ReducerValue => {
       },
     });
 
+    // Initialize an object to store grouped results
     const groupedResults: {
-      [key: number]: { parent: Result | null; children: Result[] };
+      [parentId: number]: Result & { children: Result[] };
     } = {};
+
+    // Iterate over each result
     state.results.forEach((result: Result) => {
       const parentId = result.parent?.id;
       if (parentId !== undefined && parentId !== null) {
         if (!groupedResults[parentId]) {
-          groupedResults[parentId] = {
-            parent: null,
-            children: [],
-          };
+          // If not, initialize an object with all props of result and an empty children array
+          groupedResults[parentId] = { ...result, children: [] };
         }
+        // Push the result into the children array
         groupedResults[parentId].children.push(result);
-      } else {
-        groupedResults[result.id] = {
-          parent: result,
-          children: [],
-        };
       }
     });
-
-    const result = Object.values(groupedResults).map((group) => {
-      return {
-        parent: group.parent,
-        children: group.children,
-      };
-    });
+    // Convert the groupedResults object into an array of objects
+    const result = Object.values(groupedResults);
 
     dispatch({
       type: "GET_GROUPED_RESULTS",

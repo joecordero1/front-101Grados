@@ -13,6 +13,9 @@ export interface Result {
   participant: Participant;
   periodResult: PeriodResult;
   parent: Result;
+  description: string;
+  //this prop is not native to the API but is used to store the parent result
+  children: Result[];
 }
 
 export interface PeriodResult {

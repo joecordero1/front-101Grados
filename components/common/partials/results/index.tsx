@@ -6,11 +6,11 @@ import {
   LinearProgress,
   linearProgressClasses,
   styled,
-} from '@mui/material';
-import { Divider, Stack } from '@mui/material';
+} from "@mui/material";
+import { Divider, Stack } from "@mui/material";
 
-import { useAuth, useProgram } from 'hooks';
-import { useResult } from './reducer';
+import { useAuth, useProgram } from "hooks";
+import { useResult } from "./reducer";
 
 const LinearProgressWrapper = styled(LinearProgress)(
   ({ theme }) => `
@@ -18,8 +18,8 @@ const LinearProgressWrapper = styled(LinearProgress)(
         border-radius: 50px;
 
         &.${linearProgressClasses.colorPrimary} {
-            background-color: ${alpha('#00F', 0.1)};
-            box-shadow: inset 0 1px 2px ${alpha('#000', 0.2)};
+            background-color: ${alpha("#00F", 0.1)};
+            box-shadow: inset 0 1px 2px ${alpha("#000", 0.2)};
         }
         
         & .${linearProgressClasses.bar} {
@@ -38,7 +38,7 @@ const ResultsCard = () => {
     <div className="page-content w-100">
       <Card>
         <Stack
-          direction={{ xs: 'column', md: 'row' }}
+          direction={{ xs: "column", md: "row" }}
           divider={<Divider orientation="vertical" flexItem />}
           justifyContent="space-between"
           alignItems="stretch"
@@ -51,26 +51,26 @@ const ResultsCard = () => {
               </Typography>
               <h5
                 style={{
-                  textAlign: 'center',
-                  margin: '0 auto',
-                  color: '#5d5e5e',
+                  textAlign: "center",
+                  margin: "0 auto",
+                  color: "#5d5e5e",
                 }}
               >
-                Tienes{' '}
+                Tienes{" "}
                 {loadingPoints ? (
                   <>
                     <i className="fa fa-spinner fa-spin"></i>
                   </>
                 ) : (
                   availablePoints
-                )}{' '}
+                )}{" "}
                 {program.coinName}
               </h5>
             </Box>
             <Stack
               sx={{
                 mt: 2.5,
-                textAlign: 'center',
+                textAlign: "center",
               }}
               direction="row"
               divider={<Divider orientation="vertical" flexItem />}
@@ -82,19 +82,25 @@ const ResultsCard = () => {
                 <Typography gutterBottom variant="h4">
                   Objetivo
                 </Typography>
-                <Typography variant="h4">${result.objective}</Typography>
+                <Typography variant="h4">
+                  ${result.objective.toFixed(2)}
+                </Typography>
               </Box>
               <Box>
                 <Typography gutterBottom variant="h4">
                   Tienes
                 </Typography>
-                <Typography variant="h4">${result.obtained}</Typography>
+                <Typography variant="h4">
+                  ${result.obtained.toFixed(2)}
+                </Typography>
               </Box>
               <Box>
                 <Typography gutterBottom variant="h4">
                   Te Falta
                 </Typography>
-                <Typography variant="h4">${result.remaining}</Typography>
+                <Typography variant="h4">
+                  ${result.remaining.toFixed(2)}
+                </Typography>
               </Box>
             </Stack>
           </Box>
@@ -112,7 +118,7 @@ const ResultsCard = () => {
             >
               <Typography variant="h4">{result.name}</Typography>
               <Typography variant="h5" fontWeight="bold" color="text.primary">
-                {result.percentage}%
+                {result.percentage.toFixed(2)}%
               </Typography>
             </Box>
             <LinearProgressWrapper

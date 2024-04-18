@@ -73,12 +73,10 @@ export const useItems = ({
           return acc;
         }, {}) as FilterOptions),
       };
-
       const query = queryString.stringify(params);
       const response = await api.get<Page<CatalogueItem>>(
         "/catalogue-items/store?" + query
       );
-
       setProducts(response.data);
       setMeta(response.meta);
     } catch (err) {
@@ -113,7 +111,7 @@ export const useItems = ({
       buyable: query.buyable ? true : null,
       justOnSale: query.on_sale ? true : null,
       lastDigits: query.last_digits ? (query.last_digits as any) : null,
-      catalogueId: query.catalogue ? (query.catalogue as any) : null,
+      catalogueId: query.catalogueId ? (query.catalogueId as any) : null,
       toSearch: query.search ? (query.search as any) : null,
       orderPoints: query.orderPoints ? (query.orderPoints as any) : null,
     });
