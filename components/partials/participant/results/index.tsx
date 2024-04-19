@@ -108,7 +108,7 @@ const ParticipantResults = () => {
                   <div className="card" key={index}>
                     <div
                       style={{
-                        background: "#E3E3E3",
+                        background: "#c4c4c4",
                         height: "2px",
                         width: "100%",
                       }}
@@ -240,7 +240,7 @@ const ParticipantResults = () => {
                               <div className="card" key={result.id}>
                                 <div
                                   style={{
-                                    background: "#E3E3E3",
+                                    background: "#c4c4c4",
                                     height: "2px",
                                     width: "100%",
                                   }}
@@ -316,12 +316,278 @@ const ParticipantResults = () => {
         </Container>
       ) : (
         <div>
-          {/* <Card 
-          style={{
-            padding: "1rem",
-            margin: "1rem",
-          }}
-        > */}
+          <Card
+            style={{
+              padding: "1rem",
+              margin: "1rem",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <h3>Mis Resultados</h3>
+            <div className="results-container">
+              <FormControl size="medium">
+                <InputLabel
+                  style={{
+                    fontSize: "2rem",
+                  }}
+                >
+                  Año
+                </InputLabel>
+                <Select
+                  name="year"
+                  onChange={(e) => handleFilter("year", e.target.value)}
+                  defaultValue={new Date().getFullYear()}
+                  style={{
+                    fontSize: "1.5rem",
+                  }}
+                >
+                  <MenuItem
+                    value={2024}
+                    style={{
+                      fontSize: "1.5rem",
+                    }}
+                  >
+                    2024
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <div
+              className="results-screen"
+              style={{
+                margin: "1rem",
+              }}
+            >
+              {groupedResults.map((result: Result, index: number) => (
+                <div key={index}>
+                  {result.children.length === 0 ? (
+                    <div className="card" key={index}>
+                      <div
+                        style={{
+                          background: "#c3c3c3",
+                          height: "2px",
+                          width: "100%",
+                        }}
+                      ></div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "start",
+                          justifyContent: "start",
+                          padding: "1rem",
+                        }}
+                      >
+                        <div>
+                          <h2
+                            style={{
+                              fontSize: "1.5rem",
+                              margin: "0",
+                            }}
+                          >
+                            {result.periodResult?.name}
+                          </h2>
+                          <p className="m-0">
+                            Descripción: {""}
+                            <span className="font-weight-bold">
+                              {result.periodResult?.description}
+                            </span>
+                          </p>
+
+                          <p className="m-0">
+                            <span className="font-weight-light">
+                              {result.nameValue1}:{" "}
+                            </span>
+                            {result.value1}
+                          </p>
+                        </div>
+                      </div>
+                      <div>
+                        <p className="m-0">
+                          <span className="font-weight-bold">
+                            {result.nameValue2}:{" "}
+                          </span>
+                          {result.value2}
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div
+                      className="widget-collapsible"
+                      key={index}
+                      style={{
+                        position: "relative",
+                      }}
+                    >
+                      <SlideToggle collapsed={true}>
+                        {({ onToggle, setCollapsibleElement, toggleState }) => (
+                          <>
+                            <div
+                              className={`widget-title ${toggleState.toLowerCase()}`}
+                              onClick={onToggle}
+                            >
+                              <div
+                                className="card"
+                                key={result.id}
+                                style={{
+                                  width: "90vw",
+                                }}
+                              >
+                                <div
+                                  style={{
+                                    display: "flex",
+                                    alignItems: "start",
+                                    justifyContent: "start",
+                                  }}
+                                >
+                                  <div>
+                                    <h2
+                                      style={{
+                                        fontSize: "1.5rem",
+                                        margin: "0",
+                                      }}
+                                    >
+                                      {result.parent?.periodResult?.name}
+                                    </h2>
+                                    <p className="m-0">
+                                      Descripción: {""}
+                                      <span className="font-weight-bold">
+                                        {
+                                          result.parent?.periodResult
+                                            ?.description
+                                        }
+                                      </span>
+                                    </p>
+                                  </div>
+                                </div>
+                                <div>
+                                  <p className="m-0">
+                                    <span className="font-weight-bold">
+                                      {result.parent.nameValue1}:{" "}
+                                    </span>
+
+                                    {result.parent.value1}
+                                  </p>
+                                  <p className="m-0">
+                                    <span className="font-weight-bold">
+                                      {result.parent.nameValue2}:{" "}
+                                    </span>
+                                    {result.parent.value2}
+                                  </p>
+                                  {result.parent.result !== 0 && (
+                                    <p className="m-0">
+                                      <span className="font-weight-bold">
+                                        Cumplimiento{" "}
+                                      </span>
+                                      {result.parent.result}%
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                              <div
+                                style={{
+                                  display: "flex",
+                                }}
+                              >
+                                <span
+                                  style={{
+                                    fontSize: "1.2rem",
+                                    textTransform: "uppercase",
+                                    textDecoration: "underline",
+                                    textAlign: "right",
+                                    width: "100%",
+                                  }}
+                                >
+                                  Ver Detalle
+                                </span>
+                                <span className="toggle-btn parse-content"></span>
+                              </div>
+                            </div>
+
+                            <div
+                              className="overflow-hidden"
+                              ref={setCollapsibleElement}
+                            >
+                              {result.children.map((result) => (
+                                <div className="card" key={result.id}>
+                                  <div
+                                    style={{
+                                      background: "#c3c3c3",
+                                      height: "2px",
+                                      width: "100%",
+                                    }}
+                                  ></div>
+                                  <div
+                                    style={{
+                                      display: "flex",
+                                      alignItems: "start",
+                                      justifyContent: "start",
+                                    }}
+                                  >
+                                    <div>
+                                      <h2
+                                        style={{
+                                          fontSize: "1.5rem",
+                                          margin: "0",
+                                        }}
+                                      >
+                                        {getMonthName(result.month)}
+                                      </h2>
+                                      <p className="m-0">
+                                        Descripción: {""}
+                                        <span className="font-weight-bold">
+                                          {result.description}
+                                        </span>
+                                      </p>
+
+                                      <p className="m-0">
+                                        <span className="font-weight-light">
+                                          {result.nameValue1}:{" "}
+                                        </span>
+                                        {result.value1}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <p className="m-0">
+                                      <span className="font-weight-bold">
+                                        {result.nameValue2}:{" "}
+                                      </span>
+                                      {result.value2}
+                                    </p>
+                                  </div>
+                                </div>
+                              ))}
+                              <div
+                                onClick={onToggle}
+                                style={{
+                                  display: "flex",
+                                }}
+                              >
+                                <span
+                                  style={{
+                                    fontSize: "1.2rem",
+                                    textTransform: "uppercase",
+                                    textDecoration: "underline",
+                                    textAlign: "right",
+                                    width: "100%",
+                                  }}
+                                >
+                                  Ocultar Detalle
+                                </span>
+                              </div>
+                            </div>
+                          </>
+                        )}
+                      </SlideToggle>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </Card>
         </div>
       )}
     </div>
