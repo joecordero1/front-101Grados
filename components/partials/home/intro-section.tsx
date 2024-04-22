@@ -144,14 +144,32 @@ function IntroSection(props) {
               className="banner banner-fixed content-middle banner-radius overlay-zoom"
               style={{ backgroundColor: "#232323" }}
             >
-              <figure>
-                <LazyLoadImage
-                  src={program.heroSection1}
-                  alt="Banner"
-                  width="330"
-                  height="215"
-                />
-              </figure>
+              {myCatalogues.length > 0 ? (
+                <ALink
+                  href={{
+                    pathname: "/shop",
+                    query: { catalogueId: myCatalogues[0].id },
+                  }}
+                >
+                  <figure>
+                    <LazyLoadImage
+                      src={program.heroSection1}
+                      alt="Banner"
+                      width="330"
+                      height="215"
+                    />
+                  </figure>
+                </ALink>
+              ) : (
+                <figure>
+                  <LazyLoadImage
+                    src={program.heroSection1}
+                    alt="Banner"
+                    width="330"
+                    height="215"
+                  />
+                </figure>
+              )}
             </div>
           </div>
           <div className="intro-banner mb-4">
@@ -159,14 +177,32 @@ function IntroSection(props) {
               className="banner banner-fixed content-middle banner-radius overlay-zoom"
               style={{ backgroundColor: "#eca5a9" }}
             >
-              <figure>
-                <LazyLoadImage
-                  src={program.heroSection2}
-                  alt="Banner"
-                  width="330"
-                  height="215"
-                />
-              </figure>
+              {myCatalogues.length > 0 ? (
+                <ALink
+                  href={{
+                    pathname: "/shop",
+                    query: { catalogueId: myCatalogues[0].id },
+                  }}
+                >
+                  <figure>
+                    <LazyLoadImage
+                      src={program.heroSection2}
+                      alt="Banner"
+                      width="330"
+                      height="215"
+                    />
+                  </figure>
+                </ALink>
+              ) : (
+                <figure>
+                  <LazyLoadImage
+                    src={program.heroSection2}
+                    alt="Banner"
+                    width="330"
+                    height="215"
+                  />
+                </figure>
+              )}
             </div>
           </div>
         </div>
