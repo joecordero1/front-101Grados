@@ -73,12 +73,10 @@ export const useItems = ({
           return acc;
         }, {}) as FilterOptions),
       };
-
       const query = queryString.stringify(params);
       const response = await api.get<Page<CatalogueItem>>(
         "/catalogue-items/store?" + query
       );
-
       setProducts(response.data);
       setMeta(response.meta);
     } catch (err) {

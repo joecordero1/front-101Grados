@@ -12,7 +12,7 @@ function SearchForm() {
   const { logOut, participant } = useAuth();
   const { program } = useProgram();
   const { dispatchLog } = useLogs();
-  const { items, getMyDishsItems } = useDishsItems();
+  const { items, getMyDishsItems, couldSeeResults } = useDishsItems();
   const codesToGetSnapsMenu = ["IN_SNAPS_01", "IN_SNAPS_05", "IN_SNAPS_08"];
 
   useEffect(() => {
@@ -114,6 +114,13 @@ function SearchForm() {
           <Link href="/pages/create-pdv">
             <i className="d-icon-map mr-1"></i>
             Crear Punto de Venta
+          </Link>
+        )}
+
+        {couldSeeResults && (
+          <Link href="/pages/my-results">
+            <i className="d-icon-chart mr-1"></i>
+            Mis Resultados
           </Link>
         )}
         {/* <Link href="/pages/change-my-password" className="mb-2">

@@ -157,6 +157,12 @@ export default function Header(props) {
                     </li>
                   )}
 
+                  {couldSeeResults && (
+                    <li>
+                      <ALink href="/pages/my-results">Mis Resultados</ALink>
+                    </li>
+                  )}
+
                   <li key={"blog"}>
                     <ALink
                       href="#"

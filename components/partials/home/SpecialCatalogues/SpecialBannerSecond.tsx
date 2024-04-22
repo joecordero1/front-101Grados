@@ -1,13 +1,13 @@
-import React from 'react';
-import Reveal from 'react-awesome-reveal';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import React from "react";
+import Reveal from "react-awesome-reveal";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
-import ALink from '~/components/features/custom-link';
-import OwlCarousel from '~/components/features/owl-carousel';
-import { fadeInRightShorter } from '~/utils/data/keyframes';
-import { introSlider } from '~/utils/data/carousel';
+import ALink from "~/components/features/custom-link";
+import OwlCarousel from "~/components/features/owl-carousel";
+import { fadeInRightShorter } from "~/utils/data/keyframes";
+import { introSlider } from "~/utils/data/carousel";
 
-import { useSpecialCatalogues } from 'hooks';
+import { useSpecialCatalogues } from "hooks";
 
 function SpecialBannerSecond() {
   const { myCatalogues } = useSpecialCatalogues();
@@ -21,24 +21,23 @@ function SpecialBannerSecond() {
           {myCatalogues.length > 0 &&
             myCatalogues.map((catalogue) => (
               <div className="banner banner-radius">
-                <figure>
-                  <LazyLoadImage src={catalogue.coverImage4} alt="Banner" />
-                </figure>
+                <ALink
+                  href={{
+                    pathname: "/shop",
+                    query: { catalogueId: catalogue.id },
+                  }}
+                >
+                  <figure>
+                    <LazyLoadImage src={catalogue.coverImage4} alt="Banner" />
+                  </figure>
+                </ALink>
                 <div className="banner-content text-right">
                   {/* 
                         // @ts-ignore */}
-                  <Reveal keyframes={fadeInRightShorter} duration={1000}>
-                    <ALink
-                      href={{
-                        pathname: '/shop',
-                        query: { catalogueId: catalogue.id },
-                      }}
-                      className="btn btn-dark btn-outline btn-rounded mt-2"
-                    >
-                      Premios especiales para tí
-                      <i className="d-icon-arrow-right"></i>
-                    </ALink>
-                  </Reveal>
+                  <Reveal
+                    keyframes={fadeInRightShorter}
+                    duration={1000}
+                  ></Reveal>
                 </div>
               </div>
             ))}
