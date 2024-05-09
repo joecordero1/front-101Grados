@@ -1,10 +1,13 @@
-import React from 'react';
-import { format } from 'date-fns';
-import { es } from 'date-fns/locale';
+import React from "react";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 
-import { useTransactions, useProgram } from 'hooks';
-import { TransactionType } from '~/utils/types';
-import { capitalizeFirstChar } from 'utils';
+import { Box } from "@mui/material";
+import { useTransactions, useProgram } from "hooks";
+import { TransactionType } from "~/utils/types";
+import { capitalizeFirstChar } from "utils";
+import styles from "./accountStyles.module.css";
+import { FilterYears } from "./filterYears";
 
 export const Statement = () => {
   const { transactions, loading, filters, handleFilterChange, accountBalance } =
@@ -18,7 +21,7 @@ export const Statement = () => {
         <i
           className="fas fa-spinner fa-spin"
           style={{
-            fontSize: '3rem',
+            fontSize: "3rem",
           }}
         ></i>
       </div>
@@ -29,34 +32,34 @@ export const Statement = () => {
       {/* Account Balance */}
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          borderRadius: '0.5rem',
-          padding: '1.5rem 0rem',
-          backgroundColor: '#EBEBEB',
+          display: "flex",
+          justifyContent: "space-around",
+          borderRadius: "0.5rem",
+          padding: "1.5rem 0rem",
+          backgroundColor: "#EBEBEB",
         }}
       >
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
           <h2
             style={{
               margin: 0,
-              fontSize: '1.9rem',
-              color: '#74D575',
-              textTransform: 'uppercase',
+              fontSize: "1.9rem",
+              color: "#74D575",
+              textTransform: "uppercase",
             }}
           >
             Ingresos
           </h2>
           <span
             style={{
-              fontSize: '1.5rem',
-              fontWeight: 'bold',
+              fontSize: "1.5rem",
+              fontWeight: "bold",
             }}
           >
             {accountBalance?.incomePoints}
@@ -64,25 +67,25 @@ export const Statement = () => {
         </div>
         <div
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
           <h2
             style={{
               margin: 0,
-              fontSize: '1.9rem',
-              color: '#D5635F',
-              textTransform: 'uppercase',
+              fontSize: "1.9rem",
+              color: "#D5635F",
+              textTransform: "uppercase",
             }}
           >
             Egresos
           </h2>
           <span
             style={{
-              fontSize: '1.5rem',
-              fontWeight: 'bold',
+              fontSize: "1.5rem",
+              fontWeight: "bold",
             }}
           >
             {accountBalance?.expensePoints}
@@ -91,121 +94,120 @@ export const Statement = () => {
       </div>
 
       {/* Filtros */}
-      <div
-        style={{
-          backgroundColor: '#F5F5F5',
-          borderRadius: '0.5rem',
-          padding: '1.5rem 1rem',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <input
-            type="checkbox"
-            checked={
-              filters.types && filters.types.includes(TransactionType.INCOME)
-            }
-            onChange={() =>
-              handleFilterChange({
-                types: filters.types?.includes(TransactionType.INCOME)
-                  ? []
-                  : [TransactionType.INCOME],
-              })
-            }
+      <div className={styles.filtersSection}>
+        <Box className={styles.filtersCheckboxesContainer}>
+          <div
             style={{
-              background: 'red',
-              WebkitAppearance: 'checkbox',
-            }}
-            name="justIncomes"
-            id="justIncomes"
-          />
-          <label
-            htmlFor="justIncomes"
-            style={{
-              fontSize: '1.2rem',
-              fontWeight: 'lighter',
-              margin: 0,
-              userSelect: 'none',
+              display: "flex",
+              alignItems: "center",
             }}
           >
-            Solo Ingresos
-          </label>
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <input
-            type="checkbox"
-            checked={
-              filters.types && filters.types.includes(TransactionType.EXPENSE)
-            }
-            onChange={() =>
-              handleFilterChange({
-                types: filters.types?.includes(TransactionType.EXPENSE)
-                  ? []
-                  : [TransactionType.EXPENSE],
-              })
-            }
+            <input
+              type="checkbox"
+              checked={
+                filters.types && filters.types.includes(TransactionType.INCOME)
+              }
+              onChange={() =>
+                handleFilterChange({
+                  types: filters.types?.includes(TransactionType.INCOME)
+                    ? []
+                    : [TransactionType.INCOME],
+                })
+              }
+              style={{
+                background: "red",
+                WebkitAppearance: "checkbox",
+              }}
+              name="justIncomes"
+              id="justIncomes"
+            />
+            <label
+              htmlFor="justIncomes"
+              style={{
+                fontSize: "1.2rem",
+                fontWeight: "lighter",
+                margin: 0,
+                userSelect: "none",
+              }}
+            >
+              Solo Ingresos
+            </label>
+          </div>
+          <div
             style={{
-              background: 'red',
-              WebkitAppearance: 'checkbox',
-            }}
-            name="justExpenses"
-            id="justExpenses"
-          />
-          <label
-            htmlFor="justExpenses"
-            style={{
-              fontSize: '1.2rem',
-              fontWeight: 'lighter',
-              margin: 0,
-              userSelect: 'none',
-            }}
-          >
-            Solo Egresos
-          </label>
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <input
-            type="checkbox"
-            checked={filters.includeRolledBackTransactions}
-            onChange={() =>
-              handleFilterChange({
-                includeRolledBackTransactions:
-                  !filters.includeRolledBackTransactions,
-              })
-            }
-            style={{
-              background: 'red',
-              WebkitAppearance: 'checkbox',
-            }}
-            name="includeRolledBackTransactions"
-            id="includeRolledBackTransactions"
-          />
-          <label
-            htmlFor="includeRolledBackTransactions"
-            style={{
-              fontSize: '1.2rem',
-              fontWeight: 'lighter',
-              margin: 0,
-              userSelect: 'none',
+              display: "flex",
+              alignItems: "center",
             }}
           >
-            Transacciones anuladas
-          </label>
-        </div>
+            <input
+              type="checkbox"
+              checked={
+                filters.types && filters.types.includes(TransactionType.EXPENSE)
+              }
+              onChange={() =>
+                handleFilterChange({
+                  types: filters.types?.includes(TransactionType.EXPENSE)
+                    ? []
+                    : [TransactionType.EXPENSE],
+                })
+              }
+              style={{
+                background: "red",
+                WebkitAppearance: "checkbox",
+              }}
+              name="justExpenses"
+              id="justExpenses"
+            />
+            <label
+              htmlFor="justExpenses"
+              style={{
+                fontSize: "1.2rem",
+                fontWeight: "lighter",
+                margin: 0,
+                userSelect: "none",
+              }}
+            >
+              Solo Egresos
+            </label>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <input
+              type="checkbox"
+              checked={filters.includeRolledBackTransactions}
+              onChange={() =>
+                handleFilterChange({
+                  includeRolledBackTransactions:
+                    !filters.includeRolledBackTransactions,
+                })
+              }
+              style={{
+                background: "red",
+                WebkitAppearance: "checkbox",
+              }}
+              name="includeRolledBackTransactions"
+              id="includeRolledBackTransactions"
+            />
+            <label
+              htmlFor="includeRolledBackTransactions"
+              style={{
+                fontSize: "1.2rem",
+                fontWeight: "lighter",
+                margin: 0,
+                userSelect: "none",
+              }}
+            >
+              Transacciones anuladas
+            </label>
+          </div>
+        </Box>
+        <Box className={styles.filterDateContainer}>
+          <FilterYears />
+        </Box>
       </div>
 
       {/* Transacciones */}
@@ -213,33 +215,33 @@ export const Statement = () => {
         <div
           key={transaction.id}
           style={{
-            display: 'flex',
-            borderBottom: '1px solid #ccc',
-            justifyContent: 'space-between',
-            padding: '1rem 0',
+            display: "flex",
+            borderBottom: "1px solid #ccc",
+            justifyContent: "space-between",
+            padding: "1rem 0",
           }}
         >
           <div
             style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              width: '60%',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              width: "60%",
             }}
           >
             <span
               style={{
-                fontSize: '1.3rem',
-                color: '#989898',
-                fontWeight: 'bold',
+                fontSize: "1.3rem",
+                color: "#989898",
+                fontWeight: "bold",
               }}
             >
               Ref: {transaction.id}
             </span>
             <h6
               style={{
-                fontSize: '1.4rem',
-                fontWeight: 'normal',
+                fontSize: "1.4rem",
+                fontWeight: "normal",
                 // marginBottom: '0.5rem',
                 margin: 0,
               }}
@@ -248,26 +250,26 @@ export const Statement = () => {
             </h6>
             <span
               style={{
-                fontSize: '1.3rem',
-                color: '#999',
+                fontSize: "1.3rem",
+                color: "#999",
               }}
             >
-              {format(new Date(transaction.createdAt), 'dd/MM/yyyy HH:mm')}
+              {format(new Date(transaction.createdAt), "dd/MM/yyyy HH:mm")}
             </span>
             <span
               style={{
-                fontSize: '1.2rem',
-                color: '#999',
-                fontWeight: 'lighter',
+                fontSize: "1.2rem",
+                color: "#999",
+                fontWeight: "lighter",
               }}
             >
               {transaction.type === TransactionType.INCOME
-                ? 'Obtenidos en:'
-                : 'Descontados de:'}{' '}
+                ? "Obtenidos en:"
+                : "Descontados de:"}{" "}
               {capitalizeFirstChar(
                 format(
                   new Date(`${transaction.month} 1 ${transaction.year}`),
-                  'MMMM YYY',
+                  "MMMM YYY",
                   {
                     locale: es,
                   }
@@ -277,31 +279,31 @@ export const Statement = () => {
           </div>
           <div
             style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-end',
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-end",
             }}
           >
             <span
               style={{
-                fontWeight: 'bold',
+                fontWeight: "bold",
                 color:
                   transaction.type === TransactionType.INCOME
-                    ? '#74D575'
-                    : '#D5635F',
-                fontSize: '1.6rem',
-                textAlign: 'right',
-                lineHeight: '1.5rem',
+                    ? "#74D575"
+                    : "#D5635F",
+                fontSize: "1.6rem",
+                textAlign: "right",
+                lineHeight: "1.5rem",
               }}
             >
-              {transaction.type === TransactionType.INCOME ? '+' : '-'}
+              {transaction.type === TransactionType.INCOME ? "+" : "-"}
               {transaction.points} {capitalizeFirstChar(coinName)}
             </span>
             <span
               style={{
-                textAlign: 'right',
-                lineHeight: '1.5rem',
-                marginTop: '0.5rem',
+                textAlign: "right",
+                lineHeight: "1.5rem",
+                marginTop: "0.5rem",
               }}
             >
               {transaction.afterPoints} {capitalizeFirstChar(coinName)}
