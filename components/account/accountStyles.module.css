@@ -1,0 +1,30 @@
+.filtersSection {
+  background-color: #f5f5f5;
+  border-radius: 0.5rem;
+  padding: 1.5rem 1rem;
+  display: flex;
+  width: 100%;
+}
+
+.filtersCheckboxesContainer {
+  flex: 1;
+}
+
+.filterDateContainer {
+  display: flex;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.filterYearContainer {
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.buttonFilterDate {
+}
+
+.filterYearSelector {
+}

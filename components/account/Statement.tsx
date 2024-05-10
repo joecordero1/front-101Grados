@@ -2,14 +2,17 @@ import React from 'react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 
+import { Box } from '@mui/material';
 import { useTransactions, useProgram } from 'hooks';
 import { TransactionType } from '~/utils/types';
 import { capitalizeFirstChar } from 'utils';
+import styles from './accountStyles.module.css';
+import { FilterYears } from './filterYears';
 
 export const Statement = () => {
   const { transactions, loading, filters, handleFilterChange, accountBalance } =
     useTransactions({});
-  const { coinName } = useProgram();
+  const { coinName, program } = useProgram();
 
   // If loading return spinner
   if (loading)
@@ -91,121 +94,123 @@ export const Statement = () => {
       </div>
 
       {/* Filtros */}
-      <div
-        style={{
-          backgroundColor: '#F5F5F5',
-          borderRadius: '0.5rem',
-          padding: '1.5rem 1rem',
-        }}
-      >
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <input
-            type="checkbox"
-            checked={
-              filters.types && filters.types.includes(TransactionType.INCOME)
-            }
-            onChange={() =>
-              handleFilterChange({
-                types: filters.types?.includes(TransactionType.INCOME)
-                  ? []
-                  : [TransactionType.INCOME],
-              })
-            }
+      <div className={styles.filtersSection}>
+        <Box className={styles.filtersCheckboxesContainer}>
+          <div
             style={{
-              background: 'red',
-              WebkitAppearance: 'checkbox',
-            }}
-            name="justIncomes"
-            id="justIncomes"
-          />
-          <label
-            htmlFor="justIncomes"
-            style={{
-              fontSize: '1.2rem',
-              fontWeight: 'lighter',
-              margin: 0,
-              userSelect: 'none',
+              display: 'flex',
+              alignItems: 'center',
             }}
           >
-            Solo Ingresos
-          </label>
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <input
-            type="checkbox"
-            checked={
-              filters.types && filters.types.includes(TransactionType.EXPENSE)
-            }
-            onChange={() =>
-              handleFilterChange({
-                types: filters.types?.includes(TransactionType.EXPENSE)
-                  ? []
-                  : [TransactionType.EXPENSE],
-              })
-            }
+            <input
+              type="checkbox"
+              checked={
+                filters.types && filters.types.includes(TransactionType.INCOME)
+              }
+              onChange={() =>
+                handleFilterChange({
+                  types: filters.types?.includes(TransactionType.INCOME)
+                    ? []
+                    : [TransactionType.INCOME],
+                })
+              }
+              style={{
+                background: 'red',
+                WebkitAppearance: 'checkbox',
+              }}
+              name="justIncomes"
+              id="justIncomes"
+            />
+            <label
+              htmlFor="justIncomes"
+              style={{
+                fontSize: '1.2rem',
+                fontWeight: 'lighter',
+                margin: 0,
+                userSelect: 'none',
+              }}
+            >
+              Solo Ingresos
+            </label>
+          </div>
+          <div
             style={{
-              background: 'red',
-              WebkitAppearance: 'checkbox',
-            }}
-            name="justExpenses"
-            id="justExpenses"
-          />
-          <label
-            htmlFor="justExpenses"
-            style={{
-              fontSize: '1.2rem',
-              fontWeight: 'lighter',
-              margin: 0,
-              userSelect: 'none',
-            }}
-          >
-            Solo Egresos
-          </label>
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-        >
-          <input
-            type="checkbox"
-            checked={filters.includeRolledBackTransactions}
-            onChange={() =>
-              handleFilterChange({
-                includeRolledBackTransactions:
-                  !filters.includeRolledBackTransactions,
-              })
-            }
-            style={{
-              background: 'red',
-              WebkitAppearance: 'checkbox',
-            }}
-            name="includeRolledBackTransactions"
-            id="includeRolledBackTransactions"
-          />
-          <label
-            htmlFor="includeRolledBackTransactions"
-            style={{
-              fontSize: '1.2rem',
-              fontWeight: 'lighter',
-              margin: 0,
-              userSelect: 'none',
+              display: 'flex',
+              alignItems: 'center',
             }}
           >
-            Transacciones anuladas
-          </label>
-        </div>
+            <input
+              type="checkbox"
+              checked={
+                filters.types && filters.types.includes(TransactionType.EXPENSE)
+              }
+              onChange={() =>
+                handleFilterChange({
+                  types: filters.types?.includes(TransactionType.EXPENSE)
+                    ? []
+                    : [TransactionType.EXPENSE],
+                })
+              }
+              style={{
+                background: 'red',
+                WebkitAppearance: 'checkbox',
+              }}
+              name="justExpenses"
+              id="justExpenses"
+            />
+            <label
+              htmlFor="justExpenses"
+              style={{
+                fontSize: '1.2rem',
+                fontWeight: 'lighter',
+                margin: 0,
+                userSelect: 'none',
+              }}
+            >
+              Solo Egresos
+            </label>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
+            <input
+              type="checkbox"
+              checked={filters.includeRolledBackTransactions}
+              onChange={() =>
+                handleFilterChange({
+                  includeRolledBackTransactions:
+                    !filters.includeRolledBackTransactions,
+                })
+              }
+              style={{
+                background: 'red',
+                WebkitAppearance: 'checkbox',
+              }}
+              name="includeRolledBackTransactions"
+              id="includeRolledBackTransactions"
+            />
+            <label
+              htmlFor="includeRolledBackTransactions"
+              style={{
+                fontSize: '1.2rem',
+                fontWeight: 'lighter',
+                margin: 0,
+                userSelect: 'none',
+              }}
+            >
+              Transacciones anuladas
+            </label>
+          </div>
+        </Box>
+        {/* FYI: Remove acount balance download for Socio Adelca */}
+        {program.id !== 7 && (
+          <Box className={styles.filterDateContainer}>
+            <FilterYears />
+          </Box>
+        )}
       </div>
 
       {/* Transacciones */}
@@ -234,7 +239,7 @@ export const Statement = () => {
                 fontWeight: 'bold',
               }}
             >
-              Ref: {transaction.id}
+              #Ref: {transaction.id}
             </span>
             <h6
               style={{
