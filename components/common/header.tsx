@@ -54,7 +54,7 @@ export default function Header(props) {
           <div className="header-right">
             <div className="icon-box-side mr-2">
               <div className="icon-box-content d-lg-show mr-2">
-                {program.hasAcademy && (
+                {program.hasAcademy && program.id !== 3 && (
                   <p>
                     <ALink href={`${program.academyUrl}?token=${accessToken}`}>
                       Capacitaciones
