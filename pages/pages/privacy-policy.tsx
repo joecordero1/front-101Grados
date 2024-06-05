@@ -47,14 +47,14 @@ const PrivacyPolicy = () => {
           móvil {program.name}. ¿Qué información recopilamos? Cuando se registra
           para usar la Aplicación, podemos recopilar la siguiente información de
           usted: Nombre Apellido Número de teléfono Dirección de correo
-          electrónico Documento de identificación Además, la Aplicación puede
+          electrónico Documento de identificación. Además, la Aplicación puede
           requerir acceso a la cámara y la galería de su dispositivo para su
           funcionamiento. ¿Cómo utilizamos su información? Utilizamos la
-          información que recopilamos para: Crear y administrar su cuenta
-          Proporcionarle soporte al cliente Comunicarnos con usted sobre la
-          Aplicación y cualquier actualización o cambio Mejorar la Aplicación y
-          sus características Realizar investigaciones y análisis para
-          comprender mejor cómo se utiliza la Aplicación También podemos
+          información que recopilamos para: Crear y administrar su cuenta,
+          Proporcionarle soporte al cliente, Comunicarnos con usted sobre la
+          Aplicación y cualquier actualización o cambio, Mejorar la Aplicación y
+          sus características, Realizar investigaciones y análisis para
+          comprender mejor cómo se utiliza la Aplicación, También podemos
           utilizar su información personal para cumplir con obligaciones
           legales, proteger nuestros derechos e intereses y prevenir actividades
           fraudulentas o ilegales. ¿Cómo protegemos su información? Tomamos
@@ -65,19 +65,19 @@ const PrivacyPolicy = () => {
           acceso a su información personal a empleados que necesitan conocer la
           información para proporcionarle los servicios ofrecidos por la
           Aplicación. ¿Divulgamos su información a terceros? No vendemos,
-          alquilamos ni compartimos su información personal con terceros para
-          fines de marketing. Podemos divulgar su información personal a
-          proveedores de servicios de terceros que nos ayudan a proporcionar los
-          servicios ofrecidos por la Aplicación. Estos proveedores de servicios
-          están obligados contractualmente a proteger su información personal y
-          solo pueden utilizarla para el propósito específico para el que se
-          divulgó. También podemos divulgar su información personal si estamos
-          obligados a hacerlo por ley o en respuesta a una solicitud legal de
-          una agencia gubernamental o un organismo regulador. ¿Cómo puede
-          acceder y controlar su información? Puede acceder y actualizar su
-          información personal iniciando sesión en su cuenta en la Aplicación.
-          También puede solicitar que eliminemos su información personal
-          contactándonos en{" "}
+          alquilamos ni compartimos su información personal, ni la información
+          que usted carga a la aplicación con terceros para fines comerciales o
+          de marketing. Podemos divulgar su información personal a proveedores
+          de servicios de terceros que nos ayudan a proporcionar los servicios
+          ofrecidos por la Aplicación. Estos proveedores de servicios están
+          obligados contractualmente a proteger su información personal y solo
+          pueden utilizarla para el propósito específico para el que se divulgó.
+          También podemos divulgar su información personal si estamos obligados
+          a hacerlo por ley o en respuesta a una solicitud legal de una agencia
+          gubernamental o un organismo regulador. ¿Cómo puede acceder y
+          controlar su información? Puede acceder y actualizar su información
+          personal iniciando sesión en su cuenta en la Aplicación. También puede
+          solicitar que eliminemos su información personal contactándonos en{" "}
           {program.supportPhone.length > 0
             ? program.supportPhone
             : program.supportEmail}
