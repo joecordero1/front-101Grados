@@ -125,13 +125,16 @@ export const useMyResults = (): ReducerValue => {
       const params = {
         order: "DESC",
         ignorePagination: true,
+        periodMonth: 3,
+        periodYear: new Date().getFullYear(),
+        isAMonthlyResult: false,
         // just send the filters that are not null
-        ...Object.keys(state.filters).reduce((acc, key) => {
-          if (state.filters[key] !== null) {
-            acc[key] = state.filters[key];
-          }
-          return acc;
-        }, {}),
+        // ...Object.keys(state.filters).reduce((acc, key) => {
+        //   if (state.filters[key] !== null) {
+        //     acc[key] = state.filters[key];
+        //   }
+        //   return acc;
+        // }, {}),
       };
       const query = queryString.stringify(params);
       const data = await api.get<Result[]>(`/results/my-results?${query}`);
