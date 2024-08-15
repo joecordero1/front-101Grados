@@ -33,11 +33,12 @@ export const useTransactions = ({
     }
   );
   const [meta, setMeta] = useState<PaginationMetaDto>(
-    initialMeta || {
-      // page: 1,
-      // take: 10,
-      order: "DESC",
-    }
+    initialMeta ||
+      {
+        // page: 1,
+        // take: 10,
+        // order: "DESC",
+      }
   );
 
   const getTransactions = async () => {
@@ -47,6 +48,7 @@ export const useTransactions = ({
       const params = {
         ...filters,
         ...meta,
+        orderByTransactionMonth: true,
       };
       const query = queryString.stringify(params);
       const data = await get<Transaction[]>(`/transactions/mine?${query}`);
