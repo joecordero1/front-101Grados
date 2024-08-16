@@ -63,7 +63,7 @@ const ParticipantResults = () => {
         >
           <h3>Mis Resultados</h3>
 
-          <div>
+          <div style={{ display: "flex", gap: "10px" }}>
             <FormControl size="medium">
               <InputLabel
                 style={{
@@ -403,7 +403,10 @@ const ParticipantResults = () => {
             }}
           >
             <h3>Mis Resultados</h3>
-            <div className="results-container">
+            <div
+              className="results-container"
+              style={{ display: "flex", gap: "10px" }}
+            >
               <FormControl size="medium">
                 <InputLabel
                   style={{
@@ -707,6 +710,7 @@ const ParticipantResults = () => {
                             background: "#c3c3c3",
                             height: "2px",
                             width: "100%",
+                            marginBottom: "10px",
                           }}
                         ></div>
                         <div
