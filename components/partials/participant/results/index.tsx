@@ -34,7 +34,6 @@ const ParticipantResults = () => {
     };
   }, []);
 
-  console.log("COdigos disponibles" + availableCodes);
   const couldSeeResultsPerMonth = availableCodes.includes(
     "IN_RESUL_08" as IngredientCodes
   );

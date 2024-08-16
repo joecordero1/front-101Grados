@@ -18,8 +18,6 @@ export const useDishsItems = () => {
     setItems(myDishsItemsData);
   };
 
-  console.log("ITEMISAS", items);
-
   useEffect(() => {
     function parseDishItemsToCodes() {
       const codes = items.map((item) => item.ingredient.code);
