@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { useApiAuth } from './useApiAuth';
-import { DishItem, IngredientCodes } from '~/utils/types';
+import { useApiAuth } from "./useApiAuth";
+import { DishItem, IngredientCodes } from "~/utils/types";
 
-const codesToGetResults = ['IN_RESUL_06'];
+const codesToGetResults = ["IN_RESUL_06", "IN_RESUL_08"];
 
 export const useDishsItems = () => {
   const [items, setItems] = useState<DishItem[]>([]);
@@ -12,7 +12,7 @@ export const useDishsItems = () => {
 
   const getMyDishsItems = async () => {
     const myDishsItemsData = await api.get<DishItem[]>(
-      '/dishs-items/my-dishs-items'
+      "/dishs-items/my-dishs-items"
     );
 
     setItems(myDishsItemsData);
