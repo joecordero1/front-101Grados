@@ -9,18 +9,22 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import { Result } from "~/utils/types";
+import { IngredientCodes, Result } from "~/utils/types";
 import { getMonthName } from "~/utils";
-import { useProgram } from "~/hooks";
+import { useDishsItems, useProgram } from "~/hooks";
 import styles from "./resultsStyles.module.scss";
 
 const ParticipantResults = () => {
   const { groupedResults, ungroupedResults, handleFilter, status } =
     useMyResults();
+
+  const { availableCodes, getMyDishsItems } = useDishsItems();
   const { program } = useProgram();
   const [width, setWidth] = useState(0);
+
   useEffect(() => {
     setWidth(window.innerWidth);
+    getMyDishsItems();
   }, []);
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
@@ -29,6 +33,11 @@ const ParticipantResults = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  console.log("COdigos disponibles" + availableCodes);
+  const couldSeeResultsPerMonth = availableCodes.includes(
+    "IN_RESUL_08" as IngredientCodes
+  );
 
   if (status === "idle")
     return (
@@ -82,7 +91,7 @@ const ParticipantResults = () => {
                 </MenuItem>
               </Select>
             </FormControl>
-            {program.id === 8 && (
+            {couldSeeResultsPerMonth && (
               <FormControl size="medium">
                 <InputLabel
                   style={{
@@ -326,7 +335,7 @@ const ParticipantResults = () => {
                 )}
               </div>
             ))}
-            {program.id === 8 && (
+            {couldSeeResultsPerMonth && (
               <>
                 {ungroupedResults.map((result: Result, index: number) => (
                   <div className="card" key={result.id}>
@@ -422,7 +431,7 @@ const ParticipantResults = () => {
                   </MenuItem>
                 </Select>
               </FormControl>
-              {program.id === 8 && (
+              {couldSeeResultsPerMonth && (
                 <FormControl size="medium">
                   <InputLabel
                     style={{
@@ -686,11 +695,14 @@ const ParticipantResults = () => {
                   )}
                 </div>
               ))}
-              {program.id === 8 && (
+              {couldSeeResultsPerMonth && (
                 <>
                   {ungroupedResults.map((result: Result, index: number) => (
-                    <div className={styles.ungroupedResultsContainer}>
-                      <div className="card" key={result.id}>
+                    <div
+                      className={styles.ungroupedResultsContainer}
+                      key={result.id}
+                    >
+                      <div className="card">
                         <div
                           style={{
                             background: "#c3c3c3",
