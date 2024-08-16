@@ -9,14 +9,22 @@ import {
   MenuItem,
   Select,
 } from "@mui/material";
-import { Result } from "~/utils/types";
+import { IngredientCodes, Result } from "~/utils/types";
 import { getMonthName } from "~/utils";
+import { useDishsItems, useProgram } from "~/hooks";
+import styles from "./resultsStyles.module.scss";
 
 const ParticipantResults = () => {
-  const { groupedResults, handleFilter, status } = useMyResults();
+  const { groupedResults, ungroupedResults, handleFilter, status } =
+    useMyResults();
+
+  const { availableCodes, getMyDishsItems } = useDishsItems();
+  const { program } = useProgram();
   const [width, setWidth] = useState(0);
+
   useEffect(() => {
     setWidth(window.innerWidth);
+    getMyDishsItems();
   }, []);
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
@@ -25,6 +33,10 @@ const ParticipantResults = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  const couldSeeResultsPerMonth = availableCodes.includes(
+    "IN_RESUL_08" as IngredientCodes
+  );
 
   if (status === "idle")
     return (
@@ -50,28 +62,6 @@ const ParticipantResults = () => {
           }}
         >
           <h3>Mis Resultados</h3>
-          {/*
-        <FormControl size="medium">
-          <InputLabel>Mes</InputLabel>
-          <Select
-            name="month"
-            onChange={(e) => handleFilter("month", e.target.value)}
-            defaultValue={new Date().getMonth()}
-          >
-            <MenuItem value={1}>Enero</MenuItem>
-            <MenuItem value={2}>Febrero</MenuItem>
-            <MenuItem value={3}>Marzo</MenuItem>
-            <MenuItem value={4}>Abril</MenuItem>
-            <MenuItem value={5}>Mayo</MenuItem>
-            <MenuItem value={6}>Junio</MenuItem>
-            <MenuItem value={7}>Julio</MenuItem>
-            <MenuItem value={8}>Agosto</MenuItem>
-            <MenuItem value={9}>Septiembre</MenuItem>
-            <MenuItem value={10}>Octubre</MenuItem>
-            <MenuItem value={11}>Noviembre</MenuItem>
-            <MenuItem value={12}>Diciembre</MenuItem>
-          </Select>
-        </FormControl> */}
 
           <div>
             <FormControl size="medium">
@@ -100,6 +90,38 @@ const ParticipantResults = () => {
                 </MenuItem>
               </Select>
             </FormControl>
+            {couldSeeResultsPerMonth && (
+              <FormControl size="medium">
+                <InputLabel
+                  style={{
+                    fontSize: "2rem",
+                  }}
+                >
+                  Mes
+                </InputLabel>
+                <Select
+                  name="month"
+                  onChange={(e) => handleFilter("month", e.target.value)}
+                  defaultValue={new Date().getMonth()}
+                  style={{
+                    fontSize: "1.5rem",
+                  }}
+                >
+                  <MenuItem value={1}>Enero</MenuItem>
+                  <MenuItem value={2}>Febrero</MenuItem>
+                  <MenuItem value={3}>Marzo</MenuItem>
+                  <MenuItem value={4}>Abril</MenuItem>
+                  <MenuItem value={5}>Mayo</MenuItem>
+                  <MenuItem value={6}>Junio</MenuItem>
+                  <MenuItem value={7}>Julio</MenuItem>
+                  <MenuItem value={8}>Agosto</MenuItem>
+                  <MenuItem value={9}>Septiembre</MenuItem>
+                  <MenuItem value={10}>Octubre</MenuItem>
+                  <MenuItem value={11}>Noviembre</MenuItem>
+                  <MenuItem value={12}>Diciembre</MenuItem>
+                </Select>
+              </FormControl>
+            )}
           </div>
           <div>
             {groupedResults.map((result: Result, index: number) => (
@@ -312,6 +334,60 @@ const ParticipantResults = () => {
                 )}
               </div>
             ))}
+            {couldSeeResultsPerMonth && (
+              <>
+                {ungroupedResults.map((result: Result, index: number) => (
+                  <div className="card" key={result.id}>
+                    <div
+                      style={{
+                        background: "#c4c4c4",
+                        height: "2px",
+                        width: "100%",
+                      }}
+                    ></div>
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "start",
+                        justifyContent: "start",
+                      }}
+                    >
+                      <div>
+                        <h2
+                          style={{
+                            fontSize: "1.5rem",
+                            margin: "0",
+                          }}
+                        >
+                          {getMonthName(result.month)}
+                        </h2>
+                        <p className="m-0">
+                          Descripción: {""}
+                          <span className="font-weight-bold">
+                            {result.description}
+                          </span>
+                        </p>
+
+                        <p className="m-0">
+                          <span className="font-weight-light">
+                            {result.nameValue1}:{" "}
+                          </span>
+                          {result.value1}
+                        </p>
+                      </div>
+                    </div>
+                    <div>
+                      <p className="m-0">
+                        <span className="font-weight-bold">
+                          {result.nameValue2}:{" "}
+                        </span>
+                        {result.value2}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </Container>
       ) : (
@@ -354,6 +430,38 @@ const ParticipantResults = () => {
                   </MenuItem>
                 </Select>
               </FormControl>
+              {couldSeeResultsPerMonth && (
+                <FormControl size="medium">
+                  <InputLabel
+                    style={{
+                      fontSize: "2rem",
+                    }}
+                  >
+                    Mes
+                  </InputLabel>
+                  <Select
+                    name="month"
+                    onChange={(e) => handleFilter("month", e.target.value)}
+                    defaultValue={new Date().getMonth() + 1}
+                    style={{
+                      fontSize: "1.5rem",
+                    }}
+                  >
+                    <MenuItem value={1}>Enero</MenuItem>
+                    <MenuItem value={2}>Febrero</MenuItem>
+                    <MenuItem value={3}>Marzo</MenuItem>
+                    <MenuItem value={4}>Abril</MenuItem>
+                    <MenuItem value={5}>Mayo</MenuItem>
+                    <MenuItem value={6}>Junio</MenuItem>
+                    <MenuItem value={7}>Julio</MenuItem>
+                    <MenuItem value={8}>Agosto</MenuItem>
+                    <MenuItem value={9}>Septiembre</MenuItem>
+                    <MenuItem value={10}>Octubre</MenuItem>
+                    <MenuItem value={11}>Noviembre</MenuItem>
+                    <MenuItem value={12}>Diciembre</MenuItem>
+                  </Select>
+                </FormControl>
+              )}
             </div>
             <div
               className="results-screen"
@@ -586,6 +694,65 @@ const ParticipantResults = () => {
                   )}
                 </div>
               ))}
+              {couldSeeResultsPerMonth && (
+                <>
+                  {ungroupedResults.map((result: Result, index: number) => (
+                    <div
+                      className={styles.ungroupedResultsContainer}
+                      key={result.id}
+                    >
+                      <div className="card">
+                        <div
+                          style={{
+                            background: "#c3c3c3",
+                            height: "2px",
+                            width: "100%",
+                          }}
+                        ></div>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "start",
+                            justifyContent: "start",
+                          }}
+                        >
+                          <div>
+                            <h2
+                              style={{
+                                fontSize: "1.5rem",
+                                margin: "0",
+                              }}
+                            >
+                              {getMonthName(result.month)}
+                            </h2>
+                            <p className="m-0">
+                              Descripción: {""}
+                              <span className="font-weight-bold">
+                                {result.description}
+                              </span>
+                            </p>
+
+                            <p className="m-0">
+                              <span className="font-weight-light">
+                                {result.nameValue1}:{" "}
+                              </span>
+                              {result.value1}
+                            </p>
+                          </div>
+                        </div>
+                        <div>
+                          <p className="m-0">
+                            <span className="font-weight-bold">
+                              {result.nameValue2}:{" "}
+                            </span>
+                            {result.value2}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
           </Card>
         </div>

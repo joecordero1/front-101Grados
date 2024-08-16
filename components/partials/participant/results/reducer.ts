@@ -1,6 +1,6 @@
 import queryString from "query-string";
 import { useCallback, useEffect, useReducer } from "react";
-import { useApiAuth, useAuth } from "~/hooks";
+import { useApiAuth, useAuth, useProgram } from "~/hooks";
 import { Result } from "~/utils/types";
 
 type GetMyResults = {
@@ -17,6 +17,13 @@ type GetGroupedResults = {
       parent: Result;
       children: Result[];
     }[];
+  };
+};
+
+type GetUngroupedResults = {
+  type: "GET_UNGROUPED_RESULTS";
+  payload: {
+    results: Result[];
   };
 };
 
@@ -37,6 +44,7 @@ type HandleFilter = {
 
 type ActionTypes =
   | GetMyResults
+  | GetUngroupedResults
   | HandleStatus
   | HandleFilter
   | GetGroupedResults;
@@ -45,8 +53,9 @@ export type State = {
   status: "idle" | "complete";
   results: any;
   groupedResults: any;
+  ungroupedResults: any;
   filters: {
-    // month?: number | null;
+    month?: number | null;
     year: number | null;
   };
 };
@@ -55,9 +64,10 @@ const initialState: State = {
   status: "idle",
   results: [],
   groupedResults: [],
+  ungroupedResults: [],
   filters: {
     // default month is before the current month
-    //month: new Date().getMonth(),
+    month: new Date().getMonth() + 1,
     year: new Date().getFullYear(),
   },
 };
@@ -78,6 +88,12 @@ const reducer = (state: State, action: ActionTypes): State => {
         groupedResults,
       };
 
+    case "GET_UNGROUPED_RESULTS":
+      const ungroupedResults = action.payload.results;
+      return {
+        ...state,
+        ungroupedResults,
+      };
     case "HANDLE_STATUS":
       const { status } = action.payload;
       return {
@@ -102,11 +118,13 @@ const reducer = (state: State, action: ActionTypes): State => {
 
 export interface ReducerValue extends State {
   getMyResults: () => void;
+  getUngroupedResults: () => void;
   handleFilter: (name: string, value: any) => void;
 }
 
 export const useMyResults = (): ReducerValue => {
   const api = useApiAuth();
+  const { program } = useProgram();
   const [state, dispatch] = useReducer(reducer, initialState);
   const { participant } = useAuth();
 
@@ -125,13 +143,16 @@ export const useMyResults = (): ReducerValue => {
       const params = {
         order: "DESC",
         ignorePagination: true,
+        periodMonth: new Date().getMonth() + 1,
+        periodYear: new Date().getFullYear(),
+        isAMonthlyResult: false,
         // just send the filters that are not null
-        ...Object.keys(state.filters).reduce((acc, key) => {
-          if (state.filters[key] !== null) {
-            acc[key] = state.filters[key];
-          }
-          return acc;
-        }, {}),
+        // ...Object.keys(state.filters).reduce((acc, key) => {
+        //   if (state.filters[key] !== null) {
+        //     acc[key] = state.filters[key];
+        //   }
+        //   return acc;
+        // }, {}),
       };
       const query = queryString.stringify(params);
       const data = await api.get<Result[]>(`/results/my-results?${query}`);
@@ -153,8 +174,46 @@ export const useMyResults = (): ReducerValue => {
     }
   }, [participant, state.filters]);
 
+  const getUngroupedResults = useCallback(async () => {
+    try {
+      const params = {
+        ignorePagination: true,
+        order: "DESC",
+        isAMonthlyResult: true,
+        ...Object.keys(state.filters).reduce((acc, key) => {
+          if (state.filters[key] !== null) {
+            acc[key] = state.filters[key];
+          }
+          return acc;
+        }, {}),
+      };
+      const query = queryString.stringify(params);
+      const data = await api.get<Result[]>(`/results/my-results?${query}`);
+
+      dispatch({
+        type: "GET_UNGROUPED_RESULTS",
+        payload: {
+          results: data,
+        },
+      });
+
+      dispatch({
+        type: "HANDLE_STATUS",
+        payload: {
+          status: "complete",
+        },
+      });
+    } catch (e) {
+      console.error("getMyResults", e);
+    }
+  }, [participant, state.filters]);
+
   useEffect(() => {
-    getMyResults();
+    if (program.id === 8) {
+      getUngroupedResults();
+    } else {
+      getMyResults();
+    }
   }, [getMyResults]);
 
   const groupResults = () => {
@@ -210,5 +269,6 @@ export const useMyResults = (): ReducerValue => {
     ...state,
     getMyResults,
     handleFilter,
+    getUngroupedResults,
   };
 };

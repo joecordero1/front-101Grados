@@ -15,7 +15,8 @@ import { useDishsItems } from "~/hooks";
 export default function Header(props) {
   const { logOut, availablePoints, participant, accessToken, loadingPoints } =
     useAuth();
-  const { items, getMyDishsItems, couldSeeResults } = useDishsItems();
+  const { items, getMyDishsItems, couldSeeResults, availableCodes } =
+    useDishsItems();
   const { program } = useProgram();
   const codesToGetSnapsMenu = ["IN_SNAPS_01", "IN_SNAPS_05", "IN_SNAPS_08"];
   const router = useRouter();
