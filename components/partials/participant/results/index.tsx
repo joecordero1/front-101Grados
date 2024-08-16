@@ -42,8 +42,6 @@ const ParticipantResults = () => {
       </div>
     );
 
-  console.log(ungroupedResults);
-
   return (
     <div>
       {width < 768 ? (
