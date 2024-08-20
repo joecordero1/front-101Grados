@@ -776,7 +776,9 @@ const ParticipantResults = () => {
                               <span className="font-weight-light">
                                 {result.nameValue1}:{" "}
                               </span>
-                              {result.value1}
+                              {result.description.includes("VENTAS")
+                                ? `$${result.value1}`
+                                : result.value1}
                             </p>
                           </div>
                         </div>
@@ -785,7 +787,9 @@ const ParticipantResults = () => {
                             <span className="font-weight-bold">
                               {result.nameValue2}:{" "}
                             </span>
-                            {result.value2}
+                            {result.description.includes("VENTAS")
+                              ? `$${result.value2}`
+                              : result.value2}
                           </p>
                         </div>
                       </div>
