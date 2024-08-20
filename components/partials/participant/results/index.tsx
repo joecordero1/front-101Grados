@@ -792,6 +792,15 @@ const ParticipantResults = () => {
                               : result.value2}
                           </p>
                         </div>
+                        <div>
+                          <p className="m-0">
+                            <span className="font-weight-bold">
+                              {"Cumplimiento"}:{" "}
+                            </span>
+                            {((result.value2 / result.value1) * 100).toFixed(2)}
+                            %
+                          </p>
+                        </div>
                       </div>
                     </div>
                   ))}
