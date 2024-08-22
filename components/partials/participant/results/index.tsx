@@ -50,6 +50,30 @@ const ParticipantResults = () => {
       </div>
     );
 
+  const sortOrder = {
+    VENTAS: 1,
+    IMPACTOS: 2,
+    "PRODUCTO FOCO": 3,
+  };
+
+  const getOrder = (description: string): number => {
+    for (const key in sortOrder) {
+      if (description.includes(key)) {
+        return sortOrder[key];
+      }
+    }
+    return Infinity;
+  };
+
+  const sortedResults =
+    program.id === 8
+      ? [...ungroupedResults].sort((a, b) => {
+          const orderA = getOrder(a.description.trim());
+          const orderB = getOrder(b.description.trim());
+          return orderA - orderB;
+        })
+      : ungroupedResults;
+
   return (
     <div>
       {width < 768 ? (
@@ -336,7 +360,7 @@ const ParticipantResults = () => {
             ))}
             {couldSeeResultsPerMonth && (
               <>
-                {ungroupedResults.map((result: Result, index: number) => (
+                {sortedResults.map((result: Result, index: number) => (
                   <div className="card" key={result.id}>
                     <div
                       style={{
@@ -372,7 +396,9 @@ const ParticipantResults = () => {
                           <span className="font-weight-light">
                             {result.nameValue1}:{" "}
                           </span>
-                          {result.value1}
+                          {result.description.includes("VENTAS")
+                            ? `$${result.value1}`
+                            : result.value1}
                         </p>
                       </div>
                     </div>
@@ -381,7 +407,17 @@ const ParticipantResults = () => {
                         <span className="font-weight-bold">
                           {result.nameValue2}:{" "}
                         </span>
-                        {result.value2}
+                        {result.description.includes("VENTAS")
+                          ? `$${result.value2}`
+                          : result.value2}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="m-0">
+                        <span className="font-weight-bold">
+                          {"Cumplimiento"}:{" "}
+                        </span>
+                        {((result.value2 / result.value1) * 100).toFixed(2)}%
                       </p>
                     </div>
                   </div>
@@ -699,7 +735,7 @@ const ParticipantResults = () => {
               ))}
               {couldSeeResultsPerMonth && (
                 <>
-                  {ungroupedResults.map((result: Result, index: number) => (
+                  {sortedResults.map((result: Result, index: number) => (
                     <div
                       className={styles.ungroupedResultsContainer}
                       key={result.id}
@@ -740,7 +776,9 @@ const ParticipantResults = () => {
                               <span className="font-weight-light">
                                 {result.nameValue1}:{" "}
                               </span>
-                              {result.value1}
+                              {result.description.includes("VENTAS")
+                                ? `$${result.value1}`
+                                : result.value1}
                             </p>
                           </div>
                         </div>
@@ -749,7 +787,18 @@ const ParticipantResults = () => {
                             <span className="font-weight-bold">
                               {result.nameValue2}:{" "}
                             </span>
-                            {result.value2}
+                            {result.description.includes("VENTAS")
+                              ? `$${result.value2}`
+                              : result.value2}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="m-0">
+                            <span className="font-weight-bold">
+                              {"Cumplimiento"}:{" "}
+                            </span>
+                            {((result.value2 / result.value1) * 100).toFixed(2)}
+                            %
                           </p>
                         </div>
                       </div>
