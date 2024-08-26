@@ -15,7 +15,8 @@ import { useDishsItems } from "~/hooks";
 export default function Header(props) {
   const { logOut, availablePoints, participant, accessToken, loadingPoints } =
     useAuth();
-  const { items, getMyDishsItems, couldSeeResults } = useDishsItems();
+  const { items, getMyDishsItems, couldSeeResults, availableCodes } =
+    useDishsItems();
   const { program } = useProgram();
   const codesToGetSnapsMenu = ["IN_SNAPS_01", "IN_SNAPS_05", "IN_SNAPS_08"];
   const router = useRouter();
@@ -53,8 +54,8 @@ export default function Header(props) {
 
           <div className="header-right">
             <div className="icon-box-side mr-2">
-              <div className="icon-box-content d-lg-show mr-2 ">
-                {program.hasAcademy && (
+              <div className="icon-box-content d-lg-show mr-2">
+                {program.hasAcademy && program.id !== 3 && (
                   <p
                     style={{
                       paddingTop: "23px",

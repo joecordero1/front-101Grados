@@ -204,6 +204,7 @@ export enum City {
   "Mocha" = "Mocha",
   "Balsas" = "Balsas",
   "El Carmen" = "El Carmen",
+  "Posorja" = "Posorja",
 }
 export const cities = Object.values(City).map((city) => ({
   label: city.toString(),
