@@ -53,9 +53,14 @@ export default function Header(props) {
 
           <div className="header-right">
             <div className="icon-box-side mr-2">
-              <div className="icon-box-content d-lg-show mr-2">
+              <div className="icon-box-content d-lg-show mr-2 ">
                 {program.hasAcademy && (
-                  <p>
+                  <p
+                    style={{
+                      paddingTop: "23px",
+                      paddingRight: "10px",
+                    }}
+                  >
                     <ALink href={`${program.academyUrl}?token=${accessToken}`}>
                       Capacitaciones
                     </ALink>
