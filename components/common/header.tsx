@@ -62,9 +62,13 @@ export default function Header(props) {
                       paddingRight: "10px",
                     }}
                   >
-                    <ALink href={`${program.academyUrl}?token=${accessToken}`}>
-                      Capacitaciones
-                    </ALink>
+                    <div className="arrow-3">
+                      <ALink
+                        href={`${program.academyUrl}?token=${accessToken}`}
+                      >
+                        Capacitaciones
+                      </ALink>
+                    </div>
                   </p>
                 )}
               </div>

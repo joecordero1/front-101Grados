@@ -9,7 +9,7 @@ import useDishsItems from "~/hooks/useDishsItems";
 
 function SearchForm() {
   const router = useRouter();
-  const { logOut, participant } = useAuth();
+  const { logOut, participant, accessToken } = useAuth();
   const { program } = useProgram();
   const { dispatchLog } = useLogs();
   const { items, getMyDishsItems, couldSeeResults } = useDishsItems();
@@ -95,6 +95,16 @@ function SearchForm() {
           <Link href="/pages/account/?tab=account-statement" className="mb-2">
             <i className="d-icon-money mr-1"></i>
             Estado de Cuenta
+          </Link>
+        )}
+
+        {program.hasAcademy && (
+          <Link
+            href={`${program.academyUrl}?token=${accessToken}`}
+            className="mb-2"
+          >
+            <i className="d-icon-graduation-cap mr-1"></i>
+            Academia
           </Link>
         )}
 
