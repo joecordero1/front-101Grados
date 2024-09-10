@@ -34,8 +34,13 @@ const ParticipantResults = () => {
     };
   }, []);
 
-  const couldSeeResultsPerMonth = availableCodes.includes(
-    "IN_RESUL_08" as IngredientCodes
+  const ingredientCodes: IngredientCodes[] = [
+    IngredientCodes.IN_RESUL_01,
+    IngredientCodes.IN_RESUL_08,
+  ];
+
+  const couldSeeResultsPerMonth = ingredientCodes.some((code) =>
+    availableCodes.includes(code)
   );
 
   if (status === "idle")
