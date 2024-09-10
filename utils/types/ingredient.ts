@@ -26,6 +26,7 @@ export enum IngredientCodes {
   "IN_RESUL_03" = "IN_RESUL_03",
   "IN_RESUL_04" = "IN_RESUL_04",
   "IN_RESUL_05" = "IN_RESUL_05",
+  "IN_RESUL_08" = "IN_RESUL_08",
 }
 
 export interface Ingredient {

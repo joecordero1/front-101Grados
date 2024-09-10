@@ -3,7 +3,12 @@ import { useEffect, useState } from "react";
 import { useApiAuth } from "./useApiAuth";
 import { DishItem, IngredientCodes } from "~/utils/types";
 
-const codesToGetResults = ["IN_RESUL_06", "IN_RESUL_08"];
+const codesToGetResults = [
+  "IN_RESUL_06",
+  "IN_RESUL_08",
+  "IN_RESUL_01",
+  "IN_EXTRA_01",
+];
 
 export const useDishsItems = () => {
   const [items, setItems] = useState<DishItem[]>([]);
