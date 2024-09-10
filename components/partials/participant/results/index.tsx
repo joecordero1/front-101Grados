@@ -36,7 +36,7 @@ const ParticipantResults = () => {
 
   const ingredientCodes: IngredientCodes[] = [
     IngredientCodes.IN_RESUL_01,
-    IngredientCodes.IN_RESUL_01,
+    IngredientCodes.IN_EXTRA_01,
     IngredientCodes.IN_RESUL_08,
   ];
 
