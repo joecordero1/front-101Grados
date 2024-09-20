@@ -51,17 +51,17 @@ function SearchForm() {
     setSearch("");
   }, [router.query.slug]);
 
-  useEffect(() => {
-    if (search.length > 2) {
-      getItems();
-      if (timer) clearTimeout(timer);
-      let timerId = setTimeout(() => {
-        setTimer(null);
-      }, 500);
+  // useEffect(() => {
+  //   if (search.length > 2) {
+  //     getItems();
+  //     if (timer) clearTimeout(timer);
+  //     let timerId = setTimeout(() => {
+  //       setTimer(null);
+  //     }, 500);
 
-      setTimer(timerId);
-    }
-  }, [search]);
+  //     setTimer(timerId);
+  //   }
+  // }, [search]);
 
   useEffect(() => {
     document.querySelector(".header-search.show-results") &&

@@ -142,7 +142,7 @@ function SearchForm() {
           autoComplete="off"
           value={search}
           onChange={onSearchChange}
-          placeholder="              Mi nombre es Merlin, ¿Qué
+          placeholder="Mi nombre es Merlin, ¿Qué
           necesitas?"
           required
           sx={{
