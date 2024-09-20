@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import ALink from "~/components/features/custom-link";
@@ -11,6 +11,12 @@ import { useAuth, useProgram, useLogs } from "hooks";
 import { LogType } from "~/utils/types/logType";
 import ResultsCard from "./partials/results";
 import { useDishsItems } from "~/hooks";
+import SimpleMainMenu from "./Menus/content/simple-main-menu";
+import { Button } from "@mui/material";
+
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import styles from "./headerStyles.module.scss";
 
 export default function Header(props) {
   const { logOut, availablePoints, participant, accessToken, loadingPoints } =
@@ -21,6 +27,7 @@ export default function Header(props) {
   const codesToGetSnapsMenu = ["IN_SNAPS_01", "IN_SNAPS_05", "IN_SNAPS_08"];
   const router = useRouter();
   const { dispatchLog } = useLogs();
+  const [isResultsVisible, setIsResultsVisible] = useState(false);
 
   useEffect(() => {
     let header = document.querySelector("header");
@@ -42,7 +49,10 @@ export default function Header(props) {
 
   return (
     <header className="header">
-      <div className="header-middle sticky-header fix-top sticky-content">
+      <div
+        className="header-middle sticky-header fix-top sticky-content"
+        style={{ padding: "1rem" }}
+      >
         <div className="container">
           <div className="header-left mr-4">
             <ALink href="/" className="logo">
@@ -192,8 +202,33 @@ export default function Header(props) {
 
       <div
         className={`header-bottom ${router.pathname === "/" ? "" : "pb-50"}`}
+        style={{ paddingBottom: 0 }}
       >
-        <div className="container">{program.isStoreActive && <MainMenu />}</div>
+        <div
+          className={`${styles.menuHeaderContainer} container`}
+          style={{ gap: "5px" }}
+        >
+          {program.isStoreActive && <SimpleMainMenu />}
+          {/* Botón para mostrar/ocultar el ResultsCard */}
+          <Button
+            variant="contained"
+            size="small"
+            color="primary"
+            onClick={() => setIsResultsVisible(!isResultsVisible)}
+            className={styles.customButton}
+            endIcon={isResultsVisible ? <ExpandLessIcon /> : <ExpandMoreIcon />} // Ícono que cambia según el estado
+            sx={{
+              borderRadius: "10px",
+              backgroundColor: "#00A5D7",
+              "&:hover": {
+                backgroundColor: "#007B9E", // Color de fondo para hover
+              },
+              fontSize: "1rem",
+            }}
+          >
+            {isResultsVisible ? "Ocultar Resultados" : "Ver Resultados"}
+          </Button>
+        </div>
       </div>
 
       {!couldSeeResults && (
@@ -228,8 +263,12 @@ export default function Header(props) {
       )}
 
       {couldSeeResults && (
-        <div className="welcome-message container">
-          <ResultsCard />
+        <div
+          className="welcome-message container"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          {/* Mostrar ResultsCard condicionalmente */}
+          {isResultsVisible && <ResultsCard />}
         </div>
       )}
     </header>

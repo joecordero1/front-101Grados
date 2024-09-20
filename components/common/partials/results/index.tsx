@@ -46,10 +46,10 @@ const ResultsCard = () => {
         >
           <Box p={2} flexGrow={1}>
             <Box>
-              <Typography variant="h3" textAlign="center">
+              <Typography variant="h4" textAlign="center">
                 <b>¡Hola {participant?.firstName}!</b>
               </Typography>
-              <h5
+              <h6
                 style={{
                   textAlign: "center",
                   margin: "0 auto",
@@ -65,7 +65,7 @@ const ResultsCard = () => {
                   availablePoints
                 )}{" "}
                 {program.coinName}
-              </h5>
+              </h6>
             </Box>
             <Stack
               sx={{
@@ -79,33 +79,33 @@ const ResultsCard = () => {
               spacing={2}
             >
               <Box>
-                <Typography gutterBottom variant="h4">
+                <Typography gutterBottom variant="h5">
                   Objetivo
                 </Typography>
-                <Typography variant="h4">
+                <Typography variant="h5">
                   ${result.objective.toFixed(2)}
                 </Typography>
               </Box>
               <Box>
-                <Typography gutterBottom variant="h4">
+                <Typography gutterBottom variant="h5">
                   Tienes
                 </Typography>
-                <Typography variant="h4">
+                <Typography variant="h5">
                   ${result.obtained.toFixed(2)}
                 </Typography>
               </Box>
               <Box>
-                <Typography gutterBottom variant="h4">
+                <Typography gutterBottom variant="h5">
                   Te Falta
                 </Typography>
-                <Typography variant="h4">
+                <Typography variant="h5">
                   ${result.remaining.toFixed(2)}
                 </Typography>
               </Box>
             </Stack>
           </Box>
           <Box p={2} flexGrow={1}>
-            <Typography variant="h4" textAlign="center">
+            <Typography variant="h5" textAlign="center">
               Tu Avance
             </Typography>
             <Box
@@ -116,8 +116,8 @@ const ResultsCard = () => {
               alignItems="center"
               justifyContent="space-between"
             >
-              <Typography variant="h4">{result.name}</Typography>
-              <Typography variant="h5" fontWeight="bold" color="text.primary">
+              <Typography variant="h5">{result.name}</Typography>
+              <Typography variant="h6" fontWeight="bold" color="text.primary">
                 {result.percentage.toFixed(2)}%
               </Typography>
             </Box>
@@ -133,8 +133,8 @@ const ResultsCard = () => {
               alignItems="center"
               justifyContent="space-between"
             >
-              <Typography variant="h5">0</Typography>
-              <Typography variant="h5" fontWeight="bold" color="text.primary">
+              <Typography variant="h6">0</Typography>
+              <Typography variant="h6" fontWeight="bold" color="text.primary">
                 100%
               </Typography>
             </Box>

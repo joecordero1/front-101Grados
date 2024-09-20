@@ -6,7 +6,7 @@ export default function ShopBanner(props) {
 
   return (
     <div
-      className="shop-boxed-banner banner mb-8 mb-lg-7"
+      className="shop-boxed-banner banner  lg-7"
       style={{
         backgroundImage: `url(${program.shopSection1})`,
         backgroundSize: "cover",

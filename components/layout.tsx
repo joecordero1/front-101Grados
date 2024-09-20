@@ -94,7 +94,7 @@ function Layout({ children, closeQuickview }) {
 
   return (
     <div>
-      <div className="page-wrapper">
+      <div className="page-wrapper" style={{ position: "relative" }}>
         {isLoggedIn && <Header />}
 
         {children}
