@@ -1,0 +1,63 @@
+.searchMerlinContainer {
+  display: none;
+}
+@media (min-width: 768px) {
+  .searchMainContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    box-sizing: border-box;
+  }
+
+  .searchMerlinContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .merlinIconBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+
+    img {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  .merlinDialogContainer {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .merlinDialogBox {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+  }
+
+  .searchBarContainer {
+    display: flex;
+    flex: 1;
+    margin-left: 20px;
+  }
+
+  .formSearchContainer {
+    display: flex;
+    flex: 1;
+    width: 500px;
+    align-items: center;
+    justify-content: center;
+  }
+}
+// Puedes agregar estilos adicionales si quieres personalizar más el cuadro de diálogo

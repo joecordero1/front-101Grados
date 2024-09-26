@@ -95,7 +95,10 @@ const ProductListOne: FC<Props> = (props) => {
       )}
 
       {items.length > 0 ? (
-        <div className="toolbox toolbox-pagination">
+        <div
+          className="toolbox toolbox-pagination"
+          style={{ paddingTop: 10, paddingBottom: 0 }}
+        >
           {/* {data && (
             <p className="show-info">
               Showing{' '}

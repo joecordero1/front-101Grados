@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useRouter } from "next/router";
 import queryString from "query-string";
+import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 
 import ALink from "~/components/features/custom-link";
 
 import { useApiAuth, useProgram, useLogs } from "~/hooks";
 import { CatalogueItem, Page } from "~/utils/types";
 import { LogType } from "~/utils/types/logType";
+import styles from "./searchBoxStyles.module.scss";
+import { Box, IconButton, TextField, Typography } from "@mui/material";
 
 function SearchForm() {
   const router = useRouter();
@@ -17,6 +20,15 @@ function SearchForm() {
   const [items, setItems] = useState<CatalogueItem[]>([]);
   const [timer, setTimer] = useState(null);
   const { dispatchLog } = useLogs();
+
+  const suggestions = [
+    "Cosas de hogar",
+    "Quiero algo de comer",
+    "Ropa de verano",
+    "Tecnología",
+    "Libros",
+    "Deportes",
+  ];
 
   const getItems = async () => {
     const params = { toSearch: search.length > 2 && search, take: 50 };
@@ -39,17 +51,17 @@ function SearchForm() {
     setSearch("");
   }, [router.query.slug]);
 
-  useEffect(() => {
-    if (search.length > 2) {
-      getItems();
-      if (timer) clearTimeout(timer);
-      let timerId = setTimeout(() => {
-        setTimer(null);
-      }, 500);
+  // useEffect(() => {
+  //   if (search.length > 2) {
+  //     getItems();
+  //     if (timer) clearTimeout(timer);
+  //     let timerId = setTimeout(() => {
+  //       setTimer(null);
+  //     }, 500);
 
-      setTimer(timerId);
-    }
-  }, [search]);
+  //     setTimer(timerId);
+  //   }
+  // }, [search]);
 
   useEffect(() => {
     document.querySelector(".header-search.show-results") &&
@@ -118,38 +130,69 @@ function SearchForm() {
   }
 
   return (
-    <div className="header-search hs-expanded">
-      <a
-        href="#"
-        className="search-toggle"
-        role="button"
-        onClick={onSearchClick}
-      >
-        <i className="icon-search-3"></i>
-      </a>
-      <form
-        action="#"
-        method="get"
-        onSubmit={onSubmitSearchForm}
-        className="input-wrapper"
-      >
-        <input
-          type="text"
-          className="form-control"
-          name="search"
-          autoComplete="off"
-          value={search}
-          onChange={onSearchChange}
-          placeholder="Buscar..."
-          disabled={!program.isStoreActive}
-          required
-        />
+    <div className={styles.searchMainContainer}>
+      <div className={styles.searchMerlinContainer}>
+        <div className={styles.merlinIconBox}>
+          <img
+            src={`https://storage.googleapis.com/lala4/store/files/fav-merlin-1-1721681703043.png`}
+            alt="Merlin"
+          />
+        </div>
+        <div className={styles.merlinDialogContainer}>
+          <Box className={styles.merlinDialogBox}>
+            <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+              Mi nombre es Merlin, tu nuevo asistente de compras. Dime, ¿qué
+              necesitas?
+            </Typography>
+          </Box>
+          <div className={styles.searchBarContainer}>
+            <a
+              href="#"
+              className="search-toggle"
+              role="button"
+              onClick={onSearchClick}
+            >
+              <i className="icon-search-3"></i>
+            </a>
+            <form
+              action="#"
+              method="get"
+              onSubmit={onSubmitSearchForm}
+              className={styles.formSearchContainer}
+            >
+              <TextField
+                variant="standard"
+                fullWidth
+                name="search"
+                autoComplete="off"
+                value={search}
+                onChange={onSearchChange}
+                placeholder="Quiero...."
+                disabled={!program.isStoreActive}
+                required
+                sx={{
+                  "& .MuiInputBase-input": {
+                    fontSize: "1.5rem",
+                    padding: "10px 0",
+                  },
+                  "& .MuiInputBase-root:before": {
+                    borderBottom: "2px solid #ccc",
+                  },
+                  "& .MuiInputBase-root:after": {
+                    borderBottom: "2px solid #3f51b5",
+                  },
+                  "& .MuiInputBase-input::placeholder": {
+                    fontSize: "1.2rem",
+                    color: "#000",
+                  },
+                }}
+              />
 
-        <button className="btn btn-search" type="submit">
-          <i className="d-icon-search"></i>
-        </button>
+              <IconButton className="" type="submit">
+                <AutoFixHighIcon />
+              </IconButton>
 
-        <div className="live-search-list bg-white">
+              {/* <div className="live-search-list bg-white">
           {search.length > 2 &&
             items &&
             items.map((product, index) => (
@@ -181,8 +224,11 @@ function SearchForm() {
                 </span>
               </ALink>
             ))}
+        </div> */}
+            </form>
+          </div>
         </div>
-      </form>
+      </div>
     </div>
   );
 }
