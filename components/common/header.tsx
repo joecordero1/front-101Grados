@@ -210,24 +210,28 @@ export default function Header(props) {
         >
           {program.isStoreActive && <SimpleMainMenu />}
           {/* Botón para mostrar/ocultar el ResultsCard */}
-          <Button
-            variant="contained"
-            size="small"
-            color="primary"
-            onClick={() => setIsResultsVisible(!isResultsVisible)}
-            className={styles.customButton}
-            endIcon={isResultsVisible ? <ExpandLessIcon /> : <ExpandMoreIcon />} // Ícono que cambia según el estado
-            sx={{
-              borderRadius: "10px",
-              backgroundColor: "#00A5D7",
-              "&:hover": {
-                backgroundColor: "#007B9E", // Color de fondo para hover
-              },
-              fontSize: "1rem",
-            }}
-          >
-            {isResultsVisible ? "Ocultar Resultados" : "Ver Resultados"}
-          </Button>
+          {couldSeeResults && (
+            <Button
+              variant="contained"
+              size="small"
+              color="primary"
+              onClick={() => setIsResultsVisible(!isResultsVisible)}
+              className={styles.customButton}
+              endIcon={
+                isResultsVisible ? <ExpandLessIcon /> : <ExpandMoreIcon />
+              } // Ícono que cambia según el estado
+              sx={{
+                borderRadius: "10px",
+                backgroundColor: "#00A5D7",
+                "&:hover": {
+                  backgroundColor: "#007B9E", // Color de fondo para hover
+                },
+                fontSize: "1rem",
+              }}
+            >
+              {isResultsVisible ? "Ocultar Resultados" : "Ver Resultados"}
+            </Button>
+          )}
         </div>
       </div>
 
@@ -236,7 +240,7 @@ export default function Header(props) {
           <h6
             style={{
               textAlign: "center",
-              margin: "0 auto",
+              margin: 10,
               color: "#5d5e5e",
             }}
           >
