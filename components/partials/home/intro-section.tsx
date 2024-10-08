@@ -31,9 +31,13 @@ function IntroSection(props) {
       window.removeEventListener("resize", setDimension);
     };
   }, [screenSize]);
+
+  // Determinar si es móvil
+  const isMobile = screenSize.dynamicWidth <= 990;
+
   return (
     <div className="row">
-      {screenSize.dynamicWidth > 990 && (
+      {!isMobile && (
         <div className="col-lg-9 mb-4">
           <OwlCarousel
             adClass="owl-theme owl-dot-inner intro-slider animation-slider"
@@ -51,27 +55,8 @@ function IntroSection(props) {
                   height="215"
                 />
               </figure>
-
-              {/* <div className="banner-content">
-              <Reveal keyframes={fadeInLeftShorter} duration={1000}>
-                <h5 className="banner-subtitle text-capitalize font-weight-normal">
-                  Lifestyle Collection
-                </h5>
-                <h3 className="banner-title text-uppercase font-weight-bold ls-m">
-                  for Ski Clothes
-                </h3>
-                <div className="banner-price-info font-weight-semi-bold text-body text-uppercase ls-m">
-                  Sale Up To <span className="text-primary">30% Off</span>
-                </div>
-                <ALink
-                  href="/shop"
-                  className="btn btn-dark btn-outline btn-rounded"
-                >
-                  Shop Now<i className="d-icon-arrow-right"></i>
-                </ALink>
-              </Reveal>
-            </div> */}
             </div>
+
             {myCatalogues.length > 0 &&
               myCatalogues.map((catalogue) => (
                 <div
@@ -88,52 +73,8 @@ function IntroSection(props) {
                       <LazyLoadImage src={catalogue.coverImage2} alt="Banner" />
                     </figure>
                   </ALink>
-                  <div className="banner-content text-right">
-                    {/* 
-                        // @ts-ignore */}
-                    <Reveal
-                      keyframes={fadeInRightShorter}
-                      duration={1000}
-                    ></Reveal>
-                  </div>
                 </div>
               ))}
-
-            {/* <div
-            className="banner banner-fixed content-middle intro-slide intro-slide3 banner-radius"
-            style={{ backgroundColor: '#d8dee4' }}
-          >
-            <figure>
-              <LazyLoadImage
-                src="images/home/slides/3.jpg"
-                alt="Banner"
-                width="1030"
-                height="450"
-              />
-            </figure>
-            <div className="banner-content">
-              <Reveal keyframes={fadeInLeftShorter} duration={1000}>
-                <h5 className="banner-subtitle text-capitalize font-weight-normal mb-1">
-                  Must-Haves
-                </h5>
-                <h3 className="banner-title text-uppercase font-weight-bold ls-m">
-                  for the season
-                </h3>
-                <div className="banner-price-info font-weight-semi-bold text-dark text-uppercase ls-m">
-                  Start At <span className="text-primary">$230.00</span>
-                </div>
-                <p className="text-dark font-weight-normal">
-                  * Get Plus Discount Buying Fashion
-                </p>
-                <ALink
-                  href="/shop"
-                  className="btn btn-dark btn-outline btn-rounded"
-                >
-                  Shop Now<i className="d-icon-arrow-right"></i>
-                </ALink>
-              </Reveal>
-            </div>
-          </div> */}
           </OwlCarousel>
         </div>
       )}
@@ -153,7 +94,11 @@ function IntroSection(props) {
                 >
                   <figure>
                     <LazyLoadImage
-                      src={program.heroSection1}
+                      src={
+                        isMobile && program.heroMobile1
+                          ? program.heroMobile1
+                          : program.heroSection1
+                      }
                       alt="Banner"
                       width="330"
                       height="215"
@@ -163,7 +108,11 @@ function IntroSection(props) {
               ) : (
                 <figure>
                   <LazyLoadImage
-                    src={program.heroSection1}
+                    src={
+                      isMobile && program.heroMobile1
+                        ? program.heroMobile1
+                        : program.heroSection1
+                    }
                     alt="Banner"
                     width="330"
                     height="215"
@@ -186,7 +135,11 @@ function IntroSection(props) {
                 >
                   <figure>
                     <LazyLoadImage
-                      src={program.heroSection2}
+                      src={
+                        isMobile && program.heroMobile2
+                          ? program.heroMobile2
+                          : program.heroSection2
+                      }
                       alt="Banner"
                       width="330"
                       height="215"
@@ -196,7 +149,11 @@ function IntroSection(props) {
               ) : (
                 <figure>
                   <LazyLoadImage
-                    src={program.heroSection2}
+                    src={
+                      isMobile && program.heroMobile2
+                        ? program.heroMobile2
+                        : program.heroSection2
+                    }
                     alt="Banner"
                     width="330"
                     height="215"

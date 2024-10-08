@@ -11,6 +11,9 @@ export interface Program {
   hero3: null;
   heroSection1: null;
   heroSection2: null;
+  heroMobile1: null;
+  heroMobile2: null;
+  heroMobile3: null;
   firstSecion1: null;
   firstSecion2: null;
   firstSecion3: null;
