@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import ALink from "~/components/features/custom-link";
 
 import CartMenu from "~/components/common/partials/cart-menu";
-import MainMenu from "~/components/common/partials/main-menu";
 import SearchBox from "~/components/common/partials/search-box";
 import { headerBorderRemoveList } from "~/utils/data/menu";
 import { useAuth, useProgram, useLogs } from "hooks";
@@ -27,7 +26,9 @@ export default function Header(props) {
   const codesToGetSnapsMenu = ["IN_SNAPS_01", "IN_SNAPS_05", "IN_SNAPS_08"];
   const router = useRouter();
   const { dispatchLog } = useLogs();
-  const [isResultsVisible, setIsResultsVisible] = useState(false);
+  const [isResultsVisible, setIsResultsVisible] = useState(
+    program.id === 8 ? true : false
+  );
 
   useEffect(() => {
     let header = document.querySelector("header");
