@@ -27,7 +27,7 @@ export default function Header(props) {
   const router = useRouter();
   const { dispatchLog } = useLogs();
   const [isResultsVisible, setIsResultsVisible] = useState(
-    program.id === 8 ? true : false
+    program.id === 8 || program.id === 13 ? true : false
   );
 
   useEffect(() => {
