@@ -4,6 +4,7 @@ export interface Award {
   name: string;
   mainImage: string;
   description: string;
+  gptDescription: string;
   subcategories: Subcategory[];
   brand: Brand;
   model: string;
