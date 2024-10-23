@@ -1,10 +1,10 @@
-import { useState, useEffect, useCallback } from "react";
-import queryString from "query-string";
-import { useRouter } from "next/router";
+import { useState, useEffect, useCallback } from 'react';
+import queryString from 'query-string';
+import { useRouter } from 'next/router';
 
-import { CatalogueItem, Page, PaginationMetaDto } from "utils/types";
+import { CatalogueItem, Page, PaginationMetaDto } from 'utils/types';
 
-import { useApiAuth } from "./useApiAuth";
+import { useApiAuth } from './useApiAuth';
 
 type FilterOptions = {
   brandId?: number;
@@ -56,7 +56,7 @@ export const useItems = ({
       setLoading(true);
       const params = {
         // order: 'DESC',
-        order: metaProps?.order || "ASC",
+        order: metaProps?.order || 'DESC',
         take: meta.take.toString(),
         page: meta.page.toString(),
         // Add just the filter options that are not null or undefined or empty string
@@ -75,7 +75,7 @@ export const useItems = ({
       };
       const query = queryString.stringify(params);
       const response = await api.get<Page<CatalogueItem>>(
-        "/catalogue-items/store?" + query
+        '/catalogue-items/store?' + query
       );
       setProducts(response.data);
       setMeta(response.meta);
