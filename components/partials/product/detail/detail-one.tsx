@@ -89,7 +89,7 @@ const DetailOne: FC<Props> = (props) => {
 
       <p
         className="product-short-desc"
-        dangerouslySetInnerHTML={{ __html: product.award.description }}
+        dangerouslySetInnerHTML={{ __html: product.award.gptDescription }}
       ></p>
       <div className="product-form product-qty pb-0">
         <label className="d-none">Cantidad:</label>
