@@ -104,7 +104,7 @@ function SearchForm() {
             className="mb-2"
           >
             <i className="d-icon-graduation-cap mr-1"></i>
-            Academia
+            Capacitaciones
           </Link>
         )}
 
