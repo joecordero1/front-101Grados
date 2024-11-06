@@ -83,9 +83,21 @@ export const Requests = () => {
 
                 <p className="m-0">
                   <span className="font-weight-bold">Guia de entrega: </span>
-                  {group.requests[0].shippingGuide
-                    ? group.requests[0].shippingGuide
-                    : "N/A"}
+                  {group.requests[0].shippingGuide ? (
+                    <a
+                      href={`https://www.servientrega.com.ec/Tracking/?guia=${group.requests[0].shippingGuide}&tipo=GUIA`}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{
+                        color: "#007bff",
+                        textDecoration: "underline",
+                      }}
+                    >
+                      {group.requests[0].shippingGuide}
+                    </a>
+                  ) : (
+                    "N/A"
+                  )}
                 </p>
 
                 <p className="m-0">
