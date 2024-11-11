@@ -11,6 +11,7 @@ interface SpecialCollectionProps {
 }
 
 function SpecialCollection({ catalogue }: SpecialCollectionProps) {
+  const url = `/shop?catalogueId=${catalogue.id}&random=true`;
   const { availablePoints } = useAuth();
   const { coinName } = useProgram();
 
@@ -28,9 +29,16 @@ function SpecialCollection({ catalogue }: SpecialCollectionProps) {
     <section className="mb-10 pb-6">
       <div className="container">
         <h2 className="title title-line title-underline with-link">
-          {catalogue.name}
+          <span
+            style={{
+              textDecoration: 'none !important',
+              cursor: 'pointer',
+            }}
+          >
+            {catalogue.name}
+          </span>
           <ALink
-            href={{ pathname: '/shop', query: { catalogueId: catalogue.id } }}
+            href={url}
             className="btn btn-dark btn-link font-weight-semi-bold text-capitalize btn-more"
           >
             Más Premios<i className="d-icon-arrow-right"></i>
@@ -40,11 +48,13 @@ function SpecialCollection({ catalogue }: SpecialCollectionProps) {
         <div className="product-wrapper products-grid row">
           <div className="banner-wrapper">
             <div className="banner banner-fixed content-top banner-radius">
-              <img
-                src={catalogue.coverImage}
-                alt="cover-image"
-                style={{ width: 'auto', height: 'auto' }}
-              />
+              <ALink href={url}>
+                <img
+                  src={catalogue.coverImage}
+                  alt="cover-image"
+                  style={{ width: 'auto', height: 'auto' }}
+                />
+              </ALink>
             </div>
           </div>
           {loading

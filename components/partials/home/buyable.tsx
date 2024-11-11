@@ -7,6 +7,7 @@ import { useItems, useAuth, useProgram, useLogs } from 'hooks';
 import { LogType } from '~/utils/types/logType';
 
 function ElectronicCollection() {
+  const url = `/shop?buyable=true&random=true`;
   const { availablePoints, loadingPoints } = useAuth();
   const { coinName } = useProgram();
   const { items, loading } = useItems({
@@ -26,7 +27,7 @@ function ElectronicCollection() {
         <h2 className="title title-line title-underline with-link">
           Cómpralos Ahora
           <ALink
-            href={{ pathname: '/shop', query: { buyable: true } }}
+            href={url}
             className="btn btn-dark btn-link font-weight-semi-bold text-capitalize btn-more"
             onClick={() => {
               dispatchLog(LogType.CLICK_MORE_REACHABLE_AWARDS, {});
@@ -38,49 +39,45 @@ function ElectronicCollection() {
 
         <div className="product-wrapper products-grid row">
           <div className="banner-wrapper">
-            <div
-              className="banner banner-fixed content-top banner-radius"
-              style={{
-                // backgroundImage: 'url(images/home/banner/3.jpg)',
-                // backgroundImage:
-                //   'url(https://zanzibarworld.com/wp-content/uploads/2022/04/f1fd2bd5-e90f-48fa-85d1-840e2c4ace3b.jpg)',
-                backgroundColor: '#313131',
-              }}
-            >
-              <div className="banner-content">
-                <h4 className="banner-subtitle text-white text-uppercase">
-                  Te mereces lo mejor
-                </h4>
-                <h3 className="banner-title text-white font-weight-bold ls-m">
-                  Disponibles con tus {coinName}
-                </h3>
-                <div className="banner-price-info text-white font-weight-semi-bold ls-m">
-                  Hasta{' '}
-                  <strong className="text-secondary">
-                    {loadingPoints ? (
-                      <>
-                        <i className="fa fa-spinner fa-spin"></i>
-                      </>
-                    ) : (
-                      availablePoints
-                    )}{' '}
-                    {coinName}
-                  </strong>
+            <ALink href={url}>
+              <div
+                className="banner banner-fixed content-top banner-radius"
+                style={{
+                  backgroundColor: '#313131',
+                }}
+              >
+                <div className="banner-content">
+                  <h4 className="banner-subtitle text-white text-uppercase">
+                    Te mereces lo mejor
+                  </h4>
+                  <h3 className="banner-title text-white font-weight-bold ls-m">
+                    Disponibles con tus {coinName}
+                  </h3>
+                  <div className="banner-price-info text-white font-weight-semi-bold ls-m">
+                    Hasta{' '}
+                    <strong className="text-secondary">
+                      {loadingPoints ? (
+                        <>
+                          <i className="fa fa-spinner fa-spin"></i>
+                        </>
+                      ) : (
+                        availablePoints
+                      )}{' '}
+                      {coinName}
+                    </strong>
+                  </div>
+                  <ALink
+                    href={url}
+                    className="btn btn-white btn-outline btn-rounded"
+                    onClick={() => {
+                      dispatchLog(LogType.CLICK_MORE_REACHABLE_AWARDS, {});
+                    }}
+                  >
+                    Comprar Ahora<i className="d-icon-arrow-right"></i>
+                  </ALink>
                 </div>
-                <ALink
-                  href={{
-                    pathname: '/shop',
-                    query: { buyable: true },
-                  }}
-                  className="btn btn-white btn-outline btn-rounded"
-                  onClick={() => {
-                    dispatchLog(LogType.CLICK_MORE_REACHABLE_AWARDS, {});
-                  }}
-                >
-                  Comprar Ahora<i className="d-icon-arrow-right"></i>
-                </ALink>
               </div>
-            </div>
+            </ALink>
           </div>
           {loading
             ? [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (

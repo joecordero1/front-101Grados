@@ -1,17 +1,18 @@
-import React from "react";
+import React from 'react';
 
-import ALink from "~/components/features/custom-link";
-import ProductSm from "~/components/features/product/product-sm";
-import ProductDeal from "~/components/partials/home/product-deal";
+import ALink from '~/components/features/custom-link';
+import ProductSm from '~/components/features/product/product-sm';
+import ProductDeal from '~/components/partials/home/product-deal';
 
-import { useItems, useLogs } from "hooks";
-import { LogType } from "~/utils/types/logType";
+import { useItems, useLogs } from 'hooks';
+import { LogType } from '~/utils/types/logType';
 
 function BestCollection(props) {
+  const url = `/shop?orderPoints=DESC`;
   const { items: rawItems, loading } = useItems({
     filterOptions: {
       random: true,
-      orderPoints: "DESC",
+      orderPoints: 'DESC',
     },
   });
   const { dispatchLog } = useLogs();
@@ -24,7 +25,7 @@ function BestCollection(props) {
         <h2 className="title title-line title-underline with-link">
           Premios Destacados
           <ALink
-            href="/shop"
+            href={url}
             className="btn btn-dark btn-link text-capitalize font-weight-semi-bold btn-more"
             onClick={() => {
               dispatchLog(LogType.CLICK_MORE_FEATURED_AWARDS, {});
@@ -55,7 +56,7 @@ function BestCollection(props) {
             ? [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
                 <div
                   className="product-loading-overlay"
-                  key={"deal-skel-" + item}
+                  key={'deal-skel-' + item}
                 ></div>
               ))
             : items &&
