@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import Reveal from "react-awesome-reveal";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import React, { useEffect, useState } from 'react';
+import Reveal from 'react-awesome-reveal';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 // import Custom Components
-import ALink from "~/components/features/custom-link";
-import OwlCarousel from "~/components/features/owl-carousel";
-import { introSlider } from "~/utils/data/carousel";
-import { fadeInRightShorter, fadeInLeftShorter } from "~/utils/data/keyframes";
+import ALink from '~/components/features/custom-link';
+import OwlCarousel from '~/components/features/owl-carousel';
+import { introSlider } from '~/utils/data/carousel';
+import { fadeInRightShorter, fadeInLeftShorter } from '~/utils/data/keyframes';
 
-import { useProgram, useSpecialCatalogues } from "hooks";
+import { useProgram, useSpecialCatalogues } from 'hooks';
 
 function IntroSection(props) {
   const { program } = useProgram();
@@ -25,10 +25,10 @@ function IntroSection(props) {
   };
 
   useEffect(() => {
-    window.addEventListener("resize", setDimension);
+    window.addEventListener('resize', setDimension);
 
     return () => {
-      window.removeEventListener("resize", setDimension);
+      window.removeEventListener('resize', setDimension);
     };
   }, [screenSize]);
 
@@ -36,23 +36,23 @@ function IntroSection(props) {
   const isMobile = screenSize.dynamicWidth <= 990;
 
   return (
-    <div className="row">
+    <div className='row'>
       {!isMobile && (
-        <div className="col-lg-9 mb-4">
+        <div className='col-lg-9 mb-4'>
           <OwlCarousel
-            adClass="owl-theme owl-dot-inner intro-slider animation-slider"
+            adClass='owl-theme owl-dot-inner intro-slider animation-slider'
             options={introSlider}
           >
             <div
-              className="banner banner-fixed content-middle intro-slide intro-slide1 banner-radius"
-              style={{ backgroundColor: "#f8f8f8" }}
+              className='banner banner-fixed content-middle intro-slide intro-slide1 banner-radius'
+              style={{ backgroundColor: '#f8f8f8' }}
             >
               <figure>
                 <LazyLoadImage
                   src={program.hero1}
-                  alt="Banner"
-                  width="330"
-                  height="215"
+                  alt='Banner'
+                  width='330'
+                  height='215'
                 />
               </figure>
             </div>
@@ -60,17 +60,17 @@ function IntroSection(props) {
             {myCatalogues.length > 0 &&
               myCatalogues.map((catalogue) => (
                 <div
-                  className="banner banner-fixed content-middle intro-slide intro-slide2 banner-radius"
-                  style={{ backgroundColor: "#e2e2e3" }}
+                  className='banner banner-fixed content-middle intro-slide intro-slide2 banner-radius'
+                  style={{ backgroundColor: '#e2e2e3' }}
                 >
                   <ALink
                     href={{
-                      pathname: "/shop",
+                      pathname: '/shop',
                       query: { catalogueId: catalogue.id },
                     }}
                   >
                     <figure>
-                      <LazyLoadImage src={catalogue.coverImage2} alt="Banner" />
+                      <LazyLoadImage src={catalogue.coverImage2} alt='Banner' />
                     </figure>
                   </ALink>
                 </div>
@@ -78,17 +78,17 @@ function IntroSection(props) {
           </OwlCarousel>
         </div>
       )}
-      <div className="col-lg-3">
-        <div className="row cols-lg-1 cols-sm-2 cols-1">
-          <div className="intro-banner mb-4">
+      <div className='col-lg-3'>
+        <div className='row cols-lg-1 cols-sm-2 cols-1'>
+          <div className='intro-banner mb-4'>
             <div
-              className="banner banner-fixed content-middle banner-radius overlay-zoom"
-              style={{ backgroundColor: "#232323" }}
+              className='banner banner-fixed content-middle banner-radius overlay-zoom'
+              style={{ backgroundColor: '#232323' }}
             >
               {myCatalogues.length > 0 ? (
                 <ALink
                   href={{
-                    pathname: "/shop",
+                    pathname: '/shop',
                     query: { catalogueId: myCatalogues[0].id },
                   }}
                 >
@@ -99,9 +99,9 @@ function IntroSection(props) {
                           ? program.heroMobile1
                           : program.heroSection1
                       }
-                      alt="Banner"
-                      width="330"
-                      height="215"
+                      alt='Banner'
+                      width='330'
+                      height='215'
                     />
                   </figure>
                 </ALink>
@@ -113,23 +113,23 @@ function IntroSection(props) {
                         ? program.heroMobile1
                         : program.heroSection1
                     }
-                    alt="Banner"
-                    width="330"
-                    height="215"
+                    alt='Banner'
+                    width='330'
+                    height='215'
                   />
                 </figure>
               )}
             </div>
           </div>
-          <div className="intro-banner mb-4">
+          <div className='intro-banner mb-4'>
             <div
-              className="banner banner-fixed content-middle banner-radius overlay-zoom"
-              style={{ backgroundColor: "#eca5a9" }}
+              className='banner banner-fixed content-middle banner-radius overlay-zoom'
+              style={{ backgroundColor: '#eca5a9' }}
             >
               {myCatalogues.length > 0 ? (
                 <ALink
                   href={{
-                    pathname: "/shop",
+                    pathname: '/shop',
                     query: { catalogueId: myCatalogues[0].id },
                   }}
                 >
@@ -140,9 +140,9 @@ function IntroSection(props) {
                           ? program.heroMobile2
                           : program.heroSection2
                       }
-                      alt="Banner"
-                      width="330"
-                      height="215"
+                      alt='Banner'
+                      width='330'
+                      height='215'
                     />
                   </figure>
                 </ALink>
@@ -154,9 +154,9 @@ function IntroSection(props) {
                         ? program.heroMobile2
                         : program.heroSection2
                     }
-                    alt="Banner"
-                    width="330"
-                    height="215"
+                    alt='Banner'
+                    width='330'
+                    height='215'
                   />
                 </figure>
               )}
