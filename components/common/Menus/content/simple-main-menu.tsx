@@ -1,11 +1,11 @@
-import { useRouter } from "next/router";
-import ALink from "~/components/features/custom-link";
-import { useCategories } from "hooks";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
-import styles from "./simpleMainMenuStyles.module.scss";
+import { useRouter } from 'next/router';
+import ALink from '~/components/features/custom-link';
+import { useCategories } from 'hooks';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import styles from './simpleMainMenuStyles.module.scss';
 
 function SimpleMainMenu() {
   const { categories } = useCategories({
@@ -16,8 +16,8 @@ function SimpleMainMenu() {
 
   const handleRedirect = (categoryId) => {
     router.push({
-      pathname: "/shop",
-      query: { category: categoryId },
+      pathname: '/shop',
+      query: { category: categoryId, random: true },
     });
   };
 
@@ -25,7 +25,7 @@ function SimpleMainMenu() {
     <nav className={styles.simpleMenu}>
       <List component="nav" className={styles.horizontalList}>
         <div className={styles.menuItem}>
-          <ListItem button onClick={() => router.push("/shop")}>
+          <ListItem button onClick={() => router.push('/shop?random=true')}>
             <ListItemText primary="Todas" />
           </ListItem>
         </div>
