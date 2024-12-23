@@ -1,17 +1,17 @@
-import queryString from "query-string";
-import { useCallback, useEffect, useReducer } from "react";
-import { useApiAuth, useAuth, useProgram } from "~/hooks";
-import { Result } from "~/utils/types";
+import queryString from 'query-string';
+import { useCallback, useEffect, useReducer } from 'react';
+import { useApiAuth, useAuth, useProgram } from '~/hooks';
+import { Result } from '~/utils/types';
 
 type GetMyResults = {
-  type: "GET_MY_RESULTS";
+  type: 'GET_MY_RESULTS';
   payload: {
     results: Result[];
   };
 };
 
 type GetGroupedResults = {
-  type: "GET_GROUPED_RESULTS";
+  type: 'GET_GROUPED_RESULTS';
   payload: {
     results: {
       parent: Result;
@@ -21,21 +21,21 @@ type GetGroupedResults = {
 };
 
 type GetUngroupedResults = {
-  type: "GET_UNGROUPED_RESULTS";
+  type: 'GET_UNGROUPED_RESULTS';
   payload: {
     results: Result[];
   };
 };
 
 type HandleStatus = {
-  type: "HANDLE_STATUS";
+  type: 'HANDLE_STATUS';
   payload: {
-    status: "idle" | "complete";
+    status: 'idle' | 'complete';
   };
 };
 
 type HandleFilter = {
-  type: "HANDLE_FILTER";
+  type: 'HANDLE_FILTER';
   payload: {
     name: string;
     value: any;
@@ -50,7 +50,7 @@ type ActionTypes =
   | GetGroupedResults;
 
 export type State = {
-  status: "idle" | "complete";
+  status: 'idle' | 'complete';
   results: any;
   groupedResults: any;
   ungroupedResults: any;
@@ -61,7 +61,7 @@ export type State = {
 };
 
 const initialState: State = {
-  status: "idle",
+  status: 'idle',
   results: [],
   groupedResults: [],
   ungroupedResults: [],
@@ -74,34 +74,34 @@ const initialState: State = {
 
 const reducer = (state: State, action: ActionTypes): State => {
   switch (action.type) {
-    case "GET_MY_RESULTS":
+    case 'GET_MY_RESULTS':
       const { results } = action.payload;
       return {
         ...state,
         results,
       };
 
-    case "GET_GROUPED_RESULTS":
+    case 'GET_GROUPED_RESULTS':
       const groupedResults = action.payload.results;
       return {
         ...state,
         groupedResults,
       };
 
-    case "GET_UNGROUPED_RESULTS":
+    case 'GET_UNGROUPED_RESULTS':
       const ungroupedResults = action.payload.results;
       return {
         ...state,
         ungroupedResults,
       };
-    case "HANDLE_STATUS":
+    case 'HANDLE_STATUS':
       const { status } = action.payload;
       return {
         ...state,
         status,
       };
 
-    case "HANDLE_FILTER":
+    case 'HANDLE_FILTER':
       const { name, value } = action.payload;
       return {
         ...state,
@@ -130,7 +130,7 @@ export const useMyResults = (): ReducerValue => {
 
   const handleFilter = useCallback((name: string, value: string) => {
     dispatch({
-      type: "HANDLE_FILTER",
+      type: 'HANDLE_FILTER',
       payload: {
         name,
         value,
@@ -141,7 +141,7 @@ export const useMyResults = (): ReducerValue => {
   const getMyResults = useCallback(async () => {
     try {
       const params = {
-        order: "DESC",
+        order: 'DESC',
         ignorePagination: true,
         periodMonth: new Date().getMonth() + 1,
         periodYear: new Date().getFullYear(),
@@ -158,19 +158,19 @@ export const useMyResults = (): ReducerValue => {
       const data = await api.get<Result[]>(`/results/my-results?${query}`);
 
       dispatch({
-        type: "GET_MY_RESULTS",
+        type: 'GET_MY_RESULTS',
         payload: {
           results: data,
         },
       });
       dispatch({
-        type: "HANDLE_STATUS",
+        type: 'HANDLE_STATUS',
         payload: {
-          status: "complete",
+          status: 'complete',
         },
       });
     } catch (e) {
-      console.error("getMyResults", e);
+      console.error('getMyResults', e);
     }
   }, [participant, state.filters]);
 
@@ -178,7 +178,7 @@ export const useMyResults = (): ReducerValue => {
     try {
       const params = {
         ignorePagination: true,
-        order: "DESC",
+        order: 'DESC',
         isAMonthlyResult: true,
         ...Object.keys(state.filters).reduce((acc, key) => {
           if (state.filters[key] !== null) {
@@ -191,20 +191,20 @@ export const useMyResults = (): ReducerValue => {
       const data = await api.get<Result[]>(`/results/my-results?${query}`);
 
       dispatch({
-        type: "GET_UNGROUPED_RESULTS",
+        type: 'GET_UNGROUPED_RESULTS',
         payload: {
           results: data,
         },
       });
 
       dispatch({
-        type: "HANDLE_STATUS",
+        type: 'HANDLE_STATUS',
         payload: {
-          status: "complete",
+          status: 'complete',
         },
       });
     } catch (e) {
-      console.error("getMyResults", e);
+      console.error('getMyResults', e);
     }
   }, [participant, state.filters]);
 
@@ -218,9 +218,9 @@ export const useMyResults = (): ReducerValue => {
 
   const groupResults = () => {
     dispatch({
-      type: "HANDLE_STATUS",
+      type: 'HANDLE_STATUS',
       payload: {
-        status: "idle",
+        status: 'idle',
       },
     });
 
@@ -245,16 +245,16 @@ export const useMyResults = (): ReducerValue => {
     const result = Object.values(groupedResults);
 
     dispatch({
-      type: "GET_GROUPED_RESULTS",
+      type: 'GET_GROUPED_RESULTS',
       payload: {
         results: result,
       },
     });
 
     dispatch({
-      type: "HANDLE_STATUS",
+      type: 'HANDLE_STATUS',
       payload: {
-        status: "complete",
+        status: 'complete',
       },
     });
 

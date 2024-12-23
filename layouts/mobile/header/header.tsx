@@ -6,7 +6,7 @@ import ALink from '~/components/features/custom-link';
 import CartMenu from '~/components/common/partials/cart-menu';
 import SearchBox from '~/components/common/partials/search-box';
 import { headerBorderRemoveList } from '~/utils/data/menu';
-import { useAuth, useProgram, useLogs } from 'hooks';
+import { useAuth, useProgram, useLogs, useRequests } from 'hooks';
 import { LogType } from '~/utils/types/logType';
 import ResultsCard from '../../../components/common/partials/results';
 import { useDishsItems } from '~/hooks';
@@ -16,6 +16,7 @@ import { Button } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import styles from './headerStyles.module.scss';
+import { getStatusElement } from '~/utils/getRequestStatus';
 
 export default function HeaderMobile(props) {
   const { logOut, availablePoints, participant, accessToken, loadingPoints } =
@@ -23,6 +24,7 @@ export default function HeaderMobile(props) {
   const { items, getMyDishsItems, couldSeeResults, availableCodes } =
     useDishsItems();
   const { program } = useProgram();
+  const { loading, error, requests } = useRequests();
   const codesToGetSnapsMenu = ['IN_SNAPS_01', 'IN_SNAPS_05', 'IN_SNAPS_08'];
   const router = useRouter();
   const { dispatchLog } = useLogs();
@@ -30,7 +32,8 @@ export default function HeaderMobile(props) {
     program.id === 8 ||
       program.id === 13 ||
       program.id === 15 ||
-      program.id === 14
+      program.id === 14 ||
+      program.id === 26
       ? true
       : false
   );
@@ -208,37 +211,31 @@ export default function HeaderMobile(props) {
       </div>
 
       {!couldSeeResults && (
-        <div className='welcome-message'>
-          <h6
-            style={{
-              textAlign: 'center',
-              margin: 10,
-              color: '#5d5e5e',
-            }}
-          >
-            ¡Hola {participant?.firstName}!
-          </h6>
-          <h5
-            style={{
-              textAlign: 'center',
-              margin: '0 auto',
-              color: '#5d5e5e',
-            }}
-          >
-            Tienes{' '}
-            {loadingPoints ? (
-              <>
-                <i className='fa fa-spinner fa-spin'></i>
-              </>
+        <div className='flex justify-center items-center gap-16 mt-2'>
+          {requests.length > 0 &&
+            (loading ? (
+              <div className='award-status'>
+                <p>Cargando...</p>
+              </div>
             ) : (
-              availablePoints
-            )}{' '}
-            {program.coinName}
-          </h5>
+              <div className='award-status flex flex-col items-center'>
+                <p>Status Premio</p>
+                <div className='flex flex-col items-center'>
+                  {getStatusElement(requests[requests?.length - 1]?.status)}
+                </div>
+              </div>
+            ))}
+
+          <div className='available-points flex flex-col items-center'>
+            <p>Puntos disponibles</p>
+            <div className='flex flex-col items-center'>
+              {loadingPoints ? <p>Cargando...</p> : <p>{availablePoints}</p>}
+            </div>
+          </div>
         </div>
       )}
 
-      {couldSeeResults && (
+      {couldSeeResults ? (
         <div
           className='welcome-message container'
           style={{ display: 'flex', justifyContent: 'center' }}
@@ -246,6 +243,10 @@ export default function HeaderMobile(props) {
           {/* Mostrar ResultsCard condicionalmente */}
           {isResultsVisible && <ResultsCard />}
         </div>
+      ) : (
+        <p className='text-center mt-3'>
+          <strong>¡Bienvenido {participant.fullName}!</strong>
+        </p>
       )}
     </header>
   );

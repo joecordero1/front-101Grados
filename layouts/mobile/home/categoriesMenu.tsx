@@ -17,7 +17,7 @@ function CategoriesMenu() {
 
   return (
     <nav className='w-full overflow-x-auto'>
-      <ul className='flex space-x-4 px-4 py-4 bg-gray-100 rounded-lg shadow-md whitespace-nowrap'>
+      <ul className='flex space-x-4 px-4 py-4  rounded-lg shadow-md whitespace-nowrap'>
         {/* Botón para todas las categorías */}
         <li>
           <button

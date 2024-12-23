@@ -1,6 +1,6 @@
-import React, { use, useEffect, useState } from "react";
-import { useMyResults } from "./reducer";
-import SlideToggle from "react-slide-toggle";
+import React, { use, useEffect, useState } from 'react';
+import { useMyResults } from './reducer';
+import SlideToggle from 'react-slide-toggle';
 import {
   Card,
   Container,
@@ -8,11 +8,11 @@ import {
   InputLabel,
   MenuItem,
   Select,
-} from "@mui/material";
-import { IngredientCodes, Result } from "~/utils/types";
-import { getMonthName } from "~/utils";
-import { useDishsItems, useProgram } from "~/hooks";
-import styles from "./resultsStyles.module.scss";
+} from '@mui/material';
+import { IngredientCodes, Result } from '~/utils/types';
+import { getMonthName } from '~/utils';
+import { useDishsItems, useProgram } from '~/hooks';
+import styles from './resultsStyles.module.scss';
 
 const ParticipantResults = () => {
   const { groupedResults, ungroupedResults, handleFilter, status } =
@@ -28,9 +28,9 @@ const ParticipantResults = () => {
   }, []);
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -43,13 +43,13 @@ const ParticipantResults = () => {
     availableCodes.includes(code)
   );
 
-  if (status === "idle")
+  if (status === 'idle')
     return (
-      <div className="text-center">
+      <div className='text-center'>
         <i
-          className="fas fa-spinner fa-spin"
+          className='fas fa-spinner fa-spin'
           style={{
-            fontSize: "3rem",
+            fontSize: '3rem',
           }}
         ></i>
       </div>
@@ -58,7 +58,7 @@ const ParticipantResults = () => {
   const sortOrder = {
     VENTAS: 1,
     IMPACTOS: 2,
-    "PRODUCTO FOCO": 3,
+    'PRODUCTO FOCO': 3,
   };
 
   const getOrder = (description: string): number => {
@@ -84,35 +84,35 @@ const ParticipantResults = () => {
       {width < 768 ? (
         <Container
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
             gap: 2,
           }}
         >
-          <h3>Mis Resultados</h3>
+          <h3 className='tex-center mt-2'>Mis Resultados</h3>
 
-          <div style={{ display: "flex", gap: "10px" }}>
-            <FormControl size="medium">
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <FormControl size='medium'>
               <InputLabel
                 style={{
-                  fontSize: "2rem",
+                  fontSize: '2rem',
                 }}
               >
                 Año
               </InputLabel>
               <Select
-                name="year"
-                onChange={(e) => handleFilter("year", e.target.value)}
+                name='year'
+                onChange={(e) => handleFilter('year', e.target.value)}
                 defaultValue={new Date().getFullYear()}
                 style={{
-                  fontSize: "1.5rem",
+                  fontSize: '1.5rem',
                 }}
               >
                 <MenuItem
                   value={2024}
                   style={{
-                    fontSize: "1.5rem",
+                    fontSize: '1.5rem',
                   }}
                 >
                   2024
@@ -120,20 +120,20 @@ const ParticipantResults = () => {
               </Select>
             </FormControl>
             {couldSeeResultsPerMonth && (
-              <FormControl size="medium">
+              <FormControl size='medium'>
                 <InputLabel
                   style={{
-                    fontSize: "2rem",
+                    fontSize: '2rem',
                   }}
                 >
                   Mes
                 </InputLabel>
                 <Select
-                  name="month"
-                  onChange={(e) => handleFilter("month", e.target.value)}
+                  name='month'
+                  onChange={(e) => handleFilter('month', e.target.value)}
                   defaultValue={new Date().getMonth()}
                   style={{
-                    fontSize: "1.5rem",
+                    fontSize: '1.5rem',
                   }}
                 >
                   <MenuItem value={1}>Enero</MenuItem>
@@ -156,57 +156,58 @@ const ParticipantResults = () => {
             {groupedResults.map((result: Result, index: number) => (
               <div key={index}>
                 {result.children.length === 0 ? (
-                  <div className="card" key={index}>
+                  <div className='card py-2' key={index}>
                     <div
+                      className='m-2'
                       style={{
-                        background: "#c4c4c4",
-                        height: "2px",
-                        width: "100%",
+                        background: '#c4c4c4',
+                        height: '2px',
+                        width: '100%',
                       }}
                     ></div>
                     <div
                       style={{
-                        display: "flex",
-                        alignItems: "start",
-                        justifyContent: "start",
-                        padding: "1rem",
+                        display: 'flex',
+                        alignItems: 'start',
+                        justifyContent: 'start',
+                        padding: '1rem',
                       }}
                     >
                       <div>
                         <h2
                           style={{
-                            fontSize: "1.5rem",
-                            margin: "0",
+                            fontSize: '1.5rem',
+                            margin: '0',
                           }}
                         >
                           {result.periodResult?.name}
                         </h2>
-                        <p className="m-0">
-                          Descripción: {""}
-                          <span className="font-weight-bold">
+                        <p className='m-0'>
+                          Descripción: {''}
+                          <span className='font-weight-bold'>
                             {result.periodResult?.description}
                           </span>
                         </p>
 
-                        <p className="m-0">
-                          <span className="font-weight-light">
-                            {result.nameValue1}:{" "}
+                        <p className='m-0'>
+                          <span className='font-weight-light'>
+                            {result.nameValue1}:{' '}
                           </span>
                           {result.value1}
                         </p>
                       </div>
                     </div>
                     <div>
-                      <p className="m-0">
-                        <span className="font-weight-bold">
-                          {result.nameValue2}:{" "}
+                      <p className='m-0'>
+                        <span className='font-weight-bold'>
+                          {result.nameValue2}:{' '}
                         </span>
                         {result.value2}
                       </p>
                     </div>
                   </div>
                 ) : (
-                  <div className="widget-collapsible" key={index}>
+                  <div className='widget-collapsible' key={index}>
                     <SlideToggle collapsed={true}>
                       {({ onToggle, setCollapsibleElement, toggleState }) => (
                         <>
@@ -214,49 +215,49 @@ const ParticipantResults = () => {
                             className={`widget-title ${toggleState.toLowerCase()}`}
                             onClick={onToggle}
                           >
-                            <div className="card" key={result.id}>
+                            <div className='card py-2' key={result.id}>
                               <div
                                 style={{
-                                  display: "flex",
-                                  alignItems: "start",
-                                  justifyContent: "start",
+                                  display: 'flex',
+                                  alignItems: 'start',
+                                  justifyContent: 'start',
                                 }}
                               >
                                 <div>
                                   <h2
                                     style={{
-                                      fontSize: "1.5rem",
-                                      margin: "0",
+                                      fontSize: '1.5rem',
+                                      margin: '0',
                                     }}
                                   >
                                     {result.parent?.periodResult?.name}
                                   </h2>
-                                  <p className="m-0">
-                                    Descripción: {""}
-                                    <span className="font-weight-bold">
+                                  <p className='m-0'>
+                                    Descripción: {''}
+                                    <span className='font-weight-bold'>
                                       {result.parent?.periodResult?.description}
                                     </span>
                                   </p>
                                 </div>
                               </div>
                               <div>
-                                <p className="m-0">
-                                  <span className="font-weight-bold">
-                                    {result.parent.nameValue1}:{" "}
+                                <p className='m-0'>
+                                  <span className='font-weight-bold'>
+                                    {result.parent.nameValue1}:{' '}
                                   </span>
 
                                   {result.parent.value1}
                                 </p>
-                                <p className="m-0">
-                                  <span className="font-weight-bold">
-                                    {result.parent.nameValue2}:{" "}
+                                <p className='m-0'>
+                                  <span className='font-weight-bold'>
+                                    {result.parent.nameValue2}:{' '}
                                   </span>
                                   {result.parent.value2}
                                 </p>
                                 {result.parent.result !== 0 && (
-                                  <p className="m-0">
-                                    <span className="font-weight-bold">
-                                      Cumplimiento{" "}
+                                  <p className='m-0'>
+                                    <span className='font-weight-bold'>
+                                      Cumplimiento{' '}
                                     </span>
                                     {result.parent.result}%
                                   </p>
@@ -265,72 +266,72 @@ const ParticipantResults = () => {
                             </div>
                             <div
                               style={{
-                                display: "flex",
+                                display: 'flex',
                               }}
                             >
                               <span
                                 style={{
-                                  fontSize: "1.2rem",
-                                  textTransform: "uppercase",
-                                  textDecoration: "underline",
-                                  textAlign: "right",
-                                  width: "100%",
+                                  fontSize: '1.2rem',
+                                  textTransform: 'uppercase',
+                                  textDecoration: 'underline',
+                                  textAlign: 'right',
+                                  width: '100%',
                                 }}
                               >
                                 Ver Detalle
                               </span>
-                              <span className="toggle-btn parse-content"></span>
+                              <span className='toggle-btn parse-content'></span>
                             </div>
                           </div>
 
                           <div
-                            className="overflow-hidden"
+                            className='overflow-hidden'
                             ref={setCollapsibleElement}
                           >
                             {result.children.map((result) => (
-                              <div className="card" key={result.id}>
+                              <div className='card py-2' key={result.id}>
                                 <div
                                   style={{
-                                    background: "#c4c4c4",
-                                    height: "2px",
-                                    width: "100%",
+                                    background: '#c4c4c4',
+                                    height: '2px',
+                                    width: '100%',
                                   }}
                                 ></div>
                                 <div
                                   style={{
-                                    display: "flex",
-                                    alignItems: "start",
-                                    justifyContent: "start",
+                                    display: 'flex',
+                                    alignItems: 'start',
+                                    justifyContent: 'start',
                                   }}
                                 >
                                   <div>
                                     <h2
                                       style={{
-                                        fontSize: "1.5rem",
-                                        margin: "0",
+                                        fontSize: '1.5rem',
+                                        margin: '0',
                                       }}
                                     >
                                       {getMonthName(result.month)}
                                     </h2>
-                                    <p className="m-0">
-                                      Descripción: {""}
-                                      <span className="font-weight-bold">
+                                    <p className='m-0'>
+                                      Descripción: {''}
+                                      <span className='font-weight-bold'>
                                         {result.description}
                                       </span>
                                     </p>
 
-                                    <p className="m-0">
-                                      <span className="font-weight-light">
-                                        {result.nameValue1}:{" "}
+                                    <p className='m-0'>
+                                      <span className='font-weight-light'>
+                                        {result.nameValue1}:{' '}
                                       </span>
                                       {result.value1}
                                     </p>
                                   </div>
                                 </div>
                                 <div>
-                                  <p className="m-0">
-                                    <span className="font-weight-bold">
-                                      {result.nameValue2}:{" "}
+                                  <p className='m-0'>
+                                    <span className='font-weight-bold'>
+                                      {result.nameValue2}:{' '}
                                     </span>
                                     {result.value2}
                                   </p>
@@ -340,16 +341,16 @@ const ParticipantResults = () => {
                             <div
                               onClick={onToggle}
                               style={{
-                                display: "flex",
+                                display: 'flex',
                               }}
                             >
                               <span
                                 style={{
-                                  fontSize: "1.2rem",
-                                  textTransform: "uppercase",
-                                  textDecoration: "underline",
-                                  textAlign: "right",
-                                  width: "100%",
+                                  fontSize: '1.2rem',
+                                  textTransform: 'uppercase',
+                                  textDecoration: 'underline',
+                                  textAlign: 'right',
+                                  width: '100%',
                                 }}
                               >
                                 Ocultar Detalle
@@ -366,61 +367,61 @@ const ParticipantResults = () => {
             {couldSeeResultsPerMonth && (
               <>
                 {sortedResults.map((result: Result, index: number) => (
-                  <div className="card" key={result.id}>
+                  <div className='card py-2' key={result.id}>
                     <div
                       style={{
-                        background: "#c4c4c4",
-                        height: "2px",
-                        width: "100%",
+                        background: '#c4c4c4',
+                        height: '2px',
+                        width: '100%',
                       }}
                     ></div>
                     <div
                       style={{
-                        display: "flex",
-                        alignItems: "start",
-                        justifyContent: "start",
+                        display: 'flex',
+                        alignItems: 'start',
+                        justifyContent: 'start',
                       }}
                     >
                       <div>
                         <h2
                           style={{
-                            fontSize: "1.5rem",
-                            margin: "0",
+                            fontSize: '1.5rem',
+                            margin: '0',
                           }}
                         >
                           {getMonthName(result.month)}
                         </h2>
-                        <p className="m-0">
-                          Descripción: {""}
-                          <span className="font-weight-bold">
+                        <p className='m-0'>
+                          Descripción: {''}
+                          <span className='font-weight-bold'>
                             {result.description}
                           </span>
                         </p>
 
-                        <p className="m-0">
-                          <span className="font-weight-light">
-                            {result.nameValue1}:{" "}
+                        <p className='m-0'>
+                          <span className='font-weight-light'>
+                            {result.nameValue1}:{' '}
                           </span>
-                          {result.description.includes("VENTAS")
+                          {result.description.includes('VENTAS')
                             ? `$${result.value1}`
                             : result.value1}
                         </p>
                       </div>
                     </div>
                     <div>
-                      <p className="m-0">
-                        <span className="font-weight-bold">
-                          {result.nameValue2}:{" "}
+                      <p className='m-0'>
+                        <span className='font-weight-bold'>
+                          {result.nameValue2}:{' '}
                         </span>
-                        {result.description.includes("VENTAS")
+                        {result.description.includes('VENTAS')
                           ? `$${result.value2}`
                           : result.value2}
                       </p>
                     </div>
                     <div>
-                      <p className="m-0">
-                        <span className="font-weight-bold">
-                          {"Cumplimiento"}:{" "}
+                      <p className='m-0'>
+                        <span className='font-weight-bold'>
+                          {'Cumplimiento'}:{' '}
                         </span>
                         {((result.value2 / result.value1) * 100).toFixed(2)}%
                       </p>
@@ -435,39 +436,39 @@ const ParticipantResults = () => {
         <div>
           <Card
             style={{
-              padding: "1rem",
-              margin: "1rem",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
+              padding: '1rem',
+              margin: '1rem',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
             <h3>Mis Resultados</h3>
             <div
-              className="results-container"
-              style={{ display: "flex", gap: "10px" }}
+              className='results-container'
+              style={{ display: 'flex', gap: '10px' }}
             >
-              <FormControl size="medium">
+              <FormControl size='medium'>
                 <InputLabel
                   style={{
-                    fontSize: "2rem",
+                    fontSize: '2rem',
                   }}
                 >
                   Año
                 </InputLabel>
                 <Select
-                  name="year"
-                  onChange={(e) => handleFilter("year", e.target.value)}
+                  name='year'
+                  onChange={(e) => handleFilter('year', e.target.value)}
                   defaultValue={new Date().getFullYear()}
                   style={{
-                    fontSize: "1.5rem",
+                    fontSize: '1.5rem',
                   }}
                 >
                   <MenuItem
                     value={2024}
                     style={{
-                      fontSize: "1.5rem",
+                      fontSize: '1.5rem',
                     }}
                   >
                     2024
@@ -475,20 +476,20 @@ const ParticipantResults = () => {
                 </Select>
               </FormControl>
               {couldSeeResultsPerMonth && (
-                <FormControl size="medium">
+                <FormControl size='medium'>
                   <InputLabel
                     style={{
-                      fontSize: "2rem",
+                      fontSize: '2rem',
                     }}
                   >
                     Mes
                   </InputLabel>
                   <Select
-                    name="month"
-                    onChange={(e) => handleFilter("month", e.target.value)}
+                    name='month'
+                    onChange={(e) => handleFilter('month', e.target.value)}
                     defaultValue={new Date().getMonth() + 1}
                     style={{
-                      fontSize: "1.5rem",
+                      fontSize: '1.5rem',
                     }}
                   >
                     <MenuItem value={1}>Enero</MenuItem>
@@ -508,58 +509,58 @@ const ParticipantResults = () => {
               )}
             </div>
             <div
-              className="results-screen"
+              className='results-screen'
               style={{
-                margin: "1rem",
+                margin: '1rem',
               }}
             >
               {groupedResults.map((result: Result, index: number) => (
                 <div key={index}>
                   {result.children.length === 0 ? (
-                    <div className="card" key={index}>
+                    <div className='card py-2' key={index}>
                       <div
                         style={{
-                          background: "#c3c3c3",
-                          height: "2px",
-                          width: "100%",
+                          background: '#c3c3c3',
+                          height: '2px',
+                          width: '100%',
                         }}
                       ></div>
                       <div
                         style={{
-                          display: "flex",
-                          alignItems: "start",
-                          justifyContent: "start",
-                          padding: "1rem",
+                          display: 'flex',
+                          alignItems: 'start',
+                          justifyContent: 'start',
+                          padding: '1rem',
                         }}
                       >
                         <div>
                           <h2
                             style={{
-                              fontSize: "1.5rem",
-                              margin: "0",
+                              fontSize: '1.5rem',
+                              margin: '0',
                             }}
                           >
                             {result.periodResult?.name}
                           </h2>
-                          <p className="m-0">
-                            Descripción: {""}
-                            <span className="font-weight-bold">
+                          <p className='m-0'>
+                            Descripción: {''}
+                            <span className='font-weight-bold'>
                               {result.periodResult?.description}
                             </span>
                           </p>
 
-                          <p className="m-0">
-                            <span className="font-weight-light">
-                              {result.nameValue1}:{" "}
+                          <p className='m-0'>
+                            <span className='font-weight-light'>
+                              {result.nameValue1}:{' '}
                             </span>
                             {result.value1}
                           </p>
                         </div>
                       </div>
                       <div>
-                        <p className="m-0">
-                          <span className="font-weight-bold">
-                            {result.nameValue2}:{" "}
+                        <p className='m-0'>
+                          <span className='font-weight-bold'>
+                            {result.nameValue2}:{' '}
                           </span>
                           {result.value2}
                         </p>
@@ -567,10 +568,10 @@ const ParticipantResults = () => {
                     </div>
                   ) : (
                     <div
-                      className="widget-collapsible"
+                      className='widget-collapsible'
                       key={index}
                       style={{
-                        position: "relative",
+                        position: 'relative',
                       }}
                     >
                       <SlideToggle collapsed={true}>
@@ -581,31 +582,31 @@ const ParticipantResults = () => {
                               onClick={onToggle}
                             >
                               <div
-                                className="card"
+                                className='card py-2'
                                 key={result.id}
                                 style={{
-                                  width: "90vw",
+                                  width: '90vw',
                                 }}
                               >
                                 <div
                                   style={{
-                                    display: "flex",
-                                    alignItems: "start",
-                                    justifyContent: "start",
+                                    display: 'flex',
+                                    alignItems: 'start',
+                                    justifyContent: 'start',
                                   }}
                                 >
                                   <div>
                                     <h2
                                       style={{
-                                        fontSize: "1.5rem",
-                                        margin: "0",
+                                        fontSize: '1.5rem',
+                                        margin: '0',
                                       }}
                                     >
                                       {result.parent?.periodResult?.name}
                                     </h2>
-                                    <p className="m-0">
-                                      Descripción: {""}
-                                      <span className="font-weight-bold">
+                                    <p className='m-0'>
+                                      Descripción: {''}
+                                      <span className='font-weight-bold'>
                                         {
                                           result.parent?.periodResult
                                             ?.description
@@ -615,23 +616,23 @@ const ParticipantResults = () => {
                                   </div>
                                 </div>
                                 <div>
-                                  <p className="m-0">
-                                    <span className="font-weight-bold">
-                                      {result.parent.nameValue1}:{" "}
+                                  <p className='m-0'>
+                                    <span className='font-weight-bold'>
+                                      {result.parent.nameValue1}:{' '}
                                     </span>
 
                                     {result.parent.value1}
                                   </p>
-                                  <p className="m-0">
-                                    <span className="font-weight-bold">
-                                      {result.parent.nameValue2}:{" "}
+                                  <p className='m-0'>
+                                    <span className='font-weight-bold'>
+                                      {result.parent.nameValue2}:{' '}
                                     </span>
                                     {result.parent.value2}
                                   </p>
                                   {result.parent.result !== 0 && (
-                                    <p className="m-0">
-                                      <span className="font-weight-bold">
-                                        Cumplimiento{" "}
+                                    <p className='m-0'>
+                                      <span className='font-weight-bold'>
+                                        Cumplimiento{' '}
                                       </span>
                                       {result.parent.result}%
                                     </p>
@@ -640,72 +641,72 @@ const ParticipantResults = () => {
                               </div>
                               <div
                                 style={{
-                                  display: "flex",
+                                  display: 'flex',
                                 }}
                               >
                                 <span
                                   style={{
-                                    fontSize: "1.2rem",
-                                    textTransform: "uppercase",
-                                    textDecoration: "underline",
-                                    textAlign: "right",
-                                    width: "100%",
+                                    fontSize: '1.2rem',
+                                    textTransform: 'uppercase',
+                                    textDecoration: 'underline',
+                                    textAlign: 'right',
+                                    width: '100%',
                                   }}
                                 >
                                   Ver Detalle
                                 </span>
-                                <span className="toggle-btn parse-content"></span>
+                                <span className='toggle-btn parse-content'></span>
                               </div>
                             </div>
 
                             <div
-                              className="overflow-hidden"
+                              className='overflow-hidden'
                               ref={setCollapsibleElement}
                             >
                               {result.children.map((result) => (
-                                <div className="card" key={result.id}>
+                                <div className='card py-2' key={result.id}>
                                   <div
                                     style={{
-                                      background: "#c3c3c3",
-                                      height: "2px",
-                                      width: "100%",
+                                      background: '#c3c3c3',
+                                      height: '2px',
+                                      width: '100%',
                                     }}
                                   ></div>
                                   <div
                                     style={{
-                                      display: "flex",
-                                      alignItems: "start",
-                                      justifyContent: "start",
+                                      display: 'flex',
+                                      alignItems: 'start',
+                                      justifyContent: 'start',
                                     }}
                                   >
                                     <div>
                                       <h2
                                         style={{
-                                          fontSize: "1.5rem",
-                                          margin: "0",
+                                          fontSize: '1.5rem',
+                                          margin: '0',
                                         }}
                                       >
                                         {getMonthName(result.month)}
                                       </h2>
-                                      <p className="m-0">
-                                        Descripción: {""}
-                                        <span className="font-weight-bold">
+                                      <p className='m-0'>
+                                        Descripción: {''}
+                                        <span className='font-weight-bold'>
                                           {result.description}
                                         </span>
                                       </p>
 
-                                      <p className="m-0">
-                                        <span className="font-weight-light">
-                                          {result.nameValue1}:{" "}
+                                      <p className='m-0'>
+                                        <span className='font-weight-light'>
+                                          {result.nameValue1}:{' '}
                                         </span>
                                         {result.value1}
                                       </p>
                                     </div>
                                   </div>
                                   <div>
-                                    <p className="m-0">
-                                      <span className="font-weight-bold">
-                                        {result.nameValue2}:{" "}
+                                    <p className='m-0'>
+                                      <span className='font-weight-bold'>
+                                        {result.nameValue2}:{' '}
                                       </span>
                                       {result.value2}
                                     </p>
@@ -715,16 +716,16 @@ const ParticipantResults = () => {
                               <div
                                 onClick={onToggle}
                                 style={{
-                                  display: "flex",
+                                  display: 'flex',
                                 }}
                               >
                                 <span
                                   style={{
-                                    fontSize: "1.2rem",
-                                    textTransform: "uppercase",
-                                    textDecoration: "underline",
-                                    textAlign: "right",
-                                    width: "100%",
+                                    fontSize: '1.2rem',
+                                    textTransform: 'uppercase',
+                                    textDecoration: 'underline',
+                                    textAlign: 'right',
+                                    width: '100%',
                                   }}
                                 >
                                   Ocultar Detalle
@@ -745,62 +746,62 @@ const ParticipantResults = () => {
                       className={styles.ungroupedResultsContainer}
                       key={result.id}
                     >
-                      <div className="card">
+                      <div className='card py-2'>
                         <div
                           style={{
-                            background: "#c3c3c3",
-                            height: "2px",
-                            width: "100%",
-                            marginBottom: "10px",
+                            background: '#c3c3c3',
+                            height: '2px',
+                            width: '100%',
+                            marginBottom: '10px',
                           }}
                         ></div>
                         <div
                           style={{
-                            display: "flex",
-                            alignItems: "start",
-                            justifyContent: "start",
+                            display: 'flex',
+                            alignItems: 'start',
+                            justifyContent: 'start',
                           }}
                         >
                           <div>
                             <h2
                               style={{
-                                fontSize: "1.5rem",
-                                margin: "0",
+                                fontSize: '1.5rem',
+                                margin: '0',
                               }}
                             >
                               {getMonthName(result.month)}
                             </h2>
-                            <p className="m-0">
-                              Descripción: {""}
-                              <span className="font-weight-bold">
+                            <p className='m-0'>
+                              Descripción: {''}
+                              <span className='font-weight-bold'>
                                 {result.description}
                               </span>
                             </p>
 
-                            <p className="m-0">
-                              <span className="font-weight-light">
-                                {result.nameValue1}:{" "}
+                            <p className='m-0'>
+                              <span className='font-weight-light'>
+                                {result.nameValue1}:{' '}
                               </span>
-                              {result.description.includes("VENTAS")
+                              {result.description.includes('VENTAS')
                                 ? `$${result.value1}`
                                 : result.value1}
                             </p>
                           </div>
                         </div>
                         <div>
-                          <p className="m-0">
-                            <span className="font-weight-bold">
-                              {result.nameValue2}:{" "}
+                          <p className='m-0'>
+                            <span className='font-weight-bold'>
+                              {result.nameValue2}:{' '}
                             </span>
-                            {result.description.includes("VENTAS")
+                            {result.description.includes('VENTAS')
                               ? `$${result.value2}`
                               : result.value2}
                           </p>
                         </div>
                         <div>
-                          <p className="m-0">
-                            <span className="font-weight-bold">
-                              {"Cumplimiento"}:{" "}
+                          <p className='m-0'>
+                            <span className='font-weight-bold'>
+                              {'Cumplimiento'}:{' '}
                             </span>
                             {((result.value2 / result.value1) * 100).toFixed(2)}
                             %

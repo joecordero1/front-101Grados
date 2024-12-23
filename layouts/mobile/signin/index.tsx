@@ -36,13 +36,13 @@ const SignIn = () => {
           />
         </div>
         <div className='text-center mt-1'>
-          <h2 className='text-3xl font-bold text-white'>Ingresa</h2>
+          <h2 className='text-3xl font-bold text-gray-500'>Ingresa</h2>
         </div>
         <form onSubmit={handleSubmit} className='mt-3'>
           <div className='mb-4'>
             <label
               htmlFor='username'
-              className='block text-white text-md font-medium mb-2'
+              className='block text-gray-500 text-md font-medium mb-2'
             >
               Usuario:
             </label>
@@ -50,7 +50,7 @@ const SignIn = () => {
               type='text'
               id='username'
               placeholder='1234567890'
-              className='w-full p-2 rounded-md bg-white/30 text-white placeholder-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400'
+              className='w-full p-2 rounded-md bg-white/30 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400'
               value={values.username}
               onChange={(e) => onChange('username', e.target.value || null)}
               required
@@ -59,7 +59,7 @@ const SignIn = () => {
           <div className='mb-4'>
             <label
               htmlFor='password'
-              className='block text-white text-md font-medium mb-2'
+              className='block text-gray-500 text-md font-medium mb-2'
             >
               Contraseña:
             </label>
@@ -67,7 +67,7 @@ const SignIn = () => {
               type={showPassword ? 'text' : 'password'}
               id='password'
               placeholder='************'
-              className='w-full p-2 rounded-md bg-white/30 text-white placeholder-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400'
+              className='w-full p-2 rounded-md bg-white/30 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400'
               value={values.password}
               onChange={(e) => onChange('password', e.target.value || null)}
               required
@@ -85,7 +85,7 @@ const SignIn = () => {
           >
             Ingresar
           </button>
-          <div className='text-center text-md text-white mt-4'>
+          <div className='text-center text-md text-gray-600 mt-4'>
             ¿Aún no eres socio?{' '}
             <Link href='/signup' className=' font-bold hover:underline'>
               Regístrate
