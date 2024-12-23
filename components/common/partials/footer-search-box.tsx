@@ -1,31 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
 
-import withApollo from "~/server/apollo";
+import withApollo from '~/server/apollo';
 
-import { useLogs } from "hooks";
-import { LogType } from "~/utils/types/logType";
-import styles from "./footerSearchBoxStyles.module.scss";
-import { IconButton, TextField } from "@mui/material";
+import { useLogs } from 'hooks';
+import { LogType } from '~/utils/types/logType';
+import styles from './footerSearchBoxStyles.module.scss';
+import { IconButton, TextField } from '@mui/material';
 
 function SearchForm() {
   const router = useRouter();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   // const [ searchProducts, { data } ] = useLazyQuery( GET_PRODUCTS );
   const [timer, setTimer] = useState(null);
   const { dispatchLog } = useLogs();
 
   useEffect(() => {
-    document.querySelector("body").addEventListener("click", onBodyClick);
+    document.querySelector('body').addEventListener('click', onBodyClick);
 
     return () => {
-      document.querySelector("body").removeEventListener("click", onBodyClick);
+      document.querySelector('body').removeEventListener('click', onBodyClick);
     };
   }, []);
 
   useEffect(() => {
-    setSearch("");
+    setSearch('');
   }, [router.query.slug]);
 
   useEffect(() => {
@@ -41,10 +41,10 @@ function SearchForm() {
   }, [search]);
 
   useEffect(() => {
-    document.querySelector(".header-search.show-results") &&
+    document.querySelector('.header-search.show-results') &&
       document
-        .querySelector(".header-search.show-results")
-        .classList.remove("show-results");
+        .querySelector('.header-search.show-results')
+        .classList.remove('show-results');
   }, [router.pathname]);
 
   function removeXSSAttacks(html) {
@@ -52,11 +52,11 @@ function SearchForm() {
 
     // Removing the <script> tags
     while (SCRIPT_REGEX.test(html)) {
-      html = html.replace(SCRIPT_REGEX, "");
+      html = html.replace(SCRIPT_REGEX, '');
     }
 
     // Removing all events from tags...
-    html = html.replace(/ on\w+="[^"]*"/g, "");
+    html = html.replace(/ on\w+="[^"]*"/g, '');
 
     return {
       __html: html,
@@ -64,29 +64,29 @@ function SearchForm() {
   }
 
   function matchEmphasize(name) {
-    let regExp = new RegExp(search, "i");
-    return name.replace(regExp, (match) => "<strong>" + match + "</strong>");
+    let regExp = new RegExp(search, 'i');
+    return name.replace(regExp, (match) => '<strong>' + match + '</strong>');
   }
 
   function onSearchClick(e) {
     e.preventDefault();
     e.stopPropagation();
-    e.currentTarget.parentNode.classList.toggle("show");
+    e.currentTarget.parentNode.classList.toggle('show');
   }
 
   function onBodyClick(e) {
-    if (e.target.closest(".header-search"))
+    if (e.target.closest('.header-search'))
       return (
-        e.target.closest(".header-search").classList.contains("show-results") ||
-        e.target.closest(".header-search").classList.add("show-results")
+        e.target.closest('.header-search').classList.contains('show-results') ||
+        e.target.closest('.header-search').classList.add('show-results')
       );
 
-    document.querySelector(".header-search.show") &&
-      document.querySelector(".header-search.show").classList.remove("show");
-    document.querySelector(".header-search.show-results") &&
+    document.querySelector('.header-search.show') &&
+      document.querySelector('.header-search.show').classList.remove('show');
+    document.querySelector('.header-search.show-results') &&
       document
-        .querySelector(".header-search.show-results")
-        .classList.remove("show-results");
+        .querySelector('.header-search.show-results')
+        .classList.remove('show-results');
   }
 
   function onSearchChange(e) {
@@ -96,7 +96,7 @@ function SearchForm() {
   function onSubmitSearchForm(e) {
     e.preventDefault();
     router.push({
-      pathname: "/shop",
+      pathname: '/shop',
       query: {
         search: search,
       },
@@ -107,67 +107,56 @@ function SearchForm() {
   }
 
   return (
-    <div className="header-search hs-toggle dir-up">
-      <a
-        href="#"
-        className="search-toggle sticky-link"
-        role="button"
-        onClick={onSearchClick}
-      >
-        <i className="d-icon-search"></i>
-        <span>Buscar</span>
-      </a>
-
+    <div className='header-search mb-3'>
       <form
-        action="#"
-        method="get"
+        action='#'
+        method='get'
         onSubmit={onSubmitSearchForm}
-        className="input-wrapper"
+        className='input-wrapper'
         style={{
-          marginRight: "-110px",
-          marginLeft: "50px",
-          width: "400px",
+          display: 'flex',
+          padding: '10px',
         }}
       >
         <div className={styles.merlinIconBox}>
           <img
             src={`https://storage.googleapis.com/lala4/store/files/fav-merlin-1-1721681703043.png`}
-            alt="Merlin"
+            alt='Merlin'
           />
         </div>
         <TextField
-          variant="standard"
+          variant='standard'
           fullWidth
-          name="search"
-          autoComplete="off"
+          name='search'
+          autoComplete='off'
           value={search}
           onChange={onSearchChange}
-          placeholder="Mi nombre es Merlin, ¿Qué
-          necesitas?"
+          placeholder='Mi nombre es Merlin, ¿Qué
+          necesitas?'
           required
           sx={{
-            "& .MuiInputBase-input": {
-              fontSize: "1.5rem",
-              padding: "10px 0",
+            '& .MuiInputBase-input': {
+              fontSize: '1.5rem',
+              padding: '10px 0',
             },
-            "& .MuiInputBase-root:before": {
-              borderBottom: "2px solid #ccc",
+            '& .MuiInputBase-root:before': {
+              borderBottom: '2px solid #ccc',
             },
-            "& .MuiInputBase-root:after": {
-              borderBottom: "2px solid #3f51b5",
+            '& .MuiInputBase-root:after': {
+              borderBottom: '2px solid #3f51b5',
             },
-            "& .MuiInputBase-input::placeholder": {
-              fontSize: "1.2rem",
-              color: "#000",
+            '& .MuiInputBase-input::placeholder': {
+              fontSize: '1.2rem',
+              color: '#000',
             },
           }}
         />
 
-        <IconButton className="" type="submit">
+        <IconButton className='' type='submit'>
           <AutoFixHighIcon />
         </IconButton>
 
-        <div className="live-search-list bg-white">
+        <div className='live-search-list bg-white'>
           {/* { search.length > 2 && data && data.products.data.map( ( product, index ) => (
                         <ALink href={ `/product/default/${ product.slug }` } className="autocomplete-suggestion" key={ `search-result-${ index }` }>
                             <LazyLoadImage effect="opacity" src={ process.env.NEXT_PUBLIC_ASSET_URI + product.pictures[ 0 ].url } width={ 40 } height={ 40 } alt="product" />
@@ -195,4 +184,4 @@ function SearchForm() {
   );
 }
 
-export default withApollo({ ssr: typeof window === "undefined" })(SearchForm);
+export default withApollo({ ssr: typeof window === 'undefined' })(SearchForm);
