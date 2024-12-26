@@ -57,7 +57,7 @@ const Home = () => {
             </div>
 
             {/* Banner 3 */}
-            <div className='banner banner-fixed content-middle intro-slide intro-slide3 banner-radius'>
+            <div className='banner banner-fixed content-middle intro-slide intro-slide2 banner-radius'>
               <figure className='responsive-banner'>
                 <LazyLoadImage
                   src={
