@@ -1,4 +1,5 @@
-import { Participant } from "./participant";
+import { Participant } from './participant';
+import { TransactionResult } from './transaction';
 
 export interface Result {
   id: number;
@@ -16,6 +17,7 @@ export interface Result {
   description: string;
   //this prop is not native to the API but is used to store the parent result
   children: Result[];
+  transactionResults: TransactionResult[];
 }
 
 export interface PeriodResult {

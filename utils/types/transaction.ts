@@ -4,6 +4,7 @@ import { DishItem } from './dishItem';
 import { Ingredient } from './ingredient';
 import { Participant } from './participant';
 import { Request } from './request';
+import { Result } from './result';
 
 export interface Transaction {
   id: number;
@@ -33,6 +34,11 @@ export interface Transaction {
 export enum TransactionType {
   INCOME = 'INCOME',
   EXPENSE = 'EXPENSE',
+}
+
+export interface TransactionResult {
+  id: number;
+  transaction: Transaction;
 }
 
 export interface Dish {

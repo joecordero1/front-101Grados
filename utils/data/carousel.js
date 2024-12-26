@@ -397,6 +397,21 @@ export const brandSlider = {
   },
 };
 
+export const mobileSlider = {
+  nav: true,
+  dots: true,
+  loop: true,
+  autoplay: true,
+  responsive: {
+    0: {
+      items: 1,
+    },
+    576: {
+      items: 1,
+    },
+  },
+};
+
 export const brandSlider2 = {
   nav: false,
   dots: false,

@@ -1,13 +1,16 @@
-import { useEffect } from "react";
-import { useStore, Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
-import Helmet from "react-helmet";
-import { SnackbarProvider } from "notistack";
+import { useEffect, useState } from 'react';
+import { useStore, Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import Helmet from 'react-helmet';
+import { SnackbarProvider } from 'notistack';
 
-import { wrapper } from "../store/index.js";
-import { demoActions } from "~/store/demo";
-import { currentDemo } from "~/server/queries";
-import "~/public/sass/style.scss";
+import { wrapper } from '../store/index.js';
+import { demoActions } from '~/store/demo';
+import { currentDemo } from '~/server/queries';
+import '~/public/sass/style.scss';
+import '~/public/sass/globals.scss';
+import LayoutDesktop from '../layouts/desktop';
+import LayoutMobile from '../layouts/mobile';
 
 import {
   ApiProvider,
@@ -16,8 +19,7 @@ import {
   ApiAuthProvider,
   GeneralProvider,
   CartProvider,
-} from "context";
-import Layout from "~/components/layout";
+} from 'context';
 
 const App = ({ Component, pageProps }) => {
   const store = useStore();
@@ -28,12 +30,24 @@ const App = ({ Component, pageProps }) => {
     }
   }, []);
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      // setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= 1024);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <SnackbarProvider
       maxSnack={50}
       anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
+        vertical: 'top',
+        horizontal: 'right',
       }}
       hideIconVariant
       autoHideDuration={3000}
@@ -48,26 +62,31 @@ const App = ({ Component, pageProps }) => {
                 <CartProvider>
                   <Provider store={store}>
                     <Helmet>
-                      <meta charSet="UTF-8" />
-                      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                      <meta charSet='UTF-8' />
+                      <meta http-equiv='X-UA-Compatible' content='IE=edge' />
                       <meta
-                        name="viewport"
-                        content="width=device-width, initial-scale=1, shrink-to-fit=no"
+                        name='viewport'
+                        content='width=device-width, initial-scale=1, shrink-to-fit=no'
                       />
 
                       <title>Tienda-Premia Tu Esfuerzo</title>
 
-                      <meta name="keywords" content="React Template" />
+                      <meta name='keywords' content='React Template' />
                       <meta
-                        name="description"
-                        content="Riode - React eCommerce Template"
+                        name='description'
+                        content='Riode - React eCommerce Template'
                       />
-                      <meta name="author" content="D-THEMES" />
+                      <meta name='author' content='D-THEMES' />
                     </Helmet>
-
-                    <Layout>
-                      <Component {...pageProps} />
-                    </Layout>
+                    {isMobile ? (
+                      <LayoutMobile>
+                        <Component {...pageProps} />
+                      </LayoutMobile>
+                    ) : (
+                      <LayoutDesktop>
+                        <Component {...pageProps} />
+                      </LayoutDesktop>
+                    )}
                   </Provider>
                 </CartProvider>
               </ApiAuthProvider>

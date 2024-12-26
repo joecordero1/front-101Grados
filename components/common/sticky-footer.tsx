@@ -4,10 +4,12 @@ import ALink from '~/components/features/custom-link';
 
 import FooterSearchBox from '~/components/common/partials/footer-search-box';
 import FooterAccountBox from '~/components/common/partials/footer-account-box';
+import { useAuth, useProgram } from '~/hooks';
 
 export default function StickyFooter() {
   let tmp = 0;
-
+  const { program } = useProgram();
+  const { participant } = useAuth();
   useEffect(() => {
     window.addEventListener('scroll', stickyFooterHandler);
 
@@ -15,53 +17,6 @@ export default function StickyFooter() {
       window.removeEventListener('scroll', stickyFooterHandler);
     };
   }, []);
-
-  // this function is used to handle sticky footer i changed it to always show the footer
-  // Original code that couses an 'removeChild' error when you do an scroll and logout
-  // const stickyFooterHandler = (e) => {
-  //   let top = document.querySelector('.page-content')
-  //     ? // @ts-ignore
-  //       document.querySelector('.page-content').offsetTop +
-  //       document.querySelector('header').offsetHeight +
-  //       100
-  //     : 600;
-  //   let stickyFooter = document.querySelector('.sticky-footer.sticky-content');
-  //   let height = 0;
-  //   if (stickyFooter) {
-  //     // @ts-ignore
-  //     height = stickyFooter.offsetHeight;
-  //   }
-  //   if (stickyFooter) {
-  //     stickyFooter.classList.add('fixed');
-  //     stickyFooter.setAttribute('style', 'margin-bottom: 0');
-  //     if (!document.querySelector('.sticky-content-wrapper')) {
-  //       let newNode = document.createElement('div');
-  //       newNode.className = 'sticky-content-wrapper';
-  //       stickyFooter.parentNode.insertBefore(newNode, stickyFooter);
-  //       document
-  //         .querySelector('.sticky-content-wrapper')
-  //         .insertAdjacentElement('beforeend', stickyFooter);
-  //       document
-  //         .querySelector('.sticky-content-wrapper')
-  //         .setAttribute('style', 'height: ' + height + 'px');
-  //     }
-  //     if (
-  //       !document.querySelector('.sticky-content-wrapper').getAttribute('style')
-  //     ) {
-  //       document
-  //         .querySelector('.sticky-content-wrapper')
-  //         .setAttribute('style', 'height: ' + height + 'px');
-  //     }
-  //   }
-  //   if (
-  //     window.outerWidth > 767 &&
-  //     document.querySelector('.sticky-content-wrapper')
-  //   ) {
-  //     // @ts-ignore
-  //     document.querySelector('.sticky-content-wrapper').style.height = 'auto';
-  //   }
-  //   tmp = e.currentTarget.scrollY;
-  // };
 
   const stickyFooterHandler = (e) => {
     let stickyFooter = document.querySelector('.sticky-footer.sticky-content');
@@ -72,18 +27,26 @@ export default function StickyFooter() {
 
   return (
     <div>
-      <div className="sticky-footer sticky-content fix-bottom fixed">
-        <ALink href="/" className="sticky-link active">
-          <i className="d-icon-home"></i>
+      <div className='sticky-footer sticky-content fix-bottom fixed flex justify-around items-center'>
+        <ALink href='/' className='sticky-link active'>
+          <i className='d-icon-home'></i>
           <span>Inicio</span>
         </ALink>
 
-        <ALink href="/shop" className="sticky-link">
-          <i className="d-icon-shoppingbag"></i>
+        <ALink href='/shop' className='sticky-link'>
+          <i className='d-icon-shoppingbag'></i>
           <span>Premios</span>
         </ALink>
-
-        <FooterSearchBox />
+        {program.id !== 26 && program.supportPhone.length > 1 && (
+          <a
+            href={`https://api.whatsapp.com/send?phone=593${program.supportPhone}&text=Hola!%20Soy%20un%20participante%20del%20programa%20${program.name},%20mi%20usuario%20es%20${participant.fullName},%20y%20tengo%20una%20duda%20sobre...`}
+            target='_blank'
+            className='sticky-link flex flex-col items-center'
+          >
+            <i className='fab fa-whatsapp'></i>
+            <span>Contacto</span>
+          </a>
+        )}
 
         <FooterAccountBox />
       </div>
