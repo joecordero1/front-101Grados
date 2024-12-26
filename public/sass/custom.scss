@@ -75,7 +75,7 @@
 }
 .arrow-3:before,
 .arrow-3:after {
-  content: "";
+  content: '';
   flex: 1;
   margin: 0 5px;
   background: #e30613;
@@ -101,4 +101,18 @@
   100% {
     transform: scaleX(var(--s, 1)) translate(4px);
   }
+}
+/* Agrega estas clases para ajustar la imagen y el contenedor */
+.responsive-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+}
+
+.responsive-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }

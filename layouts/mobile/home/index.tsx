@@ -8,6 +8,7 @@ import { useProgram } from '~/hooks';
 import { mobileSlider } from '~/utils/data/carousel';
 import CategoriesMenu from './categoriesMenu';
 import SearchForm from '../../../components/common/partials/footer-search-box';
+
 const Home = () => {
   const { program } = useProgram();
   return (
@@ -17,19 +18,17 @@ const Home = () => {
           <title>Tienda - {program.name}</title>
         </Helmet>
         <SearchForm />
-        <div className='m-5'>
-          <div className='categories-container mt-3 mb-3'>
+        <div className='mt-1 ml-1 mr-1'>
+          <div className='categories-container mt-3'>
             <CategoriesMenu />
           </div>
           <OwlCarousel
             adClass='owl-theme owl-dot-inner intro-slider animation-slider'
             options={mobileSlider}
           >
-            <div
-              className='banner banner-fixed content-middle intro-slide intro-slide1 banner-radius'
-              style={{ backgroundColor: '#f8f8f8' }}
-            >
-              <figure>
+            {/* Banner 1 */}
+            <div className='banner banner-fixed content-middle intro-slide intro-slide1 banner-radius'>
+              <figure className='responsive-banner'>
                 <LazyLoadImage
                   src={
                     program.appBanner1 !== null
@@ -37,16 +36,14 @@ const Home = () => {
                       : program.hero1
                   }
                   alt='Banner'
-                  width='100%'
-                  height='100%'
+                  className='responsive-image'
                 />
               </figure>
             </div>
-            <div
-              className='banner banner-fixed content-middle intro-slide intro-slide2 banner-radius'
-              style={{ backgroundColor: '#f8f8f8' }}
-            >
-              <figure>
+
+            {/* Banner 2 */}
+            <div className='banner banner-fixed content-middle intro-slide intro-slide2 banner-radius'>
+              <figure className='responsive-banner'>
                 <LazyLoadImage
                   src={
                     program.appBanner2 !== null
@@ -54,17 +51,14 @@ const Home = () => {
                       : program.heroSection1
                   }
                   alt='Banner'
-                  width='100%'
-                  height='100%'
+                  className='responsive-image'
                 />
               </figure>
             </div>
 
-            <div
-              className='banner banner-fixed content-middle intro-slide intro-slide3 banner-radius'
-              style={{ backgroundColor: '#f8f8f8' }}
-            >
-              <figure>
+            {/* Banner 3 */}
+            <div className='banner banner-fixed content-middle intro-slide intro-slide3 banner-radius'>
+              <figure className='responsive-banner'>
                 <LazyLoadImage
                   src={
                     program.appBanner3 !== null
@@ -72,8 +66,7 @@ const Home = () => {
                       : program.heroSection2
                   }
                   alt='Banner'
-                  width='100%'
-                  height='100%'
+                  className='responsive-image'
                 />
               </figure>
             </div>
