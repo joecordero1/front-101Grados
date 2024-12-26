@@ -40,13 +40,13 @@ function DetailAward(props: {
 
   return (
     <div className={`product-details ${isSticky ? 'sticky' : ''} ${adClass}`}>
-      <h2 className="product-name">{product.award.name}</h2>
+      <h2 className='product-name'>{product.award.name}</h2>
 
-      <div className="product-meta">
-        Codigo: <span className="product-sku">{product.award.code}</span>
+      <div className='product-meta'>
+        Codigo: <span className='product-sku'>{product.award.code}</span>
         CATEGORIAS:{' '}
-        <span className="product-brand">
-          {product.award.subcategories.map((item, index) => (
+        <span className='product-brand'>
+          {product.award?.subcategories?.map((item, index) => (
             <React.Fragment key={item.name + '-' + index}>
               <ALink
                 href={{
@@ -60,30 +60,30 @@ function DetailAward(props: {
             </React.Fragment>
           ))}
         </span>
-        Marca: <span className="product-brand">{product.award.brand.name}</span>
+        Marca: <span className='product-brand'>{product.award.brand.name}</span>
         {product.award.model && (
-          <span className="product-sku">Modelo: {product.award.model}</span>
+          <span className='product-sku'>Modelo: {product.award.model}</span>
         )}
       </div>
 
-      <div className="product-price">
-        <ins className="new-price">{`${product.points} ${program.coinName}`}</ins>
+      <div className='product-price'>
+        <ins className='new-price'>{`${product.points} ${program.coinName}`}</ins>
       </div>
 
       <p
-        className="product-short-desc"
+        className='product-short-desc'
         dangerouslySetInnerHTML={{ __html: product.award.gptDescription }}
       ></p>
       <p
-        className="product-short-desc"
+        className='product-short-desc'
         dangerouslySetInnerHTML={{ __html: product.award.description }}
       ></p>
-      <div className="product-form product-qty pb-0">
-        <label className="d-none">Cantidad:</label>
-        <div className="product-form-group">
-          <div className="mr-2 input-group">
+      <div className='product-form product-qty pb-0'>
+        <label className='d-none'>Cantidad:</label>
+        <div className='product-form-group'>
+          <div className='mr-2 input-group'>
             <button
-              className="quantity-minus d-icon-minus"
+              className='quantity-minus d-icon-minus'
               onClick={() =>
                 onChange(
                   'quantity',
@@ -92,11 +92,11 @@ function DetailAward(props: {
               }
             ></button>
             <input
-              className="quantity form-control"
-              type="number"
+              className='quantity form-control'
+              type='number'
               min={1}
               value={quantity}
-              name="quantity"
+              name='quantity'
               onChange={(e) =>
                 onChange(
                   'quantity',
@@ -109,7 +109,7 @@ function DetailAward(props: {
               }
             />
             <button
-              className="quantity-plus d-icon-plus"
+              className='quantity-plus d-icon-plus'
               onClick={() =>
                 onChange(
                   'quantity',
@@ -132,7 +132,7 @@ function DetailAward(props: {
                 });
               }}
             >
-              <i className="d-icon-bag"></i>Agregar Al Carrito
+              <i className='d-icon-bag'></i>Agregar Al Carrito
             </button>
           )}
         </div>
@@ -142,12 +142,12 @@ function DetailAward(props: {
           <h5>Escoge la cantidad y también selecciona una variación:</h5>
           {product.award.variants.map((variant, index) =>
             variant.type === VariantType.COLOR && variant.isActive ? (
-              <div className="product-form product-color" key={variant.id}>
+              <div className='product-form product-color' key={variant.id}>
                 <label>Color:</label>
 
-                <div className="product-variations">
+                <div className='product-variations'>
                   <ALink
-                    href="#"
+                    href='#'
                     key={variant.id}
                     onClick={() => {
                       addToCartHandler(variant);
@@ -163,14 +163,14 @@ function DetailAward(props: {
               </div>
             ) : variant.type === VariantType.SIZE && variant.isActive ? (
               <div
-                className="product-form product-size mb-0 pb-2"
+                className='product-form product-size mb-0 pb-2'
                 key={variant.id}
               >
                 <label>Talla:</label>
-                <div className="product-form-group">
-                  <div className="product-variations">
+                <div className='product-form-group'>
+                  <div className='product-variations'>
                     <ALink
-                      href="#"
+                      href='#'
                       className={`size`}
                       key={'size-' + variant.id}
                       onClick={() => {
@@ -188,14 +188,14 @@ function DetailAward(props: {
               </div>
             ) : variant.type === VariantType.GENERAL && variant.isActive ? (
               <div
-                className="product-form product-size mb-0 pb-2"
+                className='product-form product-size mb-0 pb-2'
                 key={variant.id}
               >
                 <label>Tipo:</label>
-                <div className="product-form-group">
-                  <div className="product-variations">
+                <div className='product-form-group'>
+                  <div className='product-variations'>
                     <ALink
-                      href="#"
+                      href='#'
                       className={`size`}
                       key={'size-' + variant.id}
                       onClick={() => {

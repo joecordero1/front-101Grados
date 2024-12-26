@@ -66,6 +66,23 @@ export function useResult() {
         const firstResponse = await get<Result[]>(
           `/results/my-results?${params}`
         );
+        const result = firstResponse[0];
+
+        dispatch({
+          type: 'load',
+          result: {
+            name: result.dishItem?.ingredient.name || '',
+            remaining:
+              result.value1 - result.value2 < 0
+                ? 0
+                : result.value1 - result.value2,
+            obtained: result.value2,
+            objective: result.value1,
+            percentage: parseFloat(
+              ((result.value2 / result.value1) * 100).toFixed(2)
+            ),
+          },
+        });
 
         if (firstResponse.length === 0) {
           const params = queryString.stringify({

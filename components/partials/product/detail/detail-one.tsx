@@ -39,15 +39,15 @@ const DetailOne: FC<Props> = (props) => {
   return (
     <div className={'product-details ' + adClass}>
       {isNav ? (
-        <div className="product-navigation">
-          <ul className="breadcrumb breadcrumb-lg">
+        <div className='product-navigation'>
+          <ul className='breadcrumb breadcrumb-lg'>
             <li>
-              <ALink href="/">
-                <i className="d-icon-home"></i>
+              <ALink href='/'>
+                <i className='d-icon-home'></i>
               </ALink>
             </li>
             <li>
-              <ALink href="#" className="active">
+              <ALink href='#' className='active'>
                 Products
               </ALink>
             </li>
@@ -60,15 +60,15 @@ const DetailOne: FC<Props> = (props) => {
         ''
       )}
 
-      <h2 className="product-name">{product.award.name}</h2>
+      <h2 className='product-name'>{product.award.name}</h2>
 
-      <div className="product-meta">
-        Código: <span className="product-sku">{product.award.code}</span>
-        Modelo: <span className="product-sku">{product.award.model}</span>
-        Marca: <span className="product-sku">{product.award.brand.name}</span>
+      <div className='product-meta'>
+        Código: <span className='product-sku'>{product.award.code}</span>
+        Modelo: <span className='product-sku'>{product.award.model}</span>
+        Marca: <span className='product-sku'>{product.award.brand.name}</span>
         Subcategorías:{' '}
-        <span className="product-brand">
-          {product.award.subcategories.map((item, index) => (
+        <span className='product-brand'>
+          {product.award?.subcategories?.map((item, index) => (
             <React.Fragment key={item.name + '-' + index}>
               <ALink
                 href={{ pathname: '/shop', query: { subcategory: item.id } }}
@@ -81,22 +81,22 @@ const DetailOne: FC<Props> = (props) => {
         </span>
       </div>
 
-      <div className="product-price mb-2">
-        <ins className="new-price">
+      <div className='product-price mb-2'>
+        <ins className='new-price'>
           {product.points} {coinName}
         </ins>
       </div>
 
       <p
-        className="product-short-desc"
+        className='product-short-desc'
         dangerouslySetInnerHTML={{ __html: product.award.gptDescription }}
       ></p>
-      <div className="product-form product-qty pb-0">
-        <label className="d-none">Cantidad:</label>
-        <div className="product-form-group">
-          <div className="mr-2 input-group">
+      <div className='product-form product-qty pb-0'>
+        <label className='d-none'>Cantidad:</label>
+        <div className='product-form-group'>
+          <div className='mr-2 input-group'>
             <button
-              className="quantity-minus d-icon-minus"
+              className='quantity-minus d-icon-minus'
               onClick={() =>
                 onChange(
                   'quantity',
@@ -105,11 +105,11 @@ const DetailOne: FC<Props> = (props) => {
               }
             ></button>
             <input
-              className="quantity form-control"
-              type="number"
+              className='quantity form-control'
+              type='number'
               min={1}
               value={quantity}
-              name="quantity"
+              name='quantity'
               onChange={(e) =>
                 onChange(
                   'quantity',
@@ -122,7 +122,7 @@ const DetailOne: FC<Props> = (props) => {
               }
             />
             <button
-              className="quantity-plus d-icon-plus"
+              className='quantity-plus d-icon-plus'
               onClick={() =>
                 onChange(
                   'quantity',
@@ -145,7 +145,7 @@ const DetailOne: FC<Props> = (props) => {
                 });
               }}
             >
-              <i className="d-icon-bag"></i>Agregar Al Carrito
+              <i className='d-icon-bag'></i>Agregar Al Carrito
             </button>
           )}
         </div>
@@ -155,12 +155,12 @@ const DetailOne: FC<Props> = (props) => {
           <h5>Escoge la cantidad y también selecciona una variación 2:</h5>
           {product.award.variants.map((variant) =>
             variant.type === VariantType.COLOR && variant.isActive ? (
-              <div className="product-form product-color" key={variant.id}>
+              <div className='product-form product-color' key={variant.id}>
                 <label>Color:</label>
 
-                <div className="product-variations">
+                <div className='product-variations'>
                   <ALink
-                    href="#"
+                    href='#'
                     /* className={"color"} */
                     key={variant.id}
                     /*  style={{ backgroundColor: `${variant.name}` }} */
@@ -178,14 +178,14 @@ const DetailOne: FC<Props> = (props) => {
               </div>
             ) : variant.type === VariantType.SIZE && variant.isActive ? (
               <div
-                className="product-form product-size mb-0 pb-2"
+                className='product-form product-size mb-0 pb-2'
                 key={variant.id}
               >
                 <label>Talla:</label>
-                <div className="product-form-group">
-                  <div className="product-variations">
+                <div className='product-form-group'>
+                  <div className='product-variations'>
                     <ALink
-                      href="#"
+                      href='#'
                       className={`size`}
                       key={'size-' + variant.id}
                       onClick={() => {
@@ -203,14 +203,14 @@ const DetailOne: FC<Props> = (props) => {
               </div>
             ) : variant.type === VariantType.GENERAL && variant.isActive ? (
               <div
-                className="product-form product-size mb-0 pb-2"
+                className='product-form product-size mb-0 pb-2'
                 key={variant.id}
               >
                 <label>Tipo:</label>
-                <div className="product-form-group">
-                  <div className="product-variations">
+                <div className='product-form-group'>
+                  <div className='product-variations'>
                     <ALink
-                      href="#"
+                      href='#'
                       className={`size`}
                       key={'size-' + variant.id}
                       onClick={() => {

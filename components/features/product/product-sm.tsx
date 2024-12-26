@@ -1,13 +1,13 @@
-import React, { FC } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
+import React, { FC } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 
-import ALink from "~/components/features/custom-link";
+import ALink from '~/components/features/custom-link';
 
-import { CatalogueItem } from "../../../utils/types/catalogueItem";
-import { useProgram, useGeneral, useAuth } from "hooks";
-import { toDecimal } from "~/utils";
-import { useLogs } from "hooks";
-import { LogType } from "~/utils/types/logType";
+import { CatalogueItem } from '../../../utils/types/catalogueItem';
+import { useProgram, useGeneral, useAuth } from 'hooks';
+import { toDecimal } from '~/utils';
+import { useLogs } from 'hooks';
+import { LogType } from '~/utils/types/logType';
 
 type Props = {
   product: CatalogueItem;
@@ -40,16 +40,16 @@ const SmallProduct: FC<Props> = (props) => {
 
   return (
     <div className={`product product-list-sm ${adClass}`}>
-      <figure className="product-media">
+      <figure className='product-media'>
         <ALink href={`/award/${product.award.id}`}>
           <LazyLoadImage
-            alt="product"
+            alt='product'
             // src={process.env.NEXT_PUBLIC_ASSET_URI + product.award.mainImage}
             src={product.award.mainImage}
             threshold={500}
-            effect="opacity"
-            width="300"
-            height="338"
+            effect='opacity'
+            width='300'
+            height='338'
           />
 
           {/* {product.pictures.length >= 2 ? (
@@ -67,16 +67,16 @@ const SmallProduct: FC<Props> = (props) => {
           )} */}
         </ALink>
 
-        <div className="product-label-group">
-          {isNew ? <label className="product-label label-new">New</label> : ""}
-          {isTop ? <label className="product-label label-top">Top</label> : ""}
+        <div className='product-label-group'>
+          {isNew ? <label className='product-label label-new'>New</label> : ''}
+          {isTop ? <label className='product-label label-top'>Top</label> : ''}
         </div>
 
-        <div className="product-action">
+        <div className='product-action'>
           <ALink
-            href="#"
-            className="btn-product btn-quickview"
-            title="Quick View"
+            href='#'
+            className='btn-product btn-quickview'
+            title='Quick View'
             onClick={() => {
               openModal(product);
               dispatchLog(LogType.OPEN_QUICK_VIEW_AWARD, {
@@ -90,28 +90,28 @@ const SmallProduct: FC<Props> = (props) => {
         </div>
       </figure>
 
-      <div className="product-details">
-        <div className="product-cat">
-          {product.award.subcategories.map((item, index) => (
-            <React.Fragment key={item.name + "-" + index}>
+      <div className='product-details'>
+        <div className='product-cat'>
+          {product.award?.subcategories?.map((item, index) => (
+            <React.Fragment key={item.name + '-' + index}>
               <ALink
-                href={{ pathname: "/shop", query: { subcategory: item.id } }}
+                href={{ pathname: '/shop', query: { subcategory: item.id } }}
               >
                 {item.name}
-                {index < product.award.subcategories.length - 1 ? ", " : ""}
+                {index < product.award.subcategories.length - 1 ? ', ' : ''}
               </ALink>
             </React.Fragment>
           ))}
         </div>
 
-        <h3 className="product-name">
+        <h3 className='product-name'>
           <ALink href={`/product/default/${product.award.id}`}>
             {product.award.name} | {product.award.model}
           </ALink>
         </h3>
 
-        <div className="product-price">
-          <ins className="new-price">
+        <div className='product-price'>
+          <ins className='new-price'>
             {product.points} {coinName}
           </ins>
           {/* {product.price[0] !== product.price[1] ? (
@@ -130,13 +130,13 @@ const SmallProduct: FC<Props> = (props) => {
             <ins className="new-price">${toDecimal(product.price[0])}</ins>
           )} */}
         </div>
-        <div className="ratings-container">
-          <div className="ratings-full">
+        <div className='ratings-container'>
+          <div className='ratings-full'>
             <span
-              className="ratings"
-              style={{ width: 20 * rating + "%" }}
+              className='ratings'
+              style={{ width: 20 * rating + '%' }}
             ></span>
-            <span className="tooltiptext tooltip-top">{toDecimal(rating)}</span>
+            <span className='tooltiptext tooltip-top'>{toDecimal(rating)}</span>
           </div>
 
           {/*  {isReviewCount ? (
@@ -148,7 +148,7 @@ const SmallProduct: FC<Props> = (props) => {
           )} */}
         </div>
         {isStockCount && (
-          <div className="count-text">
+          <div className='count-text'>
             {/* Only <strong>{product.stock}</strong> Left */}
             {product.award.brand.name}
           </div>
