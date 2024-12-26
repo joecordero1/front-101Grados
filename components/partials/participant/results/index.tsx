@@ -131,7 +131,7 @@ const ParticipantResults = () => {
                 <Select
                   name='month'
                   onChange={(e) => handleFilter('month', e.target.value)}
-                  defaultValue={new Date().getMonth()}
+                  defaultValue={new Date().getMonth() + 1}
                   style={{
                     fontSize: '1.5rem',
                   }}
@@ -510,19 +510,22 @@ const ParticipantResults = () => {
                           </p>
                         </div>
                         {result.transactionResults.length > 0 &&
-                          result.transactionResults[0].transaction
-                            .rollbackTransaction === null && (
-                            <div>
-                              <p className='m-0'>
-                                <span className='font-weight-bold'>
-                                  {`${program.coinName}:`}{' '}
-                                </span>
-                                {
-                                  result.transactionResults[0].transaction
-                                    .points
-                                }
-                              </p>
-                            </div>
+                          result.transactionResults.map((transaction) =>
+                            transaction.transaction.rollbackTransaction ===
+                            null ? (
+                              <div>
+                                <p className='m-0'>
+                                  <span className='font-weight-bold'>
+                                    {`${program.coinName
+                                      .charAt(0)
+                                      .toUpperCase()}${program.coinName.slice(
+                                      1
+                                    )}: `}
+                                  </span>
+                                  {transaction.transaction.points}
+                                </p>
+                              </div>
+                            ) : null
                           )}
                       </div>
                     ) : (
@@ -589,19 +592,23 @@ const ParticipantResults = () => {
                                       </p>
                                     )}
                                     {result.transactionResults.length > 0 &&
-                                      result.transactionResults[0].transaction
-                                        .rollbackTransaction === null && (
-                                        <div>
-                                          <p className='m-0'>
-                                            <span className='font-weight-bold'>
-                                              {`${program.coinName}:`}{' '}
-                                            </span>
-                                            {
-                                              result.transactionResults[0]
-                                                .transaction.points
-                                            }
-                                          </p>
-                                        </div>
+                                      result.transactionResults.map(
+                                        (transaction) =>
+                                          transaction.transaction
+                                            .rollbackTransaction === null ? (
+                                            <div>
+                                              <p className='m-0'>
+                                                <span className='font-weight-bold'>
+                                                  {`${program.coinName
+                                                    .charAt(0)
+                                                    .toUpperCase()}${program.coinName.slice(
+                                                    1
+                                                  )}: `}
+                                                </span>
+                                                {transaction.transaction.points}
+                                              </p>
+                                            </div>
+                                          ) : null
                                       )}
                                   </div>
                                 </div>
@@ -678,19 +685,23 @@ const ParticipantResults = () => {
                                       </p>
                                     </div>
                                     {result.transactionResults.length > 0 &&
-                                      result.transactionResults[0].transaction
-                                        .rollbackTransaction === null && (
-                                        <div>
-                                          <p className='m-0'>
-                                            <span className='font-weight-bold'>
-                                              {`${program.coinName}:`}{' '}
-                                            </span>
-                                            {
-                                              result.transactionResults[0]
-                                                .transaction.points
-                                            }
-                                          </p>
-                                        </div>
+                                      result.transactionResults.map(
+                                        (transaction) =>
+                                          transaction.transaction
+                                            .rollbackTransaction === null ? (
+                                            <div>
+                                              <p className='m-0'>
+                                                <span className='font-weight-bold'>
+                                                  {`${program.coinName
+                                                    .charAt(0)
+                                                    .toUpperCase()}${program.coinName.slice(
+                                                    1
+                                                  )}: `}
+                                                </span>
+                                                {transaction.transaction.points}
+                                              </p>
+                                            </div>
+                                          ) : null
                                       )}
                                   </div>
                                 ))}
@@ -793,19 +804,22 @@ const ParticipantResults = () => {
                           </p>
                         </div>
                         {result.transactionResults.length > 0 &&
-                          result.transactionResults[0].transaction
-                            .rollbackTransaction === null && (
-                            <div>
-                              <p className='m-0'>
-                                <span className='font-weight-bold'>
-                                  {`${program.coinName}:`}{' '}
-                                </span>
-                                {
-                                  result.transactionResults[0].transaction
-                                    .points
-                                }
-                              </p>
-                            </div>
+                          result.transactionResults.map((transaction) =>
+                            transaction.transaction.rollbackTransaction ===
+                            null ? (
+                              <div>
+                                <p className='m-0'>
+                                  <span className='font-weight-bold'>
+                                    {`${program.coinName
+                                      .charAt(0)
+                                      .toUpperCase()}${program.coinName.slice(
+                                      1
+                                    )}: `}
+                                  </span>
+                                  {transaction.transaction.points}
+                                </p>
+                              </div>
+                            ) : null
                           )}
                       </div>
                     ))}
@@ -1263,19 +1277,22 @@ const ParticipantResults = () => {
                             </p>
                           </div>
                           {result.transactionResults.length > 0 &&
-                            result.transactionResults[0].transaction
-                              .rollbackTransaction === null && (
-                              <div>
-                                <p className='m-0'>
-                                  <span className='font-weight-bold'>
-                                    {`${program.coinName}:`}{' '}
-                                  </span>
-                                  {
-                                    result.transactionResults[0].transaction
-                                      .points
-                                  }
-                                </p>
-                              </div>
+                            result.transactionResults.map((transaction) =>
+                              transaction.transaction.rollbackTransaction ===
+                              null ? (
+                                <div>
+                                  <p className='m-0'>
+                                    <span className='font-weight-bold'>
+                                      {`${program.coinName
+                                        .charAt(0)
+                                        .toUpperCase()}${program.coinName.slice(
+                                        1
+                                      )}: `}
+                                    </span>
+                                    {transaction.transaction.points}
+                                  </p>
+                                </div>
+                              ) : null
                             )}
                         </div>
                       ) : (
@@ -1354,19 +1371,26 @@ const ParticipantResults = () => {
                                         </p>
                                       )}
                                       {result.transactionResults.length > 0 &&
-                                        result.transactionResults[0].transaction
-                                          .rollbackTransaction === null && (
-                                          <div>
-                                            <p className='m-0'>
-                                              <span className='font-weight-bold'>
-                                                {`${program.coinName}:`}{' '}
-                                              </span>
-                                              {
-                                                result.transactionResults[0]
-                                                  .transaction.points
-                                              }
-                                            </p>
-                                          </div>
+                                        result.transactionResults.map(
+                                          (transaction) =>
+                                            transaction.transaction
+                                              .rollbackTransaction === null ? (
+                                              <div>
+                                                <p className='m-0'>
+                                                  <span className='font-weight-bold'>
+                                                    {`${program.coinName
+                                                      .charAt(0)
+                                                      .toUpperCase()}${program.coinName.slice(
+                                                      1
+                                                    )}: `}
+                                                  </span>
+                                                  {
+                                                    transaction.transaction
+                                                      .points
+                                                  }
+                                                </p>
+                                              </div>
+                                            ) : null
                                         )}
                                     </div>
                                   </div>
@@ -1443,19 +1467,26 @@ const ParticipantResults = () => {
                                         </p>
                                       </div>
                                       {result.transactionResults.length > 0 &&
-                                        result.transactionResults[0].transaction
-                                          .rollbackTransaction === null && (
-                                          <div>
-                                            <p className='m-0'>
-                                              <span className='font-weight-bold'>
-                                                {`${program.coinName}:`}{' '}
-                                              </span>
-                                              {
-                                                result.transactionResults[0]
-                                                  .transaction.points
-                                              }
-                                            </p>
-                                          </div>
+                                        result.transactionResults.map(
+                                          (transaction) =>
+                                            transaction.transaction
+                                              .rollbackTransaction === null ? (
+                                              <div>
+                                                <p className='m-0'>
+                                                  <span className='font-weight-bold'>
+                                                    {`${program.coinName
+                                                      .charAt(0)
+                                                      .toUpperCase()}${program.coinName.slice(
+                                                      1
+                                                    )}: `}
+                                                  </span>
+                                                  {
+                                                    transaction.transaction
+                                                      .points
+                                                  }
+                                                </p>
+                                              </div>
+                                            ) : null
                                         )}
                                     </div>
                                   ))}
@@ -1561,19 +1592,22 @@ const ParticipantResults = () => {
                               </p>
                             </div>
                             {result.transactionResults.length > 0 &&
-                              result.transactionResults[0].transaction
-                                .rollbackTransaction === null && (
-                                <div>
-                                  <p className='m-0'>
-                                    <span className='font-weight-bold'>
-                                      {`${program.coinName}:`}{' '}
-                                    </span>
-                                    {
-                                      result.transactionResults[0].transaction
-                                        .points
-                                    }
-                                  </p>
-                                </div>
+                              result.transactionResults.map((transaction) =>
+                                transaction.transaction.rollbackTransaction ===
+                                null ? (
+                                  <div>
+                                    <p className='m-0'>
+                                      <span className='font-weight-bold'>
+                                        {`${program.coinName
+                                          .charAt(0)
+                                          .toUpperCase()}${program.coinName.slice(
+                                          1
+                                        )}: `}
+                                      </span>
+                                      {transaction.transaction.points}
+                                    </p>
+                                  </div>
+                                ) : null
                               )}
                           </div>
                         </div>

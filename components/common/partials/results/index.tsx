@@ -33,7 +33,6 @@ const ResultsCard = () => {
   const { participant, availablePoints, loadingPoints } = useAuth();
   const { result } = useResult();
   const { program } = useProgram();
-
   return (
     <div className='page-content w-100'>
       <Card>
