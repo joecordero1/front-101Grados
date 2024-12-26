@@ -36,13 +36,13 @@ const SignIn = () => {
           />
         </div>
         <div className='text-center mt-1'>
-          <h2 className='text-3xl font-bold text-gray-500'>Ingresa</h2>
+          <h2 className='text-3xl font-bold text-white'>Ingresa</h2>
         </div>
         <form onSubmit={handleSubmit} className='mt-3'>
           <div className='mb-4'>
             <label
               htmlFor='username'
-              className='block text-gray-500 text-md font-medium mb-2'
+              className='block text-white text-md font-medium mb-2'
             >
               Usuario:
             </label>
@@ -59,7 +59,7 @@ const SignIn = () => {
           <div className='mb-4'>
             <label
               htmlFor='password'
-              className='block text-gray-500 text-md font-medium mb-2'
+              className='block text-white text-md font-medium mb-2'
             >
               Contraseña:
             </label>
@@ -73,7 +73,7 @@ const SignIn = () => {
               required
             />
             <p
-              className='text-right text-md  cursor-pointer mt-2'
+              className='text-right text-md  cursor-pointer mt-2 text-gray-100'
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? 'Ocultar' : 'Mostrar'}
@@ -85,7 +85,7 @@ const SignIn = () => {
           >
             Ingresar
           </button>
-          <div className='text-center text-md text-gray-600 mt-4'>
+          <div className='text-center text-md text-gray-100 mt-4'>
             ¿Aún no eres socio?{' '}
             <Link href='/signup' className=' font-bold hover:underline'>
               Regístrate
