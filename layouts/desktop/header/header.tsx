@@ -30,7 +30,8 @@ export default function HeaderDesktop(props) {
     program.id === 8 ||
       program.id === 13 ||
       program.id === 15 ||
-      program.id === 14
+      program.id === 14 ||
+      program.id === 26
       ? true
       : false
   );
