@@ -53,4 +53,18 @@ export type Program = {
   campaignsInfo: string;
   experiencesInfo: string;
   warrantyInfo: string;
+  hero1: null;
+  hero2: null;
+  hero3: null;
+  heroSection1: null;
+  heroSection2: null;
+  heroMobile1: null;
+  heroMobile2: null;
+  heroMobile3: null;
+  firstSecion1: null;
+  firstSecion2: null;
+  firstSecion3: null;
+  secondSecion1: null;
+  secondSecion2: null;
+  shopSection1: null;
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ParticipantRequests } from '../../components/partials/participant/requests/ParticipantRequests';
+import { ParticipantRequests } from '../../../components/partials/participant/requests/ParticipantRequests';
 import { withAuth } from 'components/AuthGuard';
 
 const MyRequests = () => {

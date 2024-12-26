@@ -31,7 +31,11 @@ const Home = () => {
             >
               <figure>
                 <LazyLoadImage
-                  src={program.appBanner1}
+                  src={
+                    program.appBanner1 !== null
+                      ? program.appBanner1
+                      : program.hero1
+                  }
                   alt='Banner'
                   width='100%'
                   height='100%'
@@ -44,7 +48,11 @@ const Home = () => {
             >
               <figure>
                 <LazyLoadImage
-                  src={program.appBanner2}
+                  src={
+                    program.appBanner2 !== null
+                      ? program.appBanner2
+                      : program.heroSection1
+                  }
                   alt='Banner'
                   width='100%'
                   height='100%'
@@ -58,7 +66,11 @@ const Home = () => {
             >
               <figure>
                 <LazyLoadImage
-                  src={program.appBanner3}
+                  src={
+                    program.appBanner3 !== null
+                      ? program.appBanner3
+                      : program.heroSection2
+                  }
                   alt='Banner'
                   width='100%'
                   height='100%'

@@ -98,29 +98,31 @@ export default function HeaderDesktop(props) {
                   </a>
                 )}
               </div>
-              <div className='icon-box-content d-lg-show mt-4'>
-                <h4 className='icon-box-title text-dark text-normal'>
-                  Soporte:
-                </h4>
-                {program.supportPhone.length > 1 ? (
-                  <p>
-                    <a
-                      href={`https://api.whatsapp.com/send?phone=593${program.supportPhone}&text=Hola!%20Soy%20un%20participante%20del%20programa%20${program.name},%20mi%20usuario%20es%20${participant.fullName},%20y%20tengo%20una%20duda%20sobre...`}
-                      target='_blank'
-                    >
-                      {program.supportPhone}
-                    </a>
-                  </p>
-                ) : (
-                  <p>
-                    <ALink
-                      href={`mailto:${program.supportEmail}&text=Hola!%20Soy%20un%20participante%20del%20programa%20${program.name},%20mi%20usuario%20es%20${participant.fullName},%20y%20tengo%20una%20duda%20sobre...`}
-                    >
-                      {program.supportEmail}
-                    </ALink>
-                  </p>
-                )}
-              </div>
+              {program.id !== 26 && (
+                <div className='icon-box-content d-lg-show mt-4'>
+                  <h4 className='icon-box-title text-dark text-normal'>
+                    Soporte:
+                  </h4>
+                  {program.supportPhone.length > 1 ? (
+                    <p>
+                      <a
+                        href={`https://api.whatsapp.com/send?phone=593${program.supportPhone}&text=Hola!%20Soy%20un%20participante%20del%20programa%20${program.name},%20mi%20usuario%20es%20${participant.fullName},%20y%20tengo%20una%20duda%20sobre...`}
+                        target='_blank'
+                      >
+                        {program.supportPhone}
+                      </a>
+                    </p>
+                  ) : (
+                    <p>
+                      <ALink
+                        href={`mailto:${program.supportEmail}&text=Hola!%20Soy%20un%20participante%20del%20programa%20${program.name},%20mi%20usuario%20es%20${participant.fullName},%20y%20tengo%20una%20duda%20sobre...`}
+                      >
+                        {program.supportEmail}
+                      </ALink>
+                    </p>
+                  )}
+                </div>
+              )}
             </div>
             <span className='divider mr-4'></span>
 

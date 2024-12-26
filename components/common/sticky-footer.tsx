@@ -37,8 +37,7 @@ export default function StickyFooter() {
           <i className='d-icon-shoppingbag'></i>
           <span>Premios</span>
         </ALink>
-
-        {program.supportPhone.length > 1 && (
+        {program.id !== 26 && program.supportPhone.length > 1 && (
           <a
             href={`https://api.whatsapp.com/send?phone=593${program.supportPhone}&text=Hola!%20Soy%20un%20participante%20del%20programa%20${program.name},%20mi%20usuario%20es%20${participant.fullName},%20y%20tengo%20una%20duda%20sobre...`}
             target='_blank'

@@ -209,7 +209,7 @@ export const useMyResults = (): ReducerValue => {
   }, [participant, state.filters]);
 
   useEffect(() => {
-    if (program.id === 8) {
+    if (program.id === 8 || program.id === 14) {
       getUngroupedResults();
     } else {
       getMyResults();

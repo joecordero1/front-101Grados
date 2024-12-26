@@ -100,8 +100,6 @@ function LayoutDesktop({ children, closeQuickview }) {
         {children}
 
         {isLoggedIn && <Footer />}
-
-        {isLoggedIn ? <StickyFooter /> : <div></div>}
       </div>
 
       <ToastContainer
