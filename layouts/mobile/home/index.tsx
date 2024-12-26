@@ -22,55 +22,57 @@ const Home = () => {
           <div className='categories-container mt-3'>
             <CategoriesMenu />
           </div>
-          <OwlCarousel
-            adClass='owl-theme owl-dot-inner intro-slider animation-slider'
-            options={mobileSlider}
-          >
-            {/* Banner 1 */}
-            <div className='banner banner-fixed content-middle intro-slide intro-slide1 banner-radius'>
-              <figure className='responsive-banner'>
-                <LazyLoadImage
-                  src={
-                    program.appBanner1 !== null
-                      ? program.appBanner1
-                      : program.hero1
-                  }
-                  alt='Banner'
-                  className='responsive-image'
-                />
-              </figure>
-            </div>
+          <div className='banners-container mb-2'>
+            <OwlCarousel
+              adClass='owl-theme owl-dot-inner intro-slider animation-slider'
+              options={mobileSlider}
+            >
+              {/* Banner 1 */}
+              <div className='banner banner-fixed content-middle intro-slide intro-slide1 banner-radius'>
+                <figure className='responsive-banner'>
+                  <LazyLoadImage
+                    src={
+                      program.appBanner1 !== null
+                        ? program.appBanner1
+                        : program.hero1
+                    }
+                    alt='Banner'
+                    className='responsive-image'
+                  />
+                </figure>
+              </div>
 
-            {/* Banner 2 */}
-            <div className='banner banner-fixed content-middle intro-slide intro-slide2 banner-radius'>
-              <figure className='responsive-banner'>
-                <LazyLoadImage
-                  src={
-                    program.appBanner2 !== null
-                      ? program.appBanner2
-                      : program.heroSection1
-                  }
-                  alt='Banner'
-                  className='responsive-image'
-                />
-              </figure>
-            </div>
+              {/* Banner 2 */}
+              <div className='banner banner-fixed content-middle intro-slide intro-slide2 banner-radius'>
+                <figure className='responsive-banner'>
+                  <LazyLoadImage
+                    src={
+                      program.appBanner2 !== null
+                        ? program.appBanner2
+                        : program.heroSection1
+                    }
+                    alt='Banner'
+                    className='responsive-image'
+                  />
+                </figure>
+              </div>
 
-            {/* Banner 3 */}
-            <div className='banner banner-fixed content-middle intro-slide intro-slide2 banner-radius'>
-              <figure className='responsive-banner'>
-                <LazyLoadImage
-                  src={
-                    program.appBanner3 !== null
-                      ? program.appBanner3
-                      : program.heroSection2
-                  }
-                  alt='Banner'
-                  className='responsive-image'
-                />
-              </figure>
-            </div>
-          </OwlCarousel>
+              {/* Banner 3 */}
+              <div className='banner banner-fixed content-middle intro-slide intro-slide2 banner-radius'>
+                <figure className='responsive-banner'>
+                  <LazyLoadImage
+                    src={
+                      program.appBanner3 !== null
+                        ? program.appBanner3
+                        : program.heroSection2
+                    }
+                    alt='Banner'
+                    className='responsive-image'
+                  />
+                </figure>
+              </div>
+            </OwlCarousel>
+          </div>
         </div>
 
         <div className='container'>
