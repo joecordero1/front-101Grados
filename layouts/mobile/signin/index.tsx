@@ -23,7 +23,7 @@ const SignIn = () => {
         backgroundImage: `url(${program.loginScreen})`,
       }}
     >
-      <div className='bg-white/10 backdrop-blur-md rounded-3xl p-8 shadow-lg w-[90%] max-w-lg'>
+      <div className='bg-neutral-800/80 backdrop-blur-md rounded-3xl p-8 shadow-lg w-[90%] max-w-lg'>
         <div className='text-center'>
           <img
             src={program.logoBig}
@@ -35,14 +35,14 @@ const SignIn = () => {
             }}
           />
         </div>
-        <div className='text-center mt-1'>
-          <h2 className='text-3xl font-bold text-white'>Ingresa</h2>
+        <div className='text-center mt-4'>
+          <h2 className='text-3xl font-bold text-gray-200'>Ingresa</h2>
         </div>
-        <form onSubmit={handleSubmit} className='mt-3'>
+        <form onSubmit={handleSubmit} className='mt-6'>
           <div className='mb-4'>
             <label
               htmlFor='username'
-              className='block text-white text-md font-medium mb-2'
+              className='block text-gray-200 text-md font-medium mb-2'
             >
               Usuario:
             </label>
@@ -50,7 +50,7 @@ const SignIn = () => {
               type='text'
               id='username'
               placeholder='1234567890'
-              className='w-full p-2 rounded-md bg-white/30 text-gray-400 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400'
+              className='w-full p-2 rounded-md bg-neutral-700 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-neutral-400'
               value={values.username}
               onChange={(e) => onChange('username', e.target.value || null)}
               required
@@ -59,7 +59,7 @@ const SignIn = () => {
           <div className='mb-4'>
             <label
               htmlFor='password'
-              className='block text-white text-md font-medium mb-2'
+              className='block text-gray-200 text-md font-medium mb-2'
             >
               Contraseña:
             </label>
@@ -67,13 +67,13 @@ const SignIn = () => {
               type={showPassword ? 'text' : 'password'}
               id='password'
               placeholder='************'
-              className='w-full p-2 rounded-md bg-white/30 text-gray-400 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400'
+              className='w-full p-2 rounded-md bg-neutral-700 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-neutral-400'
               value={values.password}
               onChange={(e) => onChange('password', e.target.value || null)}
               required
             />
             <p
-              className='text-right text-md  cursor-pointer mt-2 text-gray-100'
+              className='text-right text-md cursor-pointer mt-2 text-gray-300'
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? 'Ocultar' : 'Mostrar'}
@@ -81,13 +81,16 @@ const SignIn = () => {
           </div>
           <button
             type='submit'
-            className='w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition'
+            className='w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition'
           >
             Ingresar
           </button>
-          <div className='text-center text-md text-gray-100 mt-4'>
+          <div className='text-center text-md text-gray-300 mt-4'>
             ¿Aún no eres socio?{' '}
-            <Link href='/signup' className=' font-bold hover:underline'>
+            <Link
+              href='/signup'
+              className='font-bold text-blue-400 hover:underline'
+            >
               Regístrate
             </Link>
           </div>
