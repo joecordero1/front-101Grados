@@ -50,7 +50,7 @@ const SignIn = () => {
               type='text'
               id='username'
               placeholder='1234567890'
-              className='w-full p-2 rounded-md bg-white/30 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400'
+              className='w-full p-2 rounded-md bg-white/30 text-gray-400 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400'
               value={values.username}
               onChange={(e) => onChange('username', e.target.value || null)}
               required
@@ -67,7 +67,7 @@ const SignIn = () => {
               type={showPassword ? 'text' : 'password'}
               id='password'
               placeholder='************'
-              className='w-full p-2 rounded-md bg-white/30 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400'
+              className='w-full p-2 rounded-md bg-white/30 text-gray-400 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400'
               value={values.password}
               onChange={(e) => onChange('password', e.target.value || null)}
               required
