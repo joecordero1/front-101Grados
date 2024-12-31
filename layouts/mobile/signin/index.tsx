@@ -85,15 +85,6 @@ const SignIn = () => {
           >
             Ingresar
           </button>
-          <div className='text-center text-md text-gray-300 mt-4'>
-            ¿Aún no eres socio?{' '}
-            <Link
-              href='/signup'
-              className='font-bold text-blue-400 hover:underline'
-            >
-              Regístrate
-            </Link>
-          </div>
         </form>
       </div>
     </div>

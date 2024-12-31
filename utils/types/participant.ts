@@ -13,10 +13,11 @@ export interface Participant {
   approvedPolicy: boolean;
   approvedTermsAndConditions: boolean;
   isAConsumerRegistrar: boolean;
+  passwordUpdatedAt?: string;
 }
 
 export interface EditParticipant
-  extends Omit<Partial<Participant>, "id" | "identifier"> {
+  extends Omit<Partial<Participant>, 'id' | 'identifier'> {
   currentPassword?: string;
   newPassword?: string;
   confirmPassword?: string;

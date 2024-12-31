@@ -70,6 +70,38 @@ function LayoutDesktop({ children, closeQuickview }) {
   }, [isLoggedIn, participant]);
 
   useEffect(() => {
+    if (program?.id === 26) {
+      if (
+        isLoggedIn &&
+        participant?.passwordUpdatedAt &&
+        participant.approvedPolicy &&
+        participant.approvedTermsAndConditions
+      ) {
+        // Definir la fecha actual
+        const currentDate = new Date();
+
+        // Crear una nueva instancia de la fecha de actualización de la contraseña
+        const passwordUpdatedDate = new Date(participant.passwordUpdatedAt);
+
+        // Restar los días a la fecha actual para obtener la fecha de comparación
+        const comparisonDate = new Date();
+        comparisonDate.setDate(currentDate.getDate() - 365);
+
+        // Comparar las fechas
+        if (passwordUpdatedDate <= comparisonDate) {
+          router.push('/pages/change-my-password');
+        }
+      }
+    }
+  }, [
+    isLoggedIn,
+    participant?.passwordUpdatedAt,
+    participant?.approvedPolicy,
+    participant?.approvedTermsAndConditions,
+    program?.id,
+  ]);
+
+  useEffect(() => {
     if (isLoggedIn && !program?.isStoreActive) {
       router.push('/');
     }

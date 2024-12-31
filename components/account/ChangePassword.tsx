@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSnackbar } from 'notistack';
-import { useRouter } from 'next/navigation';
-
-import ALink from '~/components/features/custom-link';
 
 import { useAuth, useForm, useApiAuth, useProgram } from 'hooks';
 import { EditParticipant } from '~/utils/types';
 import { parseCredentials, removeFirstChar } from '~/utils';
+import { useRouter } from 'next/router';
 
-export const AccountDetails = () => {
+export const ChangePassword = () => {
+  const router = useRouter();
   const { participant, setSession } = useAuth();
   const { program } = useProgram();
   const { put } = useApiAuth();
@@ -24,7 +23,8 @@ export const AccountDetails = () => {
     confirmPassword: '',
   });
   const { enqueueSnackbar } = useSnackbar();
-  const { push } = useRouter();
+
+  const [showPassword, setShowPassword] = useState(false); // Estado para mostrar/ocultar contraseñas
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -41,89 +41,41 @@ export const AccountDetails = () => {
       } else {
         enqueueSnackbar('Información actualizada', { variant: 'success' });
       }
-      push('/');
+      router.push('/');
     } catch (e) {
       console.error('Error updating participant info', e);
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState); // Cambiar el estado para mostrar/ocultar contraseñas
+  };
+
   return (
     <form action='#' className='form' onSubmit={handleSubmit}>
-      {program.id !== 26 && (
-        <div>
-          <label>Usuario *</label>
-          <input
-            className='form-control'
-            name='username'
-            required
-            value={values.username}
-            onChange={handleInputChange}
-          />
-
-          <div className='row'>
-            <div className='col-sm-6'>
-              <label>Nombre *</label>
-              <input
-                type='text'
-                className='form-control'
-                name='firstName'
-                required
-                value={values.firstName}
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className='col-sm-6'>
-              <label>Apellido *</label>
-              <input
-                type='text'
-                className='form-control'
-                name='lastName'
-                required
-                value={values.lastName}
-                onChange={handleInputChange}
-              />
-            </div>
-          </div>
-
-          <label>Cédula</label>
-          <input
-            type='text'
-            className='form-control'
-            name='document'
-            value={values.document}
-            onChange={handleInputChange}
-          />
-
-          <label>Correo electrónico</label>
-          <input
-            type='email'
-            className='form-control'
-            name='email'
-            value={values.email}
-            onChange={handleInputChange}
-          />
-        </div>
-      )}
-
-      <label>Teléfono</label>
-      <input
-        type='tel'
-        className='form-control'
-        name='mobile'
-        required
-        value={values.mobile}
-        onChange={handleInputChange}
-      />
+      <p className='text-red-500 text-2xl font-bold'>
+        Por favor actualiza tu contraseña
+      </p>
       <legend>Actualización de Contraseña</legend>
       <fieldset>
         <label>Contraseña actual</label>
-        <input
-          type='password'
-          className='form-control'
-          name='currentPassword'
-          value={values.currentPassword}
-          onChange={handleInputChange}
-        />{' '}
+        <div className='password-input-wrapper'>
+          <input
+            type={showPassword ? 'text' : 'password'} // Cambiar tipo según estado
+            className='form-control'
+            name='currentPassword'
+            value={values.currentPassword}
+            onChange={handleInputChange}
+          />
+          <button
+            type='button'
+            className='toggle-password-btn font-bold text-blue-500 mb-2'
+            onClick={togglePasswordVisibility}
+          >
+            {showPassword ? 'Ocultar' : 'Mostrar'}
+          </button>
+        </div>
+
         <div
           style={{
             display: 'flex',
@@ -169,22 +121,28 @@ export const AccountDetails = () => {
             )
           )}
         </div>
+
         <label>Nueva contraseña</label>
-        <input
-          type='password'
-          className='form-control'
-          name='newPassword'
-          value={values.newPassword}
-          onChange={handleInputChange}
-        />
+        <div className='password-input-wrapper'>
+          <input
+            type={showPassword ? 'text' : 'password'} // Cambiar tipo según estado
+            className='form-control'
+            name='newPassword'
+            value={values.newPassword}
+            onChange={handleInputChange}
+          />
+        </div>
+
         <label>Confirmar nueva contraseña</label>
-        <input
-          type='password'
-          className='form-control'
-          name='confirmPassword'
-          value={values.confirmPassword}
-          onChange={handleInputChange}
-        />
+        <div className='password-input-wrapper'>
+          <input
+            type={showPassword ? 'text' : 'password'} // Cambiar tipo según estado
+            className='form-control'
+            name='confirmPassword'
+            value={values.confirmPassword}
+            onChange={handleInputChange}
+          />
+        </div>
       </fieldset>
 
       <button type='submit' className='btn btn-primary'>

@@ -8,7 +8,7 @@ const PrivacyPolicy = () => {
   const { program } = useProgram();
   const router = useRouter();
   const { put } = useApiAuth();
-  const { isLoggedIn } = useAuth();
+  const { isLoggedIn, participant } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
   const acceptTerms = async () => {
     try {
@@ -22,7 +22,26 @@ const PrivacyPolicy = () => {
           variant: 'success',
         }
       );
-      router.push('/');
+      if (program.id === 26) {
+        if (isLoggedIn && participant?.passwordUpdatedAt) {
+          // Definir la fecha actual
+          const currentDate = new Date();
+
+          // Crear una nueva instancia de la fecha de actualización de la contraseña
+          const passwordUpdatedDate = new Date(participant.passwordUpdatedAt);
+
+          // Restar los días a la fecha actual para obtener la fecha de comparación
+          const comparisonDate = new Date();
+          comparisonDate.setDate(currentDate.getDate() - 365);
+
+          // Comparar las fechas
+          if (passwordUpdatedDate <= comparisonDate) {
+            router.push('/pages/change-my-password');
+          } else {
+            router.push('/');
+          }
+        }
+      }
     } catch (error) {
       console.error(error, 'acceptTerms');
       enqueueSnackbar(
