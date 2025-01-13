@@ -17,6 +17,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import styles from './headerStyles.module.scss';
 import { getStatusElement } from '~/utils/getRequestStatus';
+import ResultsCardComplete from '~/components/common/partials/results/resultsCardComplete';
 
 export default function HeaderMobile(props) {
   const { logOut, availablePoints, participant, accessToken, loadingPoints } =
@@ -241,7 +242,8 @@ export default function HeaderMobile(props) {
           style={{ display: 'flex', justifyContent: 'center' }}
         >
           {/* Mostrar ResultsCard condicionalmente */}
-          {isResultsVisible && <ResultsCard />}
+          {isResultsVisible && program.id !== 26 && <ResultsCard />}
+          {isResultsVisible && program.id === 26 && <ResultsCardComplete />}
         </div>
       ) : (
         <p className='text-center mt-3'>
