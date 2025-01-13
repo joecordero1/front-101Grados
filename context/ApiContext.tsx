@@ -1,8 +1,8 @@
 import React, { useEffect, useState, createContext } from 'react';
 import { AxiosError } from 'axios';
-import { useSnackbar } from 'notistack';
 
 import { createRequestMethods, FetchFunction } from '../utils/api';
+import { useSnackbar } from 'notistack';
 
 interface ApiContextValue {
   get: FetchFunction;
@@ -20,126 +20,44 @@ export const ApiContext = createContext<ApiContextValue>({
   patch: () => Promise.reject(),
 });
 
-export enum HandledErrors {
-  BAD_REQUEST = 400,
-  UNAUTHORIZED = 401,
-  FORBIDDEN = 403,
-  NOT_FOUND = 404,
-  CONFLICT = 409,
-  INTERNAL_SERVER_ERROR = 500,
-  null = null,
-}
-
 type ErrorMessagesType = {
-  [key in HandledErrors]: {
-    title: string;
-    variant: 'error' | 'warning' | 'info' | 'success';
-    message: string;
-  };
-};
-
-const ErroMessages: ErrorMessagesType = {
-  [HandledErrors.BAD_REQUEST]: {
-    title: 'Error',
-    variant: 'error',
-    message: 'Hay un error con la información que nos proporcionaste.',
-  },
-  [HandledErrors.UNAUTHORIZED]: {
-    title: 'Error',
-    variant: 'error',
-    message: 'Tu sesión ha finalizado. Ingresa nuevamente.',
-  },
-  [HandledErrors.FORBIDDEN]: {
-    title: 'Error',
-    variant: 'error',
-    message: 'No puedes realizar esa operación. Ponte en contacto con soporte.',
-  },
-  [HandledErrors.NOT_FOUND]: {
-    title: 'Error',
-    variant: 'error',
-    message: 'No podemos encontrar lo que nos solicitaste.',
-  },
-  [HandledErrors.CONFLICT]: {
-    title: 'Error',
-    variant: 'error',
-    message: 'El recurso ya se encuentra creado.',
-  },
-  [HandledErrors.INTERNAL_SERVER_ERROR]: {
-    title: 'Error',
-    variant: 'error',
-    message: 'Ha ocurrido algo inesperado. Por favor intenta más tarde.',
-  },
+  error: string;
+  message: string;
+  status: number;
+  detail: string;
+  instance: string;
+  help: string;
 };
 
 export function ApiProvider({ children }: { children: React.ReactNode }) {
-  const [errorMessage, setErrorMessage] = useState<string[]>([]);
+  const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const { enqueueSnackbar } = useSnackbar();
 
   const value = React.useMemo(() => {
-    function handleError(error: AxiosError | any) {
-      // setErrorMessage((pre
+    const handleErrors = (error: AxiosError) => {
       if (error.response) {
-        // returned from api buy with an error code outside 2xx
-        const isHandledError = Object.values(HandledErrors).includes(
-          error.response.status
-        );
-
-        setErrorMessage((prev) => [...prev, error.response.data.message]);
-
-        // setErrorMessage((prev) => [
-        //   ...prev,
-        //   isHandledError
-        //     ? ErroMessages[error.response.status].message
-        //     : ErroMessages[HandledErrors.INTERNAL_SERVER_ERROR].message,
-        // ]);
-
-        // This if is for the validation errors | Usually are 400 errors when the sent data is not valid
-        if (
-          error.response.data &&
-          error.response.data.errors &&
-          error.response.data.errors.length > 0
-        ) {
-          const errors: {
-            property: string;
-            children: [];
-            constraints: { [key: string]: string };
-          }[] = error.response.data.errors;
-
-          const errorMessages = errors.map((e) => {
-            const errorKey = Object.keys(e.constraints)[0];
-            return e.constraints[errorKey];
+        const { data } = error.response as any;
+        // Check if data is an array of errors
+        if (Array.isArray(data)) {
+          // data is an array of errors ErrorMessagesType[]
+          data.forEach((error) => {
+            setErrorMessages((prev) => [...prev, error.message]);
           });
-
-          errorMessages.forEach((message) => {
-            setErrorMessage((prev) => [...prev, message]);
-          });
-        } else if (!isHandledError) {
-          setErrorMessage((prev) => [
-            ...prev,
-            ErroMessages[HandledErrors.INTERNAL_SERVER_ERROR].message,
-          ]);
-          // if (
-          //   error.response.data.message &&
-          //   error.response.data.message !== 'Unauthorized'
-          // ) {
-          //   setErrorMessage((prev) => [...prev, error.response.data.message]);
-          // }
+        } else {
+          console.error('Non formated error', error.response.data);
+          // TODO: Handle non formated errors
         }
-      } else if (error.response) {
-        // setState({ errorCode: NoResponseCode, status: 'error' });
       }
-    }
-
-    return createRequestMethods(handleError);
+    };
+    return createRequestMethods(handleErrors);
   }, []);
 
   useEffect(() => {
-    if (errorMessage.length === 0) return;
-    enqueueSnackbar(errorMessage[0], {
-      variant: 'error',
-    });
-    setErrorMessage((prev) => prev.slice(1));
-  }, [errorMessage]);
+    if (errorMessages.length === 0) return;
+    const message = errorMessages[0];
+    enqueueSnackbar(message, { variant: 'error' });
+    setErrorMessages((prev) => prev.slice(1));
+  }, [errorMessages]);
 
   return <ApiContext.Provider value={value}>{children}</ApiContext.Provider>;
 }

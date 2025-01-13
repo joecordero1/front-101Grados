@@ -1,8 +1,10 @@
 import axios, { AxiosError } from 'axios';
-
 import { config } from './config';
 
-export const api = axios.create({ baseURL: config.server.apiUrl });
+export const api = axios.create({
+  baseURL: config.server.apiUrl,
+  // withCredentials: true, // Ensure cookies are sent with each request
+});
 
 export type FetchFunction = <T>(
   url: string,
@@ -15,13 +17,30 @@ export function createRequestMethod(
   onError: (error: AxiosError) => void
 ): FetchFunction {
   return async function (url: string, body: any, headers: any) {
-    const token = localStorage.getItem('accessTokenLala4Store');
     try {
+      // Get currentWorkspace from localStorage
+      const currentWorkspace = localStorage.getItem('currentWorkspace');
+      const currentProgram = localStorage.getItem('currentProgram');
+
+      // Prepare the default headers
+      let defaultHeaders = {
+        ...headers,
+        [config.headers.WORKSPACE_HEADER]: currentWorkspace,
+        [config.headers.PROGRAM_HEADER]: currentProgram,
+      };
+
+      // If the body is not FormData, set the Content-Type to application/json
+      if (!(body instanceof FormData)) {
+        defaultHeaders['Content-Type'] = 'application/json';
+      }
+
       const response = await api(url, {
         method,
-        ...(token && { headers: { Authorization: `Bearer ${token}` } }),
         data: body,
+        withCredentials: true,
+        headers: defaultHeaders,
       });
+
       return response.data;
     } catch (error) {
       console.error('API: error', error);

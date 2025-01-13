@@ -18,7 +18,7 @@ interface AuthState {
 }
 
 interface AuthContextValue extends AuthState {
-  logIn: (username: string, password: string, isGoogleLogin?: boolean) => void;
+  logIn: (username: string, password: string) => void;
   logOut: () => void;
   loginWithToken: (token: string) => void;
   getAvailablePoints: () => void;
@@ -147,18 +147,14 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     setSession();
   };
 
-  const logIn = async (
-    username: string,
-    password: string,
-    isGoogleLogin?: boolean
-  ) => {
+  const logIn = async (username: string, password: string) => {
     try {
       const accessTokenResponse = await post<{
         accessToken: string;
-      }>(`/auth/participant/login`, {
+      }>(`/auth/v5/participant/login`, {
         username,
         password,
-        isGoogleLogin,
+
         programId: program.id,
       });
 
