@@ -150,17 +150,16 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const logIn = async (username: string, password: string) => {
     try {
       const accessTokenResponse = await post<{
-        accessToken: string;
+        access_token: string;
       }>(`/auth/v5/participant/login`, {
         username,
         password,
-
         programId: program.id,
       });
 
       localStorage.setItem(
         `accessTokenLala4Store`,
-        accessTokenResponse.accessToken
+        accessTokenResponse.access_token
       );
       setSession();
     } catch (e) {
