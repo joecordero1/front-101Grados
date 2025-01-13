@@ -16,6 +16,7 @@ import { Button } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import styles from './headerStyles.module.scss';
+import ResultsCardComplete from '~/components/common/partials/results/resultsCardComplete';
 
 export default function HeaderDesktop(props) {
   const { logOut, availablePoints, participant, accessToken, loadingPoints } =
@@ -281,7 +282,8 @@ export default function HeaderDesktop(props) {
           style={{ display: 'flex', justifyContent: 'center' }}
         >
           {/* Mostrar ResultsCard condicionalmente */}
-          {isResultsVisible && <ResultsCard />}
+          {isResultsVisible && program.id !== 26 && <ResultsCard />}
+          {isResultsVisible && program.id === 26 && <ResultsCardComplete />}
         </div>
       )}
     </header>
