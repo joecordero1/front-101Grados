@@ -1,10 +1,10 @@
-import { useReducer, useEffect, useCallback } from "react";
-import { useApiAuth } from "~/hooks";
-import { useAuth } from "../../../../hooks/useAuth";
-import { Page, Request } from "../../../../utils/types";
-import queryString from "query-string";
+import { useReducer, useEffect, useCallback } from 'react';
+import { useApiAuth } from '~/hooks';
+import { useAuth } from '../../../../hooks/useAuth';
+import { Page, Request } from '../../../../utils/types';
+import queryString from 'query-string';
 export type RetrieveRequestsParticipant = {
-  type: "retrive-requests-participant";
+  type: 'retrive-requests-participant';
   payload: {
     requestsParticipant: Request[];
   };
@@ -12,21 +12,21 @@ export type RetrieveRequestsParticipant = {
 export type ActionTypes = RetrieveRequestsParticipant;
 
 export type State = {
-  status: "idle" | "complete";
+  status: 'idle' | 'complete';
   requestsParticipant: Request[];
 };
 const initialState: State = {
-  status: "idle",
+  status: 'idle',
   requestsParticipant: [],
 };
 const reducer = (state: State, action: ActionTypes): State => {
   switch (action.type) {
-    case "retrive-requests-participant":
+    case 'retrive-requests-participant':
       const { requestsParticipant } = action.payload;
       return {
         ...state,
         requestsParticipant,
-        status: "complete",
+        status: 'complete',
       };
     default:
       return state;
@@ -40,20 +40,20 @@ export const useRequests = (): ReducerValue => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { participant } = useAuth();
   const params = {
-    order: "DESC",
+    order: 'DESC',
   };
   const query = queryString.stringify(params);
   const getParticipantRequests = useCallback(async () => {
     try {
-      const data = await api.get<Request[]>(`/requests/mine?${query}`);
+      const data = await api.get<Request[]>(`/lala4/requests/mine?${query}`);
       dispatch({
-        type: "retrive-requests-participant",
+        type: 'retrive-requests-participant',
         payload: {
           requestsParticipant: data,
         },
       });
     } catch (e) {
-      console.error("getParticipantRequests", e);
+      console.error('getParticipantRequests', e);
     }
   }, [participant]);
   useEffect(() => {

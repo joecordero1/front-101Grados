@@ -43,7 +43,7 @@ export const useLogs = () => {
       const device = parser.getDevice();
       const os = parser.getOS();
 
-      await api.post('/logs', {
+      await api.post('/lala4/logs', {
         type,
         ...params,
         device: device.type || 'Desktop',

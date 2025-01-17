@@ -155,7 +155,9 @@ export const useMyResults = (): ReducerValue => {
         // }, {}),
       };
       const query = queryString.stringify(params);
-      const data = await api.get<Result[]>(`/results/my-results?${query}`);
+      const data = await api.get<Result[]>(
+        `/lala4/results/my-results?${query}`
+      );
 
       dispatch({
         type: 'GET_MY_RESULTS',
@@ -188,7 +190,9 @@ export const useMyResults = (): ReducerValue => {
         }, {}),
       };
       const query = queryString.stringify(params);
-      const data = await api.get<Result[]>(`/results/my-results?${query}`);
+      const data = await api.get<Result[]>(
+        `/lala4/results/my-results?${query}`
+      );
 
       dispatch({
         type: 'GET_UNGROUPED_RESULTS',

@@ -494,7 +494,7 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
               status: 'idle',
             },
           });
-          await api.post(`/requests`, createRequestData);
+          await api.post(`/lala4/requests`, createRequestData);
           // for (let index = 0; index < item.quantity; index++) {
           //   const createRequestData: CreateRequestDto = {
           //     type: RequestTypes.PARTICIPANT,
@@ -560,7 +560,7 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
   };
   const retrieveAddresses = async () => {
     try {
-      const addresses = await api.get<Address[]>(`/addresses/mine`);
+      const addresses = await api.get<Address[]>(`/lala4/addresses/mine`);
       dispatch({
         type: 'retrieve-addresses',
         payload: {
@@ -584,7 +584,7 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
 
   const saveAddress = async () => {
     try {
-      const address = await api.post<Address>(`/addresses`, {
+      const address = await api.post<Address>(`/lala4/addresses`, {
         ...state.newAddress,
         participantId: participant.id,
       });
@@ -626,7 +626,7 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
   //function for removeAddress
   const removeAddress = async (addressId: number) => {
     try {
-      await api.delete(`/addresses/${addressId}`);
+      await api.delete(`/lala4/addresses/${addressId}`);
       enqueueSnackbar('Se elimino con exito la dirección', {
         variant: 'success',
       });

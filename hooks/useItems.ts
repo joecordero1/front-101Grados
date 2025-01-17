@@ -75,7 +75,7 @@ export const useItems = ({
       };
       const query = queryString.stringify(params);
       const response = await api.get<Page<CatalogueItem>>(
-        '/catalogue-items/store?' + query
+        '/lala4/catalogue-items/store?' + query
       );
       setProducts(response.data);
       setMeta(response.meta);

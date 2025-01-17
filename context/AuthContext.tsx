@@ -151,7 +151,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     try {
       const accessTokenResponse = await post<{
         access_token: string;
-      }>(`/auth/v5/participant/login`, {
+      }>(`/lala4/auth/v5/participant/login`, {
         username,
         password,
         programId: program.id,
@@ -182,7 +182,9 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     // If there is a token, I proceed to validate it
     if (accessToken) {
       try {
-        const participant = await get<Participant>(`participants/info/me`);
+        const participant = await get<Participant>(
+          `/lala4/participants/info/me`
+        );
 
         // If all is OK, I send a Login action
         // and i need to verify if participant is active if is active i dispatch action else i send alert for not active
@@ -215,7 +217,9 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     });
     try {
       console.info('Cargando puntos');
-      const availablePoints = await get<number>(`/points/my-available-points`);
+      const availablePoints = await get<number>(
+        `/lala4/points/my-available-points`
+      );
       dispatch({
         type: 'UPDATE_AVAILABLE_POINTS',
         payload: availablePoints,

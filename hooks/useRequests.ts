@@ -14,7 +14,7 @@ export const useRequests = (parseToGrouped = false) => {
     try {
       setLoading(true);
       console.info('Getting requests');
-      const data = await api.get<Request[]>('/requests/mine');
+      const data = await api.get<Request[]>('/lala4/requests/mine');
       setRequests(data);
       setLoading(false);
     } catch (e) {

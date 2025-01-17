@@ -1,17 +1,17 @@
-import { useReducer, useEffect, useCallback } from "react";
-import { useApiAuth } from "~/hooks";
-import { useAuth } from "../../../../hooks/useAuth";
-import { AccountBalance, Transaction } from "../../../../utils/types";
-import queryString from "query-string";
+import { useReducer, useEffect, useCallback } from 'react';
+import { useApiAuth } from '~/hooks';
+import { useAuth } from '../../../../hooks/useAuth';
+import { AccountBalance, Transaction } from '../../../../utils/types';
+import queryString from 'query-string';
 export type RetrieveAccountBalance = {
-  type: "RETRIEVE_ACCOUNT_BALANCE";
+  type: 'RETRIEVE_ACCOUNT_BALANCE';
   payload: {
     accountBalance: AccountBalance;
   };
 };
 
 export type RetrieveMyTransactions = {
-  type: "RETRIEVE_MY_TRANSACTIONS";
+  type: 'RETRIEVE_MY_TRANSACTIONS';
   payload: {
     transactions: Transaction[];
   };
@@ -39,35 +39,35 @@ export type ActionTypes =
 }; */
 
 export type State = {
-  status: "idle" | "complete";
+  status: 'idle' | 'complete';
   accountBalance: AccountBalance;
   myTransactions: Transaction[];
   /* filterOptions?: FilterOptions; */
 };
 const initialState: State = {
-  status: "idle",
+  status: 'idle',
   accountBalance: {
-    incomePoints: "0",
-    expensePoints: "0",
+    incomePoints: '0',
+    expensePoints: '0',
   },
   myTransactions: [],
   /*   filterOptions: initialFilterOptions, */
 };
 const reducer = (state: State, action: ActionTypes): State => {
   switch (action.type) {
-    case "RETRIEVE_ACCOUNT_BALANCE":
+    case 'RETRIEVE_ACCOUNT_BALANCE':
       const { accountBalance } = action.payload;
       return {
         ...state,
-        status: "complete",
+        status: 'complete',
         accountBalance: accountBalance,
       };
 
-    case "RETRIEVE_MY_TRANSACTIONS":
+    case 'RETRIEVE_MY_TRANSACTIONS':
       const { transactions } = action.payload;
       return {
         ...state,
-        status: "complete",
+        status: 'complete',
         myTransactions: transactions,
       };
 
@@ -102,34 +102,36 @@ export const useAccountBalance = (): ReducerValue => {
       /*  const query = queryString.stringify(params); */
 
       const data = await api.get<AccountBalance>(
-        `/points/my-account-balance` /* + query */
+        `/lala4/points/my-account-balance` /* + query */
       );
       dispatch({
-        type: "RETRIEVE_ACCOUNT_BALANCE",
+        type: 'RETRIEVE_ACCOUNT_BALANCE',
         payload: {
           accountBalance: data,
         },
       });
     } catch (e) {
-      console.error("getAccountBalance", e);
+      console.error('getAccountBalance', e);
     }
   };
 
   const getMyTransactions = async () => {
     const params = {
-      order: "DESC",
+      order: 'DESC',
     };
     const query = queryString.stringify(params);
     try {
-      const data = await api.get<Transaction[]>(`/transactions/mine?${query}`);
+      const data = await api.get<Transaction[]>(
+        `/lala4/transactions/mine?${query}`
+      );
       dispatch({
-        type: "RETRIEVE_MY_TRANSACTIONS",
+        type: 'RETRIEVE_MY_TRANSACTIONS',
         payload: {
           transactions: data,
         },
       });
     } catch (e) {
-      console.error("getMyTransactions", e);
+      console.error('getMyTransactions', e);
     }
   };
 

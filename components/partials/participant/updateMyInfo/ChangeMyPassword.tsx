@@ -6,17 +6,17 @@ import {
   TextField,
   IconButton,
   Typography,
-} from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import React, { useState } from "react";
-import { useApiAuth } from "~/hooks";
-import { useSnackbar } from "notistack";
+} from '@mui/material';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import React, { useState } from 'react';
+import { useApiAuth } from '~/hooks';
+import { useSnackbar } from 'notistack';
 
 const ChangeMyPassword = () => {
   const api = useApiAuth();
   const { enqueueSnackbar } = useSnackbar();
-  const [newPassword, setNewPassword] = useState("");
-  const [newPasswordVerify, setNewPasswordVerify] = useState("");
+  const [newPassword, setNewPassword] = useState('');
+  const [newPasswordVerify, setNewPasswordVerify] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
 
@@ -29,7 +29,7 @@ const ChangeMyPassword = () => {
     setNewPassword(newPasswordValue);
 
     // Validate that the password does not contain spaces
-    const containsSpaces = newPasswordValue.includes(" ");
+    const containsSpaces = newPasswordValue.includes(' ');
     setPasswordsMatch(
       newPasswordValue === newPasswordVerify &&
         !containsSpaces &&
@@ -42,7 +42,7 @@ const ChangeMyPassword = () => {
     setNewPasswordVerify(newPasswordVerifyValue);
 
     // Validate that the password does not contain spaces
-    const containsSpaces = newPasswordVerifyValue.includes(" ");
+    const containsSpaces = newPasswordVerifyValue.includes(' ');
     setPasswordsMatch(
       newPassword === newPasswordVerifyValue &&
         !containsSpaces &&
@@ -52,78 +52,78 @@ const ChangeMyPassword = () => {
 
   const saveNewPassword = async () => {
     try {
-      await api.put("/participants/mine", {
+      await api.put('/lala4/participants/mine', {
         password: newPassword,
       });
-      enqueueSnackbar("Contraseña cambiada correctamente", {
-        variant: "success",
+      enqueueSnackbar('Contraseña cambiada correctamente', {
+        variant: 'success',
       });
     } catch (error) {
       console.error(error);
-      enqueueSnackbar("Error al cambiar la contraseña", { variant: "error" });
+      enqueueSnackbar('Error al cambiar la contraseña', { variant: 'error' });
     }
   };
 
   return (
     <div>
-      <Container sx={{ width: "100%", height: "100vh", marginTop: 10 }}>
+      <Container sx={{ width: '100%', height: '100vh', marginTop: 10 }}>
         <Grid container spacing={1}>
           {!passwordsMatch && (
-            <Typography variant="h5" color="error">
+            <Typography variant='h5' color='error'>
               {
-                "Las contraseñas no coinciden, contienen espacios en blanco, o la contraseña es demasiado corta (mínimo 6 caracteres)"
+                'Las contraseñas no coinciden, contienen espacios en blanco, o la contraseña es demasiado corta (mínimo 6 caracteres)'
               }
             </Typography>
           )}
           <Grid item xs={12}>
-            <InputLabel sx={{ mb: 1, fontSize: 14, fontWeight: "bold" }}>
-              {"Nueva Contraseña"}
+            <InputLabel sx={{ mb: 1, fontSize: 14, fontWeight: 'bold' }}>
+              {'Nueva Contraseña'}
             </InputLabel>
             <TextField
               fullWidth
               required
               inputProps={{ style: { fontSize: 16 } }}
-              name="password"
+              name='password'
               value={newPassword}
-              type={showPassword ? "text" : "password"}
-              placeholder={"Ingrese su nueva contraseña"}
-              variant="outlined"
+              type={showPassword ? 'text' : 'password'}
+              placeholder={'Ingrese su nueva contraseña'}
+              variant='outlined'
               onChange={handleNewPasswordChange}
             />
-            <IconButton onClick={handleTogglePasswordVisibility} size="large">
+            <IconButton onClick={handleTogglePasswordVisibility} size='large'>
               {showPassword ? (
-                <VisibilityOff fontSize="large" />
+                <VisibilityOff fontSize='large' />
               ) : (
-                <Visibility fontSize="large" />
+                <Visibility fontSize='large' />
               )}
             </IconButton>
           </Grid>
           <Grid item xs={12}>
-            <InputLabel sx={{ mb: 1, fontSize: 14, fontWeight: "bold" }}>
-              {"Repita la contraseña"}
+            <InputLabel sx={{ mb: 1, fontSize: 14, fontWeight: 'bold' }}>
+              {'Repita la contraseña'}
             </InputLabel>
             <TextField
               fullWidth
               required
               inputProps={{ style: { fontSize: 16 } }}
-              name="passwordVerify"
+              name='passwordVerify'
               value={newPasswordVerify}
-              type={showPassword ? "text" : "password"}
-              placeholder={"Repita la contraseña"}
-              variant="outlined"
+              type={showPassword ? 'text' : 'password'}
+              placeholder={'Repita la contraseña'}
+              variant='outlined'
               onChange={handleNewPasswordVerifyChange}
             />
           </Grid>
         </Grid>
         <Button
-          variant="contained"
-          color="primary"
+          variant='contained'
+          color='primary'
           sx={{ mt: 3, fontSize: 13 }}
-          size="large"
+          size='large'
           disabled={!passwordsMatch}
           onClick={saveNewPassword}
         >
-          {"Cambiar Contraseña"}
+          {'Cambiar Contraseña'}
         </Button>
       </Container>
     </div>

@@ -1,28 +1,28 @@
-import { useReducer } from "react";
-import { useApiAuth } from "~/hooks";
-import { Snap } from "~/utils/types";
-import { useSnackbar } from "notistack";
+import { useReducer } from 'react';
+import { useApiAuth } from '~/hooks';
+import { Snap } from '~/utils/types';
+import { useSnackbar } from 'notistack';
 
 type HandlePhoto = {
-  type: "handle-photo";
+  type: 'handle-photo';
   payload: {
     selectedPhoto: any;
   };
 };
 
 type SendingInvoice = {
-  type: "sending-invoice";
+  type: 'sending-invoice';
 };
 
 type InvoiceCreated = {
-  type: "invoice-created";
+  type: 'invoice-created';
   payload: {
     imageUrl: string;
   };
 };
 
 type Error = {
-  type: "error";
+  type: 'error';
   payload: {
     errorMsg: any;
   };
@@ -31,7 +31,7 @@ type Error = {
 type Action = HandlePhoto | InvoiceCreated | SendingInvoice | Error;
 
 type State = {
-  status: "idle" | "loading" | "error";
+  status: 'idle' | 'loading' | 'error';
   selectedPhoto: any;
   imageUrl: string;
   invoiceCreated: boolean;
@@ -39,44 +39,44 @@ type State = {
 };
 
 const initialState: State = {
-  status: "idle",
+  status: 'idle',
   selectedPhoto: [],
-  imageUrl: "",
+  imageUrl: '',
   invoiceCreated: false,
   errorMsg: null,
 };
 
 const reducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case "handle-photo": {
+    case 'handle-photo': {
       const { selectedPhoto } = action.payload;
       return {
         ...state,
-        status: "idle",
+        status: 'idle',
         selectedPhoto,
       };
     }
-    case "sending-invoice": {
+    case 'sending-invoice': {
       return {
         ...state,
-        status: "loading",
+        status: 'loading',
       };
     }
-    case "invoice-created": {
+    case 'invoice-created': {
       const { imageUrl } = action.payload;
       return {
         ...state,
-        status: "idle",
+        status: 'idle',
         imageUrl,
         invoiceCreated: true,
         selectedPhoto: [],
       };
     }
-    case "error": {
+    case 'error': {
       const { errorMsg } = action.payload;
       return {
         ...state,
-        status: "error",
+        status: 'error',
         errorMsg,
       };
     }
@@ -96,7 +96,7 @@ export const useCustomReducer = (): ReducerValue => {
   const { enqueueSnackbar } = useSnackbar();
   const photoHandleChange = (image: any) => {
     dispatch({
-      type: "handle-photo",
+      type: 'handle-photo',
       payload: {
         selectedPhoto: image,
       },
@@ -107,37 +107,37 @@ export const useCustomReducer = (): ReducerValue => {
     if (state.selectedPhoto) {
       try {
         dispatch({
-          type: "sending-invoice",
+          type: 'sending-invoice',
         });
         const formData = new FormData();
 
-        formData.append("file", state.selectedPhoto);
-        const imageUrl = await api.post("/uploads/snaps", formData, {
+        formData.append('file', state.selectedPhoto);
+        const imageUrl = await api.post('/lala4/uploads/snaps', formData, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
         });
 
-        await api.post<Snap>("/snaps/upload", {
+        await api.post<Snap>('/lala4/snaps/upload', {
           imageUrl,
         });
 
         dispatch({
-          type: "invoice-created",
+          type: 'invoice-created',
           payload: {
             imageUrl: imageUrl.toString(),
           },
         });
-        enqueueSnackbar("Factura Subida Correctamente", {
-          variant: "success",
+        enqueueSnackbar('Factura Subida Correctamente', {
+          variant: 'success',
         });
       } catch (e) {
         enqueueSnackbar(e.response.data.message, {
-          variant: "error",
+          variant: 'error',
         });
-        console.error("createInvoice(): ", e);
+        console.error('createInvoice(): ', e);
         dispatch({
-          type: "error",
+          type: 'error',
           payload: {
             errorMsg: e.response.data.message,
           },

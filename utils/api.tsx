@@ -19,24 +19,21 @@ export function createRequestMethod(
   return async function (url: string, body: any, headers: any) {
     try {
       // Get currentWorkspace from localStorage
-      const currentWorkspace = localStorage.getItem('currentWorkspace');
-      const currentProgram = localStorage.getItem('currentProgram');
+      // const currentWorkspace = localStorage.getItem('currentWorkspace');
+      // const currentProgram = localStorage.getItem('currentProgram');
       const token = localStorage.getItem('accessTokenLala4Store');
-      console.log(token, 'token');
       // Prepare the default headers
       let defaultHeaders = {
         ...headers,
         Authorization: `Bearer ${token}`,
-        [config.headers.WORKSPACE_HEADER]: currentWorkspace,
-        [config.headers.PROGRAM_HEADER]: currentProgram,
+        //[config.headers.WORKSPACE_HEADER]: currentWorkspace,
+        //[config.headers.PROGRAM_HEADER]: currentProgram,
       };
 
       // If the body is not FormData, set the Content-Type to application/json
       if (!(body instanceof FormData)) {
         defaultHeaders['Content-Type'] = 'application/json';
       }
-
-      console.log(defaultHeaders, 'defaultHeaders');
 
       const response = await api(url, {
         method,

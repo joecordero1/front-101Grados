@@ -12,7 +12,7 @@ export const useDishsItems = () => {
 
   const getMyDishsItems = async () => {
     const myDishsItemsData = await api.get<DishItem[]>(
-      '/dishs-items/my-dishs-items'
+      '/lala4/dishs-items/my-dishs-items'
     );
 
     setItems(myDishsItemsData);
