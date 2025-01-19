@@ -34,7 +34,7 @@ export const AccountDetails = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await put(`/participants/mine`, touched);
+      await put(`/lala4/participants/mine`, touched);
       setSession();
       if (touched.newPassword) {
         enqueueSnackbar('Contraseña actualizada', { variant: 'success' });

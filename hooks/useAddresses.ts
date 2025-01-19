@@ -12,7 +12,7 @@ export const useAddresses = () => {
   const getMyAddresses = async () => {
     try {
       setLoading(true);
-      const myAddressesData = await api.get<Address[]>('/addresses/mine');
+      const myAddressesData = await api.get<Address[]>('/lala4/addresses/mine');
       setAddresses(myAddressesData);
     } catch (error) {
       setError(true);

@@ -1,25 +1,25 @@
-import { Box, Button, CircularProgress, IconButton } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import Alert from "@mui/material/Alert";
-import DownloadIcon from "@mui/icons-material/Download";
+import { Box, Button, CircularProgress, IconButton } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import Alert from '@mui/material/Alert';
+import DownloadIcon from '@mui/icons-material/Download';
 
-import { useApiAuth } from "~/hooks";
-import styles from "./accountStyles.module.css";
-import SelectorYear from "../features/selectorYear/selectorYear";
+import { useApiAuth } from '~/hooks';
+import styles from './accountStyles.module.css';
+import SelectorYear from '../features/selectorYear/selectorYear';
 
 export const FilterYears = () => {
-  const [selectedYear, setSelectedYear] = useState("");
+  const [selectedYear, setSelectedYear] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const { post } = useApiAuth();
 
   useEffect(() => {
-    if (selectedYear !== "") setShowAlert(false);
+    if (selectedYear !== '') setShowAlert(false);
   }, [selectedYear]);
 
   const handleButtonClick = async () => {
     setIsLoading(true);
-    if (selectedYear !== "" && selectedYear !== "Todos los años") {
+    if (selectedYear !== '' && selectedYear !== 'Todos los años') {
       const year = parseInt(selectedYear);
       const transactionFrom = new Date(year, 0, 1);
       const transactionTo = new Date(year, 11, 31);
@@ -32,18 +32,21 @@ export const FilterYears = () => {
         transactionTo: formattedDateTo,
       };
 
-      const firstResponse = await post(`/transactions/reports`, requestBody);
-      if (typeof firstResponse === "string") {
+      const firstResponse = await post(
+        `/lala4/transactions/reports`,
+        requestBody
+      );
+      if (typeof firstResponse === 'string') {
         const url = new URL(firstResponse);
-        window.open(url.href, "_blank");
+        window.open(url.href, '_blank');
       }
 
       setIsLoading(false);
-    } else if (selectedYear === "Todos los años") {
-      const firstResponse = await post(`/transactions/reports`);
-      if (typeof firstResponse === "string") {
+    } else if (selectedYear === 'Todos los años') {
+      const firstResponse = await post(`/lala4/transactions/reports`);
+      if (typeof firstResponse === 'string') {
         const url = new URL(firstResponse);
-        window.open(url.href, "_blank");
+        window.open(url.href, '_blank');
       }
       setIsLoading(false);
     } else {
@@ -53,8 +56,8 @@ export const FilterYears = () => {
 
   const formatDate = (date) => {
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
 
@@ -69,23 +72,23 @@ export const FilterYears = () => {
       <Box className={styles.buttonFilterDate}>
         {!isLoading && (
           <Button
-            variant="outlined"
+            variant='outlined'
             onClick={() => {
-              if (selectedYear !== "") {
+              if (selectedYear !== '') {
                 handleButtonClick();
               } else {
                 setShowAlert(true);
               }
             }}
             sx={{
-              borderColor: "#666",
-              color: "#666",
-              display: "flex",
-              alignItems: "center",
+              borderColor: '#666',
+              color: '#666',
+              display: 'flex',
+              alignItems: 'center',
             }}
           >
             Descargar
-            <IconButton size="small" sx={{ ml: 1 }}>
+            <IconButton size='small' sx={{ ml: 1 }}>
               <DownloadIcon />
             </IconButton>
           </Button>
@@ -94,7 +97,7 @@ export const FilterYears = () => {
         {isLoading && <CircularProgress size={24} sx={{ ml: 2 }} />}
       </Box>
       {showAlert && (
-        <Alert variant="standard" severity="warning">
+        <Alert variant='standard' severity='warning'>
           Por favor selecciona una fecha.
         </Alert>
       )}

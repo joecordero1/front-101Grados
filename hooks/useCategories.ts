@@ -18,7 +18,7 @@ export const useCategories = ({
     try {
       setLoading(true);
       const data = await get<SubcategoriesList[]>(
-        '/catalogue-items/categories'
+        '/lala4/catalogue-items/categories'
       );
 
       // Extract the categories from the categories with no repeated categories

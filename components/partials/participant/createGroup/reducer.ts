@@ -1,12 +1,12 @@
-import { useSnackbar } from "notistack";
-import queryString from "query-string";
-import { useEffect, useReducer } from "react";
+import { useSnackbar } from 'notistack';
+import queryString from 'query-string';
+import { useEffect, useReducer } from 'react';
 
-import { useApi, useAuth, useProgram } from "~/hooks";
-import { OptionLabel, Participant } from "~/utils/types";
+import { useApi, useAuth, useProgram } from '~/hooks';
+import { OptionLabel, Participant } from '~/utils/types';
 
 type HandlePdvData = {
-  type: "handle-pdv-data";
+  type: 'handle-pdv-data';
   payload: {
     field: string;
     value: any;
@@ -14,14 +14,14 @@ type HandlePdvData = {
 };
 
 type GetParticipants = {
-  type: "get-participants";
+  type: 'get-participants';
   payload: {
     participants: OptionLabel[];
   };
 };
 
 type clearPdvData = {
-  type: "clear-pdv-data";
+  type: 'clear-pdv-data';
 };
 
 type ActionTypes = HandlePdvData | GetParticipants | clearPdvData;
@@ -48,7 +48,7 @@ const initialState: State = {
 
 const Reducer = (state: State, action: ActionTypes) => {
   switch (action.type) {
-    case "handle-pdv-data":
+    case 'handle-pdv-data':
       const { field, value } = action.payload;
       return {
         ...state,
@@ -57,7 +57,7 @@ const Reducer = (state: State, action: ActionTypes) => {
           [field]: value,
         },
       };
-    case "get-participants": {
+    case 'get-participants': {
       const { participants } = action.payload;
       return {
         ...state,
@@ -65,7 +65,7 @@ const Reducer = (state: State, action: ActionTypes) => {
       };
     }
 
-    case "clear-pdv-data":
+    case 'clear-pdv-data':
       return {
         ...state,
         pdvData: initialPdvData,
@@ -84,7 +84,7 @@ export const useRegisterPdvReducer = () => {
 
   const handlePdvData = (field: string, value: any) => {
     dispatch({
-      type: "handle-pdv-data",
+      type: 'handle-pdv-data',
       payload: {
         field,
         value,
@@ -99,9 +99,11 @@ export const useRegisterPdvReducer = () => {
         positionId: 36,
       };
       const query = queryString.stringify(params);
-      const participants = await api.get<any[]>(`/participants/list?${query}`);
+      const participants = await api.get<any[]>(
+        `/lala4/participants/list?${query}`
+      );
       dispatch({
-        type: "get-participants",
+        type: 'get-participants',
         payload: {
           participants: participants.map((participant) => ({
             label: participant.fullName,
@@ -110,34 +112,34 @@ export const useRegisterPdvReducer = () => {
         },
       });
     } catch (error) {
-      console.error(error, "get participants");
+      console.error(error, 'get participants');
     }
   };
 
   const createPdv = async () => {
     try {
       const { name, participantSupervisorId } = state.pdvData;
-      await api.post("/groups/register", {
+      await api.post('/lala4/groups/register', {
         name,
         level: 1,
         programId: program.id,
         canUploadSnaps: true,
         supervisorId: participantSupervisorId && participantSupervisorId.value,
       });
-      enqueueSnackbar("Punto de venta creado con exito", {
-        variant: "success",
+      enqueueSnackbar('Punto de venta creado con exito', {
+        variant: 'success',
       });
     } catch (error: any) {
-      enqueueSnackbar("a ocurrido un error al crear el punto de venta.", {
-        variant: "error",
+      enqueueSnackbar('a ocurrido un error al crear el punto de venta.', {
+        variant: 'error',
       });
-      console.error(error, "create pdv");
+      console.error(error, 'create pdv');
     }
   };
 
   const clearPdvData = () => {
     dispatch({
-      type: "clear-pdv-data",
+      type: 'clear-pdv-data',
     });
   };
 

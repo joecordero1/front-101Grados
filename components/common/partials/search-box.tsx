@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import { useRouter } from "next/router";
-import queryString from "query-string";
-import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import React, { useEffect, useState } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { useRouter } from 'next/router';
+import queryString from 'query-string';
+import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
-import ALink from "~/components/features/custom-link";
+import ALink from '~/components/features/custom-link';
 
-import { useApiAuth, useProgram, useLogs } from "~/hooks";
-import { CatalogueItem, Page } from "~/utils/types";
-import { LogType } from "~/utils/types/logType";
-import styles from "./searchBoxStyles.module.scss";
-import { Box, IconButton, TextField, Typography, Button } from "@mui/material";
+import { useApiAuth, useProgram, useLogs } from '~/hooks';
+import { CatalogueItem, Page } from '~/utils/types';
+import { LogType } from '~/utils/types/logType';
+import styles from './searchBoxStyles.module.scss';
+import { Box, IconButton, TextField, Typography, Button } from '@mui/material';
 
 function SearchForm() {
   const router = useRouter();
-  const [search, setSearch] = useState("");
-  const [code, setcode] = useState("");
+  const [search, setSearch] = useState('');
+  const [code, setcode] = useState('');
   const { program } = useProgram();
   const api = useApiAuth();
   const [items, setItems] = useState<CatalogueItem[]>([]);
@@ -32,21 +32,21 @@ function SearchForm() {
     };
     const query = queryString.stringify(params);
     const { data } = await api.get<Page<CatalogueItem>>(
-      "/catalogue-items/store?" + query
+      '/lala4/catalogue-items/store?' + query
     );
     setItems(data);
   };
 
   useEffect(() => {
-    document.querySelector("body").addEventListener("click", onBodyClick);
+    document.querySelector('body').addEventListener('click', onBodyClick);
 
     return () => {
-      document.querySelector("body").removeEventListener("click", onBodyClick);
+      document.querySelector('body').removeEventListener('click', onBodyClick);
     };
   }, []);
 
   useEffect(() => {
-    setSearch("");
+    setSearch('');
   }, [router.query.slug]);
 
   useEffect(() => {
@@ -62,10 +62,10 @@ function SearchForm() {
   }, [code]);
 
   useEffect(() => {
-    document.querySelector(".header-search.show-results") &&
+    document.querySelector('.header-search.show-results') &&
       document
-        .querySelector(".header-search.show-results")
-        .classList.remove("show-results");
+        .querySelector('.header-search.show-results')
+        .classList.remove('show-results');
   }, [router.pathname]);
 
   function removeXSSAttacks(html) {
@@ -73,11 +73,11 @@ function SearchForm() {
 
     // Removing the <script> tags
     while (SCRIPT_REGEX.test(html)) {
-      html = html.replace(SCRIPT_REGEX, "");
+      html = html.replace(SCRIPT_REGEX, '');
     }
 
     // Removing all events from tags...
-    html = html.replace(/ on\w+="[^"]*"/g, "");
+    html = html.replace(/ on\w+="[^"]*"/g, '');
 
     return {
       __html: html,
@@ -85,29 +85,29 @@ function SearchForm() {
   }
 
   function matchEmphasize(name) {
-    let regExp = new RegExp(search, "i");
-    return name.replace(regExp, (match) => "<strong>" + match + "</strong>");
+    let regExp = new RegExp(search, 'i');
+    return name.replace(regExp, (match) => '<strong>' + match + '</strong>');
   }
 
   function onSearchClick(e) {
     e.preventDefault();
     e.stopPropagation();
-    e.currentTarget.parentNode.classList.toggle("show");
+    e.currentTarget.parentNode.classList.toggle('show');
   }
 
   function onBodyClick(e) {
-    if (e.target.closest(".header-search"))
+    if (e.target.closest('.header-search'))
       return (
-        e.target.closest(".header-search").classList.contains("show-results") ||
-        e.target.closest(".header-search").classList.add("show-results")
+        e.target.closest('.header-search').classList.contains('show-results') ||
+        e.target.closest('.header-search').classList.add('show-results')
       );
 
-    document.querySelector(".header-search.show") &&
-      document.querySelector(".header-search.show").classList.remove("show");
-    document.querySelector(".header-search.show-results") &&
+    document.querySelector('.header-search.show') &&
+      document.querySelector('.header-search.show').classList.remove('show');
+    document.querySelector('.header-search.show-results') &&
       document
-        .querySelector(".header-search.show-results")
-        .classList.remove("show-results");
+        .querySelector('.header-search.show-results')
+        .classList.remove('show-results');
   }
 
   function onSearchChange(e) {
@@ -117,7 +117,7 @@ function SearchForm() {
   function onSubmitSearchForm(e) {
     e.preventDefault();
     router.push({
-      pathname: "/shop",
+      pathname: '/shop',
       query: {
         search: search,
       },
@@ -133,60 +133,60 @@ function SearchForm() {
         <div className={styles.merlinIconBox}>
           <img
             src={`https://storage.googleapis.com/lala4/store/files/fav-merlin-1-1721681703043.png`}
-            alt="Merlin"
+            alt='Merlin'
           />
         </div>
         <div className={styles.merlinDialogContainer}>
           <Box className={styles.merlinDialogBox}>
-            <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+            <Typography variant='body1' sx={{ fontWeight: 'bold' }}>
               Mi nombre es Merlin, tu nuevo asistente de compras. Dime, ¿qué
               necesitas?
             </Typography>
           </Box>
           <div className={styles.searchBarContainer}>
             <a
-              href="#"
-              className="search-toggle"
-              role="button"
+              href='#'
+              className='search-toggle'
+              role='button'
               onClick={onSearchClick}
             >
-              <i className="icon-search-3"></i>
+              <i className='icon-search-3'></i>
             </a>
             <form
-              action="#"
-              method="get"
+              action='#'
+              method='get'
               onSubmit={onSubmitSearchForm}
               className={styles.formSearchContainer}
             >
               <TextField
-                variant="standard"
+                variant='standard'
                 fullWidth
-                name="search"
-                autoComplete="off"
+                name='search'
+                autoComplete='off'
                 value={search}
                 onChange={onSearchChange}
-                placeholder="Quiero...."
+                placeholder='Quiero....'
                 disabled={!program.isStoreActive}
                 required
                 sx={{
-                  "& .MuiInputBase-input": {
-                    fontSize: "1.5rem",
-                    padding: "10px 0",
+                  '& .MuiInputBase-input': {
+                    fontSize: '1.5rem',
+                    padding: '10px 0',
                   },
-                  "& .MuiInputBase-root:before": {
-                    borderBottom: "2px solid #ccc",
+                  '& .MuiInputBase-root:before': {
+                    borderBottom: '2px solid #ccc',
                   },
-                  "& .MuiInputBase-root:after": {
-                    borderBottom: "2px solid #3f51b5",
+                  '& .MuiInputBase-root:after': {
+                    borderBottom: '2px solid #3f51b5',
                   },
-                  "& .MuiInputBase-input::placeholder": {
-                    fontSize: "1.2rem",
-                    color: "#000",
+                  '& .MuiInputBase-input::placeholder': {
+                    fontSize: '1.2rem',
+                    color: '#000',
                   },
                 }}
               />
 
-              <IconButton className="" type="submit">
+              <IconButton className='' type='submit'>
                 <AutoFixHighIcon />
               </IconButton>
             </form>
@@ -196,7 +196,7 @@ function SearchForm() {
           <div className={styles.toggleButtonContainer}>
             <Button
               onClick={() => setShowSecondSearch(!showSecondSearch)}
-              aria-label="toggle search by code"
+              aria-label='toggle search by code'
               endIcon={
                 showSecondSearch ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
               }
@@ -209,40 +209,40 @@ function SearchForm() {
           {showSecondSearch && (
             <div className={styles.searchBarContainer}>
               <form
-                action="#"
-                method="get"
+                action='#'
+                method='get'
                 onSubmit={onSubmitSearchForm}
                 className={styles.formSearchContainer}
               >
                 <TextField
-                  variant="standard"
+                  variant='standard'
                   fullWidth
-                  name="search"
-                  autoComplete="off"
+                  name='search'
+                  autoComplete='off'
                   value={code}
                   onChange={(e) => setcode(e.target.value)}
-                  placeholder="Buscar por código"
+                  placeholder='Buscar por código'
                   disabled={!program.isStoreActive}
                   required
                   sx={{
-                    "& .MuiInputBase-input": {
-                      fontSize: "1.5rem",
-                      padding: "10px 0",
+                    '& .MuiInputBase-input': {
+                      fontSize: '1.5rem',
+                      padding: '10px 0',
                     },
-                    "& .MuiInputBase-root:before": {
-                      borderBottom: "2px solid #ccc",
+                    '& .MuiInputBase-root:before': {
+                      borderBottom: '2px solid #ccc',
                     },
-                    "& .MuiInputBase-root:after": {
-                      borderBottom: "2px solid #3f51b5",
+                    '& .MuiInputBase-root:after': {
+                      borderBottom: '2px solid #3f51b5',
                     },
-                    "& .MuiInputBase-input::placeholder": {
-                      fontSize: "1.2rem",
-                      color: "#000",
+                    '& .MuiInputBase-input::placeholder': {
+                      fontSize: '1.2rem',
+                      color: '#000',
                     },
                   }}
                 />
 
-                <IconButton className="" type="submit">
+                <IconButton className='' type='submit'>
                   <AutoFixHighIcon />
                 </IconButton>
 
@@ -257,11 +257,11 @@ function SearchForm() {
                         key={`search-result-${index}`}
                       >
                         <LazyLoadImage
-                          effect="opacity"
+                          effect='opacity'
                           src={product.award.mainImage}
                           width={40}
                           height={40}
-                          alt="product"
+                          alt='product'
                         />
                         <div
                           className={styles.searchName}

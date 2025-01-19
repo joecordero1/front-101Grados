@@ -18,7 +18,7 @@ interface AuthState {
 }
 
 interface AuthContextValue extends AuthState {
-  logIn: (username: string, password: string, isGoogleLogin?: boolean) => void;
+  logIn: (username: string, password: string) => void;
   logOut: () => void;
   loginWithToken: (token: string) => void;
   getAvailablePoints: () => void;
@@ -147,24 +147,19 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     setSession();
   };
 
-  const logIn = async (
-    username: string,
-    password: string,
-    isGoogleLogin?: boolean
-  ) => {
+  const logIn = async (username: string, password: string) => {
     try {
       const accessTokenResponse = await post<{
-        accessToken: string;
-      }>(`/auth/participant/login`, {
+        access_token: string;
+      }>(`/lala4/auth/v5/participant/login`, {
         username,
         password,
-        isGoogleLogin,
         programId: program.id,
       });
 
       localStorage.setItem(
         `accessTokenLala4Store`,
-        accessTokenResponse.accessToken
+        accessTokenResponse.access_token
       );
       setSession();
     } catch (e) {
@@ -187,7 +182,9 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     // If there is a token, I proceed to validate it
     if (accessToken) {
       try {
-        const participant = await get<Participant>(`participants/info/me`);
+        const participant = await get<Participant>(
+          `/lala4/participants/info/me`
+        );
 
         // If all is OK, I send a Login action
         // and i need to verify if participant is active if is active i dispatch action else i send alert for not active
@@ -220,7 +217,9 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
     });
     try {
       console.info('Cargando puntos');
-      const availablePoints = await get<number>(`/points/my-available-points`);
+      const availablePoints = await get<number>(
+        `/lala4/points/my-available-points`
+      );
       dispatch({
         type: 'UPDATE_AVAILABLE_POINTS',
         payload: availablePoints,

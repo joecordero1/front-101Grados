@@ -12,7 +12,7 @@ const PrivacyPolicy = () => {
   const { enqueueSnackbar } = useSnackbar();
   const acceptTerms = async () => {
     try {
-      await put('/participants/mine', {
+      await put('/lala4/participants/mine', {
         approvedPolicy: true,
         approvedTermsAndConditions: true,
       });

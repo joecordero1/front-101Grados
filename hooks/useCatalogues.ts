@@ -10,7 +10,7 @@ export const useSpecialCatalogues = () => {
 
   const getMyCatalogues = async () => {
     const myCataloguesData = await api.get<Catalogue[]>(
-      '/catalogues/my-catalogues'
+      '/lala4/catalogues/my-catalogues'
     );
 
     const filteredCatalogues = myCataloguesData.filter(

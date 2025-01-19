@@ -1,9 +1,9 @@
-import { createContext, FC, ReactNode, useReducer, useEffect } from "react";
-import Script from "next/script";
+import { createContext, FC, ReactNode, useReducer, useEffect } from 'react';
+import Script from 'next/script';
 
-import { useApi } from "hooks";
-import { config } from "utils/config";
-import { Program } from "utils/types";
+import { useApi } from 'hooks';
+import { config } from 'utils/config';
+import { Program } from 'utils/types';
 
 interface ProgramState {
   status: ActionType.IDLE;
@@ -18,9 +18,9 @@ interface ProgramProviderProps {
 }
 
 export enum ActionType {
-  IDLE = "IDLE",
-  GET_PROGRAM = "GET_PROGRAM",
-  ERROR = "ERROR",
+  IDLE = 'IDLE',
+  GET_PROGRAM = 'GET_PROGRAM',
+  ERROR = 'ERROR',
 }
 
 type GetProgramAction = {
@@ -65,7 +65,9 @@ export const ProgramProvider: FC<ProgramProviderProps> = ({ children }) => {
 
   const getProgram = async () => {
     try {
-      const response = await get<Program>(`/programs/store/${program.id}`);
+      const response = await get<Program>(
+        `/lala4/programs/store/${program.id}`
+      );
       dispatch({
         type: ActionType.GET_PROGRAM,
         payload: {
@@ -73,7 +75,7 @@ export const ProgramProvider: FC<ProgramProviderProps> = ({ children }) => {
         },
       });
     } catch (e) {
-      console.error("getProgram() ->", e);
+      console.error('getProgram() ->', e);
     }
   };
 
@@ -92,20 +94,20 @@ export const ProgramProvider: FC<ProgramProviderProps> = ({ children }) => {
         const { colorPrimary, colorHeadings, colorHeaderIcons, colorIcons } =
           programState.program;
         root.style.setProperty(
-          "--color-primary",
-          colorPrimary ? colorPrimary : "white"
+          '--color-primary',
+          colorPrimary ? colorPrimary : 'white'
         );
         root.style.setProperty(
-          "--color-headings",
-          colorHeadings ? colorHeadings : "black"
+          '--color-headings',
+          colorHeadings ? colorHeadings : 'black'
         );
         root.style.setProperty(
-          "--color-header-icons",
-          colorHeaderIcons ? colorHeaderIcons : "black"
+          '--color-header-icons',
+          colorHeaderIcons ? colorHeaderIcons : 'black'
         );
         root.style.setProperty(
-          "--color-icons",
-          colorIcons ? colorIcons : "black"
+          '--color-icons',
+          colorIcons ? colorIcons : 'black'
         );
       }
     }

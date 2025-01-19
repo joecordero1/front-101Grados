@@ -1,13 +1,13 @@
-import { useState, useEffect } from "react";
-import queryString from "querystring";
+import { useState, useEffect } from 'react';
+import queryString from 'querystring';
 
-import { useApiAuth, useAuth, useProgram } from "~/hooks";
+import { useApiAuth, useAuth, useProgram } from '~/hooks';
 import {
   Transaction,
   TransactionType,
   PaginationMetaDto,
   AccountBalance,
-} from "utils/types";
+} from 'utils/types';
 
 interface TransactionFilter {
   types?: TransactionType[];
@@ -51,7 +51,9 @@ export const useTransactions = ({
         orderByTransactionMonth: true,
       };
       const query = queryString.stringify(params);
-      const data = await get<Transaction[]>(`/transactions/mine?${query}`);
+      const data = await get<Transaction[]>(
+        `/lala4/transactions/mine?${query}`
+      );
       setTransactions(data);
       setLoading(false);
     } catch (e) {
@@ -102,8 +104,8 @@ export const useTransactions = ({
     try {
       const data = await get<AccountBalance>(
         program.id !== 9
-          ? `/points/my-account-balance`
-          : `/points/my-account-balance-hdt`
+          ? `/lala4/points/my-account-balance`
+          : `/lala4/points/my-account-balance-hdt`
       );
       setAccountBalance(data);
       // setLoading(false);
