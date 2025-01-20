@@ -23,7 +23,14 @@ export default function HeaderDesktop(props) {
   const { items, getMyDishsItems, couldSeeResults, availableCodes } =
     useDishsItems();
   const { program } = useProgram();
-  const codesToGetSnapsMenu = ['IN_SNAPS_01', 'IN_SNAPS_05', 'IN_SNAPS_08'];
+  const codesToGetSnapsMenu = [
+    'IN_SNAPS_01',
+    'IN_SNAPS_05',
+    'IN_SNAPS_08',
+    'IN_SNAPS_10',
+    'IN_SNAPS_12',
+    'IN_SNAPS_09',
+  ];
   const router = useRouter();
   const { dispatchLog } = useLogs();
   const [isResultsVisible, setIsResultsVisible] = useState(
@@ -31,9 +38,7 @@ export default function HeaderDesktop(props) {
       program.id === 13 ||
       program.id === 15 ||
       program.id === 14 ||
-      program.id === 26 ||
-      program.id === 18 ||
-      program.id === 10
+      program.id === 26
       ? true
       : false
   );
