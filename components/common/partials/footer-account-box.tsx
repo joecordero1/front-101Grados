@@ -13,7 +13,14 @@ function SearchForm() {
   const { program } = useProgram();
   const { dispatchLog } = useLogs();
   const { items, getMyDishsItems, couldSeeResults } = useDishsItems();
-  const codesToGetSnapsMenu = ['IN_SNAPS_01', 'IN_SNAPS_05', 'IN_SNAPS_08'];
+  const codesToGetSnapsMenu = [
+    'IN_SNAPS_01',
+    'IN_SNAPS_05',
+    'IN_SNAPS_08',
+    'IN_SNAPS_10',
+    'IN_SNAPS_12',
+    'IN_SNAPS_09',
+  ];
 
   useEffect(() => {
     document.querySelector('body').addEventListener('click', onBodyClick);
