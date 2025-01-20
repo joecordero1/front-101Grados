@@ -33,7 +33,8 @@ export default function HeaderMobile(props) {
       program.id === 13 ||
       program.id === 15 ||
       program.id === 14 ||
-      program.id === 26
+      program.id === 26 ||
+      program.id === 18
       ? true
       : false
   );
