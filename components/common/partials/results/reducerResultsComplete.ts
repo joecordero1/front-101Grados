@@ -66,7 +66,7 @@ export function useResults() {
           isAMonthlyResult: true,
         });
         const firstResponse = await get<Result[]>(
-          `/results/my-results?${params}`
+          `/lala4/results/my-results?${params}`
         );
         const results = firstResponse;
         dispatch({
