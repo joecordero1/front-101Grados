@@ -3,73 +3,74 @@ import Helmet from 'react-helmet';
 
 import ALink from '~/components/features/custom-link';
 import { useCart } from '~/hooks';
+import { withAuth } from '~/components/AuthGuard';
 
 function Order(props) {
   const { cartList } = props;
   const { status } = useCart();
   return (
-    <main className="main order">
+    <main className='main order'>
       <Helmet>
         <title>Tienda | Orden</title>
       </Helmet>
 
-      <h1 className="d-none">Tienda - Orden</h1>
+      <h1 className='d-none'>Tienda - Orden</h1>
 
-      <div className="page-content pt-7 pb-10 mb-10">
-        <div className="step-by pr-4 pl-4">
-          <h3 className="title title-simple title-step">
-            <ALink href="/pages/cart">1.Carrito</ALink>
+      <div className='page-content pt-7 pb-10 mb-10'>
+        <div className='step-by pr-4 pl-4'>
+          <h3 className='title title-simple title-step'>
+            <ALink href='/pages/cart'>1.Carrito</ALink>
           </h3>
-          <h3 className="title title-simple title-step">
-            <ALink href="/pages/checkout">2.Envío</ALink>
+          <h3 className='title title-simple title-step'>
+            <ALink href='/pages/checkout'>2.Envío</ALink>
           </h3>
-          <h3 className="title title-simple title-step active">
-            <ALink href="#">3.Finalizar</ALink>
+          <h3 className='title title-simple title-step active'>
+            <ALink href='#'>3.Finalizar</ALink>
           </h3>
         </div>
-        <div className="container mt-8">
-          <div className="order-message mr-auto ml-auto">
-            <div className="icon-box d-inline-flex align-items-center">
-              <div className="icon-box-icon mb-0">
+        <div className='container mt-8'>
+          <div className='order-message mr-auto ml-auto'>
+            <div className='icon-box d-inline-flex align-items-center'>
+              <div className='icon-box-icon mb-0'>
                 <svg
-                  version="1.1"
-                  id="Layer_1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlnsXlink="http://www.w3.org/1999/xlink"
-                  x="0px"
-                  y="0px"
-                  viewBox="0 0 50 50"
-                  enableBackground="new 0 0 50 50"
-                  xmlSpace="preserve"
+                  version='1.1'
+                  id='Layer_1'
+                  xmlns='http://www.w3.org/2000/svg'
+                  xmlnsXlink='http://www.w3.org/1999/xlink'
+                  x='0px'
+                  y='0px'
+                  viewBox='0 0 50 50'
+                  enableBackground='new 0 0 50 50'
+                  xmlSpace='preserve'
                 >
                   <g>
                     <path
-                      fill="none"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="bevel"
-                      strokeMiterlimit="10"
-                      d="
+                      fill='none'
+                      strokeWidth='3'
+                      strokeLinecap='round'
+                      strokeLinejoin='bevel'
+                      strokeMiterlimit='10'
+                      d='
                                         M33.3,3.9c-2.7-1.1-5.6-1.8-8.7-1.8c-12.3,0-22.4,10-22.4,22.4c0,12.3,10,22.4,22.4,22.4c12.3,0,22.4-10,22.4-22.4
-                                        c0-0.7,0-1.4-0.1-2.1"
+                                        c0-0.7,0-1.4-0.1-2.1'
                     ></path>
                     <polyline
-                      fill="none"
-                      strokeWidth="4"
-                      strokeLinecap="round"
-                      strokeLinejoin="bevel"
-                      strokeMiterlimit="10"
-                      points="
-                                        48,6.9 24.4,29.8 17.2,22.3 	"
+                      fill='none'
+                      strokeWidth='4'
+                      strokeLinecap='round'
+                      strokeLinejoin='bevel'
+                      strokeMiterlimit='10'
+                      points='
+                                        48,6.9 24.4,29.8 17.2,22.3 	'
                     ></polyline>
                   </g>
                 </svg>
               </div>
 
               {status !== 'error' ? (
-                <div className="icon-box-content text-left">
-                  <div className="message">
-                    <h5 className="icon-box-title font-weight-bold lh-1 mb-1">
+                <div className='icon-box-content text-left'>
+                  <div className='message'>
+                    <h5 className='icon-box-title font-weight-bold lh-1 mb-1'>
                       Canje realizado con exito!
                     </h5>
                     <p>
@@ -79,9 +80,9 @@ function Order(props) {
                   </div>
                 </div>
               ) : (
-                <div className="error">
-                  <div className="message">
-                    <h5 className="font-weight-bold lh-1 mb-1">
+                <div className='error'>
+                  <div className='message'>
+                    <h5 className='font-weight-bold lh-1 mb-1'>
                       Error al realizar el canje
                     </h5>
                   </div>
@@ -198,10 +199,10 @@ function Order(props) {
 
           <ALink
             style={{ marginTop: 10 }}
-            href="/shop"
-            className="btn btn-icon-left btn-dark btn-back btn-rounded btn-md mb-4"
+            href='/shop'
+            className='btn btn-icon-left btn-dark btn-back btn-rounded btn-md mb-4'
           >
-            <i className="d-icon-arrow-left"></i>Regresar a la tienda
+            <i className='d-icon-arrow-left'></i>Regresar a la tienda
           </ALink>
         </div>
       </div>
@@ -215,4 +216,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(Order);
+export default withAuth(connect(mapStateToProps)(Order));
