@@ -1,14 +1,15 @@
 import { Button, Container } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
 import { useApiAuth, useAuth, useProgram } from '~/hooks';
 const PrivacyPolicy = () => {
   const { program } = useProgram();
   const router = useRouter();
   const { put } = useApiAuth();
-  const { isLoggedIn, participant } = useAuth();
+  const [isAccepted, setAccepted] = useState(false);
+  const { isLoggedIn, participant, setSession } = useAuth();
   const { enqueueSnackbar } = useSnackbar();
   const acceptTerms = async () => {
     try {
@@ -22,6 +23,8 @@ const PrivacyPolicy = () => {
           variant: 'success',
         }
       );
+      setSession();
+      setAccepted(true);
       if (program.id === 26) {
         if (isLoggedIn && participant?.passwordUpdatedAt) {
           // Definir la fecha actual
@@ -52,6 +55,12 @@ const PrivacyPolicy = () => {
       );
     }
   };
+
+  useEffect(() => {
+    if (isAccepted && isLoggedIn) {
+      router.push('/');
+    }
+  }, [participant.approvedPolicy, participant.approvedTermsAndConditions]);
   return (
     <div>
       <Helmet>

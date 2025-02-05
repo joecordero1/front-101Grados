@@ -22,6 +22,7 @@ const PrivacyPolicy = () => {
           variant: 'success',
         }
       );
+      router.push('/');
       if (program.id === 26) {
         if (isLoggedIn && participant?.passwordUpdatedAt) {
           // Definir la fecha actual

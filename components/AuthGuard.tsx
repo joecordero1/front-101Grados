@@ -1,14 +1,32 @@
 import Login from 'pages/signin';
 
 import { useAuth } from 'hooks';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 export const withAuth = (Component) => {
   const Auth = (props) => {
-    const { isLoggedIn, status } = useAuth();
+    const { isLoggedIn, status, participant, setSession } = useAuth();
+    const router = useRouter();
 
     // if (status === 'loading') {
     //   return <div>Loading...</div>;
     // }
+
+    useEffect(() => {
+      if (
+        isLoggedIn &&
+        !participant.approvedPolicy &&
+        !participant.approvedTermsAndConditions
+      ) {
+        router.push('/pages/privacy-policy');
+      }
+    }, [
+      isLoggedIn,
+      participant.approvedPolicy,
+      participant.approvedTermsAndConditions,
+      status,
+    ]);
 
     // If user is not logged in, return login component
     if (!isLoggedIn) {
