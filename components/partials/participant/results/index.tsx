@@ -868,18 +868,29 @@ const ParticipantResults = () => {
                 <Select
                   name='year'
                   onChange={(e) => handleFilter('year', e.target.value)}
-                  defaultValue={new Date().getFullYear()}
+                  defaultValue={new Date().getFullYear()} // Año actual como valor por defecto
                   style={{
                     fontSize: '1.5rem',
                   }}
                 >
+                  {/* Año actual */}
                   <MenuItem
-                    value={2024}
+                    value={new Date().getFullYear()}
                     style={{
                       fontSize: '1.5rem',
                     }}
                   >
-                    2024
+                    {new Date().getFullYear()}
+                  </MenuItem>
+
+                  {/* Año anterior */}
+                  <MenuItem
+                    value={new Date().getFullYear() - 1}
+                    style={{
+                      fontSize: '1.5rem',
+                    }}
+                  >
+                    {new Date().getFullYear() - 1}
                   </MenuItem>
                 </Select>
               </FormControl>
