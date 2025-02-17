@@ -123,7 +123,7 @@ const ProductOne: FC<Props> = (props) => {
         <div className='product-action-vertical'>
           {product.award.variants.length > 0 ? (
             <a
-              href={`product/default/${product.award.id}`}
+              href={`/award/${product.award.id}`}
               className='btn-product-icon btn-cart'
               title='Elegir Talla'
             >
