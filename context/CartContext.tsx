@@ -342,6 +342,23 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
     quantity: number,
     variant?: AwardVariant
   ) => {
+    // Verifica si hay elementos en el carrito
+    if (state.items.length > 0) {
+      // Obtiene el valor actual de send_awards_to_participant del primer elemento en el carrito
+      const currentSendToParticipant =
+        state.items[0].send_awards_to_participant;
+
+      // Si el nuevo ítem tiene un valor diferente, evita agregarlo
+      if (item.send_awards_to_participant !== currentSendToParticipant) {
+        enqueueSnackbar(
+          'Por favor termina primero el canje actual para seguir canjeando.',
+          { variant: 'error' }
+        );
+        return; // Detiene la ejecución y no agrega el nuevo ítem
+      }
+    }
+
+    // Si pasa la validación, agrega el ítem normalmente
     dispatch({
       type: 'add-to-cart',
       payload: {
@@ -481,7 +498,9 @@ export const CartProvider: FC<ProgramProviderProps> = ({ children }) => {
             type: RequestTypes.PARTICIPANT,
             participantId: participant.id,
             awardId: item.award.id,
-            addressId: state.selectedAdressId,
+            addressId: item.send_awards_to_participant
+              ? state.selectedAdressId
+              : null,
             // points: item.points,
             points: item.points * item.quantity,
             ...(item.variant && { variantId: item.variant.id }),

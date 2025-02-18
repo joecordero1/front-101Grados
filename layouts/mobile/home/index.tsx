@@ -8,6 +8,7 @@ import { useProgram } from '~/hooks';
 import { mobileSlider } from '~/utils/data/carousel';
 import CategoriesMenu from './categoriesMenu';
 import SearchForm from '../../../components/common/partials/footer-search-box';
+import Buyable from '~/components/partials/home/buyable';
 
 const Home = () => {
   const { program } = useProgram();
@@ -74,7 +75,7 @@ const Home = () => {
             </OwlCarousel>
           </div>
         </div>
-
+        <Buyable />
         <div className='container'>
           <InfiniteScrollComponent />
         </div>
