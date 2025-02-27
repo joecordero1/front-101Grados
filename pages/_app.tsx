@@ -20,6 +20,7 @@ import {
   GeneralProvider,
   CartProvider,
 } from 'context';
+import { Modal } from '@mui/material';
 
 const App = ({ Component, pageProps }) => {
   const store = useStore();
@@ -34,8 +35,7 @@ const App = ({ Component, pageProps }) => {
 
   useEffect(() => {
     const handleResize = () => {
-      // setIsMobile(window.innerWidth <= 768);
-      setIsMobile(window.innerWidth <= 1024);
+      setIsMobile(window.innerWidth <= 768);
     };
     handleResize();
     window.addEventListener('resize', handleResize);

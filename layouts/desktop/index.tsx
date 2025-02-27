@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/router';
@@ -19,11 +19,13 @@ import {
 } from '~/utils';
 
 import { useProgram, useAuth } from 'hooks';
+import { Modal } from '@mui/material';
 
 function LayoutDesktop({ children, closeQuickview }) {
   const { program } = useProgram();
   const { isLoggedIn, participant } = useAuth();
   const router = useRouter();
+  const [open, setOpen] = useState(true);
 
   useLayoutEffect(() => {
     document.querySelector('body').classList.remove('loaded');
@@ -147,6 +149,67 @@ function LayoutDesktop({ children, closeQuickview }) {
       />
 
       <Quickview />
+      {program && program.id === 26 && (
+        <Modal open={open} onClose={() => setOpen(false)}>
+          <div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: 1300,
+            }}
+          >
+            <div
+              style={{
+                position: 'relative',
+                backgroundColor: 'white',
+                borderRadius: '10px',
+                overflow: 'hidden',
+                width: '80%',
+                maxWidth: '800px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <button
+                style={{
+                  position: 'absolute',
+                  top: '10px',
+                  right: '10px',
+                  backgroundColor: 'red',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '50%',
+                  width: '30px',
+                  height: '30px',
+                  fontSize: '16px',
+                  cursor: 'pointer',
+                  zIndex: 2,
+                }}
+                onClick={() => setOpen(false)}
+              >
+                ✖
+              </button>
+              <img
+                src='https://storage.googleapis.com/lala4/store/images/6904c42d-ed80-4638-97c3-2ee6435ec8c6-de8ff331-6554-4aac-b01f-1a7d04ec00ab.png'
+                alt='image-modal'
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  objectFit: 'contain',
+                }}
+              />
+            </div>
+          </div>
+        </Modal>
+      )}
 
       <VideoModal />
     </div>

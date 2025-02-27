@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/router';
@@ -18,12 +18,13 @@ import {
 
 import { useProgram, useAuth } from 'hooks';
 import HeaderMobile from './header/header';
+import { Modal } from '@mui/material';
 
 function LayoutMobile({ children, closeQuickview }) {
   const { program } = useProgram();
   const { isLoggedIn, participant } = useAuth();
   const router = useRouter();
-
+  const [open, setOpen] = useState(true);
   useLayoutEffect(() => {
     document.querySelector('body').classList.remove('loaded');
   }, [router.pathname]);
@@ -146,6 +147,67 @@ function LayoutMobile({ children, closeQuickview }) {
         hideProgressBar={true}
         newestOnTop={true}
       />
+      {program && program.id === 26 && (
+        <Modal open={open} onClose={() => setOpen(false)}>
+          <div
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: 1300,
+            }}
+          >
+            <div
+              style={{
+                position: 'relative',
+                backgroundColor: 'white',
+                borderRadius: '10px',
+                overflow: 'hidden',
+                width: '80%',
+                maxWidth: '800px',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              <button
+                style={{
+                  position: 'absolute',
+                  top: '10px',
+                  right: '10px',
+                  backgroundColor: 'red',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '50%',
+                  width: '30px',
+                  height: '30px',
+                  fontSize: '16px',
+                  cursor: 'pointer',
+                  zIndex: 2,
+                }}
+                onClick={() => setOpen(false)}
+              >
+                ✖
+              </button>
+              <img
+                src='https://storage.googleapis.com/lala4/store/images/36f64d11-008d-498c-b3b3-1eb635890a1f-55c32420-f2c3-41f9-a9e8-9cd2288973fb.png'
+                alt='image-modal'
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  objectFit: 'contain',
+                }}
+              />
+            </div>
+          </div>
+        </Modal>
+      )}
 
       <Quickview />
 
