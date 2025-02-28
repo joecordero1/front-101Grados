@@ -182,19 +182,17 @@ function LayoutDesktop({ children, closeQuickview }) {
                   position: 'absolute',
                   top: '10px',
                   right: '10px',
-                  backgroundColor: 'red',
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
                   color: 'white',
                   border: 'none',
-                  borderRadius: '50%',
-                  width: '30px',
-                  height: '30px',
+                  padding: '5px',
                   fontSize: '16px',
                   cursor: 'pointer',
                   zIndex: 2,
                 }}
                 onClick={() => setOpen(false)}
               >
-                ✖
+                Acceder
               </button>
               <img
                 src='https://storage.googleapis.com/lala4/store/images/6904c42d-ed80-4638-97c3-2ee6435ec8c6-de8ff331-6554-4aac-b01f-1a7d04ec00ab.png'

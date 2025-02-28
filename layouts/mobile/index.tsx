@@ -181,19 +181,17 @@ function LayoutMobile({ children, closeQuickview }) {
                   position: 'absolute',
                   top: '10px',
                   right: '10px',
-                  backgroundColor: 'red',
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
                   color: 'white',
                   border: 'none',
-                  borderRadius: '50%',
-                  width: '30px',
-                  height: '30px',
-                  fontSize: '16px',
+                  padding: '5px',
+                  fontSize: '15px',
                   cursor: 'pointer',
                   zIndex: 2,
                 }}
                 onClick={() => setOpen(false)}
               >
-                ✖
+                Acceder
               </button>
               <img
                 src='https://storage.googleapis.com/lala4/store/images/36f64d11-008d-498c-b3b3-1eb635890a1f-55c32420-f2c3-41f9-a9e8-9cd2288973fb.png'
