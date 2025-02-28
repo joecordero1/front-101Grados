@@ -158,7 +158,7 @@ function LayoutDesktop({ children, closeQuickview }) {
               left: 0,
               width: '100%',
               height: '100%',
-
+              backgroundColor: 'transparent',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
@@ -168,11 +168,10 @@ function LayoutDesktop({ children, closeQuickview }) {
             <div
               style={{
                 position: 'relative',
-                backgroundColor: 'white',
+                backgroundColor: 'transparent',
                 borderRadius: '10px',
+                width: '35%',
                 overflow: 'hidden',
-                width: '80%',
-                maxWidth: '800px',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -201,9 +200,9 @@ function LayoutDesktop({ children, closeQuickview }) {
                 src='https://storage.googleapis.com/lala4/store/images/6904c42d-ed80-4638-97c3-2ee6435ec8c6-de8ff331-6554-4aac-b01f-1a7d04ec00ab.png'
                 alt='image-modal'
                 style={{
+                  objectFit: 'cover',
                   width: '100%',
                   height: 'auto',
-                  objectFit: 'contain',
                 }}
               />
             </div>

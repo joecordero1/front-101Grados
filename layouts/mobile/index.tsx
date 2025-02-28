@@ -169,7 +169,7 @@ function LayoutMobile({ children, closeQuickview }) {
                 backgroundColor: 'white',
                 borderRadius: '10px',
                 overflow: 'hidden',
-                width: '80%',
+                width: '65%',
                 maxWidth: '800px',
                 display: 'flex',
                 justifyContent: 'center',
@@ -201,7 +201,7 @@ function LayoutMobile({ children, closeQuickview }) {
                 style={{
                   width: '100%',
                   height: 'auto',
-                  objectFit: 'contain',
+                  objectFit: 'cover',
                 }}
               />
             </div>
