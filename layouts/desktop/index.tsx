@@ -20,6 +20,7 @@ import {
 
 import { useProgram, useAuth } from 'hooks';
 import { Modal } from '@mui/material';
+import MyBirthDateForm from '~/components/partials/modals/dateOfBirthModal';
 
 function LayoutDesktop({ children, closeQuickview }) {
   const { program } = useProgram();
@@ -125,7 +126,6 @@ function LayoutDesktop({ children, closeQuickview }) {
       </>
     );
   }
-
   return (
     <div>
       <div className='page-wrapper' style={{ position: 'relative' }}>
@@ -207,7 +207,12 @@ function LayoutDesktop({ children, closeQuickview }) {
           </div>
         </Modal>
       )}
-
+      {isLoggedIn &&
+        program &&
+        program.id === 28 &&
+        participant.dateOfBirth === null && (
+          <MyBirthDateForm open={open} onClose={() => setOpen(false)} />
+        )}
       <VideoModal />
     </div>
   );

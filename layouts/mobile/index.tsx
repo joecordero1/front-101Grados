@@ -19,6 +19,7 @@ import {
 import { useProgram, useAuth } from 'hooks';
 import HeaderMobile from './header/header';
 import { Modal } from '@mui/material';
+import MyBirthDateForm from '~/components/partials/modals/dateOfBirthModal';
 
 function LayoutMobile({ children, closeQuickview }) {
   const { program } = useProgram();
@@ -208,7 +209,12 @@ function LayoutMobile({ children, closeQuickview }) {
       )}
 
       <Quickview />
-
+      {isLoggedIn &&
+        program &&
+        program.id === 28 &&
+        participant.dateOfBirth === null && (
+          <MyBirthDateForm open={open} onClose={() => setOpen(false)} />
+        )}
       <VideoModal />
     </div>
   );

@@ -10,6 +10,7 @@ export interface Participant {
   mobile: string;
   document: string;
   isActive: boolean;
+  dateOfBirth: string;
   approvedPolicy: boolean;
   approvedTermsAndConditions: boolean;
   isAConsumerRegistrar: boolean;
