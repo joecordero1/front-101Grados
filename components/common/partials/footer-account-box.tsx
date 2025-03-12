@@ -19,6 +19,7 @@ function SearchForm() {
     'IN_SNAPS_08',
     'IN_SNAPS_10',
     'IN_SNAPS_12',
+    'IN_SNAPS_14',
     'IN_SNAPS_09',
   ];
 
