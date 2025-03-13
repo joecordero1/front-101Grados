@@ -24,15 +24,9 @@ export default function HeaderDesktop(props) {
   const { items, getMyDishsItems, couldSeeResults, availableCodes } =
     useDishsItems();
   const { program } = useProgram();
-  const codesToGetSnapsMenu = [
-    'IN_SNAPS_01',
-    'IN_SNAPS_05',
-    'IN_SNAPS_08',
-    'IN_SNAPS_10',
-    'IN_SNAPS_12',
-    'IN_SNAPS_14',
-    'IN_SNAPS_09',
-  ];
+  const hasSnapsItem = items.some((item) =>
+    item.ingredient.code.includes('IN_SNAPS')
+  );
   const router = useRouter();
   const { dispatchLog } = useLogs();
   const [isResultsVisible, setIsResultsVisible] = useState(
@@ -177,9 +171,7 @@ export default function HeaderDesktop(props) {
 
                   {
                     //todo: change this to filter by ingredient code and validate groups can upload invoices
-                    items.find((item) =>
-                      codesToGetSnapsMenu.includes(item.ingredient.code)
-                    ) && (
+                    hasSnapsItem && (
                       <li>
                         <ALink href='/pages/upload-invoices'>
                           Subir Facturas

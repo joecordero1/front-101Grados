@@ -13,15 +13,9 @@ function SearchForm() {
   const { program } = useProgram();
   const { dispatchLog } = useLogs();
   const { items, getMyDishsItems, couldSeeResults } = useDishsItems();
-  const codesToGetSnapsMenu = [
-    'IN_SNAPS_01',
-    'IN_SNAPS_05',
-    'IN_SNAPS_08',
-    'IN_SNAPS_10',
-    'IN_SNAPS_12',
-    'IN_SNAPS_14',
-    'IN_SNAPS_09',
-  ];
+  const hasSnapsItem = items.some((item) =>
+    item.ingredient.code.includes('IN_SNAPS')
+  );
 
   useEffect(() => {
     document.querySelector('body').addEventListener('click', onBodyClick);
@@ -118,9 +112,7 @@ function SearchForm() {
 
         {
           //todo: change this to filter by ingredient code and validate groups can upload invoices
-          items.find((item) =>
-            codesToGetSnapsMenu.includes(item.ingredient.code)
-          ) && (
+          hasSnapsItem && (
             <Link href='/pages/upload-invoices'>
               <i className='d-icon-camera1 mr-1 mb-1'></i>
               Subir Facturas
