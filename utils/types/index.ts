@@ -14,3 +14,5 @@ export * from './ingredient';
 export * from './dishItem';
 export * from './logType';
 export * from './result';
+export * from './trivia';
+export * from './form';

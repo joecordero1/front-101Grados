@@ -15,3 +15,4 @@ export * from './useTransactions';
 export * from './useAddresses';
 export * from './useDishsItems';
 export * from './useCatalogues';
+export * from './useTrivias';
