@@ -1,12 +1,13 @@
 import { Box, IconButton, Modal } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import RenderTriviaForm from './renderTriviaForm';
-import { useAuth, useConfig, useTrivias } from '~/hooks';
+import { useAuth, useConfig, useProgram, useTrivias } from '~/hooks';
 import CloseIcon from '@mui/icons-material/Close';
 import { withAuth } from '~/components/AuthGuard';
 
 const TriviaModal = () => {
   const { participant, isLoggedIn } = useAuth();
+  const { program } = useProgram();
   const [openTriviaModal, setOpenTriviaModal] = useState(false);
   const {
     getConfig,
@@ -51,8 +52,10 @@ const TriviaModal = () => {
   }, [isLoggedIn, participant, participantConfig, predictedTrivia, isAnswered]);
 
   return (
-    !loadingParticipantConfig &&
-    participantConfig?.forms.length > 0 && (
+    (!loadingParticipantConfig &&
+      participantConfig?.forms.length > 0 &&
+      program.id !== 28) ||
+    (program.id !== 39 && (
       <Modal open={openTriviaModal} onClose={() => setOpenTriviaModal(false)}>
         <div
           style={{
@@ -101,7 +104,7 @@ const TriviaModal = () => {
           </Box>
         </div>
       </Modal>
-    )
+    ))
   );
 };
 
