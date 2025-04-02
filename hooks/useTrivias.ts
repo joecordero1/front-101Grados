@@ -15,6 +15,7 @@ export const useTrivias = () => {
   const [loading, setLoading] = useState(false);
   const [loadingPrediction, setLoadingPrediction] = useState(false);
   const [loadingForm, setLoadingForm] = useState(false);
+  const [isAnswered, setAnswered] = useState(false);
   const [trivia, setTrivia] = useState<Trivia | null>(null);
   const [predictedTrivia, setPredictedTrivia] =
     useState<PredictedTrivia | null>(null);
@@ -30,6 +31,17 @@ export const useTrivias = () => {
       setLoading(false);
     } catch (error) {
       setLoading(false);
+      console.error(error);
+    }
+  };
+
+  const getAnsweredForm = async (id: string) => {
+    try {
+      const { answered } = await get<{ answered: boolean }>(
+        `/forms/app/forms/${id}/answered`
+      );
+      setAnswered(answered);
+    } catch (error) {
       console.error(error);
     }
   };
@@ -78,6 +90,9 @@ export const useTrivias = () => {
       setLoadingForm(false);
     } catch (error) {
       setLoadingForm(false);
+      enqueueSnackbar('Ha ocurrido un error al guardar tu respuesta.', {
+        variant: 'error',
+      });
       console.error(error);
     }
   };
@@ -99,6 +114,9 @@ export const useTrivias = () => {
       });
     } catch (error) {
       setLoadingPrediction(false);
+      enqueueSnackbar('Ha ocurrido un error al guardar tu respuesta.', {
+        variant: 'error',
+      });
       console.error(error);
     }
   };
@@ -122,6 +140,9 @@ export const useTrivias = () => {
       });
     } catch (error) {
       setLoadingPrediction(false);
+      enqueueSnackbar('Ha ocurrido un error al guardar tu respuesta.', {
+        variant: 'error',
+      });
       console.error(error);
     }
   };
@@ -139,5 +160,7 @@ export const useTrivias = () => {
     loadingPrediction,
     trivia,
     predictedTrivia,
+    getAnsweredForm,
+    isAnswered,
   };
 };

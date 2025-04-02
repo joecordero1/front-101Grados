@@ -5,10 +5,8 @@ import { useRouter } from 'next/router';
 import 'react-toastify/dist/ReactToastify.min.css';
 import 'react-image-lightbox/style.css';
 import 'react-input-range/lib/css/index.css';
-
 import HeaderDesktop from '~/layouts/desktop/header/header';
 import Footer from '~/components/common/footer';
-import StickyFooter from '~/components/common/sticky-footer';
 import Quickview from '~/components/features/product/common/quickview-modal';
 import VideoModal from '~/components/features/modals/video-modal';
 import { modalActions } from '~/store/modal';
@@ -21,6 +19,7 @@ import {
 import { useProgram, useAuth } from 'hooks';
 import { Modal } from '@mui/material';
 import MyBirthDateForm from '~/components/partials/modals/dateOfBirthModal';
+import Trivias from '~/components/partials/trivias';
 
 function LayoutDesktop({ children, closeQuickview }) {
   const { program } = useProgram();
@@ -207,6 +206,8 @@ function LayoutDesktop({ children, closeQuickview }) {
           </div>
         </Modal>
       )}
+
+      {isLoggedIn && <Trivias />}
       {isLoggedIn &&
         program &&
         program.id === 28 &&

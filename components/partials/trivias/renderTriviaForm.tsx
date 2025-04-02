@@ -12,18 +12,26 @@ import {
 import * as Yup from 'yup';
 import { useEffect, useState } from 'react';
 import { useTrivias } from 'hooks/useTrivias';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { Formik } from 'formik';
 
-const RenderTriviaForm = () => {
+interface RenderTriviaFormProps {
+  formId?: string;
+  type?: string;
+}
+
+const RenderTriviaForm = (props: RenderTriviaFormProps) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const router = useRouter();
   const params = useSearchParams();
 
-  const formId = params.get('formId');
-  const rawType = params.get('type');
-  const type =
-    rawType === 'FORM' || rawType === 'MATCH_TRIVIA' ? rawType : null;
+  const paramFormId = params.get('formId');
+  const paramRawType = params.get('type');
+  const finalFormId = props.formId || paramFormId || '';
+  const finalType =
+    props.type ||
+    (paramRawType === 'FORM' || paramRawType === 'MATCH_TRIVIA'
+      ? paramRawType
+      : null);
 
   const {
     getForm,
@@ -49,19 +57,19 @@ const RenderTriviaForm = () => {
   });
 
   useEffect(() => {
-    if (!formId || !type) return;
-    if (type === 'FORM') getForm(formId);
-    if (type === 'MATCH_TRIVIA') {
-      getMatchTrivia(formId);
-      getMatchPredictedTrivia(formId);
+    if (!finalFormId || !finalType) return;
+    if (finalType === 'FORM') getForm(finalFormId);
+    if (finalType === 'MATCH_TRIVIA') {
+      getMatchTrivia(finalFormId);
+      getMatchPredictedTrivia(finalFormId);
     }
-  }, [formId, type]);
+  }, [finalFormId, finalType]);
 
-  if (!formId || !type) return null;
+  if (!finalFormId || !finalType) return null;
   if (
     loading ||
-    (type === 'FORM' && !form) ||
-    (type === 'MATCH_TRIVIA' && !trivia)
+    (finalType === 'FORM' && !form) ||
+    (finalType === 'MATCH_TRIVIA' && !trivia)
   ) {
     return (
       <Box
@@ -77,7 +85,7 @@ const RenderTriviaForm = () => {
 
   return (
     <Container maxWidth='xs' sx={{ py: 6 }}>
-      {type === 'MATCH_TRIVIA' && trivia && (
+      {finalType === 'MATCH_TRIVIA' && trivia && (
         <Box
           sx={{
             backgroundImage: `url(${trivia.style?.background?.image})`,
@@ -121,6 +129,7 @@ const RenderTriviaForm = () => {
               textAlign='center'
               sx={{
                 textShadow: '0px 0px 4px rgba(0,0,0,0.5)',
+                fontSize: 17,
               }}
             >
               Ingresa tu predicción
@@ -202,6 +211,7 @@ const RenderTriviaForm = () => {
                             mt: 1,
                             fontWeight: 'bold',
                             textAlign: 'center',
+                            fontSize: 14,
                           },
                         }}
                       />
@@ -209,7 +219,7 @@ const RenderTriviaForm = () => {
 
                     {/* VS */}
                     <Typography
-                      variant='h6'
+                      variant='h5'
                       color='white'
                       fontWeight='bold'
                       sx={{
@@ -260,6 +270,7 @@ const RenderTriviaForm = () => {
                             mt: 1,
                             fontWeight: 'bold',
                             textAlign: 'center',
+                            fontSize: 15,
                           },
                         }}
                       />
@@ -282,6 +293,7 @@ const RenderTriviaForm = () => {
                       '&:hover': {
                         backgroundColor: '#111',
                       },
+                      fontSize: 12,
                     }}
                   >
                     {loadingPrediction
@@ -296,7 +308,7 @@ const RenderTriviaForm = () => {
           </Box>
         </Box>
       )}
-      {type === 'FORM' && form && (
+      {finalType === 'FORM' && form && (
         <Formik
           initialValues={{
             selectedOptions: form.questions.reduce((acc, q) => {
@@ -326,121 +338,132 @@ const RenderTriviaForm = () => {
                 backgroundColor: 'rgba(255, 255, 255, 0.15)',
               }}
             >
-              {/* Dots de navegación */}
-              <Box mb={2} display='flex' justifyContent='center' gap={1}>
-                {form.questions.map((_, i) => (
-                  <Box
-                    key={i}
-                    sx={{
-                      width: 10,
-                      height: 10,
-                      borderRadius: '50%',
-                      backgroundColor:
-                        i === currentQuestionIndex
-                          ? 'white'
-                          : 'rgba(255,255,255,0.4)',
+              <Box
+                sx={{
+                  backdropFilter: 'blur(20px)',
+                  background: 'rgba(255, 255, 255, 0.2)',
+                  borderRadius: 4,
+                  px: 2,
+                  py: 3,
+                }}
+              >
+                {/* Dots de navegación */}
+                <Box mb={2} display='flex' justifyContent='center' gap={1}>
+                  {form.questions.map((_, i) => (
+                    <Box
+                      key={i}
+                      sx={{
+                        width: 10,
+                        height: 10,
+                        borderRadius: '50%',
+                        backgroundColor:
+                          i === currentQuestionIndex
+                            ? 'white'
+                            : 'rgba(255,255,255,0.4)',
+                      }}
+                    />
+                  ))}
+                </Box>
+
+                {/* Imagen */}
+                <Box mb={3}>
+                  <img
+                    src={
+                      form.questions[currentQuestionIndex].style.background
+                        ?.image || ''
+                    }
+                    alt='Question visual'
+                    style={{
+                      width: '100%',
+                      borderRadius: 16,
+                      boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
                     }}
                   />
-                ))}
-              </Box>
+                </Box>
 
-              {/* Imagen */}
-              <Box mb={3}>
-                <img
-                  src={
-                    form.questions[currentQuestionIndex].style.background
-                      ?.image || ''
-                  }
-                  alt='Question visual'
-                  style={{
-                    width: '100%',
-                    borderRadius: 16,
-                    boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
-                  }}
-                />
-              </Box>
-
-              {/* Opciones */}
-              {form.questions[currentQuestionIndex].options.map((option) => {
-                const selected = values.selectedOptions[
-                  form.questions[currentQuestionIndex].id
-                ]?.includes(option.id);
-                return (
-                  <Box
-                    key={option.id}
-                    onClick={() =>
-                      setFieldValue(
-                        `selectedOptions.${form.questions[currentQuestionIndex].id}`,
-                        [option.id]
-                      )
-                    }
-                    sx={{
-                      cursor: 'pointer',
-                      px: 3,
-                      py: 1.5,
-                      my: 1,
-                      borderRadius: 10,
-                      backgroundColor: selected
-                        ? '#333'
-                        : 'rgba(255, 255, 255, 0.85)',
-                      color: selected ? 'white' : 'black',
-                      textAlign: 'center',
-                      fontWeight: 600,
-                      fontSize: 16,
-                      transition: 'all 0.3s ease',
-                      '&:hover': {
+                {/* Opciones */}
+                {form.questions[currentQuestionIndex].options.map((option) => {
+                  const selected = values.selectedOptions[
+                    form.questions[currentQuestionIndex].id
+                  ]?.includes(option.id);
+                  return (
+                    <Box
+                      key={option.id}
+                      onClick={() =>
+                        setFieldValue(
+                          `selectedOptions.${form.questions[currentQuestionIndex].id}`,
+                          [option.id]
+                        )
+                      }
+                      sx={{
+                        cursor: 'pointer',
+                        px: 3,
+                        py: 1.5,
+                        my: 1,
+                        borderRadius: 10,
                         backgroundColor: selected
-                          ? '#222'
-                          : 'rgba(255, 255, 255, 1)',
-                      },
-                    }}
-                  >
-                    {option.name}
-                  </Box>
-                );
-              })}
+                          ? '#333'
+                          : 'rgba(255, 255, 255, 0.94)',
+                        color: selected ? 'white' : 'black',
+                        textAlign: 'center',
+                        fontWeight: 600,
+                        fontSize: 16,
+                        transition: 'all 0.3s ease',
+                        '&:hover': {
+                          backgroundColor: selected
+                            ? '#222'
+                            : 'rgba(255, 255, 255, 1)',
+                        },
+                      }}
+                    >
+                      {option.name}
+                    </Box>
+                  );
+                })}
 
-              {/* Botón continuar */}
-              <Button
-                fullWidth
-                variant='contained'
-                sx={{
-                  mt: 3,
-                  borderRadius: 4,
-                  backgroundColor: '#222',
-                  color: 'white',
-                  fontWeight: 'bold',
-                  py: 1.5,
-                  '&:hover': {
-                    backgroundColor: '#000',
-                  },
-                }}
-                onClick={() => {
-                  const currentAnswers =
+                {/* Botón continuar */}
+                <Button
+                  fullWidth
+                  variant='contained'
+                  sx={{
+                    mt: 3,
+                    borderRadius: 4,
+                    backgroundColor: '#222',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    fontSize: 14,
+                    py: 1.5,
+                    '&:hover': {
+                      backgroundColor: '#000',
+                    },
+                  }}
+                  onClick={() => {
+                    const currentAnswers =
+                      values.selectedOptions[
+                        form.questions[currentQuestionIndex].id
+                      ];
+                    if (!currentAnswers || currentAnswers.length === 0) return;
+
+                    if (currentQuestionIndex < form.questions.length - 1) {
+                      setCurrentQuestionIndex((prev) => prev + 1);
+                    } else {
+                      handleSubmit();
+                    }
+                  }}
+                  disabled={
+                    !values.selectedOptions[
+                      form.questions[currentQuestionIndex].id
+                    ] ||
                     values.selectedOptions[
                       form.questions[currentQuestionIndex].id
-                    ];
-                  if (!currentAnswers || currentAnswers.length === 0) return;
-
-                  if (currentQuestionIndex < form.questions.length - 1) {
-                    setCurrentQuestionIndex((prev) => prev + 1);
-                  } else {
-                    handleSubmit();
+                    ].length === 0
                   }
-                }}
-                disabled={
-                  !values.selectedOptions[
-                    form.questions[currentQuestionIndex].id
-                  ] ||
-                  values.selectedOptions[
-                    form.questions[currentQuestionIndex].id
-                  ].length === 0
-                }
-              >
-                {currentQuestionIndex === form.questions.length - 1
-                  ? 'Guardar mi respuesta'
-                  : 'Continuar'}
-              </Button>
+                >
+                  {currentQuestionIndex === form.questions.length - 1
+                    ? 'Guardar mi respuesta'
+                    : 'Continuar'}
+                </Button>
+              </Box>
             </Box>
           )}
         </Formik>

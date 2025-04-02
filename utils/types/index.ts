@@ -16,3 +16,4 @@ export * from './logType';
 export * from './result';
 export * from './trivia';
 export * from './form';
+export * from './participantConfig';
