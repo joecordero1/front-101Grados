@@ -95,10 +95,11 @@ const TriviaModal = () => {
 
             <RenderTriviaForm
               formId={
-                participantConfig.forms[participantConfig.forms.length - 1].id
+                participantConfig?.forms[participantConfig.forms.length - 1].id
               }
               type={
-                participantConfig.forms[participantConfig.forms.length - 1].type
+                participantConfig?.forms[participantConfig.forms.length - 1]
+                  .type
               }
             />
           </Box>

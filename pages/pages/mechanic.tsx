@@ -29,6 +29,16 @@ const Mechanic = () => {
       py={4}
       bgcolor='#f5f5f5'
     >
+      <Button
+        variant='contained'
+        color='primary'
+        sx={{ fontSize: 14, mb: 3 }}
+        href={pdfUrl}
+        target='_blank'
+        rel='noopener noreferrer'
+      >
+        Descargar PDF
+      </Button>
       <Paper
         elevation={3}
         sx={{
@@ -44,17 +54,6 @@ const Mechanic = () => {
           style={{ width: '100%', height: '85vh', border: 'none' }}
         />
       </Paper>
-
-      <Button
-        variant='contained'
-        color='primary'
-        sx={{ mt: 3, fontSize: 14 }}
-        href={pdfUrl}
-        target='_blank'
-        rel='noopener noreferrer'
-      >
-        Descargar PDF
-      </Button>
     </Box>
   );
 };
