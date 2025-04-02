@@ -1,7 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import CloseIcon from '@mui/icons-material/Close';
-import IconButton from '@mui/material/IconButton';
 import { ToastContainer } from 'react-toastify';
 import { useRouter } from 'next/router';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -18,23 +16,18 @@ import {
   stickyFooterHandler,
 } from '~/utils';
 
-import { useProgram, useAuth, useConfig } from 'hooks';
+import { useProgram, useAuth } from 'hooks';
 import HeaderMobile from './header/header';
-import { Box, Modal } from '@mui/material';
+import { Modal } from '@mui/material';
 import MyBirthDateForm from '~/components/partials/modals/dateOfBirthModal';
-import RenderTriviaForm from '~/components/partials/trivias/renderTriviaForm';
+import Trivias from '~/components/partials/trivias';
 
 function LayoutMobile({ children, closeQuickview }) {
   const { program } = useProgram();
   const { isLoggedIn, participant } = useAuth();
   const router = useRouter();
-  const {
-    getConfig,
-    data: participantConfig,
-    loading: loadingParticipantConfig,
-  } = useConfig();
   const [open, setOpen] = useState(true);
-  const [openTriviaModal, setOpenTriviaModal] = useState(false);
+
   useLayoutEffect(() => {
     document.querySelector('body').classList.remove('loaded');
   }, [router.pathname]);
@@ -116,18 +109,6 @@ function LayoutMobile({ children, closeQuickview }) {
       router.push('/');
     }
   }, [isLoggedIn, program?.isStoreActive]);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      getConfig();
-    }
-  }, [participant, isLoggedIn, participantConfig]);
-
-  useEffect(() => {
-    if (participantConfig?.forms?.length > 0) {
-      setOpenTriviaModal(true);
-    }
-  }, [participant, isLoggedIn, participantConfig]);
 
   if (!program) {
     return (
@@ -228,56 +209,7 @@ function LayoutMobile({ children, closeQuickview }) {
           </div>
         </Modal>
       )}
-      {!loadingParticipantConfig && participantConfig?.forms.length > 0 && (
-        <Modal open={openTriviaModal} onClose={() => setOpenTriviaModal(false)}>
-          <div
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              backgroundColor: 'transparent',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              zIndex: 1300,
-            }}
-          >
-            <Box
-              sx={{
-                position: 'relative',
-                width: '100%',
-
-                borderRadius: 4,
-              }}
-            >
-              {/* Botón de cerrar */}
-              <IconButton
-                onClick={() => setOpenTriviaModal(false)}
-                sx={{
-                  position: 'absolute',
-                  top: 8,
-                  right: 8,
-                  color: 'white',
-                }}
-              >
-                <CloseIcon fontSize='large' />
-              </IconButton>
-
-              <RenderTriviaForm
-                formId={
-                  participantConfig.forms[participantConfig.forms.length - 1].id
-                }
-                type={
-                  participantConfig.forms[participantConfig.forms.length - 1]
-                    .type
-                }
-              />
-            </Box>
-          </div>
-        </Modal>
-      )}
+      {isLoggedIn && <Trivias />}
       <Quickview />
       {isLoggedIn &&
         program &&
