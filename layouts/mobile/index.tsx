@@ -21,6 +21,7 @@ import HeaderMobile from './header/header';
 import { Modal } from '@mui/material';
 import MyBirthDateForm from '~/components/partials/modals/dateOfBirthModal';
 import Trivias from '~/components/partials/trivias';
+import { isSameDay } from 'date-fns';
 
 function LayoutMobile({ children, closeQuickview }) {
   const { program } = useProgram();
@@ -103,6 +104,20 @@ function LayoutMobile({ children, closeQuickview }) {
     participant?.approvedTermsAndConditions,
     program?.id,
   ]);
+
+  useEffect(() => {
+    if (isLoggedIn && participant?.passwordUpdatedAt && program?.id === 38) {
+      const passwordUpdatedDate = new Date(participant.passwordUpdatedAt);
+      const today = new Date();
+
+      if (!isSameDay(passwordUpdatedDate, today)) {
+        console.log('🔒 No cambió la contraseña hoy → redirigiendo...');
+        router.push('/pages/change-my-password');
+      } else {
+        console.log('✅ Contraseña fue cambiada hoy → todo bien.');
+      }
+    }
+  }, [isLoggedIn, participant?.passwordUpdatedAt, program?.id]);
 
   useEffect(() => {
     if (isLoggedIn && !program?.isStoreActive) {

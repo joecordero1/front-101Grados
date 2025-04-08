@@ -15,11 +15,11 @@ import {
   stickyHeaderHandler,
   stickyFooterHandler,
 } from '~/utils';
-
 import { useProgram, useAuth } from 'hooks';
 import { Modal } from '@mui/material';
 import MyBirthDateForm from '~/components/partials/modals/dateOfBirthModal';
 import Trivias from '~/components/partials/trivias';
+import { isSameDay, subDays } from 'date-fns';
 
 function LayoutDesktop({ children, closeQuickview }) {
   const { program } = useProgram();
@@ -50,15 +50,13 @@ function LayoutDesktop({ children, closeQuickview }) {
   useEffect(() => {
     closeQuickview();
 
-    // @ts-ignore
-    let bodyClasses = [...document.querySelector('body').classList];
-    for (let i = 0; i < bodyClasses.length; i++) {
-      document.querySelector('body').classList.remove(bodyClasses[i]);
+    const body = document.querySelector('body');
+    if (body) {
+      body.className = ''; // Limpiar clases
+      setTimeout(() => {
+        body.classList.add('loaded');
+      }, 50);
     }
-
-    setTimeout(() => {
-      document.querySelector('body').classList.add('loaded');
-    }, 50);
   }, [router.pathname]);
 
   useEffect(() => {
@@ -72,27 +70,18 @@ function LayoutDesktop({ children, closeQuickview }) {
   }, [isLoggedIn, participant]);
 
   useEffect(() => {
-    if (program?.id === 26) {
-      if (
-        isLoggedIn &&
-        participant?.passwordUpdatedAt &&
-        participant.approvedPolicy &&
-        participant.approvedTermsAndConditions
-      ) {
-        // Definir la fecha actual
-        const currentDate = new Date();
+    if (
+      program?.id === 26 &&
+      isLoggedIn &&
+      participant?.passwordUpdatedAt &&
+      participant.approvedPolicy &&
+      participant.approvedTermsAndConditions
+    ) {
+      const passwordUpdatedDate = new Date(participant.passwordUpdatedAt);
+      const comparisonDate = subDays(new Date(), 365);
 
-        // Crear una nueva instancia de la fecha de actualización de la contraseña
-        const passwordUpdatedDate = new Date(participant.passwordUpdatedAt);
-
-        // Restar los días a la fecha actual para obtener la fecha de comparación
-        const comparisonDate = new Date();
-        comparisonDate.setDate(currentDate.getDate() - 365);
-
-        // Comparar las fechas
-        if (passwordUpdatedDate <= comparisonDate) {
-          router.push('/pages/change-my-password');
-        }
+      if (passwordUpdatedDate <= comparisonDate) {
+        router.push('/pages/change-my-password');
       }
     }
   }, [
@@ -109,29 +98,40 @@ function LayoutDesktop({ children, closeQuickview }) {
     }
   }, [isLoggedIn, program?.isStoreActive]);
 
+  useEffect(() => {
+    if (isLoggedIn && participant?.passwordUpdatedAt && program?.id === 38) {
+      const passwordUpdatedDate = new Date(participant.passwordUpdatedAt);
+      const today = new Date();
+
+      if (!isSameDay(passwordUpdatedDate, today)) {
+        console.log('🔒 No cambió la contraseña hoy → redirigiendo...');
+        router.push('/pages/change-my-password');
+      } else {
+        console.log('✅ Contraseña fue cambiada hoy → todo bien.');
+      }
+    }
+  }, [isLoggedIn, participant?.passwordUpdatedAt, program?.id]);
+
   if (!program) {
     return (
-      <>
-        <div
-          style={{
-            width: '100%',
-            height: '100%',
-            position: 'fixed',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        ></div>
-      </>
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          position: 'fixed',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      ></div>
     );
   }
+
   return (
     <div>
       <div className='page-wrapper' style={{ position: 'relative' }}>
         {isLoggedIn && <HeaderDesktop />}
-
         {children}
-
         {isLoggedIn && <Footer />}
       </div>
 
@@ -139,16 +139,16 @@ function LayoutDesktop({ children, closeQuickview }) {
         autoClose={3000}
         // @ts-ignore
         duration={300}
-        newestOnTo={true}
+        newestOnTop={true}
         className='toast-container'
         position='bottom-left'
         closeButton={false}
         hideProgressBar={true}
-        newestOnTop={true}
       />
 
       <Quickview />
-      {program && program.id === 26 && (
+
+      {program?.id === 26 && (
         <Modal open={open} onClose={() => setOpen(false)}>
           <div
             style={{
@@ -209,11 +209,11 @@ function LayoutDesktop({ children, closeQuickview }) {
 
       {isLoggedIn && <Trivias />}
       {isLoggedIn &&
-        program &&
-        program.id === 28 &&
-        participant.dateOfBirth === null && (
+        program?.id === 28 &&
+        participant?.dateOfBirth === null && (
           <MyBirthDateForm open={open} onClose={() => setOpen(false)} />
         )}
+
       <VideoModal />
     </div>
   );

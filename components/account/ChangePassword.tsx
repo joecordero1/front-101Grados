@@ -86,11 +86,11 @@ export const ChangePassword = () => {
               href={`https://api.whatsapp.com/send?phone=${removeFirstChar(
                 program.supportPhone
               )}&text=https://api.whatsapp.com/send?phone=99143091&text=Hola!%20Soy%20${
-                participant.fullName
+                participant?.fullName
               }%20podr%C3%ADan%20ayudarme%20reseteando%20mi%20contrase%C3%B1a%20por%20favor?%20Mi%20ID%20de%20usuario%20es%20el:%20${
-                participant.id
+                participant?.id
               }%20y%20mi%20identificador%20es%20el%20${parseCredentials(
-                participant.identifier
+                participant?.identifier
               )}.%20Muchas%20gracias!%20`}
               style={{
                 textAlign: 'right',
