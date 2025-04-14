@@ -10,6 +10,7 @@ export const ChangePassword = () => {
   const router = useRouter();
   const { participant, setSession } = useAuth();
   const { program } = useProgram();
+  const [passwordError, setPasswordError] = useState<string | null>(null);
   const { put } = useApiAuth();
   const { values, onChange, touched } = useForm<EditParticipant>({
     username: participant.username,
@@ -24,15 +25,43 @@ export const ChangePassword = () => {
   });
   const { enqueueSnackbar } = useSnackbar();
 
+  const isPasswordValid = (password: string) => {
+    const minLength = 8;
+    const hasLetter = /[a-zA-Z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    return password.length >= minLength && hasLetter && hasNumber;
+  };
+
   const [showPassword, setShowPassword] = useState(false); // Estado para mostrar/ocultar contraseñas
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    if (name === 'newPassword') {
+      if (!value) {
+        setPasswordError(null);
+      } else if (!isPasswordValid(value)) {
+        setPasswordError(
+          'Debe tener mínimo 8 caracteres, incluyendo letras y números.'
+        );
+      } else {
+        setPasswordError(null);
+      }
+    }
+
     onChange(name as keyof EditParticipant, value);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (touched.newPassword && !isPasswordValid(touched.newPassword)) {
+      enqueueSnackbar(
+        'La nueva contraseña debe tener al menos 8 caracteres, incluyendo letras y números.',
+        { variant: 'error' }
+      );
+      return;
+    }
+
     try {
       await put(`/lala4/participants/mine`, touched);
       setSession();
@@ -125,12 +154,15 @@ export const ChangePassword = () => {
         <label>Nueva contraseña</label>
         <div className='password-input-wrapper'>
           <input
-            type={showPassword ? 'text' : 'password'} // Cambiar tipo según estado
+            type={showPassword ? 'text' : 'password'}
             className='form-control'
             name='newPassword'
             value={values.newPassword}
             onChange={handleInputChange}
           />
+          {passwordError && (
+            <p className='text-red-500 text-md mt-1'>{passwordError}</p>
+          )}
         </div>
 
         <label>Confirmar nueva contraseña</label>
