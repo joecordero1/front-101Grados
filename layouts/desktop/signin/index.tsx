@@ -4,10 +4,11 @@ import ALink from '~/components/features/custom-link';
 
 import { useForm, useAuth, useProgram } from 'hooks';
 import { removeFirstChar } from '~/utils';
+import { useRouter } from 'next/router';
 
 const SignIn = () => {
   const { program } = useProgram();
-
+  const { push } = useRouter();
   const { values, onChange } = useForm<{
     username: string;
     password: string;
@@ -16,11 +17,25 @@ const SignIn = () => {
     password: null,
   });
   const [showPassword, setShowPassword] = useState(false);
-  const { logIn } = useAuth();
+  const { logIn, logInUser } = useAuth();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    logIn(values.username, values.password);
+
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.username);
+
+    if (program.id === 40 && isEmail) {
+      try {
+        const token = await logInUser(values.username, values.password);
+        if (token) {
+          push(`http://localhost:3000/?token=${token}`);
+        }
+      } catch (err) {
+        console.error('Error en logInUser', err);
+      }
+    } else {
+      logIn(values.username, values.password);
+    }
   };
 
   return (

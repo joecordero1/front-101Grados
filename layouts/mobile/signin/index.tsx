@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuth, useForm, useProgram } from '../../../hooks';
+import { useRouter } from 'next/router';
 
 const SignIn = () => {
-  const { logIn } = useAuth();
+  const { logIn, logInUser } = useAuth();
+  const { push } = useRouter();
   const { program } = useProgram();
   const { values, onChange } = useForm({
     username: null,
@@ -11,9 +13,23 @@ const SignIn = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    logIn(values.username, values.password);
+
+    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.username);
+
+    if (program.id === 40 && isEmail) {
+      try {
+        const token = await logInUser(values.username, values.password);
+        if (token) {
+          push(`http://localhost:3000/?token=${token}`);
+        }
+      } catch (err) {
+        console.error('Error en logInUser', err);
+      }
+    } else {
+      logIn(values.username, values.password);
+    }
   };
 
   return (

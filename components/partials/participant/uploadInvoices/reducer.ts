@@ -119,7 +119,7 @@ export const useCustomReducer = (): ReducerValue => {
         });
 
         await api.post<Snap>('/lala4/snaps/upload', {
-          imageUrl,
+          imageUrl: imageUrl.toString(),
         });
 
         dispatch({

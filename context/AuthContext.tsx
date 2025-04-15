@@ -23,6 +23,7 @@ interface AuthContextValue extends AuthState {
   loginWithToken: (token: string) => void;
   getAvailablePoints: () => void;
   setSession: () => void;
+  logInUser: (username: string, password: string) => Promise<string>;
 }
 
 interface AuthProviderProps {
@@ -133,6 +134,9 @@ export const AuthContext = createContext<AuthContextValue>({
   getAvailablePoints: () => {},
   loginWithToken: (token: string) => {},
   setSession: () => {},
+  logInUser: async () => {
+    return '';
+  },
 });
 
 export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
@@ -162,6 +166,20 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         accessTokenResponse.access_token
       );
       setSession();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const logInUser = async (username: string, password: string) => {
+    try {
+      const accessTokenResponse = await post<{
+        access_token: string;
+      }>(`/auth/signin`, {
+        username,
+        password,
+      });
+      return accessTokenResponse.access_token;
     } catch (e) {
       console.error(e);
     }
@@ -247,6 +265,7 @@ export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
         getAvailablePoints,
         loginWithToken,
         setSession,
+        logInUser,
       }}
     >
       {children}
