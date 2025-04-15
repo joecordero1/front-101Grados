@@ -28,7 +28,7 @@ const SignIn = () => {
       try {
         const token = await logInUser(values.username, values.password);
         if (token) {
-          push(`http://localhost:3000/?token=${token}`);
+          push(`https://asesores.conticlubec.com/login?token=${token}`);
         }
       } catch (err) {
         console.error('Error en logInUser', err);
