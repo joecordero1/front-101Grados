@@ -187,11 +187,13 @@ export default function HeaderDesktop(props) {
                     </li>
                   )}
 
-                  {couldSeeResults && (
-                    <li>
-                      <ALink href='/pages/my-results'>Mis Resultados</ALink>
-                    </li>
-                  )}
+                  {couldSeeResults &&
+                    program.id !== 28 &&
+                    program.id !== 39 && (
+                      <li>
+                        <ALink href='/pages/my-results'>Mis Resultados</ALink>
+                      </li>
+                    )}
 
                   <li key={'blog'}>
                     <ALink
@@ -220,7 +222,7 @@ export default function HeaderDesktop(props) {
         >
           {program.isStoreActive && <SimpleMainMenu />}
           {/* Botón para mostrar/ocultar el ResultsCard */}
-          {couldSeeResults && (
+          {couldSeeResults && program.id !== 28 && program.id !== 39 && (
             <Button
               variant='contained'
               size='small'
@@ -275,8 +277,69 @@ export default function HeaderDesktop(props) {
           </h5>
         </div>
       )}
+      {couldSeeResults && program.id === 28 && (
+        <div className='welcome-message'>
+          <h6
+            style={{
+              textAlign: 'center',
+              margin: 10,
+              color: '#5d5e5e',
+            }}
+          >
+            ¡Hola {participant?.firstName}!
+          </h6>
+          <h5
+            style={{
+              textAlign: 'center',
+              margin: '0 auto',
+              color: '#5d5e5e',
+            }}
+          >
+            Tienes{' '}
+            {loadingPoints ? (
+              <>
+                <i className='fa fa-spinner fa-spin'></i>
+              </>
+            ) : (
+              availablePoints
+            )}{' '}
+            {program.coinName}
+          </h5>
+        </div>
+      )}
 
-      {couldSeeResults && (
+      {couldSeeResults && program.id === 39 && (
+        <div className='welcome-message'>
+          <h6
+            style={{
+              textAlign: 'center',
+              margin: 10,
+              color: '#5d5e5e',
+            }}
+          >
+            ¡Hola {participant?.firstName}!
+          </h6>
+          <h5
+            style={{
+              textAlign: 'center',
+              margin: '0 auto',
+              color: '#5d5e5e',
+            }}
+          >
+            Tienes{' '}
+            {loadingPoints ? (
+              <>
+                <i className='fa fa-spinner fa-spin'></i>
+              </>
+            ) : (
+              availablePoints
+            )}{' '}
+            {program.coinName}
+          </h5>
+        </div>
+      )}
+
+      {couldSeeResults && program.id !== 28 && program.id !== 39 && (
         <div
           className='welcome-message container'
           style={{ display: 'flex', justifyContent: 'center' }}

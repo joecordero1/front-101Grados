@@ -155,11 +155,13 @@ export default function HeaderMobile(props) {
                     </li>
                   )}
 
-                  {couldSeeResults && (
-                    <li>
-                      <ALink href='/pages/my-results'>Mis Resultados</ALink>
-                    </li>
-                  )}
+                  {couldSeeResults &&
+                    program.id !== 28 &&
+                    program.id !== 39 && (
+                      <li>
+                        <ALink href='/pages/my-results'>Mis Resultados</ALink>
+                      </li>
+                    )}
 
                   <li key={'blog'}>
                     <ALink
@@ -187,7 +189,7 @@ export default function HeaderMobile(props) {
           style={{ gap: '5px' }}
         >
           {/* Botón para mostrar/ocultar el ResultsCard */}
-          {couldSeeResults && (
+          {couldSeeResults && program.id !== 28 && program.id !== 39 && (
             <Button
               variant='contained'
               size='small'
@@ -237,7 +239,33 @@ export default function HeaderMobile(props) {
         </div>
       )}
 
-      {couldSeeResults ? (
+      {(couldSeeResults && program.id === 28) ||
+        (couldSeeResults && program.id === 39 && (
+          <div className='flex justify-center items-center gap-16 mt-2'>
+            {requests.length > 0 &&
+              (loading ? (
+                <div className='award-status'>
+                  <p>Cargando...</p>
+                </div>
+              ) : (
+                <div className='award-status flex flex-col items-center'>
+                  <p>Status Premio</p>
+                  <div className='flex flex-col items-center'>
+                    {getStatusElement(requests[requests?.length - 1]?.status)}
+                  </div>
+                </div>
+              ))}
+
+            <div className='available-points flex flex-col items-center'>
+              <p>Puntos disponibles</p>
+              <div className='flex flex-col items-center'>
+                {loadingPoints ? <p>Cargando...</p> : <p>{availablePoints}</p>}
+              </div>
+            </div>
+          </div>
+        ))}
+
+      {couldSeeResults && program.id !== 28 && program.id !== 39 ? (
         <div
           className='welcome-message container'
           style={{ display: 'flex', justifyContent: 'center' }}
