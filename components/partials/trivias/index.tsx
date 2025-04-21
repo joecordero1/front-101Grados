@@ -19,6 +19,7 @@ const TriviaModal = () => {
     predictedTrivia,
     getAnsweredForm,
     isAnswered,
+    loadingIsAnswered,
   } = useTrivias();
 
   useEffect(() => {
@@ -52,23 +53,24 @@ const TriviaModal = () => {
   }, [isLoggedIn, participant, participantConfig, predictedTrivia, isAnswered]);
 
   return (
-    (!loadingParticipantConfig &&
-      participantConfig?.forms.length > 0 &&
-      program.id !== 28) ||
-    (program.id !== 39 && (
+    !loadingParticipantConfig &&
+    !loadingIsAnswered &&
+    participantConfig?.forms.length > 0 &&
+    program.id !== 28 &&
+    program.id !== 39 && (
       <Modal open={openTriviaModal} onClose={() => setOpenTriviaModal(false)}>
         <div
           style={{
             position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'transparent',
+            inset: 0,
+            backgroundColor: 'rgba(0,0,0,0.6)',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
             zIndex: 1300,
+            padding: '1rem',
+            overflowY: 'auto',
+            WebkitOverflowScrolling: 'touch',
           }}
         >
           <Box
@@ -105,7 +107,7 @@ const TriviaModal = () => {
           </Box>
         </div>
       </Modal>
-    ))
+    )
   );
 };
 

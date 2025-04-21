@@ -12,6 +12,7 @@ import { useApiAuth } from './useApiAuth';
 
 export const useTrivias = () => {
   const { get, put } = useApiAuth();
+  const [loadingIsAnswered, setLoadingIsAnswered] = useState(true);
   const [loading, setLoading] = useState(false);
   const [loadingPrediction, setLoadingPrediction] = useState(false);
   const [loadingForm, setLoadingForm] = useState(false);
@@ -37,11 +38,14 @@ export const useTrivias = () => {
 
   const getAnsweredForm = async (id: string) => {
     try {
+      setLoadingIsAnswered(true);
       const { answered } = await get<{ answered: boolean }>(
         `/forms/app/forms/${id}/answered`
       );
       setAnswered(answered);
+      setLoadingIsAnswered(false);
     } catch (error) {
+      setLoadingIsAnswered(false);
       console.error(error);
     }
   };
@@ -155,6 +159,7 @@ export const useTrivias = () => {
     getMatchPredictedTrivia,
     updatePrediction,
     sendForm,
+    loadingIsAnswered,
     loading,
     loadingForm,
     loadingPrediction,
