@@ -4,14 +4,16 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { withAuth } from '~/components/AuthGuard';
 import OwlCarousel from '~/components/features/owl-carousel';
 import { InfiniteScrollComponent } from '~/components/partials/shop/product-list/product-list-two';
-import { useProgram } from '~/hooks';
+import { useProgram, useSpecialCatalogues } from '~/hooks';
 import { mobileSlider } from '~/utils/data/carousel';
 import CategoriesMenu from './categoriesMenu';
 import SearchForm from '../../../components/common/partials/footer-search-box';
 import Buyable from '~/components/partials/home/buyable';
+import SpecialCatalogues from '~/components/partials/home/SpecialCatalogues';
 
 const Home = () => {
   const { program } = useProgram();
+  const { myCatalogues } = useSpecialCatalogues();
   return (
     <>
       <div className='main-home'>
@@ -76,6 +78,7 @@ const Home = () => {
           </div>
         </div>
         <Buyable />
+        {myCatalogues.length > 0 && <SpecialCatalogues />}
         <div className='container'>
           <InfiniteScrollComponent />
         </div>
