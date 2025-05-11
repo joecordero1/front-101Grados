@@ -1,0 +1,118 @@
+.lds-facebook {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-facebook div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 16px;
+  background: rgb(41, 96, 248);
+  animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.lds-facebook div:nth-child(1) {
+  left: 8px;
+  animation-delay: -0.24s;
+}
+.smcx-modal {
+  background-color: #093b83 !important;
+  border-radius: 15px !important;
+}
+.lds-facebook div:nth-child(2) {
+  left: 32px;
+  animation-delay: -0.12s;
+}
+.lds-facebook div:nth-child(3) {
+  left: 56px;
+  animation-delay: 0;
+}
+@keyframes lds-facebook {
+  0% {
+    top: 8px;
+    height: 64px;
+  }
+  50%,
+  100% {
+    top: 24px;
+    height: 32px;
+  }
+}
+
+.welcome-message {
+  margin-bottom: 10px;
+  h6,
+  h5 {
+    color: $primary-color;
+  }
+}
+
+.bg-warning {
+  background-color: #f0ad4e !important;
+}
+
+.bg-success {
+  background-color: #5cb85c !important;
+}
+
+.bg-danger {
+  background-color: #d9534f !important;
+}
+
+.bg-primary {
+  background-color: #428bca !important;
+}
+
+.bg-info {
+  background-color: #5bc0de !important;
+}
+
+.arrow-3 {
+  width: 190px;
+  height: 25px;
+  display: flex;
+}
+.arrow-3:before,
+.arrow-3:after {
+  content: '';
+  flex: 1;
+  margin: 0 5px;
+  background: #e30613;
+  clip-path: polygon(
+    0 10px,
+    calc(100% - 15px) 10px,
+    calc(100% - 15px) 0,
+    100% 50%,
+    calc(100% - 15px) 100%,
+    calc(100% - 15px) calc(100% - 10px),
+    0 calc(100% - 10px)
+  );
+  animation: a3 0.5s infinite alternate;
+}
+
+.arrow-3:after {
+  --s: -1;
+}
+@keyframes a3 {
+  0% {
+    transform: scaleX(var(--s, 1)) translate(-4px);
+  }
+  100% {
+    transform: scaleX(var(--s, 1)) translate(4px);
+  }
+}
+/* Agrega estas clases para ajustar la imagen y el contenedor */
+.responsive-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+}
+
+.responsive-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}

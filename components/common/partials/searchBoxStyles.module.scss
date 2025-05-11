@@ -1,0 +1,122 @@
+.searchMerlinContainer {
+  display: none;
+}
+@media (min-width: 768px) {
+  .searchMainContainer {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    box-sizing: border-box;
+  }
+
+  .searchMerlinContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .merlinIconBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+
+    img {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  .merlinDialogContainer {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .merlinDialogBox {
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.75);
+  }
+
+  .searchBarContainer {
+    display: flex;
+    flex: 1;
+    margin-left: 20px;
+  }
+
+  .formSearchContainer {
+    display: flex;
+    flex: 1;
+    width: 500px;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+}
+
+/* Botón de alternancia para mostrar/ocultar el segundo buscador */
+.toggleButtonContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* Contenedor para los resultados de búsqueda del segundo buscador */
+.searchResultsContainer {
+  max-height: 200px; /* Altura máxima con scroll */
+  overflow-y: auto;
+  margin-top: 5px; /* Espacio entre el campo de búsqueda y la lista */
+  border-radius: 4px;
+  background-color: #fff;
+  position: absolute; /* Posiciona la lista de forma absoluta */
+  width: 100%; /* Ajusta el ancho al 100% del contenedor del campo de búsqueda */
+  top: calc(
+    100% + 5px
+  ); /* Posiciona la caja justo debajo del campo de entrada con un margen */
+  left: 0; /* Alinea la caja con el campo de búsqueda */
+  z-index: 10;
+}
+
+/* Elementos de la lista de sugerencias */
+.autocompleteSuggestion {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eaeaea;
+  text-decoration: none;
+  color: #333;
+  background-color: #fff;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}
+
+/* Estilo del nombre del producto en la lista de sugerencias */
+.searchName {
+  margin-left: 10px;
+  flex-grow: 1;
+}
+
+/* Estilo del precio del producto en la lista de sugerencias */
+.searchPrice {
+  font-weight: bold;
+  color: #3f51b5;
+}
+
+/* Ocultar el segundo buscador en pantallas pequeñas */
+@media (max-width: 767px) {
+  .searchResultsContainer {
+    display: none;
+  }
+}
+// Puedes agregar estilos adicionales si quieres personalizar más el cuadro de diálogo

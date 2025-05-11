@@ -1,0 +1,19 @@
+.menuHeaderContainer {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  .customButton {
+    width: 300px !important;
+  }
+}
+
+@media (min-width: 1080px) {
+  .menuHeaderContainer {
+    display: flex !important;
+    flex-direction: row !important;
+    .customButton {
+      width: 250px !important;
+    }
+  }
+}
