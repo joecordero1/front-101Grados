@@ -21,11 +21,21 @@ import SpecialBannerSecond from '~/components/partials/home/SpecialCatalogues/Sp
 import { InfiniteScrollComponent } from 'components/partials/shop/product-list/product-list-two';
 import { withAuth } from 'components/AuthGuard';
 
+import MainBanner from '~/components/partials/home/MainBanner'
+
+
 function HomeDesktopPage() {
   const { availablePoints, loginWithToken, isLoggedIn, getAvailablePoints } =
     useAuth();
   const { myCatalogues } = useSpecialCatalogues();
   const { program } = useProgram();
+  const featuredProduct = {
+  id: '1',
+  name: 'Producto destacado',
+  imageUrl: '/images/celular.jpg',
+  points: 120,
+}
+
 
   return (
     <div className='main home'>
@@ -39,7 +49,7 @@ function HomeDesktopPage() {
         <div className='intro-section'>
           <div className='container'>
             <IntroSection />
-
+            <MainBanner product={featuredProduct} />
             <ServiceBox />
           </div>
         </div>
