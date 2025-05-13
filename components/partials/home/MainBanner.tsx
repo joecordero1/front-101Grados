@@ -5,7 +5,11 @@ type Product = {
   name: string
   imageUrl: string
   points: number
+  brandName: string
+  model?: string
+  subcategories?: { id: string; name: string }[]
 }
+
 
 interface Props {
   product: Product
@@ -56,25 +60,35 @@ const MainBanner: React.FC<Props> = ({ product }) => {
           padding: '0 0.5rem',
         }}
       >
-        <strong>¡Producto estrella!</strong>
+        <strong>Porque conocemos lo que te interesa!</strong>
         <span>Canjea ahora con tus puntos</span>
       </div>
 
-      {/* Nombre + puntos: columna 3 */}
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'flex-end',
-          textAlign: 'right',
-          padding: '0 0.5rem',
-          fontSize: '2rem',
-        }}
-      >
-        <span>{product.name}</span>
-        <span style={{ color: '#007bff', fontWeight: 'bold' }}>{product.points} Puntos</span>
-      </div>
+      {/* Columna 3: product-details */}
+<div
+  style={{
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'flex-end',
+    textAlign: 'right',
+    padding: '0 0.5rem',
+    fontSize: '1rem',
+  }}
+>
+  <div style={{ fontSize: '2rem', fontWeight: 'bold' }}>{product.name}</div>
+
+  {product.model && (
+    <div style={{ fontSize: '1.5rem', color: '#666' }}>{product.model}</div>
+  )}
+
+  <div style={{ fontSize: '1.5rem', color: '#999' }}>{product.brandName}</div>
+
+  <div style={{ color: '#007bff', fontSize: '2rem',fontWeight: 'bold', marginTop: '0.3rem' }}>
+    {product.points} Puntos
+  </div>
+</div>
+
     </div>
   )
 }

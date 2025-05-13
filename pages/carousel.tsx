@@ -1,44 +1,43 @@
 // pages/carousel.tsx
-import { GetStaticProps, NextPage } from 'next'
-import ProductCarouselSection from '../components/partials/home/ProductCarouselSection'
+import React from 'react'
+import ProductCarouselSection from '~/components/partials/home/ProductCarouselSection'
+import { useItem, useProgram } from '~/hooks'
 
-type Product = {
-  id: string
-  name: string
-  imageUrl: string
-  points: number
-}
+import { withAuth } from 'components/AuthGuard';
 
-interface CarouselPageProps {
-  carouselItems: Product[]
-  sideItems: Product[]
-}
+function CarouselPage() {
+  const { program } = useProgram();
+  const { coinName } = program;
 
-const CarouselPage: NextPage<CarouselPageProps> = ({ carouselItems, sideItems }) => (
-  <div className="page-content">
-    <div className="container py-4">
-      <h2 className="mb-4">Productos Destacados</h2>
-      <ProductCarouselSection
-        carouselItems={carouselItems}
-        sideItems={sideItems}
-      />
+  // IDs (quemados)
+  const carouselIds = ['3770', '3770', '3770'];
+  const sideIds = ['3770', '3770'];
+
+  // Hooks para cada producto
+  const carousels = carouselIds.map((id) => useItem(id));
+  const sides = sideIds.map((id) => useItem(id));
+
+  const carouselItems = carousels.map(({ item }) => item).filter(Boolean);
+  const sideItems = sides.map(({ item }) => item).filter(Boolean);
+  const bannersLoading = [...carousels, ...sides].some(({ loading }) => loading);
+
+  return (
+    <div className="page-content">
+      <div className="container py-4">
+        <h2 className="mb-4">Productos Destacados</h2>
+        {bannersLoading ? (
+          <p>Cargando productos…</p>
+        ) : (
+          <ProductCarouselSection
+            carouselItems={carouselItems}
+            sideItems={sideItems}
+            coinName={coinName}
+          />
+        )}
+      </div>
     </div>
-  </div>
-)
-
-export const getStaticProps: GetStaticProps = async () => {
-  const carouselItems = [
-    { id: 'c1', name: 'Horno microondas Whirlpool',        imageUrl: '/images/micro.jpg', points: 6300 },
-    { id: 'c2', name: 'Smart TV 42”',                       imageUrl: '/images/tele.jpg',         points: 7600 },
-    { id: 'c3', name: 'Equipo de sonido',                   imageUrl: '/images/sonido.jpg',      points: 5200 },
-  ]
-
-  const sideItems = [
-    { id: 's1', name: 'Samsung Galaxy S24 FE',              imageUrl: '/images/celular.jpg', points: 7800 },
-    { id: 's2', name: 'Licuadora Ninja Xtrim 5 velocidades',imageUrl: '/images/licuadora.jpg', points: 3500 },
-  ]
-
-  return { props: { carouselItems, sideItems } }
+  );
 }
 
-export default CarouselPage
+
+export default withAuth(CarouselPage);

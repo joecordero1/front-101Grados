@@ -13,7 +13,7 @@ import Buyable from '~/components/partials/home/buyable';
 import BannerTwoSection from '~/components/partials/home/banner-two-section';
 import BestCollection from '~/components/partials/home/best-collection';
 
-import { useAuth, useProgram, useSpecialCatalogues } from 'hooks';
+import { useItem, useAuth, useProgram, useSpecialCatalogues } from 'hooks';
 import MultipleCategories from 'components/partials/home/multiple-categories';
 import SpecialCatalogues from '~/components/partials/home/SpecialCatalogues';
 import SpecialBannerFirst from '~/components/partials/home/SpecialCatalogues/SpecialBannerFirst';
@@ -29,12 +29,18 @@ function HomeDesktopPage() {
     useAuth();
   const { myCatalogues } = useSpecialCatalogues();
   const { program } = useProgram();
-  const featuredProduct = {
+  /*const featuredProduct = {
   id: '1',
   name: 'Producto destacado',
   imageUrl: '/images/celular.jpg',
   points: 120,
 }
+  */
+
+// ID del producto destacado
+  const featuredProductId = '3770'; // <-- Reemplaza con el ID real
+  const { item: featuredProduct, loading: loadingFeatured } = useItem(featuredProductId);
+
 
 
   return (
@@ -49,7 +55,21 @@ function HomeDesktopPage() {
         <div className='intro-section'>
           <div className='container'>
             <IntroSection />
-            <MainBanner product={featuredProduct} />
+            {/* Solo muestra el banner si el producto ya cargó */}
+            {!loadingFeatured && featuredProduct && (
+              <MainBanner
+                product={{
+  id: featuredProduct.award.id,
+  name: featuredProduct.award.name,
+  imageUrl: featuredProduct.award.mainImage,
+  points: featuredProduct.points,
+  brandName: featuredProduct.award.brand.name,
+  model: featuredProduct.award.model,
+  subcategories: featuredProduct.award.subcategories,
+}}
+
+              />
+            )}
             <ServiceBox />
           </div>
         </div>
